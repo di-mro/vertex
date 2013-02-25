@@ -13,6 +13,7 @@
 @property (strong, nonatomic) IBOutlet UIPickerView *srGenericPicker;
 @property (strong, nonatomic) IBOutlet NSArray *currentArray;
 @property (strong, nonatomic) IBOutlet UITextField *currentTextField;
+@property (strong, nonatomic) UIActionSheet *actionSheet;
 
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UITextField *nameField;
@@ -47,7 +48,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *detailsLabel;
 @property (strong, nonatomic) IBOutlet UITextView *detailsTextArea;
 
-- (IBAction)previewSR:(id)sender;
-- (IBAction)cancelSR:(id)sender;
+//- (IBAction)previewSR:(id)sender;
+//- (IBAction)cancelSR:(id)sender;
 
 @end

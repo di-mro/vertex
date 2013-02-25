@@ -7,6 +7,8 @@
 //
 
 #import "AddAssetPageViewController.h"
+#import "HomePageViewController.h"
+#import "AssetPageViewController.h"
 
 @interface AddAssetPageViewController ()
 
@@ -17,6 +19,14 @@
 @synthesize assetTypePickerArray;
 @synthesize assetTypePicker;
 @synthesize addAssetScroller;
+@synthesize actionSheet;
+
+@synthesize assetNameField;
+@synthesize assetTypeField;
+@synthesize modelField;
+@synthesize brandField;
+@synthesize powerConsumptionField;
+@synthesize remarksArea;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,10 +39,25 @@
 
 - (void)viewDidLoad
 {
-  self.addAssetScroller.contentSize = CGSizeMake(280.0, 1000.0);
+  //Keyboard dismissal
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
+  [self.view addGestureRecognizer:tap];
   
-  //!-Remove hardcoded values. Must retrieve listing in DB-!
-  self.assetTypePickerArray = [[NSArray alloc] initWithObjects:@"Aircon",@"Door", @"Exhaust Fan",@"Faucet",@"Toilet",@"Kitchen Sink",@"Lighting Fixtures", nil];;
+  //Cancel Navig Button
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelAddAsset)];
+  
+  //Create Navig Button
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Create" style:UIBarButtonItemStylePlain target:self action:@selector(createAsset)];
+  
+  //Configure Scroller Size
+  self.addAssetScroller.contentSize = CGSizeMake(320, 720);
+  
+  //Configure Picker Array Values
+  self.assetTypePickerArray = [[NSArray alloc] initWithObjects:@"Aircon",@"Door", @"Exhaust Fan",@"Faucet",@"Toilet",@"Kitchen Sink",@"Lighting Fixtures", nil];
+  
+  //assetTypePicker in assetTypeField
+  [assetTypeField setDelegate:self];
+    
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -43,14 +68,48 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)cancelAddAsset:(id)sender
-{
-  //Cancel / clear the fields
-}
 
-- (IBAction)createAddAsset:(id)sender
+- (BOOL)textFieldDidBeginEditing:(UITextField *)textField
 {
-  //Save inputs in db
+  if(assetTypeField.isEditing)
+  {
+    NSLog(@"textFieldDidBeginEditing - function call");
+    [textField resignFirstResponder];
+    
+    actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                              delegate:nil
+                                     cancelButtonTitle:nil
+                                destructiveButtonTitle:nil
+                                     otherButtonTitles:nil];
+    
+    [actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+    
+    assetTypePicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 40, 0, 0)];
+    assetTypePicker.showsSelectionIndicator = YES;
+    assetTypePicker.dataSource = self;
+    assetTypePicker.delegate = self;
+    
+    [actionSheet addSubview:assetTypePicker];
+    
+    UISegmentedControl *doneButton = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObject:@"Done"]];
+    doneButton.momentary = YES;
+    doneButton.frame = CGRectMake(260, 7.0f, 50.0f, 30.0f);
+    doneButton.segmentedControlStyle = UISegmentedControlStyleBar;
+    doneButton.tintColor = [UIColor blackColor];
+    [doneButton addTarget:self action:@selector(selectedRow) forControlEvents:UIControlEventValueChanged];
+    
+    [actionSheet addSubview:doneButton];
+    [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
+    [actionSheet setBounds:CGRectMake(0, 0, 320, 485)];
+    
+    assetTypeField.inputView = actionSheet;
+    
+    return YES;
+  }
+  else
+  {
+    return NO;
+  }
 }
 
 #pragma mark - Implementing the Picker View
@@ -67,22 +126,115 @@
   return [self.assetTypePickerArray objectAtIndex:row];
 }
 
--(IBAction)selectedRow {
-  //int selectedIndex = [assetTypePicker selectedRowInComponent:0];
+-(void)selectedRow{
+  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
   
-  //Do something with the selected row, save in DB
-  /*
-  NSString *message = [NSString stringWithFormat:@"You selected: %@",[assetTypePickerArray objectAtIndex:selectedIndex]];
-  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-  [alert show];
-  [alert release];
-  */
+  int selectedIndex = [assetTypePicker selectedRowInComponent:0];
+  NSString *selectedAssetType = [assetTypePickerArray objectAtIndex:selectedIndex];
+  assetTypeField.text = selectedAssetType;
+  //Do something with the selected row, store then save in DB
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-  [self.superclass endEditing:YES];
   [self.view endEditing:YES];
 }
+
+-(void) cancelAddAsset
+{
+  [self dismissViewControllerAnimated:YES completion:nil];
+  NSLog(@"Cancel Add Asset");
+  
+  //Go back to Home
+  HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+
+  [self.navigationController pushViewController:controller animated:YES];
+}
+
+-(void) createAsset
+{
+  if([self validateAddAssetFields])
+  {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    NSLog(@"Create Asset");
+    
+    //Save Asset info to db - PUT
+    
+    /*
+     //ActivityIndicator Code
+     UIActivityIndicatorView *spinner =
+     [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(150     // Hi
+     , 225   // Frennn
+     , 20    // Na
+     , 30)]; // Masungit
+     [spinner setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
+     spinner.color = [UIColor blueColor];
+     [self.view addSubview:spinner];
+     [spinner startAnimating];
+     //[spinner stopAnimating];
+     */
+    
+    //Inform user asset is saved
+    UIAlertView *createAssetAlert = [[UIAlertView alloc] initWithTitle:@"Create Asset"
+                                                               message:@"Asset Created."
+                                                              delegate:nil
+                                                     cancelButtonTitle:@"OK"
+                                                     otherButtonTitles:nil];
+    [createAssetAlert show];
+    
+    //Transition back to Assets Page
+    double delayInSeconds   = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void)
+    {
+        AssetPageViewController* controller = (AssetPageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"AssetsPage"];
+                     
+        [self.navigationController pushViewController:controller animated:YES];
+    });
+  }
+  else
+  {
+    NSLog(@"Unable to add Asset");
+  }
+}
+
+//Login fields validation
+-(BOOL) validateAddAssetFields
+{
+  UIAlertView *addAssetValidateAlert = [[UIAlertView alloc] initWithTitle:@"Incomplete Information"
+                                                               message:@"Please fill out the necessary fields."
+                                                              delegate:nil
+                                                     cancelButtonTitle:@"OK"
+                                                     otherButtonTitles:nil];
+  
+  if([assetNameField.text isEqualToString:(@"")]
+     || [assetTypeField.text isEqualToString:(@"")]
+     || [modelField.text isEqualToString:(@"")]
+     || [brandField.text isEqualToString:(@"")])
+  {
+    [addAssetValidateAlert show];
+    return false;
+  }
+  else
+  {
+    return true;
+  }
+}
+
+-(void)dismissActionSheet:(id) sender
+{
+  [sender dismissWithClickedButtonIndex:0 animated:YES];
+}
+
+-(void)dismissKeyboard
+{
+  [assetNameField resignFirstResponder];
+  [assetTypeField resignFirstResponder];
+  [modelField resignFirstResponder];
+  [brandField resignFirstResponder];
+  [powerConsumptionField resignFirstResponder];
+  [remarksArea resignFirstResponder];
+}
+
 
 @end

@@ -34,11 +34,11 @@
 @property (strong, nonatomic) IBOutlet UILabel *srDetailsLabel;
 @property (strong, nonatomic) IBOutlet UITextView *srDetailsTextArea;
 
-@property (strong, nonatomic) IBOutlet UILabel *srDate;
-@property (strong, nonatomic) IBOutlet UITextField *sDateField;
+@property (strong, nonatomic) IBOutlet UILabel *srDateLabel;
+@property (strong, nonatomic) IBOutlet UITextField *srDateField;
 
-- (IBAction)submitSR:(id)sender;
-- (IBAction)discardSR:(id)sender;
+//- (IBAction)submitSR:(id)sender;
+//- (IBAction)discardSR:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UIScrollView *displaySRScroller;
 

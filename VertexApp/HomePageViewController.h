@@ -14,4 +14,6 @@
 
 @property (nonatomic, retain) NSMutableArray *homePageEntries;
 
+-(void) logout;
+
 @end

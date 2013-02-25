@@ -22,7 +22,7 @@
 @synthesize serviceField;
 @synthesize priorityField;
 @synthesize srDetailsTextArea;
-@synthesize srDate;
+@synthesize srDateField;
 @synthesize displaySRScroller;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -58,7 +58,7 @@
   lifecycleField.enabled     = NO;
   serviceField.enabled       = NO;
   priorityField.enabled      = NO;
-  srDate.enabled             = NO;
+  srDateField.enabled        = NO;
   //srDetailsTextArea enabling / disabling is set in Attributes Inspector
 }
 

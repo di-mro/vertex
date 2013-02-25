@@ -7,6 +7,7 @@
 //
 
 #import "HomePageViewController.h"
+#import "LoginViewController.h"
 
 @interface HomePageViewController ()
 
@@ -27,7 +28,9 @@
 
 - (void)viewDidLoad
 {
-  self.navigationItem.hidesBackButton = YES;
+  //self.navigationItem.hidesBackButton = YES;
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout)];
+  
   [self displayHomePageEntries];
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -126,6 +129,19 @@
       break;
     default: break;
   }
+}
+
+#pragma mark - Logout
+-(void) logout
+{
+  NSLog(@"Logout");
+  
+  //Go back to Login Page
+  LoginViewController* controller = (LoginViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"LoginPage"];
+  
+  [self.navigationController pushViewController:controller animated:YES];
+  
+  //Clear user tokens
 }
 
 

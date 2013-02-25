@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED03E62616DB326B0011C011 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = ED03E62516DB326B0011C011 /* UserInfo.m */; };
+		ED03E62916DB34860011C011 /* UserProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ED03E62816DB34860011C011 /* UserProfile.m */; };
+		ED03E62C16DB37220011C011 /* Asset.m in Sources */ = {isa = PBXBuildFile; fileRef = ED03E62B16DB37220011C011 /* Asset.m */; };
+		ED03E62F16DB38BD0011C011 /* AssetTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = ED03E62E16DB38BD0011C011 /* AssetTypes.m */; };
+		ED03E63316DB39700011C011 /* Lifecycles.m in Sources */ = {isa = PBXBuildFile; fileRef = ED03E63216DB39700011C011 /* Lifecycles.m */; };
+		ED03E63616DB3A080011C011 /* Services.m in Sources */ = {isa = PBXBuildFile; fileRef = ED03E63516DB3A080011C011 /* Services.m */; };
+		ED03E63916DB3AAE0011C011 /* ServiceRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = ED03E63816DB3AAE0011C011 /* ServiceRequests.m */; };
+		ED03E63C16DB3CC30011C011 /* Tasks.m in Sources */ = {isa = PBXBuildFile; fileRef = ED03E63B16DB3CC20011C011 /* Tasks.m */; };
+		ED03E63F16DB3D860011C011 /* SRTask.m in Sources */ = {isa = PBXBuildFile; fileRef = ED03E63E16DB3D860011C011 /* SRTask.m */; };
+		ED03E64216DB3F2D0011C011 /* Feedback.m in Sources */ = {isa = PBXBuildFile; fileRef = ED03E64116DB3F2D0011C011 /* Feedback.m */; };
+		ED03E64516DB41530011C011 /* ContactDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = ED03E64416DB41530011C011 /* ContactDetails.m */; };
+		ED03E64816DB42140011C011 /* Personnel.m in Sources */ = {isa = PBXBuildFile; fileRef = ED03E64716DB42140011C011 /* Personnel.m */; };
 		EDE0E8AF16CB744700B9D0E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE0E8AE16CB744700B9D0E7 /* UIKit.framework */; };
 		EDE0E8B116CB744700B9D0E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE0E8B016CB744700B9D0E7 /* Foundation.framework */; };
 		EDE0E8B316CB744700B9D0E7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE0E8B216CB744700B9D0E7 /* CoreGraphics.framework */; };
@@ -18,9 +30,44 @@
 		EDE0E8C516CB744800B9D0E7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EDE0E8C416CB744800B9D0E7 /* Default-568h@2x.png */; };
 		EDE0E8C816CB744800B9D0E7 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDE0E8C616CB744800B9D0E7 /* MainStoryboard.storyboard */; };
 		EDE0E8CB16CB744800B9D0E7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE0E8CA16CB744800B9D0E7 /* ViewController.m */; };
+		EDE0E8D616CB776F00B9D0E7 /* HomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE0E8D516CB776F00B9D0E7 /* HomePageViewController.m */; };
+		EDE0E8D916CB785E00B9D0E7 /* AssetPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE0E8D816CB785E00B9D0E7 /* AssetPageViewController.m */; };
+		EDE0E8DC16CB7A8B00B9D0E7 /* ViewAssetsPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE0E8DB16CB7A8B00B9D0E7 /* ViewAssetsPageViewController.m */; };
+		EDE0E8DF16CCB55200B9D0E7 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE0E8DE16CCB55200B9D0E7 /* LoginViewController.m */; };
+		EDE0E8E216CCB99200B9D0E7 /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE0E8E116CCB99200B9D0E7 /* NavigationController.m */; };
+		EDE0E8E516CCD5A600B9D0E7 /* SingleAssetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE0E8E416CCD5A600B9D0E7 /* SingleAssetViewController.m */; };
+		EDE0E8E816CCD90A00B9D0E7 /* AddAssetPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE0E8E716CCD90A00B9D0E7 /* AddAssetPageViewController.m */; };
+		EDE0E8EB16CD563800B9D0E7 /* ServiceRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE0E8EA16CD563800B9D0E7 /* ServiceRequestViewController.m */; };
+		EDE0E8EE16CD5B1600B9D0E7 /* CreateSRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE0E8ED16CD5B1600B9D0E7 /* CreateSRViewController.m */; };
+		EDE0E8F116CDD74F00B9D0E7 /* ViewSRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE0E8F016CDD74F00B9D0E7 /* ViewSRViewController.m */; };
+		EDE0E8F416CDE09500B9D0E7 /* DisplaySRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE0E8F316CDE09500B9D0E7 /* DisplaySRViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		ED03E62416DB326B0011C011 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
+		ED03E62516DB326B0011C011 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
+		ED03E62716DB34860011C011 /* UserProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfile.h; sourceTree = "<group>"; };
+		ED03E62816DB34860011C011 /* UserProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfile.m; sourceTree = "<group>"; };
+		ED03E62A16DB37220011C011 /* Asset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Asset.h; sourceTree = "<group>"; };
+		ED03E62B16DB37220011C011 /* Asset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Asset.m; sourceTree = "<group>"; };
+		ED03E62D16DB38BD0011C011 /* AssetTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetTypes.h; sourceTree = "<group>"; };
+		ED03E62E16DB38BD0011C011 /* AssetTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetTypes.m; sourceTree = "<group>"; };
+		ED03E63116DB39700011C011 /* Lifecycles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lifecycles.h; sourceTree = "<group>"; };
+		ED03E63216DB39700011C011 /* Lifecycles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lifecycles.m; sourceTree = "<group>"; };
+		ED03E63416DB3A080011C011 /* Services.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Services.h; sourceTree = "<group>"; };
+		ED03E63516DB3A080011C011 /* Services.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Services.m; sourceTree = "<group>"; };
+		ED03E63716DB3AAE0011C011 /* ServiceRequests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceRequests.h; sourceTree = "<group>"; };
+		ED03E63816DB3AAE0011C011 /* ServiceRequests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceRequests.m; sourceTree = "<group>"; };
+		ED03E63A16DB3CC20011C011 /* Tasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tasks.h; sourceTree = "<group>"; };
+		ED03E63B16DB3CC20011C011 /* Tasks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tasks.m; sourceTree = "<group>"; };
+		ED03E63D16DB3D860011C011 /* SRTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRTask.h; sourceTree = "<group>"; };
+		ED03E63E16DB3D860011C011 /* SRTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRTask.m; sourceTree = "<group>"; };
+		ED03E64016DB3F2C0011C011 /* Feedback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Feedback.h; sourceTree = "<group>"; };
+		ED03E64116DB3F2D0011C011 /* Feedback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feedback.m; sourceTree = "<group>"; };
+		ED03E64316DB41520011C011 /* ContactDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactDetails.h; sourceTree = "<group>"; };
+		ED03E64416DB41530011C011 /* ContactDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactDetails.m; sourceTree = "<group>"; };
+		ED03E64616DB42140011C011 /* Personnel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Personnel.h; sourceTree = "<group>"; };
+		ED03E64716DB42140011C011 /* Personnel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Personnel.m; sourceTree = "<group>"; };
 		EDE0E8AB16CB744700B9D0E7 /* VertexApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VertexApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDE0E8AE16CB744700B9D0E7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		EDE0E8B016CB744700B9D0E7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -37,6 +84,28 @@
 		EDE0E8C716CB744800B9D0E7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		EDE0E8C916CB744800B9D0E7 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		EDE0E8CA16CB744800B9D0E7 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		EDE0E8D416CB776F00B9D0E7 /* HomePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageViewController.h; sourceTree = "<group>"; };
+		EDE0E8D516CB776F00B9D0E7 /* HomePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageViewController.m; sourceTree = "<group>"; };
+		EDE0E8D716CB785E00B9D0E7 /* AssetPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetPageViewController.h; sourceTree = "<group>"; };
+		EDE0E8D816CB785E00B9D0E7 /* AssetPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetPageViewController.m; sourceTree = "<group>"; };
+		EDE0E8DA16CB7A8B00B9D0E7 /* ViewAssetsPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewAssetsPageViewController.h; sourceTree = "<group>"; };
+		EDE0E8DB16CB7A8B00B9D0E7 /* ViewAssetsPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewAssetsPageViewController.m; sourceTree = "<group>"; };
+		EDE0E8DD16CCB55200B9D0E7 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = SOURCE_ROOT; };
+		EDE0E8DE16CCB55200B9D0E7 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = SOURCE_ROOT; };
+		EDE0E8E016CCB99200B9D0E7 /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationController.h; sourceTree = SOURCE_ROOT; };
+		EDE0E8E116CCB99200B9D0E7 /* NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationController.m; sourceTree = SOURCE_ROOT; };
+		EDE0E8E316CCD5A500B9D0E7 /* SingleAssetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleAssetViewController.h; sourceTree = SOURCE_ROOT; };
+		EDE0E8E416CCD5A600B9D0E7 /* SingleAssetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleAssetViewController.m; sourceTree = SOURCE_ROOT; };
+		EDE0E8E616CCD90A00B9D0E7 /* AddAssetPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddAssetPageViewController.h; sourceTree = SOURCE_ROOT; };
+		EDE0E8E716CCD90A00B9D0E7 /* AddAssetPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddAssetPageViewController.m; sourceTree = SOURCE_ROOT; };
+		EDE0E8E916CD563700B9D0E7 /* ServiceRequestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceRequestViewController.h; sourceTree = SOURCE_ROOT; };
+		EDE0E8EA16CD563800B9D0E7 /* ServiceRequestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceRequestViewController.m; sourceTree = SOURCE_ROOT; };
+		EDE0E8EC16CD5B1500B9D0E7 /* CreateSRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateSRViewController.h; sourceTree = SOURCE_ROOT; };
+		EDE0E8ED16CD5B1600B9D0E7 /* CreateSRViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateSRViewController.m; sourceTree = SOURCE_ROOT; };
+		EDE0E8EF16CDD74E00B9D0E7 /* ViewSRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewSRViewController.h; sourceTree = SOURCE_ROOT; };
+		EDE0E8F016CDD74F00B9D0E7 /* ViewSRViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewSRViewController.m; sourceTree = SOURCE_ROOT; };
+		EDE0E8F216CDE09500B9D0E7 /* DisplaySRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplaySRViewController.h; sourceTree = SOURCE_ROOT; };
+		EDE0E8F316CDE09500B9D0E7 /* DisplaySRViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplaySRViewController.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +122,160 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ED03E62316DB32290011C011 /* Users */ = {
+			isa = PBXGroup;
+			children = (
+				ED03E64316DB41520011C011 /* ContactDetails.h */,
+				ED03E64416DB41530011C011 /* ContactDetails.m */,
+				ED03E64616DB42140011C011 /* Personnel.h */,
+				ED03E64716DB42140011C011 /* Personnel.m */,
+				ED03E62416DB326B0011C011 /* UserInfo.h */,
+				ED03E62516DB326B0011C011 /* UserInfo.m */,
+				ED03E62716DB34860011C011 /* UserProfile.h */,
+				ED03E62816DB34860011C011 /* UserProfile.m */,
+			);
+			name = Users;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		ED03E63016DB39480011C011 /* Lifecycle */ = {
+			isa = PBXGroup;
+			children = (
+				ED03E63116DB39700011C011 /* Lifecycles.h */,
+				ED03E63216DB39700011C011 /* Lifecycles.m */,
+				ED03E63416DB3A080011C011 /* Services.h */,
+				ED03E63516DB3A080011C011 /* Services.m */,
+			);
+			name = Lifecycle;
+			sourceTree = "<group>";
+		};
+		EDBC3C9F16D33970006D320C /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				EDE0E8BD16CB744800B9D0E7 /* AppDelegate.h */,
+				EDE0E8BE16CB744800B9D0E7 /* AppDelegate.m */,
+			);
+			name = AppDelegate;
+			sourceTree = "<group>";
+		};
+		EDBC3CA016D339A0006D320C /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				EDBC3C9F16D33970006D320C /* AppDelegate */,
+				EDBC3CA616D33B2E006D320C /* Storyboard */,
+				EDBC3CA116D339BC006D320C /* ViewControllers */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		EDBC3CA116D339BC006D320C /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				EDBC3CA216D33A34006D320C /* Assets */,
+				EDBC3CA316D33A82006D320C /* Home */,
+				ED03E63016DB39480011C011 /* Lifecycle */,
+				EDBC3CA416D33A96006D320C /* Login */,
+				EDBC3CA516D33AEE006D320C /* Service Requests */,
+				ED03E62316DB32290011C011 /* Users */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		EDBC3CA216D33A34006D320C /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				ED03E62A16DB37220011C011 /* Asset.h */,
+				ED03E62B16DB37220011C011 /* Asset.m */,
+				ED03E62D16DB38BD0011C011 /* AssetTypes.h */,
+				ED03E62E16DB38BD0011C011 /* AssetTypes.m */,
+				EDE0E8E616CCD90A00B9D0E7 /* AddAssetPageViewController.h */,
+				EDE0E8E716CCD90A00B9D0E7 /* AddAssetPageViewController.m */,
+				EDE0E8D716CB785E00B9D0E7 /* AssetPageViewController.h */,
+				EDE0E8D816CB785E00B9D0E7 /* AssetPageViewController.m */,
+				EDE0E8E316CCD5A500B9D0E7 /* SingleAssetViewController.h */,
+				EDE0E8E416CCD5A600B9D0E7 /* SingleAssetViewController.m */,
+				EDE0E8DA16CB7A8B00B9D0E7 /* ViewAssetsPageViewController.h */,
+				EDE0E8DB16CB7A8B00B9D0E7 /* ViewAssetsPageViewController.m */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		EDBC3CA316D33A82006D320C /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				EDE0E8D416CB776F00B9D0E7 /* HomePageViewController.h */,
+				EDE0E8D516CB776F00B9D0E7 /* HomePageViewController.m */,
+				EDE0E8E016CCB99200B9D0E7 /* NavigationController.h */,
+				EDE0E8E116CCB99200B9D0E7 /* NavigationController.m */,
+			);
+			name = Home;
+			sourceTree = "<group>";
+		};
+		EDBC3CA416D33A96006D320C /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				EDE0E8DD16CCB55200B9D0E7 /* LoginViewController.h */,
+				EDE0E8DE16CCB55200B9D0E7 /* LoginViewController.m */,
+				EDE0E8C916CB744800B9D0E7 /* ViewController.h */,
+				EDE0E8CA16CB744800B9D0E7 /* ViewController.m */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		EDBC3CA516D33AEE006D320C /* Service Requests */ = {
+			isa = PBXGroup;
+			children = (
+				EDE0E8EC16CD5B1500B9D0E7 /* CreateSRViewController.h */,
+				EDE0E8ED16CD5B1600B9D0E7 /* CreateSRViewController.m */,
+				EDE0E8F216CDE09500B9D0E7 /* DisplaySRViewController.h */,
+				EDE0E8F316CDE09500B9D0E7 /* DisplaySRViewController.m */,
+				ED03E64016DB3F2C0011C011 /* Feedback.h */,
+				ED03E64116DB3F2D0011C011 /* Feedback.m */,
+				ED03E63716DB3AAE0011C011 /* ServiceRequests.h */,
+				ED03E63816DB3AAE0011C011 /* ServiceRequests.m */,
+				EDE0E8E916CD563700B9D0E7 /* ServiceRequestViewController.h */,
+				EDE0E8EA16CD563800B9D0E7 /* ServiceRequestViewController.m */,
+				ED03E63D16DB3D860011C011 /* SRTask.h */,
+				ED03E63E16DB3D860011C011 /* SRTask.m */,
+				ED03E63A16DB3CC20011C011 /* Tasks.h */,
+				ED03E63B16DB3CC20011C011 /* Tasks.m */,
+				EDE0E8EF16CDD74E00B9D0E7 /* ViewSRViewController.h */,
+				EDE0E8F016CDD74F00B9D0E7 /* ViewSRViewController.m */,
+			);
+			name = "Service Requests";
+			sourceTree = "<group>";
+		};
+		EDBC3CA616D33B2E006D320C /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				EDE0E8C616CB744800B9D0E7 /* MainStoryboard.storyboard */,
+			);
+			name = Storyboard;
+			sourceTree = "<group>";
+		};
+		EDBC3CA716D33BAC006D320C /* Media */ = {
+			isa = PBXGroup;
+			children = (
+				EDBC3CA816D3482A006D320C /* Images */,
+				EDBC3CA916D34830006D320C /* Sounds */,
+			);
+			name = Media;
+			sourceTree = "<group>";
+		};
+		EDBC3CA816D3482A006D320C /* Images */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		EDBC3CA916D34830006D320C /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Sounds;
+			sourceTree = "<group>";
+		};
 		EDE0E8A216CB744700B9D0E7 = {
 			isa = PBXGroup;
 			children = (
@@ -83,11 +306,8 @@
 		EDE0E8B416CB744700B9D0E7 /* VertexApp */ = {
 			isa = PBXGroup;
 			children = (
-				EDE0E8BD16CB744800B9D0E7 /* AppDelegate.h */,
-				EDE0E8BE16CB744800B9D0E7 /* AppDelegate.m */,
-				EDE0E8C616CB744800B9D0E7 /* MainStoryboard.storyboard */,
-				EDE0E8C916CB744800B9D0E7 /* ViewController.h */,
-				EDE0E8CA16CB744800B9D0E7 /* ViewController.m */,
+				EDBC3CA016D339A0006D320C /* Classes */,
+				EDBC3CA716D33BAC006D320C /* Media */,
 				EDE0E8B516CB744800B9D0E7 /* Supporting Files */,
 			);
 			path = VertexApp;
@@ -176,6 +396,29 @@
 				EDE0E8BB16CB744800B9D0E7 /* main.m in Sources */,
 				EDE0E8BF16CB744800B9D0E7 /* AppDelegate.m in Sources */,
 				EDE0E8CB16CB744800B9D0E7 /* ViewController.m in Sources */,
+				EDE0E8D616CB776F00B9D0E7 /* HomePageViewController.m in Sources */,
+				EDE0E8D916CB785E00B9D0E7 /* AssetPageViewController.m in Sources */,
+				EDE0E8DC16CB7A8B00B9D0E7 /* ViewAssetsPageViewController.m in Sources */,
+				EDE0E8DF16CCB55200B9D0E7 /* LoginViewController.m in Sources */,
+				EDE0E8E216CCB99200B9D0E7 /* NavigationController.m in Sources */,
+				EDE0E8E516CCD5A600B9D0E7 /* SingleAssetViewController.m in Sources */,
+				EDE0E8E816CCD90A00B9D0E7 /* AddAssetPageViewController.m in Sources */,
+				EDE0E8EB16CD563800B9D0E7 /* ServiceRequestViewController.m in Sources */,
+				EDE0E8EE16CD5B1600B9D0E7 /* CreateSRViewController.m in Sources */,
+				EDE0E8F116CDD74F00B9D0E7 /* ViewSRViewController.m in Sources */,
+				EDE0E8F416CDE09500B9D0E7 /* DisplaySRViewController.m in Sources */,
+				ED03E62616DB326B0011C011 /* UserInfo.m in Sources */,
+				ED03E62916DB34860011C011 /* UserProfile.m in Sources */,
+				ED03E62C16DB37220011C011 /* Asset.m in Sources */,
+				ED03E62F16DB38BD0011C011 /* AssetTypes.m in Sources */,
+				ED03E63316DB39700011C011 /* Lifecycles.m in Sources */,
+				ED03E63616DB3A080011C011 /* Services.m in Sources */,
+				ED03E63916DB3AAE0011C011 /* ServiceRequests.m in Sources */,
+				ED03E63C16DB3CC30011C011 /* Tasks.m in Sources */,
+				ED03E63F16DB3D860011C011 /* SRTask.m in Sources */,
+				ED03E64216DB3F2D0011C011 /* Feedback.m in Sources */,
+				ED03E64516DB41530011C011 /* ContactDetails.m in Sources */,
+				ED03E64816DB42140011C011 /* Personnel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +541,7 @@
 				EDE0E8D016CB744800B9D0E7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
