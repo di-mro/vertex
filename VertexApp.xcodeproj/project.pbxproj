@@ -19,6 +19,8 @@
 		ED03E64216DB3F2D0011C011 /* Feedback.m in Sources */ = {isa = PBXBuildFile; fileRef = ED03E64116DB3F2D0011C011 /* Feedback.m */; };
 		ED03E64516DB41530011C011 /* ContactDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = ED03E64416DB41530011C011 /* ContactDetails.m */; };
 		ED03E64816DB42140011C011 /* Personnel.m in Sources */ = {isa = PBXBuildFile; fileRef = ED03E64716DB42140011C011 /* Personnel.m */; };
+		ED03E64B16DB54790011C011 /* AssetObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED03E64A16DB54790011C011 /* AssetObject.m */; };
+		ED03E64E16DB5CAE0011C011 /* SRObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED03E64D16DB5CAD0011C011 /* SRObject.m */; };
 		EDE0E8AF16CB744700B9D0E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE0E8AE16CB744700B9D0E7 /* UIKit.framework */; };
 		EDE0E8B116CB744700B9D0E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE0E8B016CB744700B9D0E7 /* Foundation.framework */; };
 		EDE0E8B316CB744700B9D0E7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE0E8B216CB744700B9D0E7 /* CoreGraphics.framework */; };
@@ -68,6 +70,10 @@
 		ED03E64416DB41530011C011 /* ContactDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactDetails.m; sourceTree = "<group>"; };
 		ED03E64616DB42140011C011 /* Personnel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Personnel.h; sourceTree = "<group>"; };
 		ED03E64716DB42140011C011 /* Personnel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Personnel.m; sourceTree = "<group>"; };
+		ED03E64916DB54790011C011 /* AssetObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetObject.h; sourceTree = "<group>"; };
+		ED03E64A16DB54790011C011 /* AssetObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetObject.m; sourceTree = "<group>"; };
+		ED03E64C16DB5CAD0011C011 /* SRObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRObject.h; sourceTree = "<group>"; };
+		ED03E64D16DB5CAD0011C011 /* SRObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRObject.m; sourceTree = "<group>"; };
 		EDE0E8AB16CB744700B9D0E7 /* VertexApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VertexApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDE0E8AE16CB744700B9D0E7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		EDE0E8B016CB744700B9D0E7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -186,6 +192,8 @@
 			children = (
 				ED03E62A16DB37220011C011 /* Asset.h */,
 				ED03E62B16DB37220011C011 /* Asset.m */,
+				ED03E64916DB54790011C011 /* AssetObject.h */,
+				ED03E64A16DB54790011C011 /* AssetObject.m */,
 				ED03E62D16DB38BD0011C011 /* AssetTypes.h */,
 				ED03E62E16DB38BD0011C011 /* AssetTypes.m */,
 				EDE0E8E616CCD90A00B9D0E7 /* AddAssetPageViewController.h */,
@@ -235,6 +243,8 @@
 				ED03E63816DB3AAE0011C011 /* ServiceRequests.m */,
 				EDE0E8E916CD563700B9D0E7 /* ServiceRequestViewController.h */,
 				EDE0E8EA16CD563800B9D0E7 /* ServiceRequestViewController.m */,
+				ED03E64C16DB5CAD0011C011 /* SRObject.h */,
+				ED03E64D16DB5CAD0011C011 /* SRObject.m */,
 				ED03E63D16DB3D860011C011 /* SRTask.h */,
 				ED03E63E16DB3D860011C011 /* SRTask.m */,
 				ED03E63A16DB3CC20011C011 /* Tasks.h */,
@@ -419,6 +429,8 @@
 				ED03E64216DB3F2D0011C011 /* Feedback.m in Sources */,
 				ED03E64516DB41530011C011 /* ContactDetails.m in Sources */,
 				ED03E64816DB42140011C011 /* Personnel.m in Sources */,
+				ED03E64B16DB54790011C011 /* AssetObject.m in Sources */,
+				ED03E64E16DB5CAE0011C011 /* SRObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

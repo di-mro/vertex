@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ContactDetails.h";
+#import "ContactDetails.h"
 
 @interface Personnel : NSObject
 

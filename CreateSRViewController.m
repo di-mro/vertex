@@ -40,6 +40,8 @@
 @synthesize currentArray;
 @synthesize currentTextField;
 
+@synthesize srObject;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -60,7 +62,7 @@
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelSR)];
   
   //Create Navig Button
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Preview" style:UIBarButtonItemStylePlain target:self action:@selector(createSR)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Send" style:UIBarButtonItemStylePlain target:self action:@selector(createSR)];
   
   //Scroller size
   self.createSRScroller.contentSize = CGSizeMake(320.0, 900.0);
@@ -76,6 +78,9 @@
   [lifecycleField setDelegate:self];
   [serviceField setDelegate:self];
   [priorityField setDelegate:self];
+  
+  //SRObject
+  srObject = [[SRObject alloc] init];
   
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -226,18 +231,6 @@
   return [currentArray objectAtIndex:row];
 }
 
-
-/*
--(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-  //and here you can do in two ways:
-  //1
-  [currentTextField setText:[currentArray objectAtIndex:row]];
-  //2
-  //[currentTextField setText:[self pickerView:pickerView titleForRow:row inComponent:component]];
-}
-*/
-
 -(void) cancelSR
 {
   [self dismissViewControllerAnimated:YES completion:nil];
@@ -251,25 +244,63 @@
 
 -(void) createSR
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
-  NSLog(@"Create Service Request");
-  
-  //Save Service Request info to db
-  //PUT
-  
-  //Inform user Service Request is saved
-  
-  UIAlertView *createSRAlert = [[UIAlertView alloc] initWithTitle:@"Service Request"
-                                message:@"Service Request Created."
-                                delegate:nil
-                                cancelButtonTitle:@"OK"
-                                otherButtonTitles:nil];
-  [createSRAlert show];
-  
-  ServiceRequestViewController* controller = (ServiceRequestViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"SRPage"];
-  
-  [self.navigationController pushViewController:controller animated:YES];
+  if ([self validateCreateSRFields])
+  {
+    //Put Service Request info into SRObject. Save SR info to db - PUT
+    srObject.asset = assetField.text;
+    srObject.lifecycle = lifecycleField.text;
+    srObject.service = serviceField.text;
+    srObject.priority = priorityField.text;
+    srObject.name = nameField.text;
+    srObject.unitLocation = unitLocationField.text;
+    srObject.contactNumber = contactNumberField.text;
+    srObject.details = detailsTextArea.text;
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    NSLog(@"Create Service Request");
+    
+    //if(validateSaveToDB)
+    //Inform user Service Request is saved
+    UIAlertView *createSRAlert = [[UIAlertView alloc] initWithTitle:@"Service Request"
+                                                            message:@"Service Request Created."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+    [createSRAlert show];
+    //Transition to Service Request Page - alertView clickedButtonAtIndex
+  }
+  else
+  {
+    NSLog(@"Unable to create Service Request");
+  }
 }
+
+//Transition to Assets Page when OK on Alert Box is clicked
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+  if (buttonIndex == 0) //OK
+  {
+    ServiceRequestViewController* controller = (ServiceRequestViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"SRPage"];
+    
+    [self.navigationController pushViewController:controller animated:YES];
+  }
+}
+
+//Check if saved to DB properly
+-(BOOL) validateSaveToDB
+{
+  /*
+   if()
+   {
+   return true;
+   }
+   else
+   {
+   return false;
+   }
+   */
+}
+
 
 -(void)dismissActionSheet:(id) sender
 {

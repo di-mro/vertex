@@ -10,6 +10,7 @@
 #import "HomePageViewController.h"
 #import "AssetPageViewController.h"
 
+
 @interface AddAssetPageViewController ()
 
 @end
@@ -27,6 +28,9 @@
 @synthesize brandField;
 @synthesize powerConsumptionField;
 @synthesize remarksArea;
+
+@synthesize assetObject;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -47,7 +51,7 @@
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelAddAsset)];
   
   //Create Navig Button
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Create" style:UIBarButtonItemStylePlain target:self action:@selector(createAsset)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(createAsset)];
   
   //Configure Scroller Size
   self.addAssetScroller.contentSize = CGSizeMake(320, 720);
@@ -57,6 +61,9 @@
   
   //assetTypePicker in assetTypeField
   [assetTypeField setDelegate:self];
+  
+  //AssetObject initialization
+  assetObject = [[AssetObject alloc] init];
     
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -155,10 +162,18 @@
 {
   if([self validateAddAssetFields])
   {
+    //Put Asset info into Asset object. Save Asset info to db - PUT
+    assetObject.assetName = assetNameField.text;
+    assetObject.assetType = assetTypeField.text;
+    assetObject.model = modelField.text;
+    assetObject.brand = brandField.text;
+    assetObject.powerConsumption = powerConsumptionField.text;
+    assetObject.remarks = remarksArea.text;
+    
+    NSLog(@"assetObject: %@", assetObject.assetType);
+    
     [self dismissViewControllerAnimated:YES completion:nil];
     NSLog(@"Create Asset");
-    
-    //Save Asset info to db - PUT
     
     /*
      //ActivityIndicator Code
@@ -174,27 +189,30 @@
      //[spinner stopAnimating];
      */
     
+    //if(validateSaveToDB)
     //Inform user asset is saved
     UIAlertView *createAssetAlert = [[UIAlertView alloc] initWithTitle:@"Create Asset"
                                                                message:@"Asset Created."
-                                                              delegate:nil
+                                                              delegate:self
                                                      cancelButtonTitle:@"OK"
                                                      otherButtonTitles:nil];
     [createAssetAlert show];
-    
-    //Transition back to Assets Page
-    double delayInSeconds   = 2.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void)
-    {
-        AssetPageViewController* controller = (AssetPageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"AssetsPage"];
-                     
-        [self.navigationController pushViewController:controller animated:YES];
-    });
+    //Transition to Assets Page - alertView clickedButtonAtIndex
   }
   else
   {
     NSLog(@"Unable to add Asset");
+  }
+}
+
+//Transition to Assets Page when OK on Alert Box is clicked
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+  if (buttonIndex == 0)
+  {
+    AssetPageViewController* controller = (AssetPageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"AssetsPage"];
+    
+    [self.navigationController pushViewController:controller animated:YES];
   }
 }
 
@@ -219,6 +237,21 @@
   {
     return true;
   }
+}
+
+//Check if saved to DB properly
+-(BOOL) validateSaveToDB
+{
+  /*
+  if()
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+  */
 }
 
 -(void)dismissActionSheet:(id) sender

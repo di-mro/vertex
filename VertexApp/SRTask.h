@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Tasks.h";
+#import "Tasks.h"
 
 @interface SRTask : NSObject
 

@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "SRObject.h"
 
 @interface CreateSRViewController : ViewController
 @property (strong, nonatomic) IBOutlet UIScrollView *createSRScroller;
@@ -47,6 +48,8 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *detailsLabel;
 @property (strong, nonatomic) IBOutlet UITextView *detailsTextArea;
+
+@property (strong, nonatomic) SRObject *srObject;
 
 //- (IBAction)previewSR:(id)sender;
 //- (IBAction)cancelSR:(id)sender;

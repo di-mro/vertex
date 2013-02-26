@@ -139,8 +139,9 @@
   //Go back to Login Page
   LoginViewController* controller = (LoginViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"LoginPage"];
   
+  controller.navigationItem.hidesBackButton = YES;
   [self.navigationController pushViewController:controller animated:YES];
-  
+    
   //Clear user tokens
 }
 
