@@ -37,9 +37,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *srDateLabel;
 @property (strong, nonatomic) IBOutlet UITextField *srDateField;
 
-//- (IBAction)submitSR:(id)sender;
-//- (IBAction)discardSR:(id)sender;
-
 @property (strong, nonatomic) IBOutlet UIScrollView *displaySRScroller;
 
 

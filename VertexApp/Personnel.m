@@ -10,13 +10,6 @@
 
 @implementation Personnel
 
-/*
- @property (strong, nonatomic) NSString *personnelId;
- @property (strong, nonatomic) NSString *personnelName;
- @property (strong, nonatomic) NSString *position;
- @property (strong, nonatomic) ContactDetails *contactDetails;
- */
-
 @synthesize personnelId;
 @synthesize personnelName;
 @synthesize position;

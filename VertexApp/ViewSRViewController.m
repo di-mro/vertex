@@ -20,7 +20,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -42,7 +43,7 @@
 # pragma mark - Display entries in Service Requests List Page
 - (void) displaySRPageEntries
 {
-  //!-For demo only, remove hard coded values-!
+  /* !-For demo only, remove hard coded values. Must retrieve in DB -! */
   displaySREntries = [[NSMutableArray alloc] init];
   NSString *entry1 = @"Aircon Fix";
   NSString *entry2 = @"Leaking Faucet";
@@ -52,7 +53,7 @@
   [displaySREntries addObject:entry2];
   [displaySREntries addObject:entry3];
   
-  //For the subtitles/details, remove these hard coded values
+  /* !- For the subtitles/details, remove these hard coded values -! */
   displaySRSubtitles = [[NSMutableArray alloc] init];
   NSString *sub1 = @"2013-01-08";
   NSString *sub2 = @"2013-02-15";
@@ -63,7 +64,7 @@
   [displaySRSubtitles addObject:sub3];
 }
 
-#pragma mark - Table view data source
+#pragma mark - Table view data source implementation
 - (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView
 {
   //Return the number of sections.

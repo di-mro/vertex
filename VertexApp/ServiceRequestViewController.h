@@ -11,6 +11,7 @@
 @interface ServiceRequestViewController : ViewController
 
 - (void)displayServiceRequestPageEntries;
+
 @property (nonatomic, retain) NSMutableArray *serviceRequestPageEntries;
 
 @end

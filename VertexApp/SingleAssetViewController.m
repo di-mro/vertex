@@ -24,7 +24,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -32,12 +33,13 @@
 
 - (void)viewDidLoad
 {
+  //Viewing only, fields are disabled
   assetNameField.enabled = NO;
   assetTypeField.enabled = NO;
   modelField.enabled = NO;
   brandField.enabled = NO;
   powerConsumptionField.enabled = NO;
-  //Text area enabling/disabling is set in Attributes Inspector
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }

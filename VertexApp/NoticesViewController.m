@@ -19,7 +19,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -28,17 +29,17 @@
 - (void)viewDidLoad
 {
   [self displayNoticesPageEntries];
-    [super viewDidLoad];
+  [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
 
 
-# pragma mark - Display entries in Home Page
+# pragma mark - Display entries in Notices Page
 - (void) displayNoticesPageEntries
 {
   noticesPageEntries = [[NSMutableArray alloc] init];
   
-  //!-For demo only, remove hard coded values-!
+  /* !-For demo only, remove hard coded values. Must retrieve listing in DB -! */
   NSString *entry1 = @"Create Memo";
   NSString *entry2 = @"View Memo";
   NSString *entry3 = @"Create Notice";
@@ -50,8 +51,7 @@
   [noticesPageEntries addObject:entry4];
 }
 
-
-#pragma mark - Table view data source
+#pragma mark - Table view data source implementation
 - (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView
 {
   //Return the number of sections.
@@ -86,7 +86,7 @@
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  //!-Remove these hardcoded shiznitz-!
+  /* !-Remove these hardcoded cases -! */
   switch (indexPath.row)
   {
       /*

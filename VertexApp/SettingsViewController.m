@@ -19,7 +19,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -38,12 +39,12 @@
   // Dispose of any resources that can be recreated.
 }
 
-# pragma mark - Display entries in Home Page
+# pragma mark - Display entries in Settings Page
 - (void) displaySettingsPageEntries
 {
   settingsPageEntries = [[NSMutableArray alloc] init];
   
-  //!-For demo only, remove hard coded values-!
+  /* !-For demo only, remove hard coded values. Must retrieve listing in DB -! */
   NSString *entry1 = @"Edit Password";
   NSString *entry2 = @"Edit Account Details";
   NSString *entry3 = @"Customize Lifecycle";
@@ -57,8 +58,7 @@
   [settingsPageEntries addObject:entry5];
 }
 
-
-#pragma mark - Table view data source
+#pragma mark - Table view data source implementation
 - (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView
 {
   //Return the number of sections.
@@ -93,7 +93,7 @@
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  //!-Remove these hardcoded shiznitz-!
+  /* !-Remove these hardcoded cases -! */
   switch (indexPath.row)
   {
     /*

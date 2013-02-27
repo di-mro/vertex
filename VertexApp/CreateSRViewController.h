@@ -11,9 +11,9 @@
 
 @interface CreateSRViewController : ViewController
 @property (strong, nonatomic) IBOutlet UIScrollView *createSRScroller;
-@property (strong, nonatomic) IBOutlet UIPickerView *srGenericPicker;
-@property (strong, nonatomic) IBOutlet NSArray *currentArray;
-@property (strong, nonatomic) IBOutlet UITextField *currentTextField;
+@property (strong, nonatomic) UIPickerView *srGenericPicker;
+@property (strong, nonatomic) NSArray *currentArray;
+@property (strong, nonatomic) UITextField *currentTextField;
 @property (strong, nonatomic) UIActionSheet *actionSheet;
 
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
@@ -26,23 +26,18 @@
 @property (strong, nonatomic) IBOutlet UITextField *contactNumberField;
 
 @property (strong, nonatomic) IBOutlet UILabel *chooseAssetLabel;
-@property (strong, nonatomic) IBOutlet UIPickerView *assetPicker;
 @property (nonatomic, retain) NSArray *assetPickerArray;
 @property (strong, nonatomic) IBOutlet UITextField *assetField;
 
 @property (strong, nonatomic) IBOutlet UILabel *chooseLifecycleLabel;
-@property (strong, nonatomic) IBOutlet UIPickerView *lifecyclePicker;
 @property (nonatomic, retain) NSArray *lifecyclePickerArray;
 @property (strong, nonatomic) IBOutlet UITextField *lifecycleField;
 
-
 @property (strong, nonatomic) IBOutlet UILabel *chooseServicePicker;
-@property (strong, nonatomic) IBOutlet UIPickerView *servicePicker;
 @property (nonatomic, retain) NSArray *servicePickerArray;
 @property (strong, nonatomic) IBOutlet UITextField *serviceField;
 
 @property (strong, nonatomic) IBOutlet UILabel *priorityLabel;
-@property (strong, nonatomic) IBOutlet UIPickerView *priorityPicker;
 @property (nonatomic, retain) NSArray *priorityPickerArray;
 @property (strong, nonatomic) IBOutlet UITextField *priorityField;
 
@@ -51,7 +46,5 @@
 
 @property (strong, nonatomic) SRObject *srObject;
 
-//- (IBAction)previewSR:(id)sender;
-//- (IBAction)cancelSR:(id)sender;
 
 @end

@@ -19,7 +19,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -44,7 +45,7 @@
 {
   assetPageEntries = [[NSMutableArray alloc] init];
   
-  //!-For demo only, remove hard coded values-!
+  /* !- For demo only, remove hard coded values. Must retrieve listing in DB -! */
   NSString *entry1 = @"View Asset";
   NSString *entry2 = @"Add Assets";
   
@@ -52,23 +53,20 @@
   [assetPageEntries addObject:entry2];
 }
 
-#pragma mark - Table view data source
+#pragma mark - Table view data source implementation
 - (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView
 {
-  //Return the number of sections.
   return 1;
 }
 
 - (NSString *) tableView:(UITableView *) tableView titleForHeaderInSection:(NSInteger)section
 {
-  //NSString *myTitle = [[NSString alloc] initWithFormat:@"Assets Page"];
   NSString *myTitle = [[NSString alloc] initWithFormat:@""];
   return myTitle;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  //Return the number of rows in the section
   return [assetPageEntries count];
   NSLog(@"%d", [assetPageEntries count]);
 }
@@ -76,10 +74,11 @@
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
   NSLog(@"Asset Page View");
-  static NSString *CellIdentifier = @"assetPageCell";
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
-  //configure the cell
+  static NSString *CellIdentifier = @"assetPageCell";
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier  forIndexPath:indexPath];
+  
+  //Configure the cell display
   cell.textLabel.text = [self.assetPageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
   return cell;
@@ -88,7 +87,8 @@
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  switch (indexPath.row) {
+  switch (indexPath.row)
+  {
     case 0: [self performSegueWithIdentifier:@"assetsToViewAssets" sender:self];
       break;
     case 1: [self performSegueWithIdentifier:@"assetsToAddAsset" sender:self];

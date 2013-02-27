@@ -20,7 +20,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -28,7 +29,7 @@
 
 - (void)viewDidLoad
 {
-  //self.navigationItem.hidesBackButton = YES;
+  //[Logout] button initialization
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout)];
   
   [self displayHomePageEntries];
@@ -47,7 +48,7 @@
 {
   homePageEntries = [[NSMutableArray alloc] init];
   
-  //!-For demo only, remove hard coded values-!
+  /* !- For demo only, remove hard coded values. Must retrieve listing in DB -! */
   NSString *entry1 = @"Asset";
   NSString *entry2 = @"Service Request";
   NSString *entry3 = @"Notices";
@@ -55,7 +56,6 @@
   NSString *entry5 = @"Schedule";
   NSString *entry6 = @"Administration";
   NSString *entry7 = @"Options/Configurations";
-  //NSStrign *entry8 = @"Logout";
   
   [homePageEntries addObject:entry1];
   [homePageEntries addObject:entry2];
@@ -67,7 +67,7 @@
 }
 
 
-#pragma mark - Table view data source
+#pragma mark - Table view data source implementation
 - (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView
 {
   //Return the number of sections.
@@ -76,7 +76,6 @@
 
 - (NSString *) tableView:(UITableView *) tableView titleForHeaderInSection:(NSInteger)section
 {
-  //NSString *myTitle = [[NSString alloc] initWithFormat:@"Home"];
   NSString *myTitle = [[NSString alloc] initWithFormat:@""];
   return myTitle;
 }
@@ -103,7 +102,7 @@
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  //!-Remove these hardcoded shiznitz-!
+  /* !- Remove these hardcoded cases for Home Page entries -! */
   switch (indexPath.row)
   {
     //Home
@@ -131,7 +130,7 @@
   }
 }
 
-#pragma mark - Logout
+#pragma mark - [Logout] button logic implementation
 -(void) logout
 {
   NSLog(@"Logout");
@@ -142,7 +141,9 @@
   controller.navigationItem.hidesBackButton = YES;
   [self.navigationController pushViewController:controller animated:YES];
     
-  //Clear user tokens
+  /* !- TODO -!
+   Clear user tokens when [Logout] is pressed
+   */
 }
 
 

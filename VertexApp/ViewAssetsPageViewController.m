@@ -19,7 +19,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -43,7 +44,7 @@
 {
   viewAssetsPageEntries = [[NSMutableArray alloc] init];
   
-  //!-For demo only, remove hard coded values-!
+  /* !- For demo only, remove hard coded values. Must retrieve listing in DB -! */
   NSString *entry1 = @"Aircon";
   NSString *entry2 = @"Bath Tub";
   NSString *entry3 = @"Kitchen Sink";
@@ -55,7 +56,7 @@
   [viewAssetsPageEntries addObject:entry4];
 }
 
-#pragma mark - Table view data source
+#pragma mark - Table view data source implementation
 - (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView
 {
   //Return the number of sections.
@@ -91,8 +92,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   [self performSegueWithIdentifier:@"viewAssetsToSingleAsset" sender:self];
-  //call some function to populate the fields inn Single Asset View
-  //remove hardcoded fields in Single Asset View Storyboard
+  
+  /* 
+   !- TODO -!
+   Call a function to populate the fields inn Single Asset View
+   Remove hardcoded fields in Single Asset View Storyboard
+   */
 }
 
 

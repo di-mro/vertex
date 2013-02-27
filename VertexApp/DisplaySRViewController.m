@@ -28,7 +28,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -48,7 +49,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Initialization of fields
+#pragma mark - Initialization of fields. Disabled, for viewing only
 - (void) initField
 {
   nameField.enabled          = NO;
@@ -59,16 +60,7 @@
   serviceField.enabled       = NO;
   priorityField.enabled      = NO;
   srDateField.enabled        = NO;
-  //srDetailsTextArea enabling / disabling is set in Attributes Inspector
 }
 
-- (IBAction)submitSR:(id)sender
-{
-  //Save to DB service request details
-}
 
-- (IBAction)discardSR:(id)sender
-{
-  //Clear and clean the fields and go back to Home (?)
-}
 @end

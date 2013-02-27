@@ -18,7 +18,6 @@
 @property (strong, nonatomic) IBOutlet UITextField *assetNameField;
 
 @property (strong, nonatomic) IBOutlet UILabel *assetTypeLabel;
-//@property (strong, nonatomic) IBOutlet UIPickerView *assetTypePicker;
 @property (strong, nonatomic) UIPickerView *assetTypePicker;
 @property (strong, nonatomic) IBOutlet UITextField *assetTypeField;
 @property (strong, nonatomic) UIActionSheet *actionSheet;

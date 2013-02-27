@@ -10,13 +10,6 @@
 
 @implementation SRTask
 
-/*
- @property (strong, nonatomic) NSString *taskId;
- @property (strong, nonatomic) NSString *serviceRequestId;
- @property (strong, nonatomic) NSString *description;
- @property (strong, nonatomic) NSArray *tasks;
- */
-
 @synthesize taskId;
 @synthesize serviceRequestId;
 @synthesize description;

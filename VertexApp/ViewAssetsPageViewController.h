@@ -11,6 +11,7 @@
 @interface ViewAssetsPageViewController : UIViewController
 
 - (void)displayViewAssetsPageEntries;
+
 @property (nonatomic, retain) NSMutableArray *viewAssetsPageEntries;
 
 @end

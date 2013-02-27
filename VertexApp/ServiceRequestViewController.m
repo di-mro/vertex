@@ -19,7 +19,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -38,12 +39,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-# pragma mark - Display entries in Asset Page
+# pragma mark - Display entries in Service Request Page
 - (void) displayServiceRequestPageEntries
 {
   serviceRequestPageEntries = [[NSMutableArray alloc] init];
   
-  //!-For demo only, remove hard coded values-!
+  /* !-For demo only, remove hard coded values. Must retrieve in DB -! */
   NSString *entry1 = @"Create Service Request";
   NSString *entry2 = @"View Service Requests";
   NSString *entry3 = @"Submit Feedback";
@@ -53,7 +54,7 @@
   [serviceRequestPageEntries addObject:entry3];
 }
 
-#pragma mark - Table view data source
+#pragma mark - Table view data source implementation
 - (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView
 {
   //Return the number of sections.

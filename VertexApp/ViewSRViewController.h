@@ -11,6 +11,7 @@
 @interface ViewSRViewController : ViewController
 
 - (void) displaySRPageEntries;
+
 @property (nonatomic, retain) NSMutableArray *displaySREntries;
 @property (nonatomic, retain) NSMutableArray *displaySRSubtitles;
 

@@ -35,7 +35,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -47,16 +48,17 @@
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
-  //Cancel Navig Button
+  //[Cancel] Navigation Button
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelAddAsset)];
   
-  //Create Navig Button
+  //[Create] Navig Button
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(createAsset)];
   
-  //Configure Scroller Size
+  //Configure Scroller size
   self.addAssetScroller.contentSize = CGSizeMake(320, 720);
   
-  //Configure Picker Array Values
+  //Configure Picker array values
+  /* !- Remove hardcoded values. Retrieve in DB -! */
   self.assetTypePickerArray = [[NSArray alloc] initWithObjects:@"Aircon",@"Door", @"Exhaust Fan",@"Faucet",@"Toilet",@"Kitchen Sink",@"Lighting Fixtures", nil];
   
   //assetTypePicker in assetTypeField
@@ -75,12 +77,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+#pragma mark - Setting assetTypeField to assetTypePicker when clicked
 - (BOOL)textFieldDidBeginEditing:(UITextField *)textField
 {
   if(assetTypeField.isEditing)
   {
-    NSLog(@"textFieldDidBeginEditing - function call");
+    NSLog(@"textFieldDidBeginEditing - assetTypeField");
     [textField resignFirstResponder];
     
     actionSheet = [[UIActionSheet alloc] initWithTitle:nil
@@ -94,7 +96,7 @@
     assetTypePicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 40, 0, 0)];
     assetTypePicker.showsSelectionIndicator = YES;
     assetTypePicker.dataSource = self;
-    assetTypePicker.delegate = self;
+    assetTypePicker.delegate   = self;
     
     [actionSheet addSubview:assetTypePicker];
     
@@ -103,11 +105,13 @@
     doneButton.frame = CGRectMake(260, 7.0f, 50.0f, 30.0f);
     doneButton.segmentedControlStyle = UISegmentedControlStyleBar;
     doneButton.tintColor = [UIColor blackColor];
-    [doneButton addTarget:self action:@selector(selectedRow) forControlEvents:UIControlEventValueChanged];
+    [doneButton addTarget:self
+                   action:@selector(selectedRow)
+         forControlEvents:UIControlEventValueChanged];
     
     [actionSheet addSubview:doneButton];
     [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
-    [actionSheet setBounds:CGRectMake(0, 0, 320, 485)];
+    [actionSheet setBounds :CGRectMake(0, 0, 320, 485)];
     
     assetTypeField.inputView = actionSheet;
     
@@ -119,15 +123,17 @@
   }
 }
 
-#pragma mark - Implementing the Picker View
+#pragma mark - Implementing Picker View functions
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
   return 1;
 }
+
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
   return [assetTypePickerArray count];
 }
+
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
   return [self.assetTypePickerArray objectAtIndex:row];
@@ -158,11 +164,15 @@
   [self.navigationController pushViewController:controller animated:YES];
 }
 
+#pragma mark - createAsset logic implementation
 -(void) createAsset
 {
+  NSLog(@"Create Asset");
+  
   if([self validateAddAssetFields])
   {
-    //Put Asset info into Asset object. Save Asset info to db - PUT
+    //Put Asset info into Asset object.
+    /* !- Save Asset info to db - PUT -!*/
     assetObject.assetName = assetNameField.text;
     assetObject.assetType = assetTypeField.text;
     assetObject.model = modelField.text;
@@ -173,7 +183,6 @@
     NSLog(@"assetObject: %@", assetObject.assetType);
     
     [self dismissViewControllerAnimated:YES completion:nil];
-    NSLog(@"Create Asset");
     
     /*
      //ActivityIndicator Code
@@ -189,6 +198,7 @@
      //[spinner stopAnimating];
      */
     
+    /* !- Add validation if information is properly saved in DB -! */
     //if(validateSaveToDB)
     //Inform user asset is saved
     UIAlertView *createAssetAlert = [[UIAlertView alloc] initWithTitle:@"Create Asset"
@@ -197,7 +207,7 @@
                                                      cancelButtonTitle:@"OK"
                                                      otherButtonTitles:nil];
     [createAssetAlert show];
-    //Transition to Assets Page - alertView clickedButtonAtIndex
+    //Transition to Assets Page via alertView clickedButtonAtIndex
   }
   else
   {
@@ -205,7 +215,7 @@
   }
 }
 
-//Transition to Assets Page when OK on Alert Box is clicked
+#pragma mark - Transition to Assets Page when OK on Alert Box is clicked
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
   if (buttonIndex == 0)
@@ -216,7 +226,7 @@
   }
 }
 
-//Login fields validation
+#pragma mark - Asset fields validation
 -(BOOL) validateAddAssetFields
 {
   UIAlertView *addAssetValidateAlert = [[UIAlertView alloc] initWithTitle:@"Incomplete Information"
@@ -239,7 +249,8 @@
   }
 }
 
-//Check if saved to DB properly
+/* !- TODO -! */
+#pragma mark - Validate if information is saved to DB properly
 -(BOOL) validateSaveToDB
 {
   /*
@@ -254,19 +265,21 @@
   */
 }
 
+#pragma mark - Dimiss the assetTypePicker actionSheet when [Done] button is clicked
 -(void)dismissActionSheet:(id) sender
 {
   [sender dismissWithClickedButtonIndex:0 animated:YES];
 }
 
+#pragma mark - Dismiss keyboard when fields are not in use
 -(void)dismissKeyboard
 {
-  [assetNameField resignFirstResponder];
-  [assetTypeField resignFirstResponder];
-  [modelField resignFirstResponder];
-  [brandField resignFirstResponder];
+  [assetNameField        resignFirstResponder];
+  [assetTypeField        resignFirstResponder];
+  [modelField            resignFirstResponder];
+  [brandField            resignFirstResponder];
   [powerConsumptionField resignFirstResponder];
-  [remarksArea resignFirstResponder];
+  [remarksArea           resignFirstResponder];
 }
 
 
