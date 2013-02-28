@@ -23,31 +23,30 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self)
-    {
-        // Custom initialization
-    }
-    return self;
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self)
+  {
+    // Custom initialization
+  }
+  return self;
 }
 
 - (void)viewDidLoad
 {
-  //Viewing only, fields are disabled
+  //For viewing only, editing disabled
   assetNameField.enabled = NO;
   assetTypeField.enabled = NO;
   modelField.enabled = NO;
   brandField.enabled = NO;
   powerConsumptionField.enabled = NO;
-  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
 }
 
 @end

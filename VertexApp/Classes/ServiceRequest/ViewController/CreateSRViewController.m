@@ -27,12 +27,12 @@
 @synthesize lifecycleField;
 @synthesize serviceField;
 @synthesize priorityField;
+@synthesize srGenericPicker;
 @synthesize nameField;
 @synthesize unitLocationField;
 @synthesize contactNumberField;
 @synthesize detailsTextArea;
 
-@synthesize srGenericPicker;
 @synthesize currentArray;
 @synthesize currentTextField;
 
@@ -55,25 +55,24 @@
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
-  //[Cancel] Navigation Button
+  //[Cancel] navigation button
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelSR)];
   
-  //[Create] Navigation Button
+  //[Create] navigation button
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Send" style:UIBarButtonItemStylePlain target:self action:@selector(createSR)];
   
-  //Configure Scroller size
+  //Scroller size
   self.createSRScroller.contentSize = CGSizeMake(320.0, 900.0);
   
-  /* !- Remove hardcoded values. Must retrieve listing in DB -! */
+  /* TODO
+   !-Remove hardcoded data. Retrieve listing in DB-!
+   */
   self.assetPickerArray = [[NSArray alloc] initWithObjects:@"Aircon",@"Window", @"Bathtub",@"Bathroom Faucet",@"Toilet",@"Kitchen Sink",@"Lighting Fixtures", nil];
-  
   self.lifecyclePickerArray = [[NSArray alloc] initWithObjects: @"Canvas", @"Requisition", @"Purchase", @"Installation", @"Repair", @"Decommission", nil];
-  
   self.servicePickerArray = [[NSArray alloc] initWithObjects:@"Fix broken pipes", @"Clean filter", @"Fix wiring", @"Declog pipes", @"Repaint", @"Miscellaneous", nil];
-  
   self.priorityPickerArray = [[NSArray alloc] initWithObjects:@"Emergency", @"Scheduled", @"Routine", @"Urgent", nil];
   
-  //Set delegates for the Picker fields
+  //Set delegates for the picker fields
   [assetField setDelegate:self];
   [lifecycleField setDelegate:self];
   [serviceField setDelegate:self];
@@ -102,7 +101,7 @@
   srGenericPicker.delegate = self;
 }
 
-#pragma mark - Settings certain fields to Pickers when clicked
+#pragma mark - Set fields to pickers
 - (BOOL)textFieldDidBeginEditing:(UITextField *)textField
 {
   NSLog(@"textFieldDidBeginEditing");
@@ -120,9 +119,7 @@
   doneButton.frame = CGRectMake(260, 7.0f, 50.0f, 30.0f);
   doneButton.segmentedControlStyle = UISegmentedControlStyleBar;
   doneButton.tintColor = [UIColor blackColor];
-  [doneButton addTarget:self
-                 action:@selector(selectedRow)
-       forControlEvents:UIControlEventValueChanged];
+  [doneButton addTarget:self action:@selector(selectedRow) forControlEvents:UIControlEventValueChanged];
   
   [actionSheet addSubview:doneButton];
   [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
@@ -192,10 +189,9 @@
   {
     return NO;
   }
-  
 }
 
-#pragma mark - Get selected row in Pickers
+#pragma mark - Get selected row in Picker
 -(void)selectedRow {
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
   
@@ -203,17 +199,16 @@
   NSString *selectedEntity = [currentArray objectAtIndex:selectedIndex];
   currentTextField.text = selectedEntity;
   
-  /* !- Get selectedEntity then save in DB -! */
+  //Do something with the selected row, store then save in DB
 }
 
-#pragma mark - Dismiss editing to hide onscreen keyboard
+#pragma mark - Dismissing onscreen keyboard
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
   [self.view endEditing:YES];
 }
 
-
-#pragma mark - Implementing Picker Views functionality
+#pragma mark - Picker view functionalities
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
   return 1;
@@ -230,25 +225,24 @@
   return [currentArray objectAtIndex:row];
 }
 
-#pragma mark - [Cancel] button logic implementation
+#pragma mark - [Cancel] button implementation
 -(void) cancelSR
 {
   [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Cancel Service Request");
   
-  //Go back to Home Page
+  //Go back to Home
   HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
   
   [self.navigationController pushViewController:controller animated:YES];
 }
 
-#pragma mark - [Create] button logic implementation
+#pragma mark - [Create] button implementation
 -(void) createSR
 {
   if ([self validateCreateSRFields])
   {
-    //Put SR info into SR object.
-    /* !- Save SR info to db - PUT -!*/
+    /* !- TODO Put Service Request info into SRObject. Save SR info to db - PUT -! */
     srObject.asset = assetField.text;
     srObject.lifecycle = lifecycleField.text;
     srObject.service = serviceField.text;
@@ -261,9 +255,9 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     NSLog(@"Create Service Request");
     
-    /* !- Add validation if information is properly saved in DB -! */
+    /* !- TODO -! */
     //if(validateSaveToDB)
-    //Inform user SR is saved
+    //Inform user Service Request is saved
     UIAlertView *createSRAlert = [[UIAlertView alloc] initWithTitle:@"Service Request"
                                                             message:@"Service Request Created."
                                                            delegate:self
@@ -278,7 +272,7 @@
   }
 }
 
-#pragma mark - Transition to Service Requests Page when OK on Alert Box is clicked
+#pragma mark - Transition to Assets Page when OK on Alert Box is clicked
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
   if (buttonIndex == 0) //OK
@@ -289,15 +283,36 @@
   }
 }
 
-#pragma mark - Service Request fields validation
+/* !- TODO -! */
+#pragma mark - Check if saved to DB properly
+-(BOOL) validateSaveToDB
+{
+  /*
+   if()
+   {
+   return true;
+   }
+   else
+   {
+   return false;
+   }
+   */
+}
+
+#pragma mark - Dismiss Picker action sheet
+-(void)dismissActionSheet:(id) sender
+{
+  [sender dismissWithClickedButtonIndex:0 animated:YES];
+}
+
+#pragma mark - 'Create Service Request' validation of fields
 -(BOOL) validateCreateSRFields
 {
-  UIAlertView *createSRValidateAlert = [[UIAlertView alloc]
-                                        initWithTitle:@"Incomplete Information"
-                                              message:@"Please fill out the necessary fields."
-                                             delegate:nil
-                                    cancelButtonTitle:@"OK"
-                                    otherButtonTitles:nil];
+  UIAlertView *createSRValidateAlert = [[UIAlertView alloc] initWithTitle:@"Incomplete Information"
+                                                  message:@"Please fill out the necessary fields."
+                                                 delegate:nil
+                                        cancelButtonTitle:@"OK"
+                                        otherButtonTitles:nil];
   
   if([assetField.text isEqualToString:(@"")]
      || [lifecycleField.text isEqualToString:(@"")]
@@ -316,29 +331,7 @@
   }
 }
 
-/* !- TODO -! */
-#pragma mark - Validate if information is saved to DB properly
--(BOOL) validateSaveToDB
-{
-  /*
-   if()
-   {
-   return true;
-   }
-   else
-   {
-   return false;
-   }
-   */
-}
-
-#pragma mark - Dimiss the Pickers actionSheet when [Done] button is clicked
--(void)dismissActionSheet:(id) sender
-{
-  [sender dismissWithClickedButtonIndex:0 animated:YES];
-}
-
-#pragma mark - Dismiss keyboard when fields are not in use
+#pragma mark - Dismiss onscreen keyboard
 -(void)dismissKeyboard
 {
   [assetField resignFirstResponder];

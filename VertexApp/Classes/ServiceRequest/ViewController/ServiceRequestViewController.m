@@ -39,12 +39,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-# pragma mark - Display entries in Service Request Page
+# pragma mark - Display entries in Asset Page
 - (void) displayServiceRequestPageEntries
 {
   serviceRequestPageEntries = [[NSMutableArray alloc] init];
   
-  /* !-For demo only, remove hard coded values. Must retrieve in DB -! */
+  /* !- TODO For demo only, remove hard coded values -! */
   NSString *entry1 = @"Create Service Request";
   NSString *entry2 = @"View Service Requests";
   NSString *entry3 = @"Submit Feedback";
@@ -54,7 +54,7 @@
   [serviceRequestPageEntries addObject:entry3];
 }
 
-#pragma mark - Table view data source implementation
+#pragma mark - Table view data source
 - (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView
 {
   //Return the number of sections.

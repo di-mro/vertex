@@ -1,8 +1,8 @@
 //
 //  AppDelegate.h
-//  VertexApp
+//  Vertex
 //
-//  Created by Mary Rose Oh on 2/13/13.
+//  Created by Mary Rose Oh on 2/28/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 

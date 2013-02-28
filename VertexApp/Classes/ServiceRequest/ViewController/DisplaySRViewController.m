@@ -49,9 +49,10 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Initialization of fields. Disabled, for viewing only
+#pragma mark - Initialization of fields
 - (void) initField
 {
+  //Viewing only, editing disabled
   nameField.enabled          = NO;
   unitLocationField.enabled  = NO;
   contactNumberField.enabled = NO;
@@ -61,6 +62,5 @@
   priorityField.enabled      = NO;
   srDateField.enabled        = NO;
 }
-
 
 @end

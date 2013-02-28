@@ -43,7 +43,7 @@
 # pragma mark - Display entries in Service Requests List Page
 - (void) displaySRPageEntries
 {
-  /* !-For demo only, remove hard coded values. Must retrieve in DB -! */
+  /* !- TODO For demo only, remove hard coded values-! */
   displaySREntries = [[NSMutableArray alloc] init];
   NSString *entry1 = @"Aircon Fix";
   NSString *entry2 = @"Leaking Faucet";
@@ -53,7 +53,7 @@
   [displaySREntries addObject:entry2];
   [displaySREntries addObject:entry3];
   
-  /* !- For the subtitles/details, remove these hard coded values -! */
+  /* !- TODO For the subtitles/details, remove these hard coded values -! */
   displaySRSubtitles = [[NSMutableArray alloc] init];
   NSString *sub1 = @"2013-01-08";
   NSString *sub2 = @"2013-02-15";
@@ -90,7 +90,7 @@
   static NSString *CellIdentifier = @"viewSRCell";
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
-  //configure the cell title & subtitle
+  //Configure the cell title & subtitle
   cell.textLabel.text = [self.displaySREntries objectAtIndex:indexPath.row];
   cell.detailTextLabel.text = [self.displaySRSubtitles objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
@@ -100,9 +100,12 @@
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  //[self performSegueWithIdentifier:@"viewAssetsToSingleAsset" sender:self];
-  //call some function to populate the fields inn Single Asset View
-  //remove hardcoded fields in Single Asset View Storyboard
+  [self performSegueWithIdentifier:@"viewSRToDisplaySR" sender:self];
+  
+  /* !- TODO
+     Call some function to populate the fields inn Single Asset View
+     Remove hardcoded fields in Single Asset View Storyboard
+  -! */
 }
 
 

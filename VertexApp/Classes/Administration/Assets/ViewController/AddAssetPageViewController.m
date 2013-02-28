@@ -48,17 +48,16 @@
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
-  //[Cancel] Navigation Button
+  //[Cancel] navigation button
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelAddAsset)];
   
-  //[Create] Navig Button
+  //[Add] navigation button
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(createAsset)];
   
   //Configure Scroller size
   self.addAssetScroller.contentSize = CGSizeMake(320, 720);
   
   //Configure Picker array values
-  /* !- Remove hardcoded values. Retrieve in DB -! */
   self.assetTypePickerArray = [[NSArray alloc] initWithObjects:@"Aircon",@"Door", @"Exhaust Fan",@"Faucet",@"Toilet",@"Kitchen Sink",@"Lighting Fixtures", nil];
   
   //assetTypePicker in assetTypeField
@@ -77,12 +76,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Setting assetTypeField to assetTypePicker when clicked
+#pragma mark - Change assetTypeField to assetTypePicker when clicked
 - (BOOL)textFieldDidBeginEditing:(UITextField *)textField
 {
   if(assetTypeField.isEditing)
   {
-    NSLog(@"textFieldDidBeginEditing - assetTypeField");
+    NSLog(@"textFieldDidBeginEditing - function call");
     [textField resignFirstResponder];
     
     actionSheet = [[UIActionSheet alloc] initWithTitle:nil
@@ -96,7 +95,7 @@
     assetTypePicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 40, 0, 0)];
     assetTypePicker.showsSelectionIndicator = YES;
     assetTypePicker.dataSource = self;
-    assetTypePicker.delegate   = self;
+    assetTypePicker.delegate = self;
     
     [actionSheet addSubview:assetTypePicker];
     
@@ -105,13 +104,11 @@
     doneButton.frame = CGRectMake(260, 7.0f, 50.0f, 30.0f);
     doneButton.segmentedControlStyle = UISegmentedControlStyleBar;
     doneButton.tintColor = [UIColor blackColor];
-    [doneButton addTarget:self
-                   action:@selector(selectedRow)
-         forControlEvents:UIControlEventValueChanged];
+    [doneButton addTarget:self action:@selector(selectedRow) forControlEvents:UIControlEventValueChanged];
     
     [actionSheet addSubview:doneButton];
     [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
-    [actionSheet setBounds :CGRectMake(0, 0, 320, 485)];
+    [actionSheet setBounds:CGRectMake(0, 0, 320, 485)];
     
     assetTypeField.inputView = actionSheet;
     
@@ -123,7 +120,7 @@
   }
 }
 
-#pragma mark - Implementing Picker View functions
+#pragma mark - Implementing the Picker View
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
   return 1;
@@ -139,40 +136,41 @@
   return [self.assetTypePickerArray objectAtIndex:row];
 }
 
+#pragma mark - Get the selected row in assetTypePicker
 -(void)selectedRow{
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
   
   int selectedIndex = [assetTypePicker selectedRowInComponent:0];
   NSString *selectedAssetType = [assetTypePickerArray objectAtIndex:selectedIndex];
   assetTypeField.text = selectedAssetType;
+  
   //Do something with the selected row, store then save in DB
 }
 
+#pragma mark - End editing for the fields, dismiss onscreen keyboard
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
   [self.view endEditing:YES];
 }
 
+#pragma mark - [Cancel] button implementation
 -(void) cancelAddAsset
 {
   [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Cancel Add Asset");
   
-  //Go back to Home
+  //Go back to Home Page
   HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
 
   [self.navigationController pushViewController:controller animated:YES];
 }
 
-#pragma mark - createAsset logic implementation
+#pragma mark - [Add] button implementation
 -(void) createAsset
 {
-  NSLog(@"Create Asset");
-  
   if([self validateAddAssetFields])
   {
-    //Put Asset info into Asset object.
-    /* !- Save Asset info to db - PUT -!*/
+    /* !- Put Asset info into Asset object. Save Asset info to db - PUT -! */
     assetObject.assetName = assetNameField.text;
     assetObject.assetType = assetTypeField.text;
     assetObject.model = modelField.text;
@@ -183,6 +181,7 @@
     NSLog(@"assetObject: %@", assetObject.assetType);
     
     [self dismissViewControllerAnimated:YES completion:nil];
+    NSLog(@"Create Asset");
     
     /*
      //ActivityIndicator Code
@@ -198,7 +197,7 @@
      //[spinner stopAnimating];
      */
     
-    /* !- Add validation if information is properly saved in DB -! */
+    /* !- TODO validateSaveToDB -! */
     //if(validateSaveToDB)
     //Inform user asset is saved
     UIAlertView *createAssetAlert = [[UIAlertView alloc] initWithTitle:@"Create Asset"
@@ -207,7 +206,7 @@
                                                      cancelButtonTitle:@"OK"
                                                      otherButtonTitles:nil];
     [createAssetAlert show];
-    //Transition to Assets Page via alertView clickedButtonAtIndex
+    //Transition to Assets Page - alertView clickedButtonAtIndex
   }
   else
   {
@@ -226,7 +225,7 @@
   }
 }
 
-#pragma mark - Asset fields validation
+#pragma mark - Login fields validation
 -(BOOL) validateAddAssetFields
 {
   UIAlertView *addAssetValidateAlert = [[UIAlertView alloc] initWithTitle:@"Incomplete Information"
@@ -250,7 +249,7 @@
 }
 
 /* !- TODO -! */
-#pragma mark - Validate if information is saved to DB properly
+#pragma mark - Check if saved to DB properly
 -(BOOL) validateSaveToDB
 {
   /*
@@ -265,21 +264,21 @@
   */
 }
 
-#pragma mark - Dimiss the assetTypePicker actionSheet when [Done] button is clicked
+#pragma mark - Dismiss assetTypePicker action sheet
 -(void)dismissActionSheet:(id) sender
 {
   [sender dismissWithClickedButtonIndex:0 animated:YES];
 }
 
-#pragma mark - Dismiss keyboard when fields are not in use
+#pragma mark - Dismiss onscreen keyboard
 -(void)dismissKeyboard
 {
-  [assetNameField        resignFirstResponder];
-  [assetTypeField        resignFirstResponder];
-  [modelField            resignFirstResponder];
-  [brandField            resignFirstResponder];
+  [assetNameField resignFirstResponder];
+  [assetTypeField resignFirstResponder];
+  [modelField resignFirstResponder];
+  [brandField resignFirstResponder];
   [powerConsumptionField resignFirstResponder];
-  [remarksArea           resignFirstResponder];
+  [remarksArea resignFirstResponder];
 }
 
 
