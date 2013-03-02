@@ -86,7 +86,7 @@
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  NSLog(@"View Assets Page View");
+  NSLog(@"View Service Requests Page View");
   static NSString *CellIdentifier = @"viewSRCell";
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   

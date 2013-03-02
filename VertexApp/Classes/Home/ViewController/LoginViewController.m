@@ -7,6 +7,8 @@
 //
 
 #import "LoginViewController.h"
+#import "LoginCredentials.h"
+#import "RestKit/RestKit.h"
 
 @interface LoginViewController ()
 
@@ -50,16 +52,55 @@
   if([self validateLoginFields])
   {
     //TESTING PURPOSES ONLY
-    [self performSegueWithIdentifier: @"loginToHome" sender: self];
+    //[self performSegueWithIdentifier: @"loginToHome" sender: self];
     
     /*
+    NSString *username = userNameField.text;
+    NSString *password = passwordField.text;
+    
+    RKObjectMapping* loginMapping = [RKObjectMapping requestMapping ];
+    // Shortcut for [RKObjectMapping mappingForClass:[NSMutableDictionary class] ]
+    [loginMapping addAttributeMappingsFromArray:@[@"username", @"password"]];
+    NSLog(@"loginMapping: %@", loginMapping);
+    
+    // Now configure the request descriptor
+    RKRequestDescriptor *requestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:loginMapping
+                       objectClass:[LoginCredentials class]
+                       rootKeyPath:@"user"];
+    NSLog(@"requestDescriptor: %@", requestDescriptor);
+    
+    // Create a new LoginCredential object and POST it to the server
+    LoginCredentials *loginCredentials = [[LoginCredentials alloc] init];
+    loginCredentials.username = username;
+    loginCredentials.password = password;
+    NSLog(@"loginCredentials: %@", loginCredentials);
+    [[RKObjectManager sharedManager] postObject:loginCredentials path:@"http://192.168.2.103:8080/vertex/ws/user/login" parameters:nil success:nil failure:nil];
+    */
+    
+    
+    /*
+     RKObjectMapping* articleRequestMapping = [RKObjectMapping requestMapping ]; 
+     // Shortcut for [RKObjectMapping mappingForClass:[NSMutableDictionary class] ]
+     [articleRequestMapping addAttributeMappingsFromArray:@[ @"name", @"body", @"publicationDate" ]];
+     
+     // Now configure the request descriptor
+     RKRequestDescriptor *requestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:articleRequestMapping objectClass:[Article class] rootKeyPath:@"article"];
+     
+     // Create a new Article and POST it to the server
+     Article* article = [Article new];
+     article.title = @"This is my new article!";
+     article.body = @"RestKit is pretty cool. This is kinda slick.";
+     [[RKObjectManager sharedManager] postObject:article path:@"/articles" parameters:nil success:nil failure:nil];
+     */
+     
+    
      NSString *username = userNameField.text;
      NSString *password = passwordField.text;
      
      NSMutableString *bodyData = [NSMutableString stringWithFormat:@"username=%@&password=%@", username, password];
      NSLog(@"%@", bodyData);
      
-     NSString *urlString   = @"http://192.168.2.103:8080/vertex/user/login";
+     NSString *urlString   = @"http://192.168.2.103:8080/vertex/ws/user/loginform";
      NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
      
      // Set the request's content type to application/x-www-form-urlencoded
@@ -77,7 +118,7 @@
      //start the connection
      [connection start];
      
-     /* Get Response. Validation before proceeding to next page. Retrieve confirmation from the ws that user is valid
+     /* Get Response. Validation before proceeding to next page. Retrieve confirmation from the ws that user is valid.*/
      
      NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
      NSError *error = [[NSError alloc] init];
@@ -86,9 +127,9 @@
      NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
      //NSString *loginProceed = [[json objectForKey:@"message"] objectForKey:@"valid"];
      //NSString *loginProceed = [json objectForKey:@"valid"];
-     //BOOL *loginFlag = (BOOL)loginProceed;
      NSString *loginProceed = [json objectForKey:@"valid"];
-     
+     //BOOL *loginFlag = (BOOL)loginProceed;
+    
      NSLog(@"Response code- %ld",(long)[urlResponse statusCode]);
      NSLog(@"Login Response: %@", result);
      NSLog(@"Response JSON: %@", json);
@@ -97,8 +138,8 @@
      if(true)
      //if([loginProceed isEqualToString:@"1"])
      {
-     //Segue to Home Page
-     [self performSegueWithIdentifier: @"loginToHome" sender: self];
+       //Segue to Home Page
+       [self performSegueWithIdentifier: @"loginToHome" sender: self];
      }
      //else if([loginProceed isEqual: @"false"])
      else
@@ -110,7 +151,7 @@
      otherButtonTitles:nil];
      [loginAlert show];
      }
-     */
+     
   }
   else
   {

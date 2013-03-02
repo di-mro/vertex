@@ -277,7 +277,14 @@
 {
   if (buttonIndex == 0) //OK
   {
+    /*
     ServiceRequestViewController* controller = (ServiceRequestViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"SRPage"];
+    
+    [self.navigationController pushViewController:controller animated:YES];
+    */
+    
+    //Go back to Home
+    HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
     
     [self.navigationController pushViewController:controller animated:YES];
   }

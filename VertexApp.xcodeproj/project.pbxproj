@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED3BB35016E04EA900468E44 /* SRFeedbackListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3BB34F16E04EA900468E44 /* SRFeedbackListViewController.m */; };
+		ED3BB35616E0524400468E44 /* SRFeedbackPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3BB35516E0524400468E44 /* SRFeedbackPageViewController.m */; };
 		ED59EC5A16DCA78100FCA959 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC5116DCA6D700FCA959 /* libRestKit.a */; };
 		ED59EC5C16DCA78C00FCA959 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC5B16DCA78C00FCA959 /* CFNetwork.framework */; };
 		ED59EC5E16DCA79800FCA959 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC5D16DCA79800FCA959 /* CoreData.framework */; };
@@ -95,6 +97,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		ED3BB34E16E04EA900468E44 /* SRFeedbackListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRFeedbackListViewController.h; sourceTree = "<group>"; };
+		ED3BB34F16E04EA900468E44 /* SRFeedbackListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRFeedbackListViewController.m; sourceTree = "<group>"; };
+		ED3BB35416E0524400468E44 /* SRFeedbackPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRFeedbackPageViewController.h; sourceTree = "<group>"; };
+		ED3BB35516E0524400468E44 /* SRFeedbackPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRFeedbackPageViewController.m; sourceTree = "<group>"; };
 		ED59EC4916DCA6D600FCA959 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = ../RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		ED59EC5B16DCA78C00FCA959 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		ED59EC5D16DCA79800FCA959 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -497,6 +503,10 @@
 				EDEFE7AB16DF3C51002C35D6 /* CreateSRViewController.m */,
 				EDEFE7AC16DF3C51002C35D6 /* DisplaySRViewController.h */,
 				EDEFE7AD16DF3C51002C35D6 /* DisplaySRViewController.m */,
+				ED3BB34E16E04EA900468E44 /* SRFeedbackListViewController.h */,
+				ED3BB34F16E04EA900468E44 /* SRFeedbackListViewController.m */,
+				ED3BB35416E0524400468E44 /* SRFeedbackPageViewController.h */,
+				ED3BB35516E0524400468E44 /* SRFeedbackPageViewController.m */,
 				EDEFE7AE16DF3C51002C35D6 /* ServiceRequestViewController.h */,
 				EDEFE7AF16DF3C51002C35D6 /* ServiceRequestViewController.m */,
 				EDEFE7B016DF3C51002C35D6 /* ViewSRViewController.h */,
@@ -703,6 +713,8 @@
 				EDEFE7D616DF3C51002C35D6 /* ViewSRViewController.m in Sources */,
 				EDEFE7D716DF3C51002C35D6 /* SettingsViewController.m in Sources */,
 				EDEFE7DE16DF46F5002C35D6 /* SingleAssetViewController.m in Sources */,
+				ED3BB35016E04EA900468E44 /* SRFeedbackListViewController.m in Sources */,
+				ED3BB35616E0524400468E44 /* SRFeedbackPageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

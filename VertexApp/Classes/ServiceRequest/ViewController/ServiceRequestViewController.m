@@ -95,7 +95,7 @@
       break;
     case 1: [self performSegueWithIdentifier:@"srToViewSR" sender:self];
       break;
-    case 2: [self performSegueWithIdentifier:@"srToCreateSR" sender:self];
+    case 2: [self performSegueWithIdentifier:@"srToSRFeedbackList" sender:self];
       break;
     default: break;
   }
