@@ -49,6 +49,7 @@
   homePageEntries = [[NSMutableArray alloc] init];
   
   /* !- For demo only, remove hard coded values. Must retrieve listing in DB -! */
+  /*
   NSString *entry1 = @"Asset";
   NSString *entry2 = @"Service Request";
   NSString *entry3 = @"Notices";
@@ -56,6 +57,16 @@
   NSString *entry5 = @"Schedule";
   NSString *entry6 = @"Administration";
   NSString *entry7 = @"Options/Configurations";
+  */
+  
+  NSString *entry1 = @"Notices";
+  NSString *entry2 = @"Service Request";
+  NSString *entry3 = @"Asset";
+  NSString *entry4 = @"Billing";
+  NSString *entry5 = @"Reports";
+  NSString *entry6 = @"Administration";
+  NSString *entry7 = @"Schedule";
+  NSString *entry8 = @"Settings";
   
   [homePageEntries addObject:entry1];
   [homePageEntries addObject:entry2];
@@ -64,6 +75,7 @@
   [homePageEntries addObject:entry5];
   [homePageEntries addObject:entry6];
   [homePageEntries addObject:entry7];
+  [homePageEntries addObject:entry8];
 }
 
 
@@ -105,6 +117,33 @@
   /* !- Remove these hardcoded cases for Home Page entries -! */
   switch (indexPath.row)
   {
+    //Notices
+    case 0: [self performSegueWithIdentifier:@"homeToNotices" sender:self];
+      break;
+    //Service Request
+    case 1: [self performSegueWithIdentifier:@"homeToServiceRequest" sender:self];
+      break;
+    //Asset
+    case 2: [self performSegueWithIdentifier:@"homeToAssets" sender:self];
+      break;
+    //Billing ~
+    case 3: [self performSegueWithIdentifier:@"homeToServiceRequest" sender:self];
+      break;
+    //Reports ~ 
+    case 4: [self performSegueWithIdentifier:@"homeToAssets" sender:self];
+      break;
+    //Administration ~
+    case 5: [self performSegueWithIdentifier:@"homeToServiceRequest" sender:self];
+      break;
+    //Schedule ~
+    case 6: [self performSegueWithIdentifier:@"homeToServiceRequest" sender:self];
+      break;
+    //Settings
+    case 7: [self performSegueWithIdentifier:@"homeToSettings" sender:self];
+      break;
+    default: break;
+
+    /*
     //Home
     case 0: [self performSegueWithIdentifier:@"homeToAssets" sender:self];
       break;
@@ -127,6 +166,7 @@
     case 6: [self performSegueWithIdentifier:@"homeToSettings" sender:self];
       break;
     default: break;
+    */
   }
 }
 

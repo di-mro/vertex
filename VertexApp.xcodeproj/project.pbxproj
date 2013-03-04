@@ -17,6 +17,8 @@
 		ED59EC6416DCA7C200FCA959 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC6316DCA7C200FCA959 /* QuartzCore.framework */; };
 		ED59EC6616DCA7CD00FCA959 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC6516DCA7CD00FCA959 /* Security.framework */; };
 		ED59EC6816DCA7D600FCA959 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC6716DCA7D600FCA959 /* SystemConfiguration.framework */; };
+		ED8A7C7D16E4A34200F06AF1 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8A7C7716E4941200F06AF1 /* TPKeyboardAvoidingScrollView.m */; };
+		ED8A7C7E16E4A34D00F06AF1 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8A7C7916E4941200F06AF1 /* TPKeyboardAvoidingTableView.m */; };
 		EDE0E8AF16CB744700B9D0E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE0E8AE16CB744700B9D0E7 /* UIKit.framework */; };
 		EDE0E8B116CB744700B9D0E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE0E8B016CB744700B9D0E7 /* Foundation.framework */; };
 		EDE0E8B316CB744700B9D0E7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE0E8B216CB744700B9D0E7 /* CoreGraphics.framework */; };
@@ -109,6 +111,10 @@
 		ED59EC6316DCA7C200FCA959 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		ED59EC6516DCA7CD00FCA959 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		ED59EC6716DCA7D600FCA959 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		ED8A7C7616E4941200F06AF1 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
+		ED8A7C7716E4941200F06AF1 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
+		ED8A7C7816E4941200F06AF1 /* TPKeyboardAvoidingTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingTableView.h; sourceTree = "<group>"; };
+		ED8A7C7916E4941200F06AF1 /* TPKeyboardAvoidingTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingTableView.m; sourceTree = "<group>"; };
 		EDE0E8AB16CB744700B9D0E7 /* VertexApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VertexApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDE0E8AE16CB744700B9D0E7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		EDE0E8B016CB744700B9D0E7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -442,6 +448,10 @@
 		EDEFE79716DF3C51002C35D6 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				ED8A7C7616E4941200F06AF1 /* TPKeyboardAvoidingScrollView.h */,
+				ED8A7C7716E4941200F06AF1 /* TPKeyboardAvoidingScrollView.m */,
+				ED8A7C7816E4941200F06AF1 /* TPKeyboardAvoidingTableView.h */,
+				ED8A7C7916E4941200F06AF1 /* TPKeyboardAvoidingTableView.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -682,6 +692,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED8A7C7E16E4A34D00F06AF1 /* TPKeyboardAvoidingTableView.m in Sources */,
+				ED8A7C7D16E4A34200F06AF1 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				EDE0E8BB16CB744800B9D0E7 /* main.m in Sources */,
 				EDEFE7BA16DF3C51002C35D6 /* AddAssetPageViewController.m in Sources */,
 				EDEFE7BB16DF3C51002C35D6 /* AssetPageViewController.m in Sources */,

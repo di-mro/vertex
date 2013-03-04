@@ -52,7 +52,7 @@
   if([self validateLoginFields])
   {
     //TESTING PURPOSES ONLY
-    //[self performSegueWithIdentifier: @"loginToHome" sender: self];
+    [self performSegueWithIdentifier: @"loginToHome" sender: self];
     
     /*
     NSString *username = userNameField.text;
@@ -93,7 +93,7 @@
      [[RKObjectManager sharedManager] postObject:article path:@"/articles" parameters:nil success:nil failure:nil];
      */
      
-    
+    /*
      NSString *username = userNameField.text;
      NSString *password = passwordField.text;
      
@@ -118,7 +118,7 @@
      //start the connection
      [connection start];
      
-     /* Get Response. Validation before proceeding to next page. Retrieve confirmation from the ws that user is valid.*/
+     // Get Response. Validation before proceeding to next page. Retrieve confirmation from the ws that user is valid.
      
      NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
      NSError *error = [[NSError alloc] init];
@@ -151,7 +151,7 @@
      otherButtonTitles:nil];
      [loginAlert show];
      }
-     
+     */
   }
   else
   {
