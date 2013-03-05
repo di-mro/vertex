@@ -113,6 +113,10 @@
     
     return YES;
   }
+  else if(remarksArea.isEditable)
+  {
+    remarksArea.text = @"";
+  }
   else
   {
     return NO;

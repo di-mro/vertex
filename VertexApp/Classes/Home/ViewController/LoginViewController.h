@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface LoginViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UILabel *userNameLabel;
@@ -15,6 +16,8 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *passwordLabel;
 @property (strong, nonatomic) IBOutlet UITextField *passwordField;
+
+@property (strong, nonatomic) NSString *URL;
 
 - (IBAction)login:(id)sender;
 @end

@@ -185,6 +185,10 @@
     
     return YES;
   }
+  else if(detailsTextArea.isEditable)
+  {
+    detailsTextArea.text = @"";
+  }
   else
   {
     return NO;

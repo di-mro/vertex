@@ -156,12 +156,12 @@
 {
   [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Submit Service Request Feedback");
-  NSInteger finalRating = 0;
+  NSInteger *finalRating = 0;
   NSString *comments = [[NSString alloc] init];
   
-  finalRating = (srRatings / 100) * 10;
-  NSLog(@"srRating: %ld", (long)srRatings);
-  NSLog(@"finalRating: %ld", (long)finalRating);
+  finalRating = (*srRatings / 100) * 10;
+  NSLog(@"srRating: %i", *srRatings);
+  NSLog(@"finalRating: %i", *finalRating);
   
   comments = srCommentsTextArea.text;
   NSLog(@"Comments: %@", comments);
@@ -177,10 +177,10 @@
   
   // Create a new Feedback object and POST it to the server
   Feedback *feedbackObject = [[Feedback alloc] init];
-  feedbackObject.rating = &finalRating;
+  feedbackObject.rating = *(&finalRating);
   feedbackObject.comments = comments;
   
-  NSLog(@"feedbackObject - rating: %d", feedbackObject.rating);
+  NSLog(@"feedbackObject - rating: %i", feedbackObject.rating);
   NSLog(@"feedbackObject - comments: %@", feedbackObject.comments);
   NSLog(@"feedbackObject: %@", feedbackObject);
   

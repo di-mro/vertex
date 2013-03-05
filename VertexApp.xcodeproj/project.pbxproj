@@ -17,6 +17,9 @@
 		ED59EC6416DCA7C200FCA959 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC6316DCA7C200FCA959 /* QuartzCore.framework */; };
 		ED59EC6616DCA7CD00FCA959 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC6516DCA7CD00FCA959 /* Security.framework */; };
 		ED59EC6816DCA7D600FCA959 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC6716DCA7D600FCA959 /* SystemConfiguration.framework */; };
+		ED63134B16E5BD2800987E2D /* ReachabilityAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ED63134A16E5BCFD00987E2D /* ReachabilityAppDelegate.m */; };
+		ED63134C16E5BD2F00987E2D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = ED63134516E5BCEB00987E2D /* Reachability.m */; };
+		ED63134F16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ED63134D16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodeld */; };
 		ED8A7C7D16E4A34200F06AF1 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8A7C7716E4941200F06AF1 /* TPKeyboardAvoidingScrollView.m */; };
 		ED8A7C7E16E4A34D00F06AF1 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8A7C7916E4941200F06AF1 /* TPKeyboardAvoidingTableView.m */; };
 		EDE0E8AF16CB744700B9D0E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE0E8AE16CB744700B9D0E7 /* UIKit.framework */; };
@@ -111,6 +114,11 @@
 		ED59EC6316DCA7C200FCA959 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		ED59EC6516DCA7CD00FCA959 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		ED59EC6716DCA7D600FCA959 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		ED63134416E5BCEB00987E2D /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		ED63134516E5BCEB00987E2D /* Reachability.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		ED63134916E5BCFD00987E2D /* ReachabilityAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReachabilityAppDelegate.h; sourceTree = "<group>"; };
+		ED63134A16E5BCFD00987E2D /* ReachabilityAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReachabilityAppDelegate.m; sourceTree = "<group>"; };
+		ED63134E16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VertexCoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		ED8A7C7616E4941200F06AF1 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
 		ED8A7C7716E4941200F06AF1 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
 		ED8A7C7816E4941200F06AF1 /* TPKeyboardAvoidingTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingTableView.h; sourceTree = "<group>"; };
@@ -380,6 +388,8 @@
 		EDEFE77416DF3C51002C35D6 /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
+				ED63134916E5BCFD00987E2D /* ReachabilityAppDelegate.h */,
+				ED63134A16E5BCFD00987E2D /* ReachabilityAppDelegate.m */,
 				EDEFE77516DF3C51002C35D6 /* AppDelegate.h */,
 				EDEFE77616DF3C51002C35D6 /* AppDelegate.m */,
 			);
@@ -413,6 +423,7 @@
 		EDEFE77A16DF3C51002C35D6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				ED63134D16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodeld */,
 				EDEFE77B16DF3C51002C35D6 /* Asset.h */,
 				EDEFE77C16DF3C51002C35D6 /* Asset.m */,
 				EDEFE77D16DF3C51002C35D6 /* AssetObject.h */,
@@ -448,6 +459,8 @@
 		EDEFE79716DF3C51002C35D6 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				ED63134416E5BCEB00987E2D /* Reachability.h */,
+				ED63134516E5BCEB00987E2D /* Reachability.m */,
 				ED8A7C7616E4941200F06AF1 /* TPKeyboardAvoidingScrollView.h */,
 				ED8A7C7716E4941200F06AF1 /* TPKeyboardAvoidingScrollView.m */,
 				ED8A7C7816E4941200F06AF1 /* TPKeyboardAvoidingTableView.h */,
@@ -692,6 +705,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED63134C16E5BD2F00987E2D /* Reachability.m in Sources */,
+				ED63134B16E5BD2800987E2D /* ReachabilityAppDelegate.m in Sources */,
 				ED8A7C7E16E4A34D00F06AF1 /* TPKeyboardAvoidingTableView.m in Sources */,
 				ED8A7C7D16E4A34200F06AF1 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				EDE0E8BB16CB744800B9D0E7 /* main.m in Sources */,
@@ -727,6 +742,7 @@
 				EDEFE7DE16DF46F5002C35D6 /* SingleAssetViewController.m in Sources */,
 				ED3BB35016E04EA900468E44 /* SRFeedbackListViewController.m in Sources */,
 				ED3BB35616E0524400468E44 /* SRFeedbackPageViewController.m in Sources */,
+				ED63134F16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -856,6 +872,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		ED63134D16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				ED63134E16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodel */,
+			);
+			currentVersion = ED63134E16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodel */;
+			path = VertexCoreDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = EDE0E8A316CB744700B9D0E7 /* Project object */;
 }

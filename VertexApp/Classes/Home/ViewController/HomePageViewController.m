@@ -182,7 +182,7 @@
   [self.navigationController pushViewController:controller animated:YES];
     
   /* !- TODO -!
-   Clear user tokens when [Logout] is pressed
+   Clear user tokens/objects when [Logout] is pressed
    */
 }
 

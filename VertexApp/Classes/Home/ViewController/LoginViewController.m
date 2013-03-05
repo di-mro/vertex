@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "LoginCredentials.h"
+#import "Reachability.h"
 #import "RestKit/RestKit.h"
 
 @interface LoginViewController ()
@@ -18,6 +19,7 @@
 
 @synthesize userNameField;
 @synthesize passwordField;
+@synthesize URL;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -31,6 +33,9 @@
 
 - (void)viewDidLoad
 {
+  //Set URL for Login
+  URL = @"http://192.168.2.108:8080/vertex/ws/user/loginform";
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -52,9 +57,10 @@
   if([self validateLoginFields])
   {
     //TESTING PURPOSES ONLY
-    [self performSegueWithIdentifier: @"loginToHome" sender: self];
+    //[self performSegueWithIdentifier: @"loginToHome" sender: self];
     
     /*
+    //RestKit
     NSString *username = userNameField.text;
     NSString *password = passwordField.text;
     
@@ -78,79 +84,108 @@
     */
     
     
-    /*
-     RKObjectMapping* articleRequestMapping = [RKObjectMapping requestMapping ]; 
-     // Shortcut for [RKObjectMapping mappingForClass:[NSMutableDictionary class] ]
-     [articleRequestMapping addAttributeMappingsFromArray:@[ @"name", @"body", @"publicationDate" ]];
-     
-     // Now configure the request descriptor
-     RKRequestDescriptor *requestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:articleRequestMapping objectClass:[Article class] rootKeyPath:@"article"];
-     
-     // Create a new Article and POST it to the server
-     Article* article = [Article new];
-     article.title = @"This is my new article!";
-     article.body = @"RestKit is pretty cool. This is kinda slick.";
-     [[RKObjectManager sharedManager] postObject:article path:@"/articles" parameters:nil success:nil failure:nil];
-     */
-     
-    /*
-     NSString *username = userNameField.text;
-     NSString *password = passwordField.text;
-     
-     NSMutableString *bodyData = [NSMutableString stringWithFormat:@"username=%@&password=%@", username, password];
-     NSLog(@"%@", bodyData);
-     
-     NSString *urlString   = @"http://192.168.2.103:8080/vertex/ws/user/loginform";
-     NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-     
-     // Set the request's content type to application/x-www-form-urlencoded
-     [postRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-     
-     // Designate the request a POST request and specify its body data
-     [postRequest setHTTPMethod:@"POST"];
-     [postRequest setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String] length:[bodyData length]]];
-     
-     NSLog(@"%@", postRequest);
-     
-     // Initialize the NSURLConnection and proceed as usual
-     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:postRequest delegate:self];
-     
-     //start the connection
-     [connection start];
-     
-     // Get Response. Validation before proceeding to next page. Retrieve confirmation from the ws that user is valid.
-     
-     NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
-     NSError *error = [[NSError alloc] init];
-     NSData *responseData = [NSURLConnection sendSynchronousRequest:postRequest returningResponse:&urlResponse error:&error];
-     NSString *result = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-     NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-     //NSString *loginProceed = [[json objectForKey:@"message"] objectForKey:@"valid"];
-     //NSString *loginProceed = [json objectForKey:@"valid"];
-     NSString *loginProceed = [json objectForKey:@"valid"];
-     //BOOL *loginFlag = (BOOL)loginProceed;
+    NSString *username = userNameField.text;
+    NSString *password = passwordField.text;
     
-     NSLog(@"Response code- %ld",(long)[urlResponse statusCode]);
-     NSLog(@"Login Response: %@", result);
-     NSLog(@"Response JSON: %@", json);
-     NSLog(@"Login Response JSON: %@", loginProceed);
-     
-     if(true)
-     //if([loginProceed isEqualToString:@"1"])
-     {
-       //Segue to Home Page
-       [self performSegueWithIdentifier: @"loginToHome" sender: self];
-     }
-     //else if([loginProceed isEqual: @"false"])
-     else
-     {
-     UIAlertView *loginAlert = [[UIAlertView alloc] initWithTitle:@"Invalid User"
-     message:@"Username and password is incorrect."
-     delegate:nil
-     cancelButtonTitle:@"OK"
-     otherButtonTitles:nil];
-     [loginAlert show];
-     }
+    NSMutableString *bodyData = [NSMutableString
+                                 stringWithFormat:@"username=%@&password=%@"
+                                 , username
+                                 , password];
+    NSLog(@"%@", bodyData);
+    
+    
+    NSMutableURLRequest *postRequest = [NSMutableURLRequest
+                                        requestWithURL:[NSURL URLWithString:URL]];
+    
+    // Set the request's content type to application/x-www-form-urlencoded
+    [postRequest setValue:@"application/x-www-form-urlencoded"
+       forHTTPHeaderField:@"Content-Type"];
+    
+    // Designate the request a POST request and specify its body data
+    [postRequest setHTTPMethod:@"POST"];
+    [postRequest setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String]
+                                            length:[bodyData length]]];
+    NSLog(@"%@", postRequest);
+    
+    // Initialize the NSURLConnection and proceed as usual
+    NSURLConnection *connection = [[NSURLConnection alloc]
+                                   initWithRequest:postRequest
+                                   delegate:self];
+    
+    //start the connection
+    [connection start];
+    
+    // Get Response. Validation before proceeding to next page. Retrieve confirmation from the ws that user is valid.
+    NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+    NSError *error = [[NSError alloc] init];
+    
+    NSData *responseData = [NSURLConnection
+                            sendSynchronousRequest:postRequest
+                            returningResponse:&urlResponse
+                            error:&error];
+    
+    NSString *result = [[NSString alloc] initWithData:responseData
+                                             encoding:NSUTF8StringEncoding];
+    NSMutableDictionary *json = [NSJSONSerialization
+                                 JSONObjectWithData:responseData
+                                 options:kNilOptions
+                                 error:&error];
+    NSString *loginProceed = [json objectForKey:@"valid"];
+    
+    NSLog(@"Response code- %ld",(long)[urlResponse statusCode]);
+    NSLog(@"Login Response: %@", result);
+    NSLog(@"Response JSON: %@", json);
+    NSLog(@"Login Response JSON: %@", loginProceed);
+    
+    //No response retrieved, no connection
+    if(json == nil)
+    {
+      //Show an alert if connection is not available
+      UIAlertView *connectionAlert = [[UIAlertView alloc]
+                                      initWithTitle:@"Warning"
+                                      message:@"No network connection detected. Some functions may be unavailable."
+                                      delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+      [connectionAlert show];
+      
+    }
+    else
+    {
+      if([loginProceed boolValue])
+      {
+        [self performSegueWithIdentifier: @"loginToHome" sender: self];
+      }
+      else
+      {
+        UIAlertView *loginAlert = [[UIAlertView alloc]
+                                   initWithTitle:@"Invalid User"
+                                   message:@"Username and password is incorrect."
+                                   delegate:self
+                                   cancelButtonTitle:@"OK"
+                                   otherButtonTitles:nil];
+        [loginAlert show];
+      }
+    }
+    
+    /*
+    if([self reachable])
+    {
+      NSLog(@"Reachable");
+    }
+    else
+    {
+      NSLog(@"Non Reachable");
+      
+      //Show an alert if connection is not available
+      UIAlertView *connectionAlert = [[UIAlertView alloc]
+                                      initWithTitle:@"Warning"
+                                            message:@"No network connection detected. Some functions may be unavailable."
+                                           delegate:self
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+      [connectionAlert show];
+    }
      */
   }
   else
@@ -158,6 +193,32 @@
     NSLog(@"Unable to login");
   }
 }
+
+
+#pragma mark - Check for network availability
+-(BOOL)reachable
+{
+  Reachability *r = [Reachability reachabilityWithHostName:URL];
+  NetworkStatus internetStatus = [r currentReachabilityStatus];
+  
+  if(internetStatus == NotReachable)
+  {
+    return NO;
+  }
+  
+  return YES;
+}
+
+
+#pragma mark - Present warning that there is no network connection before proceeding to Home Page
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+  if (buttonIndex == 0)
+  {
+    [self performSegueWithIdentifier: @"loginToHome" sender: self];
+  }
+}
+
 
 #pragma mark - Login fields validation
 -(BOOL) validateLoginFields
