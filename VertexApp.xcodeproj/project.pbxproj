@@ -34,20 +34,6 @@
 		EDEFE7BB16DF3C51002C35D6 /* AssetPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE76916DF3C51002C35D6 /* AssetPageViewController.m */; };
 		EDEFE7BD16DF3C51002C35D6 /* ViewAssetsPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE76D16DF3C51002C35D6 /* ViewAssetsPageViewController.m */; };
 		EDEFE7BE16DF3C51002C35D6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE77616DF3C51002C35D6 /* AppDelegate.m */; };
-		EDEFE7BF16DF3C51002C35D6 /* Asset.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE77C16DF3C51002C35D6 /* Asset.m */; };
-		EDEFE7C016DF3C51002C35D6 /* AssetObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE77E16DF3C51002C35D6 /* AssetObject.m */; };
-		EDEFE7C116DF3C51002C35D6 /* AssetTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE78016DF3C51002C35D6 /* AssetTypes.m */; };
-		EDEFE7C216DF3C51002C35D6 /* ContactDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE78216DF3C51002C35D6 /* ContactDetails.m */; };
-		EDEFE7C316DF3C51002C35D6 /* Feedback.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE78416DF3C51002C35D6 /* Feedback.m */; };
-		EDEFE7C416DF3C51002C35D6 /* Lifecycles.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE78616DF3C51002C35D6 /* Lifecycles.m */; };
-		EDEFE7C516DF3C51002C35D6 /* Personnel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE78816DF3C51002C35D6 /* Personnel.m */; };
-		EDEFE7C616DF3C51002C35D6 /* ServiceRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE78A16DF3C51002C35D6 /* ServiceRequests.m */; };
-		EDEFE7C716DF3C51002C35D6 /* Services.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE78C16DF3C51002C35D6 /* Services.m */; };
-		EDEFE7C816DF3C51002C35D6 /* SRObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE78E16DF3C51002C35D6 /* SRObject.m */; };
-		EDEFE7C916DF3C51002C35D6 /* SRTask.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE79016DF3C51002C35D6 /* SRTask.m */; };
-		EDEFE7CA16DF3C51002C35D6 /* Tasks.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE79216DF3C51002C35D6 /* Tasks.m */; };
-		EDEFE7CB16DF3C51002C35D6 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE79416DF3C51002C35D6 /* UserInfo.m */; };
-		EDEFE7CC16DF3C51002C35D6 /* UserProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE79616DF3C51002C35D6 /* UserProfile.m */; };
 		EDEFE7CD16DF3C51002C35D6 /* HomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE79B16DF3C51002C35D6 /* HomePageViewController.m */; };
 		EDEFE7CE16DF3C51002C35D6 /* LoginCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE79D16DF3C51002C35D6 /* LoginCredentials.m */; };
 		EDEFE7CF16DF3C51002C35D6 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE79F16DF3C51002C35D6 /* LoginViewController.m */; };
@@ -61,6 +47,20 @@
 		EDEFE7D716DF3C51002C35D6 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE7B516DF3C51002C35D6 /* SettingsViewController.m */; };
 		EDEFE7D816DF3C51002C35D6 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDEFE7B916DF3C51002C35D6 /* MainStoryboard.storyboard */; };
 		EDEFE7DE16DF46F5002C35D6 /* SingleAssetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE7DD16DF46F5002C35D6 /* SingleAssetViewController.m */; };
+		EDF39CC116E6FC51009B026F /* Asset.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CA616E6FC51009B026F /* Asset.m */; };
+		EDF39CC216E6FC51009B026F /* AssetObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CA816E6FC51009B026F /* AssetObject.m */; };
+		EDF39CC316E6FC51009B026F /* AssetTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CAA16E6FC51009B026F /* AssetTypes.m */; };
+		EDF39CC416E6FC51009B026F /* ContactDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CAC16E6FC51009B026F /* ContactDetails.m */; };
+		EDF39CC516E6FC51009B026F /* Feedback.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CAE16E6FC51009B026F /* Feedback.m */; };
+		EDF39CC616E6FC51009B026F /* Lifecycles.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CB016E6FC51009B026F /* Lifecycles.m */; };
+		EDF39CC716E6FC51009B026F /* Personnel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CB216E6FC51009B026F /* Personnel.m */; };
+		EDF39CC816E6FC51009B026F /* ServiceRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CB416E6FC51009B026F /* ServiceRequests.m */; };
+		EDF39CC916E6FC51009B026F /* Services.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CB616E6FC51009B026F /* Services.m */; };
+		EDF39CCA16E6FC51009B026F /* SRObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CB816E6FC51009B026F /* SRObject.m */; };
+		EDF39CCB16E6FC51009B026F /* SRTask.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CBA16E6FC51009B026F /* SRTask.m */; };
+		EDF39CCC16E6FC51009B026F /* Tasks.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CBC16E6FC51009B026F /* Tasks.m */; };
+		EDF39CCD16E6FC51009B026F /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CBE16E6FC51009B026F /* UserInfo.m */; };
+		EDF39CCE16E6FC51009B026F /* UserProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CC016E6FC51009B026F /* UserProfile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,34 +142,6 @@
 		EDEFE76D16DF3C51002C35D6 /* ViewAssetsPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewAssetsPageViewController.m; sourceTree = "<group>"; };
 		EDEFE77516DF3C51002C35D6 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EDEFE77616DF3C51002C35D6 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		EDEFE77B16DF3C51002C35D6 /* Asset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Asset.h; sourceTree = "<group>"; };
-		EDEFE77C16DF3C51002C35D6 /* Asset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Asset.m; sourceTree = "<group>"; };
-		EDEFE77D16DF3C51002C35D6 /* AssetObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetObject.h; sourceTree = "<group>"; };
-		EDEFE77E16DF3C51002C35D6 /* AssetObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetObject.m; sourceTree = "<group>"; };
-		EDEFE77F16DF3C51002C35D6 /* AssetTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetTypes.h; sourceTree = "<group>"; };
-		EDEFE78016DF3C51002C35D6 /* AssetTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetTypes.m; sourceTree = "<group>"; };
-		EDEFE78116DF3C51002C35D6 /* ContactDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactDetails.h; sourceTree = "<group>"; };
-		EDEFE78216DF3C51002C35D6 /* ContactDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactDetails.m; sourceTree = "<group>"; };
-		EDEFE78316DF3C51002C35D6 /* Feedback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Feedback.h; sourceTree = "<group>"; };
-		EDEFE78416DF3C51002C35D6 /* Feedback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feedback.m; sourceTree = "<group>"; };
-		EDEFE78516DF3C51002C35D6 /* Lifecycles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lifecycles.h; sourceTree = "<group>"; };
-		EDEFE78616DF3C51002C35D6 /* Lifecycles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lifecycles.m; sourceTree = "<group>"; };
-		EDEFE78716DF3C51002C35D6 /* Personnel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Personnel.h; sourceTree = "<group>"; };
-		EDEFE78816DF3C51002C35D6 /* Personnel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Personnel.m; sourceTree = "<group>"; };
-		EDEFE78916DF3C51002C35D6 /* ServiceRequests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceRequests.h; sourceTree = "<group>"; };
-		EDEFE78A16DF3C51002C35D6 /* ServiceRequests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceRequests.m; sourceTree = "<group>"; };
-		EDEFE78B16DF3C51002C35D6 /* Services.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Services.h; sourceTree = "<group>"; };
-		EDEFE78C16DF3C51002C35D6 /* Services.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Services.m; sourceTree = "<group>"; };
-		EDEFE78D16DF3C51002C35D6 /* SRObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRObject.h; sourceTree = "<group>"; };
-		EDEFE78E16DF3C51002C35D6 /* SRObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRObject.m; sourceTree = "<group>"; };
-		EDEFE78F16DF3C51002C35D6 /* SRTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRTask.h; sourceTree = "<group>"; };
-		EDEFE79016DF3C51002C35D6 /* SRTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRTask.m; sourceTree = "<group>"; };
-		EDEFE79116DF3C51002C35D6 /* Tasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tasks.h; sourceTree = "<group>"; };
-		EDEFE79216DF3C51002C35D6 /* Tasks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tasks.m; sourceTree = "<group>"; };
-		EDEFE79316DF3C51002C35D6 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
-		EDEFE79416DF3C51002C35D6 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
-		EDEFE79516DF3C51002C35D6 /* UserProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfile.h; sourceTree = "<group>"; };
-		EDEFE79616DF3C51002C35D6 /* UserProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfile.m; sourceTree = "<group>"; };
 		EDEFE79A16DF3C51002C35D6 /* HomePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageViewController.h; sourceTree = "<group>"; };
 		EDEFE79B16DF3C51002C35D6 /* HomePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageViewController.m; sourceTree = "<group>"; };
 		EDEFE79C16DF3C51002C35D6 /* LoginCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginCredentials.h; sourceTree = "<group>"; };
@@ -195,6 +167,34 @@
 		EDEFE7B916DF3C51002C35D6 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		EDEFE7DC16DF46F5002C35D6 /* SingleAssetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleAssetViewController.h; sourceTree = "<group>"; };
 		EDEFE7DD16DF46F5002C35D6 /* SingleAssetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleAssetViewController.m; sourceTree = "<group>"; };
+		EDF39CA516E6FC51009B026F /* Asset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Asset.h; sourceTree = "<group>"; };
+		EDF39CA616E6FC51009B026F /* Asset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Asset.m; sourceTree = "<group>"; };
+		EDF39CA716E6FC51009B026F /* AssetObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetObject.h; sourceTree = "<group>"; };
+		EDF39CA816E6FC51009B026F /* AssetObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetObject.m; sourceTree = "<group>"; };
+		EDF39CA916E6FC51009B026F /* AssetTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetTypes.h; sourceTree = "<group>"; };
+		EDF39CAA16E6FC51009B026F /* AssetTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetTypes.m; sourceTree = "<group>"; };
+		EDF39CAB16E6FC51009B026F /* ContactDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactDetails.h; sourceTree = "<group>"; };
+		EDF39CAC16E6FC51009B026F /* ContactDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactDetails.m; sourceTree = "<group>"; };
+		EDF39CAD16E6FC51009B026F /* Feedback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Feedback.h; sourceTree = "<group>"; };
+		EDF39CAE16E6FC51009B026F /* Feedback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feedback.m; sourceTree = "<group>"; };
+		EDF39CAF16E6FC51009B026F /* Lifecycles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lifecycles.h; sourceTree = "<group>"; };
+		EDF39CB016E6FC51009B026F /* Lifecycles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lifecycles.m; sourceTree = "<group>"; };
+		EDF39CB116E6FC51009B026F /* Personnel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Personnel.h; sourceTree = "<group>"; };
+		EDF39CB216E6FC51009B026F /* Personnel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Personnel.m; sourceTree = "<group>"; };
+		EDF39CB316E6FC51009B026F /* ServiceRequests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceRequests.h; sourceTree = "<group>"; };
+		EDF39CB416E6FC51009B026F /* ServiceRequests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceRequests.m; sourceTree = "<group>"; };
+		EDF39CB516E6FC51009B026F /* Services.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Services.h; sourceTree = "<group>"; };
+		EDF39CB616E6FC51009B026F /* Services.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Services.m; sourceTree = "<group>"; };
+		EDF39CB716E6FC51009B026F /* SRObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRObject.h; sourceTree = "<group>"; };
+		EDF39CB816E6FC51009B026F /* SRObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRObject.m; sourceTree = "<group>"; };
+		EDF39CB916E6FC51009B026F /* SRTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRTask.h; sourceTree = "<group>"; };
+		EDF39CBA16E6FC51009B026F /* SRTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRTask.m; sourceTree = "<group>"; };
+		EDF39CBB16E6FC51009B026F /* Tasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tasks.h; sourceTree = "<group>"; };
+		EDF39CBC16E6FC51009B026F /* Tasks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tasks.m; sourceTree = "<group>"; };
+		EDF39CBD16E6FC51009B026F /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
+		EDF39CBE16E6FC51009B026F /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
+		EDF39CBF16E6FC51009B026F /* UserProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfile.h; sourceTree = "<group>"; };
+		EDF39CC016E6FC51009B026F /* UserProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfile.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -423,35 +423,8 @@
 		EDEFE77A16DF3C51002C35D6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				EDF39CA416E6FC51009B026F /* ManuallyCreatedObjects */,
 				ED63134D16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodeld */,
-				EDEFE77B16DF3C51002C35D6 /* Asset.h */,
-				EDEFE77C16DF3C51002C35D6 /* Asset.m */,
-				EDEFE77D16DF3C51002C35D6 /* AssetObject.h */,
-				EDEFE77E16DF3C51002C35D6 /* AssetObject.m */,
-				EDEFE77F16DF3C51002C35D6 /* AssetTypes.h */,
-				EDEFE78016DF3C51002C35D6 /* AssetTypes.m */,
-				EDEFE78116DF3C51002C35D6 /* ContactDetails.h */,
-				EDEFE78216DF3C51002C35D6 /* ContactDetails.m */,
-				EDEFE78316DF3C51002C35D6 /* Feedback.h */,
-				EDEFE78416DF3C51002C35D6 /* Feedback.m */,
-				EDEFE78516DF3C51002C35D6 /* Lifecycles.h */,
-				EDEFE78616DF3C51002C35D6 /* Lifecycles.m */,
-				EDEFE78716DF3C51002C35D6 /* Personnel.h */,
-				EDEFE78816DF3C51002C35D6 /* Personnel.m */,
-				EDEFE78916DF3C51002C35D6 /* ServiceRequests.h */,
-				EDEFE78A16DF3C51002C35D6 /* ServiceRequests.m */,
-				EDEFE78B16DF3C51002C35D6 /* Services.h */,
-				EDEFE78C16DF3C51002C35D6 /* Services.m */,
-				EDEFE78D16DF3C51002C35D6 /* SRObject.h */,
-				EDEFE78E16DF3C51002C35D6 /* SRObject.m */,
-				EDEFE78F16DF3C51002C35D6 /* SRTask.h */,
-				EDEFE79016DF3C51002C35D6 /* SRTask.m */,
-				EDEFE79116DF3C51002C35D6 /* Tasks.h */,
-				EDEFE79216DF3C51002C35D6 /* Tasks.m */,
-				EDEFE79316DF3C51002C35D6 /* UserInfo.h */,
-				EDEFE79416DF3C51002C35D6 /* UserInfo.m */,
-				EDEFE79516DF3C51002C35D6 /* UserProfile.h */,
-				EDEFE79616DF3C51002C35D6 /* UserProfile.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -601,6 +574,41 @@
 			path = Sounds;
 			sourceTree = "<group>";
 		};
+		EDF39CA416E6FC51009B026F /* ManuallyCreatedObjects */ = {
+			isa = PBXGroup;
+			children = (
+				EDF39CA516E6FC51009B026F /* Asset.h */,
+				EDF39CA616E6FC51009B026F /* Asset.m */,
+				EDF39CA716E6FC51009B026F /* AssetObject.h */,
+				EDF39CA816E6FC51009B026F /* AssetObject.m */,
+				EDF39CA916E6FC51009B026F /* AssetTypes.h */,
+				EDF39CAA16E6FC51009B026F /* AssetTypes.m */,
+				EDF39CAB16E6FC51009B026F /* ContactDetails.h */,
+				EDF39CAC16E6FC51009B026F /* ContactDetails.m */,
+				EDF39CAD16E6FC51009B026F /* Feedback.h */,
+				EDF39CAE16E6FC51009B026F /* Feedback.m */,
+				EDF39CAF16E6FC51009B026F /* Lifecycles.h */,
+				EDF39CB016E6FC51009B026F /* Lifecycles.m */,
+				EDF39CB116E6FC51009B026F /* Personnel.h */,
+				EDF39CB216E6FC51009B026F /* Personnel.m */,
+				EDF39CB316E6FC51009B026F /* ServiceRequests.h */,
+				EDF39CB416E6FC51009B026F /* ServiceRequests.m */,
+				EDF39CB516E6FC51009B026F /* Services.h */,
+				EDF39CB616E6FC51009B026F /* Services.m */,
+				EDF39CB716E6FC51009B026F /* SRObject.h */,
+				EDF39CB816E6FC51009B026F /* SRObject.m */,
+				EDF39CB916E6FC51009B026F /* SRTask.h */,
+				EDF39CBA16E6FC51009B026F /* SRTask.m */,
+				EDF39CBB16E6FC51009B026F /* Tasks.h */,
+				EDF39CBC16E6FC51009B026F /* Tasks.m */,
+				EDF39CBD16E6FC51009B026F /* UserInfo.h */,
+				EDF39CBE16E6FC51009B026F /* UserInfo.m */,
+				EDF39CBF16E6FC51009B026F /* UserProfile.h */,
+				EDF39CC016E6FC51009B026F /* UserProfile.m */,
+			);
+			path = ManuallyCreatedObjects;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -714,20 +722,6 @@
 				EDEFE7BB16DF3C51002C35D6 /* AssetPageViewController.m in Sources */,
 				EDEFE7BD16DF3C51002C35D6 /* ViewAssetsPageViewController.m in Sources */,
 				EDEFE7BE16DF3C51002C35D6 /* AppDelegate.m in Sources */,
-				EDEFE7BF16DF3C51002C35D6 /* Asset.m in Sources */,
-				EDEFE7C016DF3C51002C35D6 /* AssetObject.m in Sources */,
-				EDEFE7C116DF3C51002C35D6 /* AssetTypes.m in Sources */,
-				EDEFE7C216DF3C51002C35D6 /* ContactDetails.m in Sources */,
-				EDEFE7C316DF3C51002C35D6 /* Feedback.m in Sources */,
-				EDEFE7C416DF3C51002C35D6 /* Lifecycles.m in Sources */,
-				EDEFE7C516DF3C51002C35D6 /* Personnel.m in Sources */,
-				EDEFE7C616DF3C51002C35D6 /* ServiceRequests.m in Sources */,
-				EDEFE7C716DF3C51002C35D6 /* Services.m in Sources */,
-				EDEFE7C816DF3C51002C35D6 /* SRObject.m in Sources */,
-				EDEFE7C916DF3C51002C35D6 /* SRTask.m in Sources */,
-				EDEFE7CA16DF3C51002C35D6 /* Tasks.m in Sources */,
-				EDEFE7CB16DF3C51002C35D6 /* UserInfo.m in Sources */,
-				EDEFE7CC16DF3C51002C35D6 /* UserProfile.m in Sources */,
 				EDEFE7CD16DF3C51002C35D6 /* HomePageViewController.m in Sources */,
 				EDEFE7CE16DF3C51002C35D6 /* LoginCredentials.m in Sources */,
 				EDEFE7CF16DF3C51002C35D6 /* LoginViewController.m in Sources */,
@@ -743,6 +737,20 @@
 				ED3BB35016E04EA900468E44 /* SRFeedbackListViewController.m in Sources */,
 				ED3BB35616E0524400468E44 /* SRFeedbackPageViewController.m in Sources */,
 				ED63134F16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodeld in Sources */,
+				EDF39CC116E6FC51009B026F /* Asset.m in Sources */,
+				EDF39CC216E6FC51009B026F /* AssetObject.m in Sources */,
+				EDF39CC316E6FC51009B026F /* AssetTypes.m in Sources */,
+				EDF39CC416E6FC51009B026F /* ContactDetails.m in Sources */,
+				EDF39CC516E6FC51009B026F /* Feedback.m in Sources */,
+				EDF39CC616E6FC51009B026F /* Lifecycles.m in Sources */,
+				EDF39CC716E6FC51009B026F /* Personnel.m in Sources */,
+				EDF39CC816E6FC51009B026F /* ServiceRequests.m in Sources */,
+				EDF39CC916E6FC51009B026F /* Services.m in Sources */,
+				EDF39CCA16E6FC51009B026F /* SRObject.m in Sources */,
+				EDF39CCB16E6FC51009B026F /* SRTask.m in Sources */,
+				EDF39CCC16E6FC51009B026F /* Tasks.m in Sources */,
+				EDF39CCD16E6FC51009B026F /* UserInfo.m in Sources */,
+				EDF39CCE16E6FC51009B026F /* UserProfile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

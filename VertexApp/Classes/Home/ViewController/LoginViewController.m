@@ -56,34 +56,6 @@
 {
   if([self validateLoginFields])
   {
-    //TESTING PURPOSES ONLY
-    //[self performSegueWithIdentifier: @"loginToHome" sender: self];
-    
-    /*
-    //RestKit
-    NSString *username = userNameField.text;
-    NSString *password = passwordField.text;
-    
-    RKObjectMapping* loginMapping = [RKObjectMapping requestMapping ];
-    // Shortcut for [RKObjectMapping mappingForClass:[NSMutableDictionary class] ]
-    [loginMapping addAttributeMappingsFromArray:@[@"username", @"password"]];
-    NSLog(@"loginMapping: %@", loginMapping);
-    
-    // Now configure the request descriptor
-    RKRequestDescriptor *requestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:loginMapping
-                       objectClass:[LoginCredentials class]
-                       rootKeyPath:@"user"];
-    NSLog(@"requestDescriptor: %@", requestDescriptor);
-    
-    // Create a new LoginCredential object and POST it to the server
-    LoginCredentials *loginCredentials = [[LoginCredentials alloc] init];
-    loginCredentials.username = username;
-    loginCredentials.password = password;
-    NSLog(@"loginCredentials: %@", loginCredentials);
-    [[RKObjectManager sharedManager] postObject:loginCredentials path:@"http://192.168.2.103:8080/vertex/ws/user/login" parameters:nil success:nil failure:nil];
-    */
-    
-    
     NSString *username = userNameField.text;
     NSString *password = passwordField.text;
     
@@ -93,65 +65,51 @@
                                  , password];
     NSLog(@"%@", bodyData);
     
-    
     NSMutableURLRequest *postRequest = [NSMutableURLRequest
                                         requestWithURL:[NSURL URLWithString:URL]];
     
     // Set the request's content type to application/x-www-form-urlencoded
     [postRequest setValue:@"application/x-www-form-urlencoded"
        forHTTPHeaderField:@"Content-Type"];
-    
     // Designate the request a POST request and specify its body data
     [postRequest setHTTPMethod:@"POST"];
     [postRequest setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String]
                                             length:[bodyData length]]];
     NSLog(@"%@", postRequest);
     
-    // Initialize the NSURLConnection and proceed as usual
-    NSURLConnection *connection = [[NSURLConnection alloc]
-                                   initWithRequest:postRequest
-                                   delegate:self];
-    
-    //start the connection
-    [connection start];
-    
-    // Get Response. Validation before proceeding to next page. Retrieve confirmation from the ws that user is valid.
-    NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
-    NSError *error = [[NSError alloc] init];
-    
-    NSData *responseData = [NSURLConnection
-                            sendSynchronousRequest:postRequest
-                            returningResponse:&urlResponse
-                            error:&error];
-    
-    NSString *result = [[NSString alloc] initWithData:responseData
-                                             encoding:NSUTF8StringEncoding];
-    NSMutableDictionary *json = [NSJSONSerialization
-                                 JSONObjectWithData:responseData
-                                 options:kNilOptions
-                                 error:&error];
-    NSString *loginProceed = [json objectForKey:@"valid"];
-    
-    NSLog(@"Response code- %ld",(long)[urlResponse statusCode]);
-    NSLog(@"Login Response: %@", result);
-    NSLog(@"Response JSON: %@", json);
-    NSLog(@"Login Response JSON: %@", loginProceed);
-    
-    //No response retrieved, no connection
-    if(json == nil)
+    if([self reachable])
     {
-      //Show an alert if connection is not available
-      UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                      initWithTitle:@"Warning"
-                                      message:@"No network connection detected. Some functions may be unavailable."
-                                      delegate:self
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles:nil];
-      [connectionAlert show];
+      NSLog(@"Reachable");
       
-    }
-    else
-    {
+      // Initialize the NSURLConnection and proceed as usual
+      NSURLConnection *connection = [[NSURLConnection alloc]
+                                     initWithRequest:postRequest
+                                     delegate:self];
+      //start the connection
+      [connection start];
+      
+      // Get Response. Validation before proceeding to next page. Retrieve confirmation from the ws that user is valid.
+      NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+      NSError *error = [[NSError alloc] init];
+      
+      NSData *responseData = [NSURLConnection
+                              sendSynchronousRequest:postRequest
+                              returningResponse:&urlResponse
+                              error:&error];
+      
+      NSString *result = [[NSString alloc] initWithData:responseData
+                                               encoding:NSUTF8StringEncoding];
+      NSMutableDictionary *json = [NSJSONSerialization
+                                   JSONObjectWithData:responseData
+                                   options:kNilOptions
+                                   error:&error];
+      NSString *loginProceed = [json objectForKey:@"valid"];
+      
+      NSLog(@"Response code- %ld",(long)[urlResponse statusCode]);
+      NSLog(@"Login Response: %@", result);
+      NSLog(@"Response JSON: %@", json);
+      NSLog(@"Login Response JSON: %@", loginProceed);
+      
       if([loginProceed boolValue])
       {
         [self performSegueWithIdentifier: @"loginToHome" sender: self];
@@ -167,12 +125,6 @@
         [loginAlert show];
       }
     }
-    
-    /*
-    if([self reachable])
-    {
-      NSLog(@"Reachable");
-    }
     else
     {
       NSLog(@"Non Reachable");
@@ -180,25 +132,54 @@
       //Show an alert if connection is not available
       UIAlertView *connectionAlert = [[UIAlertView alloc]
                                       initWithTitle:@"Warning"
-                                            message:@"No network connection detected. Some functions may be unavailable."
-                                           delegate:self
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
+                                      message:@"No network connection detected. Some functions may be unavailable."
+                                      delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
       [connectionAlert show];
+      
+      //If OK is pressed, go to Home Page
+      //Connect to CoreData for local data
     }
-     */
   }
   else
   {
     NSLog(@"Unable to login");
   }
+  
+  //TESTING PURPOSES ONLY
+  //[self performSegueWithIdentifier: @"loginToHome" sender: self];
+  
+  /*
+   //RestKit
+   NSString *username = userNameField.text;
+   NSString *password = passwordField.text;
+   
+   RKObjectMapping* loginMapping = [RKObjectMapping requestMapping ];
+   // Shortcut for [RKObjectMapping mappingForClass:[NSMutableDictionary class] ]
+   [loginMapping addAttributeMappingsFromArray:@[@"username", @"password"]];
+   NSLog(@"loginMapping: %@", loginMapping);
+   
+   // Now configure the request descriptor
+   RKRequestDescriptor *requestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:loginMapping
+   objectClass:[LoginCredentials class]
+   rootKeyPath:@"user"];
+   NSLog(@"requestDescriptor: %@", requestDescriptor);
+   
+   // Create a new LoginCredential object and POST it to the server
+   LoginCredentials *loginCredentials = [[LoginCredentials alloc] init];
+   loginCredentials.username = username;
+   loginCredentials.password = password;
+   NSLog(@"loginCredentials: %@", loginCredentials);
+   [[RKObjectManager sharedManager] postObject:loginCredentials path:@"http://192.168.2.103:8080/vertex/ws/user/login" parameters:nil success:nil failure:nil];
+   */
 }
 
 
 #pragma mark - Check for network availability
 -(BOOL)reachable
 {
-  Reachability *r = [Reachability reachabilityWithHostName:URL];
+  Reachability *r = [Reachability  reachabilityWithHostName:URL];
   NetworkStatus internetStatus = [r currentReachabilityStatus];
   
   if(internetStatus == NotReachable)
@@ -223,13 +204,15 @@
 #pragma mark - Login fields validation
 -(BOOL) validateLoginFields
 {
-  UIAlertView *loginValidateAlert = [[UIAlertView alloc] initWithTitle:@"Incomplete Information"
-                                               message:@"Please fill out all the fields."
-                                              delegate:nil
-                                     cancelButtonTitle:@"OK"
-                                     otherButtonTitles:nil];
+  UIAlertView *loginValidateAlert = [[UIAlertView alloc]
+                                     initWithTitle:@"Incomplete Information"
+                                           message:@"Please fill out all the fields."
+                                          delegate:nil //set to 'nil' to not activate clickedAtButtonAtIndex
+                                 cancelButtonTitle:@"OK"
+                                 otherButtonTitles:nil];
 
-  if([userNameField.text isEqualToString:(@"")] || [passwordField.text isEqualToString:(@"")])
+  if([userNameField.text isEqualToString:(@"")]
+     || [passwordField.text isEqualToString:(@"")])
   {
     [loginValidateAlert show];
     return false;
