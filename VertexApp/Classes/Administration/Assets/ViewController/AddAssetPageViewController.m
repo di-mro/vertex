@@ -9,6 +9,7 @@
 #import "AddAssetPageViewController.h"
 #import "HomePageViewController.h"
 #import "AssetPageViewController.h"
+#import "Reachability.h"
 
 @interface AddAssetPageViewController ()
 
@@ -29,6 +30,8 @@
 @synthesize remarksArea;
 
 @synthesize assetObject;
+
+@synthesize URL;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -56,8 +59,12 @@
   //Configure Scroller size
   self.addAssetScroller.contentSize = CGSizeMake(320, 720);
   
-  //Configure Picker array values
-  self.assetTypePickerArray = [[NSArray alloc] initWithObjects:@"Aircon",@"Door", @"Exhaust Fan",@"Faucet",@"Toilet",@"Kitchen Sink",@"Lighting Fixtures", nil];
+  //Set URL for retrieving AssetTypes
+  URL = @"http://192.168.2.103:8080/vertex/ws/assettype/assettypes";
+  
+  //Configure Picker array
+  self.assetTypePickerArray = [[NSArray alloc] init];
+  [self getAssetTypes];
   
   //assetTypePicker in assetTypeField
   [assetTypeField setDelegate:self];
@@ -74,6 +81,90 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - Get AssetTypes
+- (void) getAssetTypes
+{
+  //userId / request parameters ??
+  NSMutableString *bodyData = [NSMutableString
+                               stringWithFormat:@"userId=1"];
+  NSLog(@"%@", bodyData);
+  
+  NSMutableURLRequest *getRequest = [NSMutableURLRequest
+                                      requestWithURL:[NSURL URLWithString:URL]];
+  
+  // Set the request's content type to application/x-www-form-urlencoded
+  [getRequest setValue:@"application/x-www-form-urlencoded" //content type ??
+     forHTTPHeaderField:@"Content-Type"];
+  // Designate the request a GET request and specify its body data
+  [getRequest setHTTPMethod:@"GET"];
+  [getRequest setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String]
+                                          length:[bodyData length]]];
+  NSLog(@"%@", getRequest);
+  
+  if([self reachable])
+  {
+    NSLog(@"Reachable");
+    
+    // Initialize the NSURLConnection and proceed as usual
+    NSURLConnection *connection = [[NSURLConnection alloc]
+                                   initWithRequest:getRequest
+                                   delegate:self];
+    //start the connection
+    [connection start];
+    
+    // Get Response. Validation before proceeding to next page. Retrieve confirmation from the ws that user is valid.
+    NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+    NSError *error = [[NSError alloc] init];
+    
+    NSData *responseData = [NSURLConnection
+                            sendSynchronousRequest:getRequest
+                            returningResponse:&urlResponse
+                            error:&error];
+    
+    NSString *result = [[NSString alloc] initWithData:responseData
+                                             encoding:NSUTF8StringEncoding];
+    NSLog(@"Response: %@", result);
+    
+    /*NSMutableDictionary *json = [NSJSONSerialization
+                                 JSONObjectWithData:responseData
+                                 options:kNilOptions
+                                 error:&error];
+    NSString *loginProceed = [json objectForKey:@"valid"];
+    
+    NSLog(@"Response code- %ld",(long)[urlResponse statusCode]);
+    NSLog(@"Response JSON: %@", json);
+    NSLog(@"Login Response JSON: %@", loginProceed);
+    */
+   
+    [assetTypePickerArray initWithObjects:responseData, nil];
+    NSLog(@"assetTypePickerArray: %@", assetTypePickerArray);
+  }
+  else
+  {
+    NSLog(@"Non Reachable");
+    NSLog(@"Connect to CoreData");
+    
+    //Connect to CoreData for local data
+    //!- FOR TESTING ONLY -!
+    self.assetTypePickerArray = [[NSArray alloc] initWithObjects:@"Aircon",@"Door", @"Exhaust Fan",@"Faucet",@"Toilet",@"Kitchen Sink",@"Lighting Fixtures", nil];
+  }
+}
+
+#pragma mark - Check for network availability
+-(BOOL)reachable
+{
+  Reachability *r = [Reachability  reachabilityWithHostName:URL];
+  NetworkStatus internetStatus = [r currentReachabilityStatus];
+  
+  if(internetStatus == NotReachable)
+  {
+    return NO;
+  }
+  
+  return YES;
+}
+
 
 #pragma mark - Change assetTypeField to assetTypePicker when clicked
 - (BOOL)textFieldDidBeginEditing:(UITextField *)textField

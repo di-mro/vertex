@@ -9,6 +9,7 @@
 #import "CreateSRViewController.h"
 #import "HomePageViewController.h"
 #import "ServiceRequestViewController.h"
+#import "Reachability.h"
 
 @interface CreateSRViewController ()
 
@@ -38,6 +39,8 @@
 
 @synthesize srObject;
 
+@synthesize URL;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -64,12 +67,20 @@
   //Scroller size
   self.createSRScroller.contentSize = CGSizeMake(320.0, 900.0);
   
+  //Set URL
+  URL = @"http://localhost:8080/vertex/lifecycle/getLifecycles";
+  
   /* TODO
    !-Remove hardcoded data. Retrieve listing in DB-!
    */
   self.assetPickerArray = [[NSArray alloc] initWithObjects:@"Aircon",@"Window", @"Bathtub",@"Bathroom Faucet",@"Toilet",@"Kitchen Sink",@"Lighting Fixtures", nil];
-  self.lifecyclePickerArray = [[NSArray alloc] initWithObjects: @"Canvas", @"Requisition", @"Purchase", @"Installation", @"Repair", @"Decommission", nil];
+  
+  //getLifecycle
+  self.lifecyclePickerArray = [[NSArray alloc] init];
+  [self getLifecycles];
+  
   self.servicePickerArray = [[NSArray alloc] initWithObjects:@"Fix broken pipes", @"Clean filter", @"Fix wiring", @"Declog pipes", @"Repaint", @"Miscellaneous", nil];
+  
   self.priorityPickerArray = [[NSArray alloc] initWithObjects:@"Emergency", @"Scheduled", @"Routine", @"Urgent", nil];
   
   //Set delegates for the picker fields
@@ -90,6 +101,90 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - getLifecycle
+-(void) getLifecycles
+{
+  //userId / request parameters ??
+  NSMutableString *bodyData = [NSMutableString
+                               stringWithFormat:@"userId=1"];
+  NSLog(@"%@", bodyData);
+  
+  NSMutableURLRequest *getRequest = [NSMutableURLRequest
+                                      requestWithURL:[NSURL URLWithString:URL]];
+  
+  // Set the request's content type to application/x-www-form-urlencoded
+  [getRequest setValue:@"application/x-www-form-urlencoded" //content type ??
+     forHTTPHeaderField:@"Content-Type"];
+  // Designate the request a GET request and specify its body data
+  [getRequest setHTTPMethod:@"GET"];
+  [getRequest setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String]
+                                         length:[bodyData length]]];
+  NSLog(@"%@", getRequest);
+  
+  if([self reachable])
+  {
+    NSLog(@"Reachable");
+    
+    // Initialize the NSURLConnection and proceed as usual
+    NSURLConnection *connection = [[NSURLConnection alloc]
+                                   initWithRequest:getRequest
+                                   delegate:self];
+    //start the connection
+    [connection start];
+    
+    // Get Response. Validation before proceeding to next page. Retrieve confirmation from the ws that user is valid.
+    NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+    NSError *error = [[NSError alloc] init];
+    
+    NSData *responseData = [NSURLConnection
+                            sendSynchronousRequest:getRequest
+                            returningResponse:&urlResponse
+                            error:&error];
+    
+    NSString *result = [[NSString alloc] initWithData:responseData
+                                             encoding:NSUTF8StringEncoding];
+    NSLog(@"Response: %@", result);
+    
+    /*NSMutableDictionary *json = [NSJSONSerialization
+     JSONObjectWithData:responseData
+     options:kNilOptions
+     error:&error];
+     NSString *loginProceed = [json objectForKey:@"valid"];
+     
+     NSLog(@"Response code- %ld",(long)[urlResponse statusCode]);
+     NSLog(@"Response JSON: %@", json);
+     NSLog(@"Login Response JSON: %@", loginProceed);
+     */
+    
+    [lifecyclePickerArray initWithObjects:responseData, nil];
+    NSLog(@"lifecyclePickerArray: %@", lifecyclePickerArray);
+  }
+  else
+  {
+    NSLog(@"Non Reachable");
+    NSLog(@"Connect to CoreData");
+    
+    //Connect to CoreData for local data
+    //!- FOR TESTING ONLY -!
+    self.lifecyclePickerArray = [[NSArray alloc] initWithObjects: @"Canvas", @"Requisition", @"Purchase", @"Installation", @"Repair", @"Decommission", nil];
+  }
+}
+
+#pragma mark - Check for network availability
+-(BOOL)reachable
+{
+  Reachability *r = [Reachability  reachabilityWithHostName:URL];
+  NetworkStatus internetStatus = [r currentReachabilityStatus];
+  
+  if(internetStatus == NotReachable)
+  {
+    return NO;
+  }
+  
+  return YES;
+}
+
 
 #pragma mark - Generic Picker definitions
 -(void) defineGenericPicker
@@ -319,11 +414,12 @@
 #pragma mark - 'Create Service Request' validation of fields
 -(BOOL) validateCreateSRFields
 {
-  UIAlertView *createSRValidateAlert = [[UIAlertView alloc] initWithTitle:@"Incomplete Information"
-                                                  message:@"Please fill out the necessary fields."
-                                                 delegate:nil
-                                        cancelButtonTitle:@"OK"
-                                        otherButtonTitles:nil];
+  UIAlertView *createSRValidateAlert = [[UIAlertView alloc]
+                                        initWithTitle:@"Incomplete Information"
+                                              message:@"Please fill out the necessary fields."
+                                             delegate:nil
+                                    cancelButtonTitle:@"OK"
+                                    otherButtonTitles:nil];
   
   if([assetField.text isEqualToString:(@"")]
      || [lifecycleField.text isEqualToString:(@"")]

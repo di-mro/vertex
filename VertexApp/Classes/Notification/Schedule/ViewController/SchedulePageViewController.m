@@ -1,26 +1,25 @@
 //
-//  SettingsViewController.m
+//  SchedulePageViewController.m
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 2/26/13.
+//  Created by Mary Rose Oh on 3/9/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
-#import "SettingsViewController.h"
+#import "SchedulePageViewController.h"
 
-@interface SettingsViewController ()
+@interface SchedulePageViewController ()
 
 @end
 
-@implementation SettingsViewController
+@implementation SchedulePageViewController
 
-@synthesize settingsPageEntries;
+@synthesize schedulePageEntries;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self)
-    {
+    if (self) {
         // Custom initialization
     }
     return self;
@@ -28,28 +27,30 @@
 
 - (void)viewDidLoad
 {
-  [self displaySettingsPageEntries];
-  [super viewDidLoad];
+  [self displaySchedulePageEntries];
+    [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
 {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 # pragma mark - Display entries in Settings Page
-- (void) displaySettingsPageEntries
+- (void) displaySchedulePageEntries
 {
-  settingsPageEntries = [[NSMutableArray alloc] init];
+  schedulePageEntries = [[NSMutableArray alloc] init];
   
   /* !-For demo only, remove hard coded values. Must retrieve listing in DB -! */
-  NSString *entry1 = @"Edit Password";
-  NSString *entry2 = @"Edit Account Details";
-  
-  [settingsPageEntries addObject:entry1];
-  [settingsPageEntries addObject:entry2];
+  /*
+   NSString *entry1 = @"Edit Password";
+   NSString *entry2 = @"Edit Account Details";
+   
+   [schedulePageEntries addObject:entry1];
+   [schedulePageEntries addObject:entry2];
+   */
 }
 
 #pragma mark - Table view data source implementation
@@ -61,25 +62,25 @@
 
 - (NSString *) tableView:(UITableView *) tableView titleForHeaderInSection:(NSInteger)section
 {
-  NSString *myTitle = [[NSString alloc] initWithFormat:@"Options and Configurations"];
+  NSString *myTitle = [[NSString alloc] initWithFormat:@""];
   return myTitle;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
   //Return the number of rows in the section
-  return [settingsPageEntries count];
-  NSLog(@"%d", [settingsPageEntries count]);
+  return [schedulePageEntries count];
+  NSLog(@"%d", [schedulePageEntries count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  NSLog(@"Settings Page View");
-  static NSString *CellIdentifier = @"settingsPageCell";
+  NSLog(@"Schedule Page View");
+  static NSString *CellIdentifier = @"schedulePageCell";
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.settingsPageEntries objectAtIndex:indexPath.row];
+  cell.textLabel.text = [self.schedulePageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
   return cell;
 }
@@ -90,15 +91,15 @@
   /* !-Remove these hardcoded cases -! */
   switch (indexPath.row)
   {
-    /*
-    //Edit Password
-    case 0: [self performSegueWithIdentifier:@"" sender:self];
-      break;
-    //Edit Account Details
-    case 1: [self performSegueWithIdentifier:@"" sender:self];
-      break;
-    default: break;
-    */
+      /*
+       //Edit Password
+       case 0: [self performSegueWithIdentifier:@"" sender:self];
+       break;
+       //Edit Account Details
+       case 1: [self performSegueWithIdentifier:@"" sender:self];
+       break;
+       default: break;
+       */
   }
 }
 

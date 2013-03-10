@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		ED3BB35016E04EA900468E44 /* SRFeedbackListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3BB34F16E04EA900468E44 /* SRFeedbackListViewController.m */; };
 		ED3BB35616E0524400468E44 /* SRFeedbackPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3BB35516E0524400468E44 /* SRFeedbackPageViewController.m */; };
+		ED3D573B16EB11A800497F80 /* ReportsPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3D573A16EB11A800497F80 /* ReportsPageViewController.m */; };
+		ED3D573E16EB128000497F80 /* SchedulePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3D573D16EB128000497F80 /* SchedulePageViewController.m */; };
 		ED59EC5A16DCA78100FCA959 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC5116DCA6D700FCA959 /* libRestKit.a */; };
 		ED59EC5C16DCA78C00FCA959 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC5B16DCA78C00FCA959 /* CFNetwork.framework */; };
 		ED59EC5E16DCA79800FCA959 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC5D16DCA79800FCA959 /* CoreData.framework */; };
@@ -22,6 +24,8 @@
 		ED63134F16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ED63134D16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodeld */; };
 		ED8A7C7D16E4A34200F06AF1 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8A7C7716E4941200F06AF1 /* TPKeyboardAvoidingScrollView.m */; };
 		ED8A7C7E16E4A34D00F06AF1 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8A7C7916E4941200F06AF1 /* TPKeyboardAvoidingTableView.m */; };
+		EDB1A0C716E9E24300BCD1F4 /* AdminTasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB1A0C616E9E24300BCD1F4 /* AdminTasksViewController.m */; };
+		EDB1A0CA16E9F71900BCD1F4 /* BillingTasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB1A0C916E9F71900BCD1F4 /* BillingTasksViewController.m */; };
 		EDE0E8AF16CB744700B9D0E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE0E8AE16CB744700B9D0E7 /* UIKit.framework */; };
 		EDE0E8B116CB744700B9D0E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE0E8B016CB744700B9D0E7 /* Foundation.framework */; };
 		EDE0E8B316CB744700B9D0E7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE0E8B216CB744700B9D0E7 /* CoreGraphics.framework */; };
@@ -106,6 +110,10 @@
 		ED3BB34F16E04EA900468E44 /* SRFeedbackListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRFeedbackListViewController.m; sourceTree = "<group>"; };
 		ED3BB35416E0524400468E44 /* SRFeedbackPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRFeedbackPageViewController.h; sourceTree = "<group>"; };
 		ED3BB35516E0524400468E44 /* SRFeedbackPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRFeedbackPageViewController.m; sourceTree = "<group>"; };
+		ED3D573916EB11A800497F80 /* ReportsPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportsPageViewController.h; sourceTree = "<group>"; };
+		ED3D573A16EB11A800497F80 /* ReportsPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportsPageViewController.m; sourceTree = "<group>"; };
+		ED3D573C16EB128000497F80 /* SchedulePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SchedulePageViewController.h; sourceTree = "<group>"; };
+		ED3D573D16EB128000497F80 /* SchedulePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SchedulePageViewController.m; sourceTree = "<group>"; };
 		ED59EC4916DCA6D600FCA959 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = ../RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		ED59EC5B16DCA78C00FCA959 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		ED59EC5D16DCA79800FCA959 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -123,6 +131,10 @@
 		ED8A7C7716E4941200F06AF1 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
 		ED8A7C7816E4941200F06AF1 /* TPKeyboardAvoidingTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingTableView.h; sourceTree = "<group>"; };
 		ED8A7C7916E4941200F06AF1 /* TPKeyboardAvoidingTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingTableView.m; sourceTree = "<group>"; };
+		EDB1A0C516E9E24300BCD1F4 /* AdminTasksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdminTasksViewController.h; sourceTree = "<group>"; };
+		EDB1A0C616E9E24300BCD1F4 /* AdminTasksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdminTasksViewController.m; sourceTree = "<group>"; };
+		EDB1A0C816E9F71900BCD1F4 /* BillingTasksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BillingTasksViewController.h; sourceTree = "<group>"; };
+		EDB1A0C916E9F71900BCD1F4 /* BillingTasksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BillingTasksViewController.m; sourceTree = "<group>"; };
 		EDE0E8AB16CB744700B9D0E7 /* VertexApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VertexApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDE0E8AE16CB744700B9D0E7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		EDE0E8B016CB744700B9D0E7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -219,6 +231,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ED3D573416EB115600497F80 /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				ED3D573516EB115600497F80 /* ViewController */,
+			);
+			name = Schedule;
+			path = Notification/Schedule;
+			sourceTree = "<group>";
+		};
+		ED3D573516EB115600497F80 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				ED3D573C16EB128000497F80 /* SchedulePageViewController.h */,
+				ED3D573D16EB128000497F80 /* SchedulePageViewController.m */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		ED59EC4A16DCA6D600FCA959 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,6 +328,7 @@
 				EDEFE77916DF3C51002C35D6 /* Core */,
 				EDEFE79816DF3C51002C35D6 /* Home */,
 				EDEFE7A416DF3C51002C35D6 /* Notification */,
+				ED3D573416EB115600497F80 /* Schedule */,
 				EDEFE7A816DF3C51002C35D6 /* ServiceRequest */,
 				EDEFE7B216DF3C51002C35D6 /* Settings */,
 				EDEFE7B616DF3C51002C35D6 /* Statistics&Reports */,
@@ -309,6 +340,8 @@
 		EDEFE76316DF3C51002C35D6 /* Administration */ = {
 			isa = PBXGroup;
 			children = (
+				EDB1A0C516E9E24300BCD1F4 /* AdminTasksViewController.h */,
+				EDB1A0C616E9E24300BCD1F4 /* AdminTasksViewController.m */,
 				EDEFE76416DF3C51002C35D6 /* Assets */,
 				EDEFE76E16DF3C51002C35D6 /* Lifecycle */,
 				EDEFE77016DF3C51002C35D6 /* Service */,
@@ -388,10 +421,10 @@
 		EDEFE77416DF3C51002C35D6 /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
-				ED63134916E5BCFD00987E2D /* ReachabilityAppDelegate.h */,
-				ED63134A16E5BCFD00987E2D /* ReachabilityAppDelegate.m */,
 				EDEFE77516DF3C51002C35D6 /* AppDelegate.h */,
 				EDEFE77616DF3C51002C35D6 /* AppDelegate.m */,
+				ED63134916E5BCFD00987E2D /* ReachabilityAppDelegate.h */,
+				ED63134A16E5BCFD00987E2D /* ReachabilityAppDelegate.m */,
 			);
 			path = AppDelegate;
 			sourceTree = "<group>";
@@ -407,6 +440,8 @@
 		EDEFE77816DF3C51002C35D6 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				EDB1A0C816E9F71900BCD1F4 /* BillingTasksViewController.h */,
+				EDB1A0C916E9F71900BCD1F4 /* BillingTasksViewController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -539,6 +574,8 @@
 		EDEFE7B716DF3C51002C35D6 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				ED3D573916EB11A800497F80 /* ReportsPageViewController.h */,
+				ED3D573A16EB11A800497F80 /* ReportsPageViewController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -751,6 +788,10 @@
 				EDF39CCC16E6FC51009B026F /* Tasks.m in Sources */,
 				EDF39CCD16E6FC51009B026F /* UserInfo.m in Sources */,
 				EDF39CCE16E6FC51009B026F /* UserProfile.m in Sources */,
+				EDB1A0C716E9E24300BCD1F4 /* AdminTasksViewController.m in Sources */,
+				EDB1A0CA16E9F71900BCD1F4 /* BillingTasksViewController.m in Sources */,
+				ED3D573B16EB11A800497F80 /* ReportsPageViewController.m in Sources */,
+				ED3D573E16EB128000497F80 /* SchedulePageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

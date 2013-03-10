@@ -45,13 +45,19 @@
   serviceRequestPageEntries = [[NSMutableArray alloc] init];
   
   /* !- TODO For demo only, remove hard coded values -! */
-  NSString *entry1 = @"Create Service Request";
-  NSString *entry2 = @"View Service Requests";
-  NSString *entry3 = @"Submit Feedback";
+  NSString *entry1 = @"Create";
+  NSString *entry2 = @"View";
+  NSString *entry3 = @"Acknowledge";
+  NSString *entry4 = @"Approve";
+  NSString *entry5 = @"Provision";
+  NSString *entry6 = @"Create Feedback";
   
   [serviceRequestPageEntries addObject:entry1];
   [serviceRequestPageEntries addObject:entry2];
   [serviceRequestPageEntries addObject:entry3];
+  [serviceRequestPageEntries addObject:entry4];
+  [serviceRequestPageEntries addObject:entry5];
+  [serviceRequestPageEntries addObject:entry6];
 }
 
 #pragma mark - Table view data source
@@ -63,7 +69,7 @@
 
 - (NSString *) tableView:(UITableView *) tableView titleForHeaderInSection:(NSInteger)section
 {
-  NSString *myTitle = [[NSString alloc] initWithFormat:@""];
+  NSString *myTitle = [[NSString alloc] initWithFormat:@"Service Request Tasks"];
   return myTitle;
 }
 
@@ -91,11 +97,23 @@
 {
   switch (indexPath.row)
   {
+    //Create
     case 0: [self performSegueWithIdentifier:@"srToCreateSR" sender:self];
       break;
+    //View
     case 1: [self performSegueWithIdentifier:@"srToViewSR" sender:self];
       break;
-    case 2: [self performSegueWithIdentifier:@"srToSRFeedbackList" sender:self];
+    //Acknowledge
+    case 2: [self performSegueWithIdentifier:@"srToViewSR" sender:self];
+      break;
+    //Approve
+    case 3: [self performSegueWithIdentifier:@"srToViewSR" sender:self];
+      break;
+    //Provision
+    case 4: [self performSegueWithIdentifier:@"srToViewSR" sender:self];
+      break;
+    //Feedback
+    case 5: [self performSegueWithIdentifier:@"srToSRFeedbackList" sender:self];
       break;
     default: break;
   }

@@ -126,17 +126,17 @@
     //Asset
     case 2: [self performSegueWithIdentifier:@"homeToAssets" sender:self];
       break;
-    //Billing ~
-    case 3: [self performSegueWithIdentifier:@"homeToServiceRequest" sender:self];
+    //Billing
+    case 3: [self performSegueWithIdentifier:@"homeToBilling" sender:self];
       break;
-    //Reports ~ 
-    case 4: [self performSegueWithIdentifier:@"homeToAssets" sender:self];
+    //Reports
+    case 4: [self performSegueWithIdentifier:@"homeToReports" sender:self];
       break;
-    //Administration ~
-    case 5: [self performSegueWithIdentifier:@"homeToServiceRequest" sender:self];
+    //Administration
+    case 5: [self performSegueWithIdentifier:@"homeToAdmin" sender:self];
       break;
-    //Schedule ~
-    case 6: [self performSegueWithIdentifier:@"homeToServiceRequest" sender:self];
+    //Schedule
+    case 6: [self performSegueWithIdentifier:@"homeToSchedule" sender:self];
       break;
     //Settings
     case 7: [self performSegueWithIdentifier:@"homeToSettings" sender:self];

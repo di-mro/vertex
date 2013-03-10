@@ -38,4 +38,6 @@
 
 @property (strong, nonatomic) AssetObject *assetObject;
 
+@property (strong, nonatomic) NSString *URL;
+
 @end

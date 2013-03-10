@@ -51,5 +51,6 @@
 
 @property (strong, nonatomic) SRObject *srObject;
 
+@property (strong, nonatomic) NSString *URL;
 
 @end
