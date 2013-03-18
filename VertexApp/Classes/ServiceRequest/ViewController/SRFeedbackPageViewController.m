@@ -9,7 +9,7 @@
 #import "SRFeedbackPageViewController.h"
 #import "HomePageViewController.h"
 #import "ServiceRequestViewController.h"
-#import "Feedback.h"
+//#import "Feedback.h"
 #import "RestKit/RestKit.h"
 
 @interface SRFeedbackPageViewController ()
@@ -166,7 +166,8 @@
   comments = srCommentsTextArea.text;
   NSLog(@"Comments: %@", comments);
   
-  /* !- DO A POST -! */
+  /*
+  // !- DO A POST -!
   RKObjectMapping* feedbackMapping = [RKObjectMapping requestMapping ];
   [feedbackMapping addAttributeMappingsFromArray:@[@"rating", @"comments"]];
   NSLog(@"feedbackMapping: %@", feedbackMapping);
@@ -185,7 +186,7 @@
   NSLog(@"feedbackObject: %@", feedbackObject);
   
   [[RKObjectManager sharedManager] postObject:feedbackObject path:@"http://192.168.2.103:8080/vertex/user/login" parameters:nil success:nil failure:nil];
-  
+  */
   
   /* !- TODO -! */
   //if(validateSaveToDB)

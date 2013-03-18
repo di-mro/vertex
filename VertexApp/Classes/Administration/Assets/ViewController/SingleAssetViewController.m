@@ -21,6 +21,8 @@
 @synthesize powerConsumptionField;
 @synthesize remarksArea;
 
+@synthesize managedAssetId;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -33,6 +35,8 @@
 
 - (void)viewDidLoad
 {
+  NSLog(@"managedAssetId: %@", managedAssetId);
+  //assetNameField.text = managedAssetId;
   //For viewing only, editing disabled
   assetNameField.enabled = NO;
   assetTypeField.enabled = NO;

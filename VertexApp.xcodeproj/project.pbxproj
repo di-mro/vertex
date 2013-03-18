@@ -11,6 +11,11 @@
 		ED3BB35616E0524400468E44 /* SRFeedbackPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3BB35516E0524400468E44 /* SRFeedbackPageViewController.m */; };
 		ED3D573B16EB11A800497F80 /* ReportsPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3D573A16EB11A800497F80 /* ReportsPageViewController.m */; };
 		ED3D573E16EB128000497F80 /* SchedulePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3D573D16EB128000497F80 /* SchedulePageViewController.m */; };
+		ED59996616EDDDD700681941 /* BroadcastUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = ED59996516EDDDD700681941 /* BroadcastUsers.m */; };
+		ED59996F16EDE64600681941 /* Lifecycles.m in Sources */ = {isa = PBXBuildFile; fileRef = ED59996E16EDE63C00681941 /* Lifecycles.m */; };
+		ED59997216EDE73900681941 /* ServiceRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = ED59997116EDE73900681941 /* ServiceRequests.m */; };
+		ED59997516EDE77400681941 /* Services.m in Sources */ = {isa = PBXBuildFile; fileRef = ED59997416EDE77400681941 /* Services.m */; };
+		ED59997816EDE7B800681941 /* Tasks.m in Sources */ = {isa = PBXBuildFile; fileRef = ED59997716EDE7B700681941 /* Tasks.m */; };
 		ED59EC5A16DCA78100FCA959 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC5116DCA6D700FCA959 /* libRestKit.a */; };
 		ED59EC5C16DCA78C00FCA959 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC5B16DCA78C00FCA959 /* CFNetwork.framework */; };
 		ED59EC5E16DCA79800FCA959 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC5D16DCA79800FCA959 /* CoreData.framework */; };
@@ -24,6 +29,9 @@
 		ED63134F16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ED63134D16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodeld */; };
 		ED8A7C7D16E4A34200F06AF1 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8A7C7716E4941200F06AF1 /* TPKeyboardAvoidingScrollView.m */; };
 		ED8A7C7E16E4A34D00F06AF1 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8A7C7916E4941200F06AF1 /* TPKeyboardAvoidingTableView.m */; };
+		EDA8E70916F05C2D00B9C57E /* UserAccounts.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA8E70816F05C2000B9C57E /* UserAccounts.m */; };
+		EDA8E70F16F05D3300B9C57E /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA8E70E16F05D2800B9C57E /* UserInfo.m */; };
+		EDA8E71216F0630B00B9C57E /* AssetTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA8E71116F062FE00B9C57E /* AssetTypes.m */; };
 		EDB1A0C716E9E24300BCD1F4 /* AdminTasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB1A0C616E9E24300BCD1F4 /* AdminTasksViewController.m */; };
 		EDB1A0CA16E9F71900BCD1F4 /* BillingTasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB1A0C916E9F71900BCD1F4 /* BillingTasksViewController.m */; };
 		EDE0E8AF16CB744700B9D0E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE0E8AE16CB744700B9D0E7 /* UIKit.framework */; };
@@ -37,7 +45,7 @@
 		EDEFE7BA16DF3C51002C35D6 /* AddAssetPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE76716DF3C51002C35D6 /* AddAssetPageViewController.m */; };
 		EDEFE7BB16DF3C51002C35D6 /* AssetPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE76916DF3C51002C35D6 /* AssetPageViewController.m */; };
 		EDEFE7BD16DF3C51002C35D6 /* ViewAssetsPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE76D16DF3C51002C35D6 /* ViewAssetsPageViewController.m */; };
-		EDEFE7BE16DF3C51002C35D6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE77616DF3C51002C35D6 /* AppDelegate.m */; };
+		EDEFE7BE16DF3C51002C35D6 /* VertexAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE77616DF3C51002C35D6 /* VertexAppDelegate.m */; };
 		EDEFE7CD16DF3C51002C35D6 /* HomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE79B16DF3C51002C35D6 /* HomePageViewController.m */; };
 		EDEFE7CE16DF3C51002C35D6 /* LoginCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE79D16DF3C51002C35D6 /* LoginCredentials.m */; };
 		EDEFE7CF16DF3C51002C35D6 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE79F16DF3C51002C35D6 /* LoginViewController.m */; };
@@ -51,20 +59,41 @@
 		EDEFE7D716DF3C51002C35D6 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE7B516DF3C51002C35D6 /* SettingsViewController.m */; };
 		EDEFE7D816DF3C51002C35D6 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDEFE7B916DF3C51002C35D6 /* MainStoryboard.storyboard */; };
 		EDEFE7DE16DF46F5002C35D6 /* SingleAssetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE7DD16DF46F5002C35D6 /* SingleAssetViewController.m */; };
-		EDF39CC116E6FC51009B026F /* Asset.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CA616E6FC51009B026F /* Asset.m */; };
-		EDF39CC216E6FC51009B026F /* AssetObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CA816E6FC51009B026F /* AssetObject.m */; };
-		EDF39CC316E6FC51009B026F /* AssetTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CAA16E6FC51009B026F /* AssetTypes.m */; };
-		EDF39CC416E6FC51009B026F /* ContactDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CAC16E6FC51009B026F /* ContactDetails.m */; };
-		EDF39CC516E6FC51009B026F /* Feedback.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CAE16E6FC51009B026F /* Feedback.m */; };
-		EDF39CC616E6FC51009B026F /* Lifecycles.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CB016E6FC51009B026F /* Lifecycles.m */; };
-		EDF39CC716E6FC51009B026F /* Personnel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CB216E6FC51009B026F /* Personnel.m */; };
-		EDF39CC816E6FC51009B026F /* ServiceRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CB416E6FC51009B026F /* ServiceRequests.m */; };
-		EDF39CC916E6FC51009B026F /* Services.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CB616E6FC51009B026F /* Services.m */; };
-		EDF39CCA16E6FC51009B026F /* SRObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CB816E6FC51009B026F /* SRObject.m */; };
-		EDF39CCB16E6FC51009B026F /* SRTask.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CBA16E6FC51009B026F /* SRTask.m */; };
-		EDF39CCC16E6FC51009B026F /* Tasks.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CBC16E6FC51009B026F /* Tasks.m */; };
-		EDF39CCD16E6FC51009B026F /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CBE16E6FC51009B026F /* UserInfo.m */; };
-		EDF39CCE16E6FC51009B026F /* UserProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF39CC016E6FC51009B026F /* UserProfile.m */; };
+		EDFC534316EDD72E009AE92F /* UserContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFC534216EDD72D009AE92F /* UserContacts.m */; };
+		EDFC534616EDD77D009AE92F /* UserCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFC534516EDD77B009AE92F /* UserCredentials.m */; };
+		EDFC534C16EDD7D2009AE92F /* UserProfiles.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFC534B16EDD7D0009AE92F /* UserProfiles.m */; };
+		EDFE622116EDC432002EB414 /* AssetAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE622016EDC432002EB414 /* AssetAttributes.m */; };
+		EDFE622416EDC448002EB414 /* AssetOwnership.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE622316EDC448002EB414 /* AssetOwnership.m */; };
+		EDFE622A16EDC4E3002EB414 /* AssetSupers.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE622916EDC4E3002EB414 /* AssetSupers.m */; };
+		EDFE622D16EDC515002EB414 /* AssetTypeAttributesTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE622C16EDC515002EB414 /* AssetTypeAttributesTemplate.m */; };
+		EDFE623016EDC532002EB414 /* AssetTypeLifecycles.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE622F16EDC532002EB414 /* AssetTypeLifecycles.m */; };
+		EDFE623616EDC56E002EB414 /* AssetAccountability.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE623516EDC56E002EB414 /* AssetAccountability.m */; };
+		EDFE623916EDC6C1002EB414 /* Assets.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE623816EDC6C1002EB414 /* Assets.m */; };
+		EDFE623C16EDC6E5002EB414 /* Bills.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE623B16EDC6E4002EB414 /* Bills.m */; };
+		EDFE623F16EDC7ED002EB414 /* BroadcastGroups.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE623E16EDC7ED002EB414 /* BroadcastGroups.m */; };
+		EDFE624516EDC82D002EB414 /* ContactInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE624416EDC82C002EB414 /* ContactInfo.m */; };
+		EDFE624816EDC84A002EB414 /* ContactTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE624716EDC84A002EB414 /* ContactTypes.m */; };
+		EDFE624B16EDC86C002EB414 /* Dues.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE624A16EDC86B002EB414 /* Dues.m */; };
+		EDFE624E16EDC88E002EB414 /* Esse.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE624D16EDC88D002EB414 /* Esse.m */; };
+		EDFE625116EDC8AD002EB414 /* EsseContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE625016EDC8AD002EB414 /* EsseContacts.m */; };
+		EDFE625416EDC8F3002EB414 /* EsseInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE625316EDC8F2002EB414 /* EsseInfo.m */; };
+		EDFE625716EDC918002EB414 /* Feedbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE625616EDC917002EB414 /* Feedbacks.m */; };
+		EDFE625D16EDC96F002EB414 /* LifecycleServices.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE625C16EDC96E002EB414 /* LifecycleServices.m */; };
+		EDFE626016EDC9A2002EB414 /* ManagedAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE625F16EDC9A1002EB414 /* ManagedAssets.m */; };
+		EDFE626316EDC9D2002EB414 /* Memoranda.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE626216EDC9D1002EB414 /* Memoranda.m */; };
+		EDFE626616EDCA12002EB414 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE626516EDCA0D002EB414 /* Notifications.m */; };
+		EDFE626916EDCA67002EB414 /* OneTimeBills.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE626816EDCA66002EB414 /* OneTimeBills.m */; };
+		EDFE626C16EDCA8C002EB414 /* PersonnelContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE626B16EDCA8B002EB414 /* PersonnelContacts.m */; };
+		EDFE626F16EDCAB3002EB414 /* PersonnelInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE626E16EDCAB1002EB414 /* PersonnelInfo.m */; };
+		EDFE627216EDCAE7002EB414 /* Personnels.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE627116EDCAE5002EB414 /* Personnels.m */; };
+		EDFE627516EDCB32002EB414 /* Priorities.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE627416EDCB30002EB414 /* Priorities.m */; };
+		EDFE627816EDCB5B002EB414 /* ProfileFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE627716EDCB5A002EB414 /* ProfileFunctions.m */; };
+		EDFE627B16EDCB92002EB414 /* RecurringBills.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE627A16EDCB91002EB414 /* RecurringBills.m */; };
+		EDFE628116EDCC02002EB414 /* ServiceRequestSchedules.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE628016EDCC00002EB414 /* ServiceRequestSchedules.m */; };
+		EDFE628716EDCCE6002EB414 /* Statuses.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE628616EDCCE3002EB414 /* Statuses.m */; };
+		EDFE628A16EDCD4C002EB414 /* SystemFunctionHierarchies.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE628916EDCD4A002EB414 /* SystemFunctionHierarchies.m */; };
+		EDFE628D16EDCD7C002EB414 /* SystemFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE628C16EDCD79002EB414 /* SystemFunctions.m */; };
+		EDFE629316EDCDFD002EB414 /* UserAccountOwnership.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE629216EDCDFB002EB414 /* UserAccountOwnership.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +143,16 @@
 		ED3D573A16EB11A800497F80 /* ReportsPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportsPageViewController.m; sourceTree = "<group>"; };
 		ED3D573C16EB128000497F80 /* SchedulePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SchedulePageViewController.h; sourceTree = "<group>"; };
 		ED3D573D16EB128000497F80 /* SchedulePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SchedulePageViewController.m; sourceTree = "<group>"; };
+		ED59996416EDDDD700681941 /* BroadcastUsers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BroadcastUsers.h; sourceTree = "<group>"; };
+		ED59996516EDDDD700681941 /* BroadcastUsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BroadcastUsers.m; sourceTree = "<group>"; };
+		ED59996D16EDE63700681941 /* Lifecycles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lifecycles.h; sourceTree = "<group>"; };
+		ED59996E16EDE63C00681941 /* Lifecycles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lifecycles.m; sourceTree = "<group>"; };
+		ED59997016EDE73800681941 /* ServiceRequests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceRequests.h; sourceTree = "<group>"; };
+		ED59997116EDE73900681941 /* ServiceRequests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceRequests.m; sourceTree = "<group>"; };
+		ED59997316EDE77300681941 /* Services.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Services.h; sourceTree = "<group>"; };
+		ED59997416EDE77400681941 /* Services.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Services.m; sourceTree = "<group>"; };
+		ED59997616EDE7B700681941 /* Tasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tasks.h; sourceTree = "<group>"; };
+		ED59997716EDE7B700681941 /* Tasks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tasks.m; sourceTree = "<group>"; };
 		ED59EC4916DCA6D600FCA959 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = ../RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		ED59EC5B16DCA78C00FCA959 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		ED59EC5D16DCA79800FCA959 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -131,6 +170,12 @@
 		ED8A7C7716E4941200F06AF1 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
 		ED8A7C7816E4941200F06AF1 /* TPKeyboardAvoidingTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingTableView.h; sourceTree = "<group>"; };
 		ED8A7C7916E4941200F06AF1 /* TPKeyboardAvoidingTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingTableView.m; sourceTree = "<group>"; };
+		EDA8E70716F05C1300B9C57E /* UserAccounts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAccounts.h; sourceTree = "<group>"; };
+		EDA8E70816F05C2000B9C57E /* UserAccounts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAccounts.m; sourceTree = "<group>"; };
+		EDA8E70D16F05D1900B9C57E /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
+		EDA8E70E16F05D2800B9C57E /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
+		EDA8E71016F062F400B9C57E /* AssetTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetTypes.h; sourceTree = "<group>"; };
+		EDA8E71116F062FE00B9C57E /* AssetTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetTypes.m; sourceTree = "<group>"; };
 		EDB1A0C516E9E24300BCD1F4 /* AdminTasksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdminTasksViewController.h; sourceTree = "<group>"; };
 		EDB1A0C616E9E24300BCD1F4 /* AdminTasksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdminTasksViewController.m; sourceTree = "<group>"; };
 		EDB1A0C816E9F71900BCD1F4 /* BillingTasksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BillingTasksViewController.h; sourceTree = "<group>"; };
@@ -152,8 +197,8 @@
 		EDEFE76916DF3C51002C35D6 /* AssetPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetPageViewController.m; sourceTree = "<group>"; };
 		EDEFE76C16DF3C51002C35D6 /* ViewAssetsPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewAssetsPageViewController.h; sourceTree = "<group>"; };
 		EDEFE76D16DF3C51002C35D6 /* ViewAssetsPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewAssetsPageViewController.m; sourceTree = "<group>"; };
-		EDEFE77516DF3C51002C35D6 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		EDEFE77616DF3C51002C35D6 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		EDEFE77516DF3C51002C35D6 /* VertexAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VertexAppDelegate.h; sourceTree = "<group>"; };
+		EDEFE77616DF3C51002C35D6 /* VertexAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VertexAppDelegate.m; sourceTree = "<group>"; };
 		EDEFE79A16DF3C51002C35D6 /* HomePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageViewController.h; sourceTree = "<group>"; };
 		EDEFE79B16DF3C51002C35D6 /* HomePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageViewController.m; sourceTree = "<group>"; };
 		EDEFE79C16DF3C51002C35D6 /* LoginCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginCredentials.h; sourceTree = "<group>"; };
@@ -179,34 +224,78 @@
 		EDEFE7B916DF3C51002C35D6 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		EDEFE7DC16DF46F5002C35D6 /* SingleAssetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleAssetViewController.h; sourceTree = "<group>"; };
 		EDEFE7DD16DF46F5002C35D6 /* SingleAssetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleAssetViewController.m; sourceTree = "<group>"; };
-		EDF39CA516E6FC51009B026F /* Asset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Asset.h; sourceTree = "<group>"; };
-		EDF39CA616E6FC51009B026F /* Asset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Asset.m; sourceTree = "<group>"; };
-		EDF39CA716E6FC51009B026F /* AssetObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetObject.h; sourceTree = "<group>"; };
-		EDF39CA816E6FC51009B026F /* AssetObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetObject.m; sourceTree = "<group>"; };
-		EDF39CA916E6FC51009B026F /* AssetTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetTypes.h; sourceTree = "<group>"; };
-		EDF39CAA16E6FC51009B026F /* AssetTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetTypes.m; sourceTree = "<group>"; };
-		EDF39CAB16E6FC51009B026F /* ContactDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactDetails.h; sourceTree = "<group>"; };
-		EDF39CAC16E6FC51009B026F /* ContactDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactDetails.m; sourceTree = "<group>"; };
-		EDF39CAD16E6FC51009B026F /* Feedback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Feedback.h; sourceTree = "<group>"; };
-		EDF39CAE16E6FC51009B026F /* Feedback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feedback.m; sourceTree = "<group>"; };
-		EDF39CAF16E6FC51009B026F /* Lifecycles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lifecycles.h; sourceTree = "<group>"; };
-		EDF39CB016E6FC51009B026F /* Lifecycles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lifecycles.m; sourceTree = "<group>"; };
-		EDF39CB116E6FC51009B026F /* Personnel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Personnel.h; sourceTree = "<group>"; };
-		EDF39CB216E6FC51009B026F /* Personnel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Personnel.m; sourceTree = "<group>"; };
-		EDF39CB316E6FC51009B026F /* ServiceRequests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceRequests.h; sourceTree = "<group>"; };
-		EDF39CB416E6FC51009B026F /* ServiceRequests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceRequests.m; sourceTree = "<group>"; };
-		EDF39CB516E6FC51009B026F /* Services.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Services.h; sourceTree = "<group>"; };
-		EDF39CB616E6FC51009B026F /* Services.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Services.m; sourceTree = "<group>"; };
-		EDF39CB716E6FC51009B026F /* SRObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRObject.h; sourceTree = "<group>"; };
-		EDF39CB816E6FC51009B026F /* SRObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRObject.m; sourceTree = "<group>"; };
-		EDF39CB916E6FC51009B026F /* SRTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRTask.h; sourceTree = "<group>"; };
-		EDF39CBA16E6FC51009B026F /* SRTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRTask.m; sourceTree = "<group>"; };
-		EDF39CBB16E6FC51009B026F /* Tasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tasks.h; sourceTree = "<group>"; };
-		EDF39CBC16E6FC51009B026F /* Tasks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tasks.m; sourceTree = "<group>"; };
-		EDF39CBD16E6FC51009B026F /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
-		EDF39CBE16E6FC51009B026F /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
-		EDF39CBF16E6FC51009B026F /* UserProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfile.h; sourceTree = "<group>"; };
-		EDF39CC016E6FC51009B026F /* UserProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfile.m; sourceTree = "<group>"; };
+		EDFC534116EDD72C009AE92F /* UserContacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserContacts.h; sourceTree = "<group>"; };
+		EDFC534216EDD72D009AE92F /* UserContacts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserContacts.m; sourceTree = "<group>"; };
+		EDFC534416EDD77A009AE92F /* UserCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCredentials.h; sourceTree = "<group>"; };
+		EDFC534516EDD77B009AE92F /* UserCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCredentials.m; sourceTree = "<group>"; };
+		EDFC534A16EDD7CF009AE92F /* UserProfiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfiles.h; sourceTree = "<group>"; };
+		EDFC534B16EDD7D0009AE92F /* UserProfiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfiles.m; sourceTree = "<group>"; };
+		EDFE621716EDBFAC002EB414 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		EDFE621816EDBFAC002EB414 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		EDFE621F16EDC432002EB414 /* AssetAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetAttributes.h; sourceTree = "<group>"; };
+		EDFE622016EDC432002EB414 /* AssetAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetAttributes.m; sourceTree = "<group>"; };
+		EDFE622216EDC448002EB414 /* AssetOwnership.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetOwnership.h; sourceTree = "<group>"; };
+		EDFE622316EDC448002EB414 /* AssetOwnership.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetOwnership.m; sourceTree = "<group>"; };
+		EDFE622816EDC4E3002EB414 /* AssetSupers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetSupers.h; sourceTree = "<group>"; };
+		EDFE622916EDC4E3002EB414 /* AssetSupers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetSupers.m; sourceTree = "<group>"; };
+		EDFE622B16EDC514002EB414 /* AssetTypeAttributesTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetTypeAttributesTemplate.h; sourceTree = "<group>"; };
+		EDFE622C16EDC515002EB414 /* AssetTypeAttributesTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetTypeAttributesTemplate.m; sourceTree = "<group>"; };
+		EDFE622E16EDC532002EB414 /* AssetTypeLifecycles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetTypeLifecycles.h; sourceTree = "<group>"; };
+		EDFE622F16EDC532002EB414 /* AssetTypeLifecycles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetTypeLifecycles.m; sourceTree = "<group>"; };
+		EDFE623416EDC56D002EB414 /* AssetAccountability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetAccountability.h; sourceTree = "<group>"; };
+		EDFE623516EDC56E002EB414 /* AssetAccountability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetAccountability.m; sourceTree = "<group>"; };
+		EDFE623716EDC6C1002EB414 /* Assets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Assets.h; sourceTree = "<group>"; };
+		EDFE623816EDC6C1002EB414 /* Assets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Assets.m; sourceTree = "<group>"; };
+		EDFE623A16EDC6E4002EB414 /* Bills.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bills.h; sourceTree = "<group>"; };
+		EDFE623B16EDC6E4002EB414 /* Bills.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bills.m; sourceTree = "<group>"; };
+		EDFE623D16EDC7ED002EB414 /* BroadcastGroups.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BroadcastGroups.h; sourceTree = "<group>"; };
+		EDFE623E16EDC7ED002EB414 /* BroadcastGroups.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BroadcastGroups.m; sourceTree = "<group>"; };
+		EDFE624316EDC82C002EB414 /* ContactInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactInfo.h; sourceTree = "<group>"; };
+		EDFE624416EDC82C002EB414 /* ContactInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactInfo.m; sourceTree = "<group>"; };
+		EDFE624616EDC84A002EB414 /* ContactTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactTypes.h; sourceTree = "<group>"; };
+		EDFE624716EDC84A002EB414 /* ContactTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactTypes.m; sourceTree = "<group>"; };
+		EDFE624916EDC86B002EB414 /* Dues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dues.h; sourceTree = "<group>"; };
+		EDFE624A16EDC86B002EB414 /* Dues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dues.m; sourceTree = "<group>"; };
+		EDFE624C16EDC88D002EB414 /* Esse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Esse.h; sourceTree = "<group>"; };
+		EDFE624D16EDC88D002EB414 /* Esse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Esse.m; sourceTree = "<group>"; };
+		EDFE624F16EDC8AC002EB414 /* EsseContacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EsseContacts.h; sourceTree = "<group>"; };
+		EDFE625016EDC8AD002EB414 /* EsseContacts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EsseContacts.m; sourceTree = "<group>"; };
+		EDFE625216EDC8F2002EB414 /* EsseInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EsseInfo.h; sourceTree = "<group>"; };
+		EDFE625316EDC8F2002EB414 /* EsseInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EsseInfo.m; sourceTree = "<group>"; };
+		EDFE625516EDC917002EB414 /* Feedbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Feedbacks.h; sourceTree = "<group>"; };
+		EDFE625616EDC917002EB414 /* Feedbacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feedbacks.m; sourceTree = "<group>"; };
+		EDFE625B16EDC96D002EB414 /* LifecycleServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LifecycleServices.h; sourceTree = "<group>"; };
+		EDFE625C16EDC96E002EB414 /* LifecycleServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LifecycleServices.m; sourceTree = "<group>"; };
+		EDFE625E16EDC9A0002EB414 /* ManagedAssets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagedAssets.h; sourceTree = "<group>"; };
+		EDFE625F16EDC9A1002EB414 /* ManagedAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagedAssets.m; sourceTree = "<group>"; };
+		EDFE626116EDC9D1002EB414 /* Memoranda.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Memoranda.h; sourceTree = "<group>"; };
+		EDFE626216EDC9D1002EB414 /* Memoranda.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Memoranda.m; sourceTree = "<group>"; };
+		EDFE626416EDCA08002EB414 /* Notifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notifications.h; sourceTree = "<group>"; };
+		EDFE626516EDCA0D002EB414 /* Notifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notifications.m; sourceTree = "<group>"; };
+		EDFE626716EDCA65002EB414 /* OneTimeBills.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneTimeBills.h; sourceTree = "<group>"; };
+		EDFE626816EDCA66002EB414 /* OneTimeBills.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneTimeBills.m; sourceTree = "<group>"; };
+		EDFE626A16EDCA8A002EB414 /* PersonnelContacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonnelContacts.h; sourceTree = "<group>"; };
+		EDFE626B16EDCA8B002EB414 /* PersonnelContacts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonnelContacts.m; sourceTree = "<group>"; };
+		EDFE626D16EDCAB1002EB414 /* PersonnelInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonnelInfo.h; sourceTree = "<group>"; };
+		EDFE626E16EDCAB1002EB414 /* PersonnelInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonnelInfo.m; sourceTree = "<group>"; };
+		EDFE627016EDCAE4002EB414 /* Personnels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Personnels.h; sourceTree = "<group>"; };
+		EDFE627116EDCAE5002EB414 /* Personnels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Personnels.m; sourceTree = "<group>"; };
+		EDFE627316EDCB2F002EB414 /* Priorities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Priorities.h; sourceTree = "<group>"; };
+		EDFE627416EDCB30002EB414 /* Priorities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Priorities.m; sourceTree = "<group>"; };
+		EDFE627616EDCB58002EB414 /* ProfileFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileFunctions.h; sourceTree = "<group>"; };
+		EDFE627716EDCB5A002EB414 /* ProfileFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileFunctions.m; sourceTree = "<group>"; };
+		EDFE627916EDCB8F002EB414 /* RecurringBills.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecurringBills.h; sourceTree = "<group>"; };
+		EDFE627A16EDCB91002EB414 /* RecurringBills.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecurringBills.m; sourceTree = "<group>"; };
+		EDFE627F16EDCBFF002EB414 /* ServiceRequestSchedules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceRequestSchedules.h; sourceTree = "<group>"; };
+		EDFE628016EDCC00002EB414 /* ServiceRequestSchedules.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceRequestSchedules.m; sourceTree = "<group>"; };
+		EDFE628516EDCCE2002EB414 /* Statuses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Statuses.h; sourceTree = "<group>"; };
+		EDFE628616EDCCE3002EB414 /* Statuses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Statuses.m; sourceTree = "<group>"; };
+		EDFE628816EDCD48002EB414 /* SystemFunctionHierarchies.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemFunctionHierarchies.h; sourceTree = "<group>"; };
+		EDFE628916EDCD4A002EB414 /* SystemFunctionHierarchies.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemFunctionHierarchies.m; sourceTree = "<group>"; };
+		EDFE628B16EDCD77002EB414 /* SystemFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemFunctions.h; sourceTree = "<group>"; };
+		EDFE628C16EDCD79002EB414 /* SystemFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemFunctions.m; sourceTree = "<group>"; };
+		EDFE629116EDCDF9002EB414 /* UserAccountOwnership.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAccountOwnership.h; sourceTree = "<group>"; };
+		EDFE629216EDCDFB002EB414 /* UserAccountOwnership.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAccountOwnership.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -340,8 +429,8 @@
 		EDEFE76316DF3C51002C35D6 /* Administration */ = {
 			isa = PBXGroup;
 			children = (
-				EDB1A0C516E9E24300BCD1F4 /* AdminTasksViewController.h */,
 				EDB1A0C616E9E24300BCD1F4 /* AdminTasksViewController.m */,
+				EDB1A0C516E9E24300BCD1F4 /* AdminTasksViewController.h */,
 				EDEFE76416DF3C51002C35D6 /* Assets */,
 				EDEFE76E16DF3C51002C35D6 /* Lifecycle */,
 				EDEFE77016DF3C51002C35D6 /* Service */,
@@ -421,8 +510,10 @@
 		EDEFE77416DF3C51002C35D6 /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
-				EDEFE77516DF3C51002C35D6 /* AppDelegate.h */,
-				EDEFE77616DF3C51002C35D6 /* AppDelegate.m */,
+				EDFE621716EDBFAC002EB414 /* AppDelegate.h */,
+				EDFE621816EDBFAC002EB414 /* AppDelegate.m */,
+				EDEFE77516DF3C51002C35D6 /* VertexAppDelegate.h */,
+				EDEFE77616DF3C51002C35D6 /* VertexAppDelegate.m */,
 				ED63134916E5BCFD00987E2D /* ReachabilityAppDelegate.h */,
 				ED63134A16E5BCFD00987E2D /* ReachabilityAppDelegate.m */,
 			);
@@ -458,8 +549,93 @@
 		EDEFE77A16DF3C51002C35D6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				EDF39CA416E6FC51009B026F /* ManuallyCreatedObjects */,
 				ED63134D16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodeld */,
+				EDFE623716EDC6C1002EB414 /* Assets.h */,
+				EDFE623816EDC6C1002EB414 /* Assets.m */,
+				EDFE623416EDC56D002EB414 /* AssetAccountability.h */,
+				EDFE623516EDC56E002EB414 /* AssetAccountability.m */,
+				EDA8E71016F062F400B9C57E /* AssetTypes.h */,
+				EDA8E71116F062FE00B9C57E /* AssetTypes.m */,
+				EDFE622E16EDC532002EB414 /* AssetTypeLifecycles.h */,
+				EDFE622F16EDC532002EB414 /* AssetTypeLifecycles.m */,
+				EDFE622B16EDC514002EB414 /* AssetTypeAttributesTemplate.h */,
+				EDFE622C16EDC515002EB414 /* AssetTypeAttributesTemplate.m */,
+				EDFE622816EDC4E3002EB414 /* AssetSupers.h */,
+				EDFE622916EDC4E3002EB414 /* AssetSupers.m */,
+				EDFE622216EDC448002EB414 /* AssetOwnership.h */,
+				EDFE622316EDC448002EB414 /* AssetOwnership.m */,
+				EDFE621F16EDC432002EB414 /* AssetAttributes.h */,
+				EDFE622016EDC432002EB414 /* AssetAttributes.m */,
+				EDFE623A16EDC6E4002EB414 /* Bills.h */,
+				EDFE623B16EDC6E4002EB414 /* Bills.m */,
+				EDFE623D16EDC7ED002EB414 /* BroadcastGroups.h */,
+				EDFE623E16EDC7ED002EB414 /* BroadcastGroups.m */,
+				ED59996416EDDDD700681941 /* BroadcastUsers.h */,
+				ED59996516EDDDD700681941 /* BroadcastUsers.m */,
+				EDFE624316EDC82C002EB414 /* ContactInfo.h */,
+				EDFE624416EDC82C002EB414 /* ContactInfo.m */,
+				EDFE624616EDC84A002EB414 /* ContactTypes.h */,
+				EDFE624716EDC84A002EB414 /* ContactTypes.m */,
+				EDFE624916EDC86B002EB414 /* Dues.h */,
+				EDFE624A16EDC86B002EB414 /* Dues.m */,
+				EDFE624C16EDC88D002EB414 /* Esse.h */,
+				EDFE624D16EDC88D002EB414 /* Esse.m */,
+				EDFE624F16EDC8AC002EB414 /* EsseContacts.h */,
+				EDFE625016EDC8AD002EB414 /* EsseContacts.m */,
+				EDFE625216EDC8F2002EB414 /* EsseInfo.h */,
+				EDFE625316EDC8F2002EB414 /* EsseInfo.m */,
+				EDFE625516EDC917002EB414 /* Feedbacks.h */,
+				EDFE625616EDC917002EB414 /* Feedbacks.m */,
+				ED59996D16EDE63700681941 /* Lifecycles.h */,
+				ED59996E16EDE63C00681941 /* Lifecycles.m */,
+				EDFE625B16EDC96D002EB414 /* LifecycleServices.h */,
+				EDFE625C16EDC96E002EB414 /* LifecycleServices.m */,
+				EDFE625E16EDC9A0002EB414 /* ManagedAssets.h */,
+				EDFE625F16EDC9A1002EB414 /* ManagedAssets.m */,
+				EDFE626116EDC9D1002EB414 /* Memoranda.h */,
+				EDFE626216EDC9D1002EB414 /* Memoranda.m */,
+				EDFE626416EDCA08002EB414 /* Notifications.h */,
+				EDFE626516EDCA0D002EB414 /* Notifications.m */,
+				EDFE626716EDCA65002EB414 /* OneTimeBills.h */,
+				EDFE626816EDCA66002EB414 /* OneTimeBills.m */,
+				EDFE626A16EDCA8A002EB414 /* PersonnelContacts.h */,
+				EDFE626B16EDCA8B002EB414 /* PersonnelContacts.m */,
+				EDFE626D16EDCAB1002EB414 /* PersonnelInfo.h */,
+				EDFE626E16EDCAB1002EB414 /* PersonnelInfo.m */,
+				EDFE627016EDCAE4002EB414 /* Personnels.h */,
+				EDFE627116EDCAE5002EB414 /* Personnels.m */,
+				EDFE627316EDCB2F002EB414 /* Priorities.h */,
+				EDFE627416EDCB30002EB414 /* Priorities.m */,
+				EDFE627616EDCB58002EB414 /* ProfileFunctions.h */,
+				EDFE627716EDCB5A002EB414 /* ProfileFunctions.m */,
+				EDFE627916EDCB8F002EB414 /* RecurringBills.h */,
+				EDFE627A16EDCB91002EB414 /* RecurringBills.m */,
+				ED59997316EDE77300681941 /* Services.h */,
+				ED59997416EDE77400681941 /* Services.m */,
+				ED59997016EDE73800681941 /* ServiceRequests.h */,
+				ED59997116EDE73900681941 /* ServiceRequests.m */,
+				EDFE627F16EDCBFF002EB414 /* ServiceRequestSchedules.h */,
+				EDFE628016EDCC00002EB414 /* ServiceRequestSchedules.m */,
+				EDFE628516EDCCE2002EB414 /* Statuses.h */,
+				EDFE628616EDCCE3002EB414 /* Statuses.m */,
+				EDFE628816EDCD48002EB414 /* SystemFunctionHierarchies.h */,
+				EDFE628916EDCD4A002EB414 /* SystemFunctionHierarchies.m */,
+				EDFE628B16EDCD77002EB414 /* SystemFunctions.h */,
+				EDFE628C16EDCD79002EB414 /* SystemFunctions.m */,
+				ED59997616EDE7B700681941 /* Tasks.h */,
+				ED59997716EDE7B700681941 /* Tasks.m */,
+				EDA8E70716F05C1300B9C57E /* UserAccounts.h */,
+				EDA8E70816F05C2000B9C57E /* UserAccounts.m */,
+				EDFE629116EDCDF9002EB414 /* UserAccountOwnership.h */,
+				EDFE629216EDCDFB002EB414 /* UserAccountOwnership.m */,
+				EDFC534116EDD72C009AE92F /* UserContacts.h */,
+				EDFC534216EDD72D009AE92F /* UserContacts.m */,
+				EDFC534416EDD77A009AE92F /* UserCredentials.h */,
+				EDFC534516EDD77B009AE92F /* UserCredentials.m */,
+				EDA8E70D16F05D1900B9C57E /* UserInfo.h */,
+				EDA8E70E16F05D2800B9C57E /* UserInfo.m */,
+				EDFC534A16EDD7CF009AE92F /* UserProfiles.h */,
+				EDFC534B16EDD7D0009AE92F /* UserProfiles.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -611,41 +787,6 @@
 			path = Sounds;
 			sourceTree = "<group>";
 		};
-		EDF39CA416E6FC51009B026F /* ManuallyCreatedObjects */ = {
-			isa = PBXGroup;
-			children = (
-				EDF39CA516E6FC51009B026F /* Asset.h */,
-				EDF39CA616E6FC51009B026F /* Asset.m */,
-				EDF39CA716E6FC51009B026F /* AssetObject.h */,
-				EDF39CA816E6FC51009B026F /* AssetObject.m */,
-				EDF39CA916E6FC51009B026F /* AssetTypes.h */,
-				EDF39CAA16E6FC51009B026F /* AssetTypes.m */,
-				EDF39CAB16E6FC51009B026F /* ContactDetails.h */,
-				EDF39CAC16E6FC51009B026F /* ContactDetails.m */,
-				EDF39CAD16E6FC51009B026F /* Feedback.h */,
-				EDF39CAE16E6FC51009B026F /* Feedback.m */,
-				EDF39CAF16E6FC51009B026F /* Lifecycles.h */,
-				EDF39CB016E6FC51009B026F /* Lifecycles.m */,
-				EDF39CB116E6FC51009B026F /* Personnel.h */,
-				EDF39CB216E6FC51009B026F /* Personnel.m */,
-				EDF39CB316E6FC51009B026F /* ServiceRequests.h */,
-				EDF39CB416E6FC51009B026F /* ServiceRequests.m */,
-				EDF39CB516E6FC51009B026F /* Services.h */,
-				EDF39CB616E6FC51009B026F /* Services.m */,
-				EDF39CB716E6FC51009B026F /* SRObject.h */,
-				EDF39CB816E6FC51009B026F /* SRObject.m */,
-				EDF39CB916E6FC51009B026F /* SRTask.h */,
-				EDF39CBA16E6FC51009B026F /* SRTask.m */,
-				EDF39CBB16E6FC51009B026F /* Tasks.h */,
-				EDF39CBC16E6FC51009B026F /* Tasks.m */,
-				EDF39CBD16E6FC51009B026F /* UserInfo.h */,
-				EDF39CBE16E6FC51009B026F /* UserInfo.m */,
-				EDF39CBF16E6FC51009B026F /* UserProfile.h */,
-				EDF39CC016E6FC51009B026F /* UserProfile.m */,
-			);
-			path = ManuallyCreatedObjects;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -758,7 +899,7 @@
 				EDEFE7BA16DF3C51002C35D6 /* AddAssetPageViewController.m in Sources */,
 				EDEFE7BB16DF3C51002C35D6 /* AssetPageViewController.m in Sources */,
 				EDEFE7BD16DF3C51002C35D6 /* ViewAssetsPageViewController.m in Sources */,
-				EDEFE7BE16DF3C51002C35D6 /* AppDelegate.m in Sources */,
+				EDEFE7BE16DF3C51002C35D6 /* VertexAppDelegate.m in Sources */,
 				EDEFE7CD16DF3C51002C35D6 /* HomePageViewController.m in Sources */,
 				EDEFE7CE16DF3C51002C35D6 /* LoginCredentials.m in Sources */,
 				EDEFE7CF16DF3C51002C35D6 /* LoginViewController.m in Sources */,
@@ -774,24 +915,53 @@
 				ED3BB35016E04EA900468E44 /* SRFeedbackListViewController.m in Sources */,
 				ED3BB35616E0524400468E44 /* SRFeedbackPageViewController.m in Sources */,
 				ED63134F16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodeld in Sources */,
-				EDF39CC116E6FC51009B026F /* Asset.m in Sources */,
-				EDF39CC216E6FC51009B026F /* AssetObject.m in Sources */,
-				EDF39CC316E6FC51009B026F /* AssetTypes.m in Sources */,
-				EDF39CC416E6FC51009B026F /* ContactDetails.m in Sources */,
-				EDF39CC516E6FC51009B026F /* Feedback.m in Sources */,
-				EDF39CC616E6FC51009B026F /* Lifecycles.m in Sources */,
-				EDF39CC716E6FC51009B026F /* Personnel.m in Sources */,
-				EDF39CC816E6FC51009B026F /* ServiceRequests.m in Sources */,
-				EDF39CC916E6FC51009B026F /* Services.m in Sources */,
-				EDF39CCA16E6FC51009B026F /* SRObject.m in Sources */,
-				EDF39CCB16E6FC51009B026F /* SRTask.m in Sources */,
-				EDF39CCC16E6FC51009B026F /* Tasks.m in Sources */,
-				EDF39CCD16E6FC51009B026F /* UserInfo.m in Sources */,
-				EDF39CCE16E6FC51009B026F /* UserProfile.m in Sources */,
 				EDB1A0C716E9E24300BCD1F4 /* AdminTasksViewController.m in Sources */,
 				EDB1A0CA16E9F71900BCD1F4 /* BillingTasksViewController.m in Sources */,
 				ED3D573B16EB11A800497F80 /* ReportsPageViewController.m in Sources */,
 				ED3D573E16EB128000497F80 /* SchedulePageViewController.m in Sources */,
+				EDFE622116EDC432002EB414 /* AssetAttributes.m in Sources */,
+				EDFE622416EDC448002EB414 /* AssetOwnership.m in Sources */,
+				EDFE622A16EDC4E3002EB414 /* AssetSupers.m in Sources */,
+				EDFE622D16EDC515002EB414 /* AssetTypeAttributesTemplate.m in Sources */,
+				EDFE623016EDC532002EB414 /* AssetTypeLifecycles.m in Sources */,
+				EDFE623616EDC56E002EB414 /* AssetAccountability.m in Sources */,
+				EDFE623916EDC6C1002EB414 /* Assets.m in Sources */,
+				EDFE623C16EDC6E5002EB414 /* Bills.m in Sources */,
+				EDFE623F16EDC7ED002EB414 /* BroadcastGroups.m in Sources */,
+				EDFE624516EDC82D002EB414 /* ContactInfo.m in Sources */,
+				EDFE624816EDC84A002EB414 /* ContactTypes.m in Sources */,
+				EDFE624B16EDC86C002EB414 /* Dues.m in Sources */,
+				EDFE624E16EDC88E002EB414 /* Esse.m in Sources */,
+				EDFE625116EDC8AD002EB414 /* EsseContacts.m in Sources */,
+				EDFE625416EDC8F3002EB414 /* EsseInfo.m in Sources */,
+				EDFE625716EDC918002EB414 /* Feedbacks.m in Sources */,
+				EDFE625D16EDC96F002EB414 /* LifecycleServices.m in Sources */,
+				EDFE626016EDC9A2002EB414 /* ManagedAssets.m in Sources */,
+				EDFE626316EDC9D2002EB414 /* Memoranda.m in Sources */,
+				EDFE626616EDCA12002EB414 /* Notifications.m in Sources */,
+				EDFE626916EDCA67002EB414 /* OneTimeBills.m in Sources */,
+				EDFE626C16EDCA8C002EB414 /* PersonnelContacts.m in Sources */,
+				EDFE626F16EDCAB3002EB414 /* PersonnelInfo.m in Sources */,
+				EDFE627216EDCAE7002EB414 /* Personnels.m in Sources */,
+				EDFE627516EDCB32002EB414 /* Priorities.m in Sources */,
+				EDFE627816EDCB5B002EB414 /* ProfileFunctions.m in Sources */,
+				EDFE627B16EDCB92002EB414 /* RecurringBills.m in Sources */,
+				EDFE628116EDCC02002EB414 /* ServiceRequestSchedules.m in Sources */,
+				EDFE628716EDCCE6002EB414 /* Statuses.m in Sources */,
+				EDFE628A16EDCD4C002EB414 /* SystemFunctionHierarchies.m in Sources */,
+				EDFE628D16EDCD7C002EB414 /* SystemFunctions.m in Sources */,
+				EDFE629316EDCDFD002EB414 /* UserAccountOwnership.m in Sources */,
+				EDFC534316EDD72E009AE92F /* UserContacts.m in Sources */,
+				EDFC534616EDD77D009AE92F /* UserCredentials.m in Sources */,
+				EDFC534C16EDD7D2009AE92F /* UserProfiles.m in Sources */,
+				ED59996616EDDDD700681941 /* BroadcastUsers.m in Sources */,
+				ED59996F16EDE64600681941 /* Lifecycles.m in Sources */,
+				ED59997216EDE73900681941 /* ServiceRequests.m in Sources */,
+				ED59997516EDE77400681941 /* Services.m in Sources */,
+				ED59997816EDE7B800681941 /* Tasks.m in Sources */,
+				EDA8E70916F05C2D00B9C57E /* UserAccounts.m in Sources */,
+				EDA8E70F16F05D3300B9C57E /* UserInfo.m in Sources */,
+				EDA8E71216F0630B00B9C57E /* AssetTypes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

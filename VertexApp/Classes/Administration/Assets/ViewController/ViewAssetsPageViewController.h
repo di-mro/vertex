@@ -14,4 +14,9 @@
 
 @property (nonatomic, retain) NSMutableArray *viewAssetsPageEntries;
 
+@property (nonatomic, strong) NSString *URL;
+
+@property (nonatomic, strong) NSMutableDictionary *managedAssets;
+@property (nonatomic, strong) UITableView *assetsTableView;
+
 @end

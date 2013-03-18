@@ -7,8 +7,12 @@
 //
 
 #import "ViewController.h"
-#import "Asset.h"
-#import "AssetObject.h"
+#import "Assets.h"
+#import "AssetAttributes.h"
+#import "AssetTypes.h"
+#import <CoreData/CoreData.h>
+#import "AppDelegate.h"
+
 
 @interface AddAssetPageViewController : ViewController <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate>
 
@@ -35,8 +39,19 @@
 @property (strong, nonatomic) IBOutlet UITextView *remarksArea;
 
 @property (nonatomic, retain) NSArray *assetTypePickerArray;
+@property (nonatomic, strong) NSMutableDictionary *assetTypes;
+@property (nonatomic, strong) NSNumber *selectedAssetTypeId;
+@property int httpResponseCode;
 
-@property (strong, nonatomic) AssetObject *assetObject;
+//@property (strong, nonatomic) Assets *assetObject;
+//@property (strong, nonatomic) AssetAttributes *assetAttributesObject;
+//@property (strong, nonatomic) AssetTypes *assetTypesObject;
+
+//@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+//@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
+//@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
+//@property AppDelegate *appDelegate;
 
 @property (strong, nonatomic) NSString *URL;
 

@@ -37,7 +37,7 @@
 @synthesize currentArray;
 @synthesize currentTextField;
 
-@synthesize srObject;
+//@synthesize srObject;
 
 @synthesize URL;
 
@@ -90,7 +90,7 @@
   [priorityField setDelegate:self];
   
   //SRObject initialization
-  srObject = [[SRObject alloc] init];
+  //srObject = [[SRObject alloc] init];
   
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -341,7 +341,8 @@
 {
   if ([self validateCreateSRFields])
   {
-    /* !- TODO Put Service Request info into SRObject. Save SR info to db - PUT -! */
+    /*
+    // !- TODO Put Service Request info into SRObject. Save SR info to db - PUT -!
     srObject.asset = assetField.text;
     srObject.lifecycle = lifecycleField.text;
     srObject.service = serviceField.text;
@@ -350,6 +351,7 @@
     srObject.unitLocation = unitLocationField.text;
     srObject.contactNumber = contactNumberField.text;
     srObject.details = detailsTextArea.text;
+    */
     
     [self dismissViewControllerAnimated:YES completion:nil];
     NSLog(@"Create Service Request");

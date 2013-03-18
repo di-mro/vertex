@@ -784,7 +784,7 @@
         <!--Single Asset View Controller - Asset Details-->
         <scene sceneID="rjr-a5-LH5">
             <objects>
-                <viewController id="rN3-nd-NeU" customClass="SingleAssetViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="singleAssetViewPage" id="rN3-nd-NeU" customClass="SingleAssetViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="e4E-Z8-OmO">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

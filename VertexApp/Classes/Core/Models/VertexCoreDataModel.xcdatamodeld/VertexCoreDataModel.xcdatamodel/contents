@@ -19,9 +19,9 @@
         <relationship name="assetOwnershipToEsse" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Esse" inverseName="esseToAssetOwnership" inverseEntity="Esse" syncable="YES"/>
     </entity>
     <entity name="Assets" representedClassName="Assets" syncable="YES">
+        <attribute name="assetId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="assetName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assetTypeId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="assetToAssetAccountability" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="AssetAccountability" inverseName="assetAccountabilityToAsset" inverseEntity="AssetAccountability" syncable="YES"/>
         <relationship name="assetToAssetAttributes" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="AssetAttributes" inverseName="assetAttributesToAssets" inverseEntity="AssetAttributes" syncable="YES"/>
         <relationship name="assetToAssetOwnership" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="AssetOwnership" inverseName="assetOwnershipToAsset" inverseEntity="AssetOwnership" syncable="YES"/>
@@ -42,7 +42,7 @@
     </entity>
     <entity name="AssetTypeLifecycles" representedClassName="AssetTypeLifecycles" syncable="YES">
         <attribute name="assetTypeId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="assetTypeLifecycleId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="lifecycleId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="assetTypeLifecycleToLifecycle" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Lifecycles" inverseName="lifecycleToAssetTypeLifecycle" inverseEntity="Lifecycles" syncable="YES"/>
         <relationship name="assetTypeLifecycleToLifecycleServices" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="LifecycleServices" inverseName="lifecycleServicesToAssetTypeLifecycle" inverseEntity="LifecycleServices" syncable="YES"/>
@@ -50,18 +50,18 @@
     </entity>
     <entity name="AssetTypes" representedClassName="AssetTypes" syncable="YES">
         <attribute name="assetTypeDesc" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assetTypeId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="assetTypeName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="assetTypeToAsset" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Assets" inverseName="assetToAssetType" inverseEntity="Assets" syncable="YES"/>
         <relationship name="assetTypeToAssetTypeAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="AssetTypeAttributesTemplate" inverseName="assetTypeAttributesToAssetTypes" inverseEntity="AssetTypeAttributesTemplate" syncable="YES"/>
         <relationship name="assetTypeToAssetTypeLifecycle" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="AssetTypeLifecycles" inverseName="assetTypeLifeycleToAssetType" inverseEntity="AssetTypeLifecycles" syncable="YES"/>
     </entity>
     <entity name="Bills" representedClassName="Bills" syncable="YES">
         <attribute name="billedTo" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="billId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="billsDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="creator" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="file" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="billsToOneTimeBills" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="OneTimeBills" inverseName="oneTimeBillToBills" inverseEntity="OneTimeBills" syncable="YES"/>
@@ -69,10 +69,10 @@
         <relationship name="billsToUserAccount" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="UserAccounts" inverseName="userAccountToBills" inverseEntity="UserAccounts" syncable="YES"/>
     </entity>
     <entity name="BroadcastGroups" representedClassName="BroadcastGroups" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="broadcastGroupId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="broadcastGroupsToMemoranda" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Memoranda" inverseName="memorandaToBroadcastGroup" inverseEntity="Memoranda" syncable="YES"/>
-        <relationship name="broadcastGroupToBroadcastUsers" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="BroadcastUsers" inverseName="broadcastUsersToBroadcastGroups" inverseEntity="BroadcastUsers" syncable="YES"/>
+        <relationship name="broadcastGroupToBroadcastUsers" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="BroadcastUsers" inverseName="broadcastUsersToBroadcastGroups" inverseEntity="BroadcastUsers" syncable="YES"/>
         <relationship name="broadcastGroupToNotifications" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Notifications" inverseName="notificationToBroadcastGroup" inverseEntity="Notifications" syncable="YES"/>
     </entity>
     <entity name="BroadcastUsers" representedClassName="BroadcastUsers" syncable="YES">
@@ -82,8 +82,8 @@
         <relationship name="broadcastUsersToUserAccount" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="UserAccounts" inverseName="userAccountToBroadcastUsers" inverseEntity="UserAccounts" syncable="YES"/>
     </entity>
     <entity name="ContactInfo" representedClassName="ContactInfo" syncable="YES">
+        <attribute name="contactInfoId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="contactTypeId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="primary" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="contactInfoToContactType" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="ContactTypes" inverseName="contactTypeToContactInfo" inverseEntity="ContactTypes" syncable="YES"/>
@@ -92,7 +92,7 @@
         <relationship name="contactInfoToUserContact" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="UserContacts" inverseName="userContactToContactInfo" inverseEntity="UserContacts" syncable="YES"/>
     </entity>
     <entity name="ContactTypes" representedClassName="ContactTypes" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="contactTypeId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="contactTypeToContactInfo" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="ContactInfo" inverseName="contactInfoToContactType" inverseEntity="ContactInfo" syncable="YES"/>
     </entity>
@@ -104,8 +104,8 @@
         <relationship name="duesToRecurringBills" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="RecurringBills" inverseName="recurringBillsToDues" inverseEntity="RecurringBills" syncable="YES"/>
     </entity>
     <entity name="Esse" representedClassName="Esse" syncable="YES">
+        <attribute name="esseId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="esseInfoId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="esseToAssetOwnership" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AssetOwnership" inverseName="assetOwnershipToEsse" inverseEntity="AssetOwnership" syncable="YES"/>
         <relationship name="esseToEsseInfo" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EsseInfo" inverseName="esseInfoToEsse" inverseEntity="EsseInfo" syncable="YES"/>
@@ -118,8 +118,8 @@
         <relationship name="esseContactToEsseInfo" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EsseInfo" inverseName="esseInfoToEsseContacts" inverseEntity="EsseInfo" syncable="YES"/>
     </entity>
     <entity name="EsseInfo" representedClassName="EsseInfo" syncable="YES">
+        <attribute name="esseInfoId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="middleName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="suffix" optional="YES" attributeType="String" syncable="YES"/>
@@ -133,9 +133,9 @@
         <relationship name="feedbacksToSR" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="ServiceRequests" inverseName="srToFeedbacks" inverseEntity="ServiceRequests" syncable="YES"/>
     </entity>
     <entity name="Lifecycles" representedClassName="Lifecycles" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="lifecycleDesc" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lifecycleId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="lifecycleName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="lifecycleToAssetTypeLifecycle" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="AssetTypeLifecycles" inverseName="assetTypeLifecycleToLifecycle" inverseEntity="AssetTypeLifecycles" syncable="YES"/>
     </entity>
     <entity name="LifecycleServices" representedClassName="LifecycleServices" syncable="YES">
@@ -152,8 +152,8 @@
         <attribute name="broadcastGroupId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="creator" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="file" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="memorandaDesc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="memorandumId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="memorandaToBroadcastGroup" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="BroadcastGroups" inverseName="broadcastGroupsToMemoranda" inverseEntity="BroadcastGroups" syncable="YES"/>
@@ -161,8 +161,8 @@
     <entity name="Notifications" representedClassName="Notifications" syncable="YES">
         <attribute name="broadcastGroupId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="creator" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="message" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notificationId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="priorityLevel" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="notificationToBroadcastGroup" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="BroadcastGroups" inverseName="broadcastGroupToNotifications" inverseEntity="BroadcastGroups" syncable="YES"/>
     </entity>
@@ -180,42 +180,37 @@
     </entity>
     <entity name="PersonnelInfo" representedClassName="PersonnelInfo" syncable="YES">
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="middleName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="personnelInfoId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="suffix" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="personnelInfoToPersonnel" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Personnels" inverseName="personnelsToPersonnelInfo" inverseEntity="Personnels" syncable="YES"/>
         <relationship name="personnelInfoToPersonnelContact" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="PersonnelContacts" inverseName="personnelContactToPersonnelInfo" inverseEntity="PersonnelContacts" syncable="YES"/>
     </entity>
     <entity name="Personnels" representedClassName="Personnels" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="personnelId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="personnelInfoId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="position" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="personnelsToPersonnelInfo" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="PersonnelInfo" inverseName="personnelInfoToPersonnel" inverseEntity="PersonnelInfo" syncable="YES"/>
         <relationship name="personnelsToTask" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Tasks" inverseName="tasksToPersonnels" inverseEntity="Tasks" syncable="YES"/>
     </entity>
+    <entity name="Priorities" representedClassName="Priorities" syncable="YES">
+        <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="priorityDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="priorityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="priorityName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="prioritiesToSR" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="ServiceRequests" inverseName="srToPriorities" inverseEntity="ServiceRequests" syncable="YES"/>
+    </entity>
     <entity name="ProfileFunctions" representedClassName="ProfileFunctions" syncable="YES">
         <attribute name="profileId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="sequence" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="systemFunctionId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="profileFunctionsToUserProfile" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="UserProfiles" inverseName="userProfilesToProfileFunctions" inverseEntity="UserProfiles" syncable="YES"/>
         <relationship name="profileFunctionToSystemFunctions" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="SystemFunctions" inverseName="systemFunctionToProfileFunction" inverseEntity="SystemFunctions" syncable="YES"/>
     </entity>
-    <entity name="PropertyOwners" representedClassName="PropertyOwners" syncable="YES">
-        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="prefix" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
-    <entity name="PropertyUsers" representedClassName="PropertyUsers" syncable="YES">
-        <attribute name="propertyId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="totalUsers" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="users" optional="YES" attributeType="Transformable" syncable="YES"/>
-    </entity>
     <entity name="RecurringBills" representedClassName="RecurringBills" syncable="YES">
         <attribute name="billId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="dueId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <relationship name="recurringBillsToDues" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Dues" inverseName="duesToRecurringBills" inverseEntity="Dues" syncable="YES"/>
+        <relationship name="recurringBillsToDues" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Dues" inverseName="duesToRecurringBills" inverseEntity="Dues" syncable="YES"/>
         <relationship name="recurringBillToBills" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Bills" inverseName="billsToRecurringBills" inverseEntity="Bills" syncable="YES"/>
     </entity>
     <entity name="ServiceRequests" representedClassName="ServiceRequests" syncable="YES">
@@ -223,19 +218,19 @@
         <attribute name="assetId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="cost" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="dateCreated" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="lifecycleId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="priority" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="priorityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="remarks" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="requestor" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="scheduledDateFrom" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="scheduledDateTo" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="serviceId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="serviceRequestId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="statusId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="srToAsset" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Assets" inverseName="assetToServiceRequests" inverseEntity="Assets" syncable="YES"/>
         <relationship name="srToFeedbacks" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Feedbacks" inverseName="feedbacksToSR" inverseEntity="Feedbacks" syncable="YES"/>
-        <relationship name="srToServices" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Services" syncable="YES"/>
+        <relationship name="srToPriorities" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Priorities" inverseName="prioritiesToSR" inverseEntity="Priorities" syncable="YES"/>
+        <relationship name="srToServices" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Services" inverseName="servicesToSR" inverseEntity="Services" syncable="YES"/>
         <relationship name="srToSRSchedule" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="ServiceRequestSchedules" inverseName="srScheduleToSR" inverseEntity="ServiceRequestSchedules" syncable="YES"/>
+        <relationship name="srToStatuses" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Statuses" inverseName="statusesToSR" inverseEntity="Statuses" syncable="YES"/>
         <relationship name="srToTasks" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Tasks" inverseName="tasksToSR" inverseEntity="Tasks" syncable="YES"/>
         <relationship name="srToUserAccount" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="UserAccounts" inverseName="userAccountToServiceRequest" inverseEntity="UserAccounts" syncable="YES"/>
     </entity>
@@ -246,9 +241,16 @@
         <relationship name="srScheduleToSR" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="ServiceRequests" inverseName="srToSRSchedule" inverseEntity="ServiceRequests" syncable="YES"/>
     </entity>
     <entity name="Services" representedClassName="Services" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="serviceId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="serviceName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="servicesToLifecycleServices" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="LifecycleServices" inverseName="lifecycleServicesToServices" inverseEntity="LifecycleServices" syncable="YES"/>
+        <relationship name="servicesToSR" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="ServiceRequests" inverseName="srToServices" inverseEntity="ServiceRequests" syncable="YES"/>
+    </entity>
+    <entity name="Statuses" representedClassName="Statuses" syncable="YES">
+        <attribute name="statusDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="statusId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="statusName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="statusesToSR" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="ServiceRequests" inverseName="srToStatuses" inverseEntity="ServiceRequests" syncable="YES"/>
     </entity>
     <entity name="SystemFunctionHierarchies" representedClassName="SystemFunctionHierarchies" syncable="YES">
         <attribute name="next" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -257,15 +259,15 @@
         <relationship name="systemFunctionHierarchiesToSystemFunction" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="SystemFunctions" inverseName="systemFunctionToSystemFunctionHierarchies" inverseEntity="SystemFunctions" syncable="YES"/>
     </entity>
     <entity name="SystemFunctions" representedClassName="SystemFunctions" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="systemFunctionId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="systemFunctionToProfileFunction" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="ProfileFunctions" inverseName="profileFunctionToSystemFunctions" inverseEntity="ProfileFunctions" syncable="YES"/>
         <relationship name="systemFunctionToSystemFunctionHierarchies" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="SystemFunctionHierarchies" inverseName="systemFunctionHierarchiesToSystemFunction" inverseEntity="SystemFunctionHierarchies" syncable="YES"/>
     </entity>
     <entity name="Tasks" representedClassName="Tasks" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="serviceRequestId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="taskDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="taskId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="tasks" optional="YES" attributeType="Transformable" syncable="YES"/>
         <relationship name="tasksToPersonnels" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Personnels" inverseName="personnelsToTask" inverseEntity="Personnels" syncable="YES"/>
         <relationship name="tasksToSR" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="ServiceRequests" inverseName="srToTasks" inverseEntity="ServiceRequests" syncable="YES"/>
@@ -276,11 +278,11 @@
         <relationship name="userAccountOwnershipToEsse" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Esse" inverseName="esseToUserAccountOwnership" inverseEntity="Esse" syncable="YES"/>
         <relationship name="userAccountOwnershipToUserAccounts" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="UserAccounts" inverseName="userAccountToUserAccountOwnership" inverseEntity="UserAccounts" syncable="YES"/>
     </entity>
-    <entity name="UserAccounts" representedClassName="" syncable="YES">
-        <attribute name="active" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
+    <entity name="UserAccounts" representedClassName="UserAccounts" syncable="YES">
+        <attribute name="active" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="credentialId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="profileId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="userInfoId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="userAccountToAssetAccountability" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AssetAccountability" inverseName="assetAccountabilityToUserAccount" inverseEntity="AssetAccountability" syncable="YES"/>
@@ -299,7 +301,7 @@
         <relationship name="userContactToUserInfo" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="UserInfo" inverseName="userInfoToUserContacts" inverseEntity="UserInfo" syncable="YES"/>
     </entity>
     <entity name="UserCredentials" representedClassName="UserCredentials" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="credentialId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="revision" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="salt" optional="YES" attributeType="String" syncable="YES"/>
@@ -309,17 +311,17 @@
     </entity>
     <entity name="UserInfo" representedClassName="UserInfo" syncable="YES">
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="middleName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="suffix" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userInfoId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="userInfoToUserAccounts" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="UserAccounts" inverseName="userAccountToUserInfo" inverseEntity="UserAccounts" syncable="YES"/>
         <relationship name="userInfoToUserContacts" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="UserContacts" inverseName="userContactToUserInfo" inverseEntity="UserContacts" syncable="YES"/>
     </entity>
     <entity name="UserProfiles" representedClassName="UserProfiles" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="profileDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="profileId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="profileName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userProfileDescription" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="userProfilesToProfileFunctions" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="ProfileFunctions" inverseName="profileFunctionsToUserProfile" inverseEntity="ProfileFunctions" syncable="YES"/>
         <relationship name="userProfileToUserAccount" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="UserAccounts" inverseName="userAccountToUserProfile" inverseEntity="UserAccounts" syncable="YES"/>
     </entity>
@@ -330,13 +332,13 @@
         <element name="Assets" positionX="-3546" positionY="-3699" width="171" height="193"/>
         <element name="AssetSupers" positionX="-3305" positionY="-3960" width="128" height="88"/>
         <element name="AssetTypeAttributesTemplate" positionX="-3026" positionY="-3582" width="200" height="88"/>
-        <element name="AssetTypeLifecycles" positionX="-3330" positionY="-3456" width="216" height="133"/>
+        <element name="AssetTypeLifecycles" positionX="-3321" positionY="-3456" width="216" height="133"/>
         <element name="AssetTypes" positionX="-3294" positionY="-3643" width="180" height="133"/>
         <element name="Bills" positionX="-3861" positionY="-3406" width="128" height="193"/>
         <element name="BroadcastGroups" positionX="-4383" positionY="-3402" width="200" height="118"/>
         <element name="BroadcastUsers" positionX="-4122" positionY="-3402" width="191" height="103"/>
         <element name="ContactInfo" positionX="-3728" positionY="-4581" width="128" height="163"/>
-        <element name="ContactTypes" positionX="-3735" positionY="-4734" width="128" height="88"/>
+        <element name="ContactTypes" positionX="-3735" positionY="-4734" width="171" height="88"/>
         <element name="Dues" positionX="-4113" positionY="-3051" width="128" height="118"/>
         <element name="Esse" positionX="-3467" positionY="-4140" width="191" height="133"/>
         <element name="EsseContacts" positionX="-3744" positionY="-4347" width="155" height="103"/>
@@ -351,21 +353,21 @@
         <element name="PersonnelContacts" positionX="-3483" positionY="-4342" width="189" height="103"/>
         <element name="PersonnelInfo" positionX="-2826" positionY="-3253" width="191" height="148"/>
         <element name="Personnels" positionX="-3098" positionY="-3013" width="173" height="118"/>
-        <element name="ProfileFunctions" positionX="-4518" positionY="-3771" width="207" height="118"/>
-        <element name="PropertyOwners" positionX="-4347" positionY="-3042" width="128" height="103"/>
-        <element name="PropertyUsers" positionX="-4500" positionY="-3040" width="128" height="88"/>
+        <element name="Priorities" positionX="-3960" positionY="-2953" width="128" height="118"/>
+        <element name="ProfileFunctions" positionX="-4518" positionY="-3771" width="207" height="103"/>
         <element name="RecurringBills" positionX="-4095" positionY="-3267" width="128" height="103"/>
-        <element name="ServiceRequests" positionX="-3537" positionY="-3465" width="128" height="328"/>
+        <element name="ServiceRequests" positionX="-3591" positionY="-3456" width="128" height="328"/>
         <element name="ServiceRequestSchedules" positionX="-3537" positionY="-2961" width="171" height="103"/>
-        <element name="Services" positionX="-3285" positionY="-3139" width="164" height="88"/>
+        <element name="Services" positionX="-3285" positionY="-3139" width="164" height="103"/>
+        <element name="Statuses" positionX="-3800" positionY="-2952" width="128" height="103"/>
         <element name="SystemFunctionHierarchies" positionX="-4518" positionY="-4095" width="243" height="103"/>
         <element name="SystemFunctions" positionX="-4518" positionY="-3942" width="261" height="103"/>
         <element name="Tasks" positionX="-3305" positionY="-3022" width="128" height="133"/>
-        <element name="UserAccountOwnership" positionX="-3834" positionY="-3897" width="218" height="103"/>
-        <element name="UserAccounts" positionX="-4032" positionY="-3753" width="207" height="253"/>
-        <element name="UserContacts" positionX="-3924" positionY="-4108" width="155" height="103"/>
+        <element name="UserAccountOwnership" positionX="-3879" positionY="-3978" width="218" height="103"/>
+        <element name="UserAccounts" positionX="-4041" positionY="-3718" width="207" height="253"/>
+        <element name="UserContacts" positionX="-3942" positionY="-4248" width="155" height="103"/>
         <element name="UserCredentials" positionX="-4320" positionY="-3613" width="180" height="148"/>
-        <element name="UserInfo" positionX="-4158" positionY="-3982" width="189" height="148"/>
-        <element name="UserProfiles" positionX="-4248" positionY="-3766" width="146" height="118"/>
+        <element name="UserInfo" positionX="-4194" positionY="-3982" width="189" height="148"/>
+        <element name="UserProfiles" positionX="-4248" positionY="-3766" width="162" height="118"/>
     </elements>
 </model>

@@ -34,7 +34,7 @@
 - (void)viewDidLoad
 {
   //Set URL for Login
-  URL = @"http://192.168.2.108:8080/vertex/ws/user/loginform";
+  URL = @"http://192.168.2.102:8080/vertex/ws/user/loginform";
   
   [super viewDidLoad];
 	// Do any additional setup after loading the view.

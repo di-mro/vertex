@@ -10,6 +10,14 @@
 #import "HomePageViewController.h"
 #import "AssetPageViewController.h"
 #import "Reachability.h"
+#import "AppDelegate.h"
+
+#import "Assets.h"
+#import "AssetAttributes.h"
+#import "AssetTypes.h"
+
+#import <CoreData/CoreData.h>
+
 
 @interface AddAssetPageViewController ()
 
@@ -29,9 +37,24 @@
 @synthesize powerConsumptionField;
 @synthesize remarksArea;
 
-@synthesize assetObject;
+@synthesize modelLabel;
+@synthesize brandLabel;
+@synthesize powerConsumptionLabel;
+@synthesize remarksLabel;
 
+//@synthesize assetObject;
+//@synthesize assetTypesObject;
+//@synthesize assetAttributesObject;
+
+//@synthesize managedObjectContext;
+//@synthesize managedObjectModel;
+//@synthesize persistentStoreCoordinator;
+//@synthesize appDelegate;
+
+@synthesize assetTypes;
 @synthesize URL;
+@synthesize selectedAssetTypeId;
+@synthesize httpResponseCode;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -53,14 +76,11 @@
   //[Cancel] navigation button
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelAddAsset)];
   
-  //[Add] navigation button
+  //[Add] navigation button - Add Asset
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(createAsset)];
   
   //Configure Scroller size
   self.addAssetScroller.contentSize = CGSizeMake(320, 720);
-  
-  //Set URL for retrieving AssetTypes
-  URL = @"http://192.168.2.103:8080/vertex/ws/assettype/assettypes";
   
   //Configure Picker array
   self.assetTypePickerArray = [[NSArray alloc] init];
@@ -69,9 +89,6 @@
   //assetTypePicker in assetTypeField
   [assetTypeField setDelegate:self];
   
-  //AssetObject initialization
-  assetObject = [[AssetObject alloc] init];
-    
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -85,69 +102,54 @@
 #pragma mark - Get AssetTypes
 - (void) getAssetTypes
 {
-  //userId / request parameters ??
-  NSMutableString *bodyData = [NSMutableString
-                               stringWithFormat:@"userId=1"];
-  NSLog(@"%@", bodyData);
+  //Set URL for retrieving AssetTypes
+  URL = @"http://192.168.2.13:8080/vertex-api/asset/getAssetTypes";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                       requestWithURL:[NSURL URLWithString:URL]];
   
-  // Set the request's content type to application/x-www-form-urlencoded
-  [getRequest setValue:@"application/x-www-form-urlencoded" //content type ??
-     forHTTPHeaderField:@"Content-Type"];
-  // Designate the request a GET request and specify its body data
+  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
   [getRequest setHTTPMethod:@"GET"];
-  [getRequest setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String]
-                                          length:[bodyData length]]];
   NSLog(@"%@", getRequest);
   
-  if([self reachable])
-  {
-    NSLog(@"Reachable");
-    
-    // Initialize the NSURLConnection and proceed as usual
-    NSURLConnection *connection = [[NSURLConnection alloc]
+  NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:getRequest
                                    delegate:self];
-    //start the connection
-    [connection start];
+  [connection start];
     
-    // Get Response. Validation before proceeding to next page. Retrieve confirmation from the ws that user is valid.
-    NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
-    NSError *error = [[NSError alloc] init];
+  NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+  NSError *error = [[NSError alloc] init];
     
-    NSData *responseData = [NSURLConnection
+  NSData *responseData = [NSURLConnection
                             sendSynchronousRequest:getRequest
                             returningResponse:&urlResponse
                             error:&error];
-    
-    NSString *result = [[NSString alloc] initWithData:responseData
-                                             encoding:NSUTF8StringEncoding];
-    NSLog(@"Response: %@", result);
-    
-    /*NSMutableDictionary *json = [NSJSONSerialization
-                                 JSONObjectWithData:responseData
-                                 options:kNilOptions
-                                 error:&error];
-    NSString *loginProceed = [json objectForKey:@"valid"];
-    
-    NSLog(@"Response code- %ld",(long)[urlResponse statusCode]);
-    NSLog(@"Response JSON: %@", json);
-    NSLog(@"Login Response JSON: %@", loginProceed);
-    */
-   
-    [assetTypePickerArray initWithObjects:responseData, nil];
-    NSLog(@"assetTypePickerArray: %@", assetTypePickerArray);
-  }
-  else
+  
+  if (responseData == nil)
   {
-    NSLog(@"Non Reachable");
-    NSLog(@"Connect to CoreData");
+    //Show an alert if connection is not available
+    UIAlertView *connectionAlert = [[UIAlertView alloc]
+                                    initWithTitle:@"Warning"
+                                    message:@"No network connection detected. Displaying data from phone cache."
+                                    delegate:nil
+                                    cancelButtonTitle:@"OK"
+                                    otherButtonTitles:nil];
+    [connectionAlert show];
     
     //Connect to CoreData for local data
     //!- FOR TESTING ONLY -!
-    self.assetTypePickerArray = [[NSArray alloc] initWithObjects:@"Aircon",@"Door", @"Exhaust Fan",@"Faucet",@"Toilet",@"Kitchen Sink",@"Lighting Fixtures", nil];
+    self.assetTypePickerArray = [[NSArray alloc] initWithObjects:@"Demo - Aircon",@"Demo - Door", @"Demo - Exhaust Fan", @"Demo - Faucet", @"Demo - Toilet", @"Demo - Kitchen Sink", @"Demo - Lighting Fixtures", nil];
+  }
+  else
+  {
+    assetTypes = [NSJSONSerialization
+                                 JSONObjectWithData:responseData
+                                 options:kNilOptions
+                                 error:&error];
+    NSLog(@"getAssetTypes JSON Result: %@", assetTypes);
+    
+    assetTypePickerArray = [assetTypes valueForKey:@"name"]; //store assetType names only
+    NSLog(@"assetTypePickerArray: %@", assetTypePickerArray);
   }
 }
 
@@ -231,14 +233,18 @@
 }
 
 #pragma mark - Get the selected row in assetTypePicker
--(void)selectedRow{
+-(void)selectedRow
+{
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
   
   int selectedIndex = [assetTypePicker selectedRowInComponent:0];
-  NSString *selectedAssetType = [assetTypePickerArray objectAtIndex:selectedIndex];
-  assetTypeField.text = selectedAssetType;
+  NSString *assetTypeName = [assetTypePickerArray objectAtIndex:selectedIndex];
+  assetTypeField.text = assetTypeName;
   
-  //Do something with the selected row, store then save in DB
+  //NSMutableArray *assetTypeIdArray = [[NSMutableArray alloc] init];
+  //assetTypeIdArray = [assetTypes valueForKey:@"id"];
+  //selectedAssetTypeId = [assetTypeIdArray objectAtIndex:selectedIndex];
+  selectedAssetTypeId = @111000;
 }
 
 #pragma mark - End editing for the fields, dismiss onscreen keyboard
@@ -264,49 +270,183 @@
 {
   if([self validateAddAssetFields])
   {
-    /* !- Put Asset info into Asset object. Save Asset info to db - PUT -! */
-    assetObject.assetName = assetNameField.text;
-    assetObject.assetType = assetTypeField.text;
-    assetObject.model = modelField.text;
-    assetObject.brand = brandField.text;
-    assetObject.powerConsumption = powerConsumptionField.text;
-    assetObject.remarks = remarksArea.text;
+    //Constructing JSON Request Object - POST
+    /*
+     "{
+        id: long
+        name: string
+        assetType :
+        { 
+          id: long 
+        }
+        assetAttributes :
+        [           {
+            keyName: string,
+            value : string
+          }, ...
+        ]
+     }"
+     */
+    //Asset
+    NSMutableDictionary *mainDictionary = [[NSMutableDictionary alloc] init];
+    [mainDictionary setObject:assetNameField.text forKey:@"name"];
     
-    NSLog(@"assetObject: %@", assetObject.assetType);
+    //AssetType Object
+    NSMutableDictionary *assetTypeDict = [[NSMutableDictionary alloc] init];
+    [assetTypeDict setObject:selectedAssetTypeId forKey:@"id"];
+    NSLog(@"selectedAssetTypeId: %@", selectedAssetTypeId);
+    //id depends on chosen AssetType
+    //selectedAssetTypeId
+    //hardcoded id aircon - 20130101011100000
+    //hardcoded id window - 20130101011300000
     
+    //AssetAttributes Array of Objects - Store key and name in array first before consolidating in a dictionary
+    //Use Core Data Model Objects
+    NSMutableArray *assetAttribKeyArray = [[NSMutableArray alloc] initWithObjects:@"Model", @"Brand", @"Power Consumption", @"Remark", nil];
+    NSMutableArray *assetAttribValueArray = [[NSMutableArray alloc] initWithObjects:modelField.text, brandField.text, powerConsumptionField.text, remarksArea.text , nil];
+    
+    NSMutableDictionary *assetAttributesDict = [[NSMutableDictionary alloc] init];
+    NSMutableArray *innerAssetAttribArray = [[NSMutableArray alloc] init];
+    NSMutableSet *assetAttribSet = [[NSMutableSet alloc] init];
+    
+    //[assetAttribSet addObjectsFromArray:assetAttribKeyArray];
+    //[assetAttribSet addObjectsFromArray:assetAttribValueArray];
+    //NSLog(@"assetAttribSet: %@", assetAttribSet);
+
+    [assetAttributesDict setObject:assetAttribKeyArray forKey:@"keyName"];
+    [assetAttributesDict setObject:assetAttribValueArray forKey:@"value"];
+    [innerAssetAttribArray addObject:assetAttributesDict];
+    
+    /*
+    for (int i = 0; i < [assetAttribKeyArray count]; i++) //attribute number
+    {
+      [assetAttributesDict setObject:[assetAttribKeyArray objectAtIndex:i] forKey:@"keyName"];
+      NSLog(@"Key: %@", [assetAttribKeyArray objectAtIndex:i]);
+      [assetAttributesDict setObject:[assetAttribValueArray objectAtIndex:i] forKey:@"value"];
+      NSLog(@"Value: %@", [assetAttribValueArray objectAtIndex:i]);
+      
+      //[innerAssetAttribArray insertObject:assetAttributesDict atIndex:i];
+      [innerAssetAttribArray addObject:assetAttributesDict];
+      //NSLog(@"innerAssetAttribArray: %d", [innerAssetAttribArray count]);
+    }*/
+    
+    [mainDictionary setObject:assetTypeDict forKey:@"assetType"];
+    [mainDictionary setObject:innerAssetAttribArray forKey:@"attributes"];
+    
+    NSError *error = [[NSError alloc] init];
+    NSData *jsonData = [NSJSONSerialization
+                        dataWithJSONObject:mainDictionary
+                                   options:NSJSONWritingPrettyPrinted
+                                     error:&error];
+    NSString *jsonString = [[NSString alloc]
+                            initWithData:jsonData
+                                encoding:NSUTF8StringEncoding];
+    
+    NSLog(@"jsonData Request: %@", jsonData);
+    NSLog(@"jsonString Request: %@", jsonString);
+    
+    //Set URL for Add Asset
+    URL = @"http://192.168.2.13:8080/vertex-api/asset/addAsset";
+    NSMutableURLRequest *postRequest = [NSMutableURLRequest
+                                       requestWithURL:[NSURL URLWithString:URL]];
+    
+    [postRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [postRequest setHTTPMethod:@"POST"];
+    [postRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String]
+                                            length:[jsonString length]]];
+    NSLog(@"%@", postRequest);
+    
+    NSURLConnection *connection = [[NSURLConnection alloc]
+                                   initWithRequest:postRequest
+                                   delegate:self];
+    
+    [connection start];
+    
+    /*
+    NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+    NSData *responseData = [NSURLConnection 
+                            sendSynchronousRequest:postRequest
+                            returningResponse:&urlResponse
+                            error:&error];
+    */
+    
+    if(httpResponseCode >= 400)
+    {
+      UIAlertView *createAssetFailAlert = [[UIAlertView alloc]
+                                           initWithTitle:@"Add Asset Failed"
+                                           message:@"Asset not added. Please try again later"
+                                           delegate:self
+                                           cancelButtonTitle:@"OK"
+                                           otherButtonTitles:nil];
+      [createAssetFailAlert show];
+      
+    }
+    else
+    {
+       UIAlertView *createAssetAlert = [[UIAlertView alloc]
+                                          initWithTitle:@"Add Asset"
+                                                message:@"Asset Created."
+                                               delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+       [createAssetAlert show];
+      //Transition to Assets Page - alertView clickedButtonAtIndex
+    }
+
     [self dismissViewControllerAnimated:YES completion:nil];
     NSLog(@"Create Asset");
     
     /*
-     //ActivityIndicator Code
-     UIActivityIndicatorView *spinner =
-     [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(150     // Hi
-     , 225   // Frennn
-     , 20    // Na
-     , 30)]; // Masungit
-     [spinner setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
-     spinner.color = [UIColor blueColor];
-     [self.view addSubview:spinner];
-     [spinner startAnimating];
-     //[spinner stopAnimating];
+     //Core Data Save
+     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+     NSManagedObjectContext *context = [appDelegate  managedObjectContext];
+     
+     NSLog(@"moc-entities: %@", context.persistentStoreCoordinator.managedObjectModel.entities);
+     Assets *assetsObject = [NSEntityDescription insertNewObjectForEntityForName:@"Assets" inManagedObjectContext:context];
+     assetsObject.assetName = assetNameField.text;
+     
+     AssetTypes *assetTypesObject = [NSEntityDescription insertNewObjectForEntityForName:@"AssetTypes" inManagedObjectContext:context];
+     assetTypesObject.assetTypeName = assetTypeField.text;
+     
+     NSError *error;
+     if (![context save:&error])
+     {
+     NSLog(@"Couldn't save data: %@", [error localizedDescription]);
+     }
+     
+     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Assets"
+     inManagedObjectContext:context];
+     [fetchRequest setEntity:entity];
+     NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+     for (Assets *assets in fetchedObjects)
+     {
+     NSLog(@"assetName: %@", assets.assetName);
+     }
      */
-    
-    /* !- TODO validateSaveToDB -! */
-    //if(validateSaveToDB)
-    //Inform user asset is saved
-    UIAlertView *createAssetAlert = [[UIAlertView alloc] initWithTitle:@"Create Asset"
-                                                               message:@"Asset Created."
-                                                              delegate:self
-                                                     cancelButtonTitle:@"OK"
-                                                     otherButtonTitles:nil];
-    [createAssetAlert show];
-    //Transition to Assets Page - alertView clickedButtonAtIndex
   }
   else
   {
     NSLog(@"Unable to add Asset");
   }
 }
+
+
+#pragma mark - Connection didFailWithError
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+  NSLog(@"connection didFailWithError: %@", [error localizedDescription]);
+}
+
+#pragma mark - Connection didReceiveResponse
+-(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+  NSHTTPURLResponse *httpResponse;
+  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponseCode = [httpResponse statusCode];
+  NSLog(@"httpResponse status code: %d", httpResponseCode);
+}
+
 
 #pragma mark - Transition to Assets Page when OK on Alert Box is clicked
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -319,14 +459,16 @@
   }
 }
 
+
 #pragma mark - Login fields validation
 -(BOOL) validateAddAssetFields
 {
-  UIAlertView *addAssetValidateAlert = [[UIAlertView alloc] initWithTitle:@"Incomplete Information"
-                                                               message:@"Please fill out the necessary fields."
-                                                              delegate:nil
-                                                     cancelButtonTitle:@"OK"
-                                                     otherButtonTitles:nil];
+  UIAlertView *addAssetValidateAlert = [[UIAlertView alloc]
+                                        initWithTitle:@"Incomplete Information"
+                                              message:@"Please fill out the necessary fields."
+                                              delegate:nil
+                                     cancelButtonTitle:@"OK"
+                                     otherButtonTitles:nil];
   
   if([assetNameField.text isEqualToString:(@"")]
      || [assetTypeField.text isEqualToString:(@"")]
@@ -342,11 +484,11 @@
   }
 }
 
-/* !- TODO -! */
+/* !- TODO -!
 #pragma mark - Check if saved to DB properly
 -(BOOL) validateSaveToDB
 {
-  /*
+  
   if()
   {
     return true;
@@ -355,8 +497,8 @@
   {
     return false;
   }
-  */
 }
+*/
 
 #pragma mark - Dismiss assetTypePicker action sheet
 -(void)dismissActionSheet:(id) sender

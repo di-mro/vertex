@@ -28,5 +28,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *remarksLabel;
 @property (strong, nonatomic) IBOutlet UITextView *remarksArea;
 
+@property (strong, nonatomic) NSString *managedAssetId;
+
 
 @end
