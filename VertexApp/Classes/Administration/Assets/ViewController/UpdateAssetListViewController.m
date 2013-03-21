@@ -180,7 +180,7 @@
 
 - (NSString *) tableView:(UITableView *) tableView titleForHeaderInSection:(NSInteger)section
 {
-  NSString *myTitle = [[NSString alloc] initWithFormat:@"Assets List Update"];
+  NSString *myTitle = [[NSString alloc] initWithFormat:@"Assets List For Update"];
   return myTitle;
 }
 

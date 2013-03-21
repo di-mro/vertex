@@ -28,6 +28,8 @@
 
 - (void)viewDidLoad
 {
+  NSLog(@"Asset Page View");
+  
   [self displayAssetPageEntries];
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -77,8 +79,6 @@
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  NSLog(@"Asset Page View");
-  
   static NSString *CellIdentifier = @"assetPageCell";
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier  forIndexPath:indexPath];
   

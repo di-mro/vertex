@@ -41,8 +41,11 @@
 
 - (void)viewDidLoad
 {
+  NSLog(@"View Assets Page View");
+  
   //URL = @"http://192.168.2.13:8080/vertex-api/asset/getManagedAssets";
   [self displayViewAssetsPageEntries];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -194,7 +197,6 @@
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  NSLog(@"View Assets Page View");
   static NSString *CellIdentifier = @"viewAssetsPageCell";
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
@@ -207,9 +209,6 @@
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  static NSString *CellIdentifier = @"viewAssetsPageCell";
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-  
   NSString *selectedRowName = [[NSString alloc] init];
   selectedRowName = [viewAssetsPageEntries objectAtIndex:indexPath.row];
   NSLog(@"Selected row name: %@", selectedRowName);

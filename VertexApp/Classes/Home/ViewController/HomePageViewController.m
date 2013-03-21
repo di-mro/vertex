@@ -29,6 +29,8 @@
 
 - (void)viewDidLoad
 {
+  NSLog(@"Home Page View");
+
   //[Logout] button initialization
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout)];
   
@@ -101,7 +103,6 @@
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  NSLog(@"Home Page View");
   static NSString *CellIdentifier = @"homePageCell";
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   

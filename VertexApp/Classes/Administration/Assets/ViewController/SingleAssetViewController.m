@@ -16,6 +16,9 @@
 
 @synthesize singleAssetViewScroller;
 
+@synthesize assetDetailsTextArea;
+
+/*
 @synthesize assetNameField;
 @synthesize assetTypeField;
 @synthesize modelField;
@@ -27,6 +30,7 @@
 @synthesize brandLabel;
 @synthesize powerConsumptionLabel;
 @synthesize remarksLabel;
+*/
 
 @synthesize managedAssetId;
 @synthesize assetOwnedId;
@@ -50,15 +54,6 @@
 {
   //Configure Scroller size
   self.singleAssetViewScroller.contentSize = CGSizeMake(320, 720);
-
-  //For Viewing only, Editing disabled
-  assetNameField.enabled = NO;
-  assetTypeField.enabled = NO;
-  
-  //TODO: AssetAttributes
-  modelField.enabled = NO;
-  brandField.enabled = NO;
-  powerConsumptionField.enabled = NO;
   
   //Connect to WS endpoint to retrieve details for the chosen Asset
   [self getAssetInfo];
@@ -136,6 +131,90 @@
                   error:&error];
     NSLog(@"assetInfo JSON: %@", assetInfo);
     
+    
+    NSMutableDictionary *assetAttributesDict = [[NSMutableDictionary alloc] init];
+    NSMutableString *assetAttribString = [[NSMutableString alloc] init];
+    NSMutableArray *assetAttribListing = [[NSMutableArray alloc] init];
+    
+    NSMutableArray *assetAttribKeyArray = [[NSMutableArray alloc] init];
+    NSMutableArray *assetAttribValueArray = [[NSMutableArray alloc] init];
+    
+    //Get the key-value pair in the returned JSON object
+    assetAttributesDict = [assetInfo objectForKey:@"attributes"];
+    for(NSString *key in assetAttributesDict)
+    {
+      NSLog(@"Key: %@", key);
+      [assetAttribKeyArray addObject:[key valueForKey:@"keyName"]];
+      [assetAttribValueArray addObject:[key valueForKey:@"value"]];
+      NSLog(@"assetAttribKeyArray: %@", assetAttribKeyArray);
+      NSLog(@"assetAttribValueArray: %@", assetAttribValueArray);
+    }
+    
+    //Format as string the key-value pair and save in an array
+    for(int i = 0; i < [assetAttribKeyArray count]; i++)
+    {
+      assetAttribString = [NSMutableString stringWithFormat:@"%@ : %@",
+                           [assetAttribKeyArray objectAtIndex:i], [assetAttribValueArray objectAtIndex:i]];
+      NSLog(@"assetAttribString: %@", assetAttribString);
+      [assetAttribListing insertObject:assetAttribString atIndex:i];
+      NSLog(@"assetAttribListing: %@", assetAttribListing);
+      assetAttribString = [[NSMutableString alloc] init];
+    }
+    
+    NSString *assetAttribStringFormatted = [[NSString alloc] init];
+    assetAttribStringFormatted = [assetAttribListing componentsJoinedByString:@"\n  "];
+    
+    //[assetAttributesDict setObject:[[assetInfo valueForKey:@"attributes"] valueForKey:@"keyName"] forKey:@"keyName"];
+    //[assetAttributesDict setObject:[[assetInfo valueForKey:@"attributes"] valueForKey:@"value"] forKey:@"value"];
+    /*
+    NSMutableArray *assetAttribKeyArray = [[NSMutableArray alloc] init];
+    NSMutableArray *assetAttribValueArray = [[NSMutableArray alloc] init];
+    NSMutableArray *assetAttribListing = [[NSMutableArray alloc] init];
+    
+    [assetAttribKeyArray addObject:[[assetInfo valueForKey:@"attributes"] valueForKey:@"keyName"]];
+    [assetAttribValueArray addObject:[[assetInfo valueForKey:@"attributes"] valueForKey:@"value"]];
+    
+    NSLog(@"assetAttribKeyArray: %@", assetAttribKeyArray);
+    NSLog(@"assetAttribValueArray: %@", assetAttribValueArray);
+    
+    for(int i = 0; i < [assetAttribKeyArray count]; i++)
+    {
+      assetAttribString = [NSMutableString stringWithFormat:@"%@ : %@",
+                           [assetAttribKeyArray objectAtIndex:i], [assetAttribValueArray objectAtIndex:i]];
+      NSLog(@"assetAttribString: %@", assetAttribString);
+      [assetAttribListing addObject:assetAttribString];
+      assetAttribString = [[NSMutableString alloc] init];
+    }
+    NSLog(@"assetAttribListing: %@", assetAttribListing);
+    */
+    
+    //Setting the display for the Text Area
+    NSMutableString *assetDetailsDisplay = [[NSMutableString alloc] init];
+    NSRange boldedRange = NSMakeRange(22, 4);
+    
+    //Format the labels to be bold text
+    NSMutableAttributedString *assetNameLabel = [[NSMutableAttributedString alloc] initWithString:@"Asset Name: "];
+    NSMutableAttributedString *assetTypeLabel = [[NSMutableAttributedString alloc] initWithString:@"Asset Type: "];
+    NSMutableAttributedString *assetAttribLabel = [[NSMutableAttributedString alloc] initWithString:@"Asset Attributes: "];
+     
+    [assetNameLabel addAttribute:NSFontAttributeName
+                           value:[UIFont fontWithName:@"Helvetica" size:18.0] //Helvetica-Bold
+                           range:boldedRange];
+    [assetTypeLabel addAttribute:NSFontAttributeName
+                           value:[UIFont fontWithName:@"Helvetica" size:18.0]
+                           range:boldedRange];
+    [assetAttribLabel addAttribute:NSFontAttributeName
+                           value:[UIFont fontWithName:@"Helvetica" size:18.0]
+                           range:boldedRange];
+    
+    //Format string
+    assetDetailsDisplay = [NSMutableString
+                           stringWithFormat:@"ASSET NAME: \n  %@ \n\nASSET TYPE: \n  %@ \n\nASSET ATTRIBUTES: \n  %@ \n\n",
+                           [assetInfo valueForKey:@"name"], [[assetInfo valueForKey:@"assetType"] valueForKey:@"name"], assetAttribStringFormatted];
+    
+    assetDetailsTextArea.text = assetDetailsDisplay;
+    
+    /*
     //Set the field texts using the retrieved values
     assetNameField.text = [assetInfo valueForKey:@"name"];
     assetTypeField.text = [[assetInfo valueForKey:@"assetType"] valueForKey:@"name"];
@@ -147,6 +226,7 @@
     brandField.text = @"Lorem Ipsum";
     powerConsumptionField.text = @"Lorem Ipsum";
     remarksArea.text = @"Lorem Ipsum";
+    */
     
     /*
     //AssetAttributes
