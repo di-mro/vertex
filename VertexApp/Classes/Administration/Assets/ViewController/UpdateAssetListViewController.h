@@ -1,18 +1,18 @@
 //
-//  ViewAssetsPageViewController.h
+//  UpdateAssetListViewController.h
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 2/13/13.
+//  Created by Mary Rose Oh on 3/20/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface ViewAssetsPageViewController : UIViewController
+@interface UpdateAssetListViewController : UIViewController
 
-- (void)displayViewAssetsPageEntries;
+- (void)displayUpdateAssetsPageEntries;
 
-@property (nonatomic, retain) NSMutableArray *viewAssetsPageEntries;
+@property (nonatomic, retain) NSMutableArray *updateAssetsPageEntries;
 
 @property (nonatomic, strong) NSString *URL;
 
@@ -22,8 +22,8 @@
 
 @property (nonatomic, strong) NSMutableArray *assetNameArray;
 @property (nonatomic, strong) NSMutableArray *assetIdArray;
-//@property (nonatomic, strong) NSMutableDictionary *assetIdNameDict;
 @property (nonatomic, strong) NSMutableArray *assetIdNameArray;
 @property (nonatomic, strong) NSNumber *selectedAssetId;
+
 
 @end

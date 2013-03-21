@@ -20,6 +20,7 @@
 @synthesize userNameField;
 @synthesize passwordField;
 @synthesize URL;
+@synthesize httpResponseCode;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -175,21 +176,22 @@
    */
 }
 
-
-#pragma mark - Check for network availability
--(BOOL)reachable
+/*
+#pragma mark - Connection didFailWithError
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-  Reachability *r = [Reachability  reachabilityWithHostName:URL];
-  NetworkStatus internetStatus = [r currentReachabilityStatus];
-  
-  if(internetStatus == NotReachable)
-  {
-    return NO;
-  }
-  
-  return YES;
+  NSLog(@"connection didFailWithError: %@", [error localizedDescription]);
 }
 
+#pragma mark - Connection didReceiveResponse
+-(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+  NSHTTPURLResponse *httpResponse;
+  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponseCode = [httpResponse statusCode];
+  NSLog(@"httpResponse status code: %d", httpResponseCode);
+}
+*/
 
 #pragma mark - Present warning that there is no network connection before proceeding to Home Page
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -222,5 +224,21 @@
     return true;
   }
 }
+
+
+#pragma mark - Check for network availability
+-(BOOL)reachable
+{
+  Reachability *r = [Reachability  reachabilityWithHostName:URL];
+  NetworkStatus internetStatus = [r currentReachabilityStatus];
+  
+  if(internetStatus == NotReachable)
+  {
+    return NO;
+  }
+  
+  return YES;
+}
+
 
 @end

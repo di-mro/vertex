@@ -14,6 +14,8 @@
 
 @implementation SingleAssetViewController
 
+@synthesize singleAssetViewScroller;
+
 @synthesize assetNameField;
 @synthesize assetTypeField;
 @synthesize modelField;
@@ -21,7 +23,17 @@
 @synthesize powerConsumptionField;
 @synthesize remarksArea;
 
+@synthesize modelLabel;
+@synthesize brandLabel;
+@synthesize powerConsumptionLabel;
+@synthesize remarksLabel;
+
 @synthesize managedAssetId;
+@synthesize assetOwnedId;
+@synthesize assetInfo;
+
+@synthesize URL;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,24 +45,140 @@
   return self;
 }
 
+
 - (void)viewDidLoad
 {
-  NSLog(@"managedAssetId: %@", managedAssetId);
-  //assetNameField.text = managedAssetId;
-  //For viewing only, editing disabled
+  //Configure Scroller size
+  self.singleAssetViewScroller.contentSize = CGSizeMake(320, 720);
+
+  //For Viewing only, Editing disabled
   assetNameField.enabled = NO;
   assetTypeField.enabled = NO;
+  
+  //TODO: AssetAttributes
   modelField.enabled = NO;
   brandField.enabled = NO;
   powerConsumptionField.enabled = NO;
+  
+  //Connect to WS endpoint to retrieve details for the chosen Asset
+  [self getAssetInfo];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
+
 
 - (void)didReceiveMemoryWarning
 {
   [super didReceiveMemoryWarning];
   // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - Set Asset ID to the selected assetID from previous page
+- (void) setAssetId:(NSNumber *) assetId
+{
+  assetOwnedId = assetId;
+  NSLog(@"SingleAssetViewController - assetOwnedId: %@", assetOwnedId);
+}
+
+
+#pragma mark - Call WS endpoint to get details for the selected asset
+-(void) getAssetInfo
+{
+  URL = @"http://192.168.2.13:8080/vertex-api/asset/getAsset/";
+  
+  //! TEST
+  //NSString *assetId = @"20130101010200000";
+  NSMutableString *urlParams = [NSMutableString
+                                stringWithFormat:@"http://192.168.2.13:8080/vertex-api/asset/getAsset/%@"
+                                , assetOwnedId];
+
+  NSMutableURLRequest *getRequest = [NSMutableURLRequest
+                                     requestWithURL:[NSURL URLWithString:urlParams]];
+  
+  [getRequest setValue:@"application/json" forHTTPHeaderField:@"userId=20130101005100000"];
+  [getRequest setHTTPMethod:@"GET"];
+  NSLog(@"%@", getRequest);
+  
+  NSURLConnection *connection = [[NSURLConnection alloc]
+                                 initWithRequest:getRequest
+                                 delegate:self];
+  [connection start];
+  
+  NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+  NSError *error = [[NSError alloc] init];
+  
+  NSData *responseData = [NSURLConnection
+                          sendSynchronousRequest:getRequest
+                          returningResponse:&urlResponse
+                          error:&error];
+  
+  if (responseData == nil)
+  {
+    //Show an alert if connection is not available
+    UIAlertView *connectionAlert = [[UIAlertView alloc]
+                                    initWithTitle:@"Warning"
+                                    message:@"No network connection detected. Displaying data from phone cache."
+                                    delegate:self
+                                    cancelButtonTitle:@"OK"
+                                    otherButtonTitles:nil];
+    [connectionAlert show];
+    
+    //TODO: Retrieve local records from CoreData
+  }
+  else
+  {
+    //JSON
+    assetInfo = [NSJSONSerialization
+                  JSONObjectWithData:responseData
+                  options:kNilOptions
+                  error:&error];
+    NSLog(@"assetInfo JSON: %@", assetInfo);
+    
+    //Set the field texts using the retrieved values
+    assetNameField.text = [assetInfo valueForKey:@"name"];
+    assetTypeField.text = [[assetInfo valueForKey:@"assetType"] valueForKey:@"name"];
+    
+    //For TESTING
+    //modelLabel.text = [[assetInfo valueForKey:@"attributes"] valueOfAttribute:@"keyName" forResultAtIndex:0];
+    //modelField.text = [[assetInfo valueForKey:@"attributes"] valueOfAttribute:@"value" forResultAtIndex:0];
+    modelField.text = @"Lorem Ipsum";
+    brandField.text = @"Lorem Ipsum";
+    powerConsumptionField.text = @"Lorem Ipsum";
+    remarksArea.text = @"Lorem Ipsum";
+    
+    /*
+    //AssetAttributes
+    modelField.text = [assetInfo valueForKey:@"attributes"];
+    brandField.text = [assetInfo valueForKey:@"attributes"];
+    powerConsumptionField.text = [assetInfo valueForKey:@"attributes"];
+    remarksArea.text = [assetInfo valueForKey:@"attributes"];
+    */
+    
+    /*
+     viewAssetsPageEntries = [assetOwned valueForKey:@"name"];
+    
+    assetNameArray = [[NSMutableArray alloc] init];
+    assetIdArray = [[NSMutableArray alloc] init];
+    NSMutableDictionary *assetInfoDict = [[NSMutableDictionary alloc] init];
+    
+    assetNameArray = [assetOwned valueForKey:@"name"];
+    assetIdArray = [assetOwned valueForKey:@"id"];
+    
+    for(int i = 0; i < [viewAssetsPageEntries count]; i++)
+    {
+      [assetInfoDict setObject:[assetIdArray objectAtIndex:i] forKey:@"id"];
+      [assetInfoDict setObject:[assetNameArray objectAtIndex:i] forKey:@"name"];
+      
+      [assetIdNameArray insertObject:assetInfoDict atIndex:i];
+      assetInfoDict = [[NSMutableDictionary alloc] init]; //container of id-name pair for asset
+      NSLog(@"assetInfoDict: %@", assetInfoDict);
+    }
+     */
+  }
+
+  
 }
 
 @end

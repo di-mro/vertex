@@ -18,6 +18,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *passwordField;
 
 @property (strong, nonatomic) NSString *URL;
+@property int httpResponseCode;
 
 - (IBAction)login:(id)sender;
 @end

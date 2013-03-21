@@ -1,22 +1,16 @@
 //
-//  AddAssetPageViewController.h
+//  UpdateAssetPageViewController.h
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 2/14/13.
+//  Created by Mary Rose Oh on 3/20/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
-#import "ViewController.h"
-#import "Assets.h"
-#import "AssetAttributes.h"
-#import "AssetTypes.h"
-#import <CoreData/CoreData.h>
-#import "AppDelegate.h"
+#import <UIKit/UIKit.h>
 
+@interface UpdateAssetPageViewController : UIViewController
 
-@interface AddAssetPageViewController : ViewController <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate>
-
-@property (strong, nonatomic) IBOutlet UIScrollView *addAssetScroller;
+@property (strong, nonatomic) IBOutlet UIScrollView *updateAssetPageScroller;
 
 @property (strong, nonatomic) IBOutlet UILabel *assetNameLabel;
 @property (strong, nonatomic) IBOutlet UITextField *assetNameField;
@@ -42,14 +36,11 @@
 @property (nonatomic, strong) NSMutableDictionary *assetTypes;
 @property (nonatomic, strong) NSNumber *selectedAssetTypeId;
 
+@property (strong, nonatomic) NSString *managedAssetId;
+@property (strong, nonatomic) NSNumber *assetOwnedId;
+@property (strong, nonatomic) NSMutableDictionary *assetInfo;
+
 @property (strong, nonatomic) NSString *URL;
 @property int httpResponseCode;
-
-@property (strong, nonatomic) NSManagedObjectContext *context;
-
-//@property (strong, nonatomic) Assets *assetObject;
-//@property (strong, nonatomic) AssetAttributes *assetAttributesObject;
-//@property (strong, nonatomic) AssetTypes *assetTypesObject;
-
 
 @end

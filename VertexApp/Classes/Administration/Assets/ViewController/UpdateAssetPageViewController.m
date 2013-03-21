@@ -1,33 +1,25 @@
 //
-//  AddAssetPageViewController.m
+//  UpdateAssetPageViewController.m
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 2/14/13.
+//  Created by Mary Rose Oh on 3/20/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
-#import "AddAssetPageViewController.h"
+#import "UpdateAssetPageViewController.h"
 #import "HomePageViewController.h"
 #import "AssetPageViewController.h"
 #import "Reachability.h"
-#import "AppDelegate.h"
 
-#import "Assets.h"
-#import "AssetAttributes.h"
-#import "AssetTypes.h"
-
-#import <CoreData/CoreData.h>
-
-
-@interface AddAssetPageViewController ()
+@interface UpdateAssetPageViewController ()
 
 @end
 
-@implementation AddAssetPageViewController
+@implementation UpdateAssetPageViewController
 
+@synthesize updateAssetPageScroller;
 @synthesize assetTypePickerArray;
 @synthesize assetTypePicker;
-@synthesize addAssetScroller;
 @synthesize actionSheet;
 
 @synthesize assetNameField;
@@ -42,27 +34,26 @@
 @synthesize powerConsumptionLabel;
 @synthesize remarksLabel;
 
-//@synthesize assetObject;
-//@synthesize assetTypesObject;
-//@synthesize assetAttributesObject;
-
 @synthesize assetTypes;
 @synthesize URL;
 @synthesize selectedAssetTypeId;
 @synthesize httpResponseCode;
 
-@synthesize context;
+@synthesize managedAssetId;
+@synthesize assetOwnedId;
+@synthesize assetInfo;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self)
-    {
-        // Custom initialization
-    }
-    return self;
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self)
+  {
+    // Custom initialization
+  }
+  return self;
 }
+
 
 - (void)viewDidLoad
 {
@@ -73,11 +64,11 @@
   //[Cancel] navigation button
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelAddAsset)];
   
-  //[Add] navigation button - Add Asset
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(createAsset)];
+  //[Update] navigation button - Update Asset
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Update" style:UIBarButtonItemStylePlain target:self action:@selector(updateAsset)];
   
   //Configure Scroller size
-  self.addAssetScroller.contentSize = CGSizeMake(320, 720);
+  self.updateAssetPageScroller.contentSize = CGSizeMake(320, 720);
   
   //Configure Picker array
   self.assetTypePickerArray = [[NSArray alloc] init];
@@ -87,21 +78,91 @@
   //assetTypePicker in assetTypeField
   [assetTypeField setDelegate:self];
   
-  //CoreData
-  AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-  context = [appDelegate managedObjectContext];
-  NSLog(@"appDelegate %@", appDelegate);
-  NSLog(@"context: %@", context);
+  NSLog(@"UpdateAssetPageViewController - assetOwnedId: %@", assetOwnedId);
+  
+  //Connect to WS endpoint to retrieve details for the chosen Asset - Initialize fields
+  [self getAssetInfo];
   
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
 
+
 - (void)didReceiveMemoryWarning
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
 }
+
+
+#pragma mark - Call WS endpoint to get details for the selected asset
+-(void) getAssetInfo
+{
+  URL = @"http://192.168.2.13:8080/vertex-api/asset/getAsset/";
+  
+  //! TEST
+  //NSString *assetId = @"20130101010200000";
+  NSMutableString *urlParams = [NSMutableString
+                                stringWithFormat:@"http://192.168.2.13:8080/vertex-api/asset/getAsset/%@"
+                                , assetOwnedId];
+  
+  NSMutableURLRequest *getRequest = [NSMutableURLRequest
+                                     requestWithURL:[NSURL URLWithString:urlParams]];
+  
+  [getRequest setValue:@"application/json" forHTTPHeaderField:@"userId=20130101005100000"];
+  [getRequest setHTTPMethod:@"GET"];
+  NSLog(@"%@", getRequest);
+  
+  NSURLConnection *connection = [[NSURLConnection alloc]
+                                 initWithRequest:getRequest
+                                 delegate:self];
+  [connection start];
+  
+  NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+  NSError *error = [[NSError alloc] init];
+  
+  NSData *responseData = [NSURLConnection
+                          sendSynchronousRequest:getRequest
+                          returningResponse:&urlResponse
+                          error:&error];
+  
+  if (responseData == nil)
+  {
+    //Show an alert if connection is not available
+    UIAlertView *connectionAlert = [[UIAlertView alloc]
+                                    initWithTitle:@"Warning"
+                                    message:@"No network connection detected. Displaying data from phone cache."
+                                    delegate:self
+                                    cancelButtonTitle:@"OK"
+                                    otherButtonTitles:nil];
+    [connectionAlert show];
+    
+    //TODO: Retrieve local records from CoreData
+  }
+  else
+  {
+    //JSON
+    assetInfo = [NSJSONSerialization
+                 JSONObjectWithData:responseData
+                 options:kNilOptions
+                 error:&error];
+    NSLog(@"assetInfo JSON: %@", assetInfo);
+    
+    //Set the field texts using the retrieved values
+    assetNameField.text = [assetInfo valueForKey:@"name"];
+    assetTypeField.text = [[assetInfo valueForKey:@"assetType"] valueForKey:@"name"];
+    
+    //For TESTING
+    //modelLabel.text = [[assetInfo valueForKey:@"attributes"] valueOfAttribute:@"keyName" forResultAtIndex:0];
+    //modelField.text = [[assetInfo valueForKey:@"attributes"] valueOfAttribute:@"value" forResultAtIndex:0];
+    modelField.text = @"Lorem Ipsum";
+    brandField.text = @"Lorem Ipsum";
+    powerConsumptionField.text = @"Lorem Ipsum";
+    remarksArea.text = @"Lorem Ipsum";
+    
+  }
+}
+
 
 #pragma mark - Get AssetTypes
 - (void) getAssetTypes
@@ -110,25 +171,25 @@
   URL = @"http://192.168.2.13:8080/vertex-api/asset/getAssetTypes";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
-                                      requestWithURL:[NSURL URLWithString:URL]];
+                                     requestWithURL:[NSURL URLWithString:URL]];
   
   [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
   [getRequest setHTTPMethod:@"GET"];
   NSLog(@"%@", getRequest);
   
   NSURLConnection *connection = [[NSURLConnection alloc]
-                                   initWithRequest:getRequest
-                                   delegate:self];
+                                 initWithRequest:getRequest
+                                 delegate:self];
   [connection start];
-    
+  
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
   NSError *error = [[NSError alloc] init];
   
   //GET
   NSData *responseData = [NSURLConnection
-                            sendSynchronousRequest:getRequest
-                            returningResponse:&urlResponse
-                            error:&error];
+                          sendSynchronousRequest:getRequest
+                          returningResponse:&urlResponse
+                          error:&error];
   
   if (responseData == nil)
   {
@@ -148,9 +209,9 @@
   else
   {
     assetTypes = [NSJSONSerialization
-                                 JSONObjectWithData:responseData
-                                 options:kNilOptions
-                                 error:&error];
+                  JSONObjectWithData:responseData
+                  options:kNilOptions
+                  error:&error];
     NSLog(@"getAssetTypes JSON Result: %@", assetTypes);
     
     assetTypePickerArray = [assetTypes valueForKey:@"name"]; //store assetType names only in PickerArray
@@ -254,31 +315,31 @@
   
   //Go back to Home Page
   HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
-
+  
   [self.navigationController pushViewController:controller animated:YES];
 }
 
 
-#pragma mark - [Add] button implementation
--(void) createAsset
+#pragma mark - [Update] button implementation
+-(void) updateAsset
 {
   if([self validateAddAssetFields])
   {
     //Constructing JSON Request Object - POST
     /*
      "{
-        id: long
-        name: string
-        assetType :
-        { 
-          id: long 
-        }
-        assetAttributes :
-        [           {
-            keyName: string,
-            value : string
-          }, ...
-        ]
+     id: long
+     name: string
+     assetType :
+     {
+     id: long
+     }
+     assetAttributes :
+     [           {
+     keyName: string,
+     value : string
+     }, ...
+     ]
      }"
      */
     //Asset
@@ -289,9 +350,6 @@
     NSMutableDictionary *assetTypeDict = [[NSMutableDictionary alloc] init];
     [assetTypeDict setObject:selectedAssetTypeId forKey:@"id"];
     NSLog(@"selectedAssetTypeId: %@", selectedAssetTypeId);
-    //id depends on chosen AssetType
-    //hardcoded id aircon - 20130101011100000
-    //hardcoded id window - 20130101011300000
     
     //AssetAttributes Array of Objects - Store key and name in array first before consolidating in a dictionary
     //Use Core Data Model Objects
@@ -316,21 +374,20 @@
     NSError *error = [[NSError alloc] init];
     NSData *jsonData = [NSJSONSerialization
                         dataWithJSONObject:mainDictionary
-                                   options:NSJSONWritingPrettyPrinted
-                                     error:&error];
+                        options:NSJSONWritingPrettyPrinted
+                        error:&error];
     NSString *jsonString = [[NSString alloc]
                             initWithData:jsonData
-                                encoding:NSUTF8StringEncoding];
+                            encoding:NSUTF8StringEncoding];
     
     NSLog(@"jsonData Request: %@", jsonData);
     NSLog(@"jsonString Request: %@", jsonString);
     
-    //Set URL for Add Asset
-    URL = @"http://192.168.2.13:8080/vertex-api/asset/addAsset";
+    //Set URL for Update Asset
+    URL = @"http://192.168.2.13:8080/vertex-api/asset/updateAsset";
     NSMutableURLRequest *postRequest = [NSMutableURLRequest
-                                       requestWithURL:[NSURL URLWithString:URL]];
+                                        requestWithURL:[NSURL URLWithString:URL]];
     
-    //[postRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [postRequest setValue:@"application/json" forHTTPHeaderField:@"userId=20130101005100000"];
     [postRequest setHTTPMethod:@"POST"];
     [postRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String]
@@ -346,62 +403,33 @@
     //POST
     if(httpResponseCode >= 400)
     {
-      UIAlertView *createAssetFailAlert = [[UIAlertView alloc]
-                                           initWithTitle:@"Add Asset Failed"
-                                           message:@"Asset not added. Please try again later"
+      UIAlertView *updateAssetFailAlert = [[UIAlertView alloc]
+                                           initWithTitle:@"Update Asset Failed"
+                                           message:@"Asset not updated. Please try again later"
                                            delegate:self
                                            cancelButtonTitle:@"OK"
                                            otherButtonTitles:nil];
-      [createAssetFailAlert show];
+      [updateAssetFailAlert show];
       
     }
     else
     {
-       UIAlertView *createAssetAlert = [[UIAlertView alloc]
-                                          initWithTitle:@"Add Asset"
-                                                message:@"Asset Created."
-                                               delegate:self
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles:nil];
-       [createAssetAlert show];
+      UIAlertView *updateAssetAlert = [[UIAlertView alloc]
+                                       initWithTitle:@"Update Asset"
+                                       message:@"Asset Updated."
+                                       delegate:self
+                                       cancelButtonTitle:@"OK"
+                                       otherButtonTitles:nil];
+      [updateAssetAlert show];
       //Transition to Assets Page - alertView clickedButtonAtIndex
     }
-
+    
     [self dismissViewControllerAnimated:YES completion:nil];
     NSLog(@"Create Asset");
-    
-    /*
-     //Core Data Save
-     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-     NSManagedObjectContext *context = [appDelegate  managedObjectContext];
-     
-     NSLog(@"moc-entities: %@", context.persistentStoreCoordinator.managedObjectModel.entities);
-     Assets *assetsObject = [NSEntityDescription insertNewObjectForEntityForName:@"Assets" inManagedObjectContext:context];
-     assetsObject.assetName = assetNameField.text;
-     
-     AssetTypes *assetTypesObject = [NSEntityDescription insertNewObjectForEntityForName:@"AssetTypes" inManagedObjectContext:context];
-     assetTypesObject.assetTypeName = assetTypeField.text;
-     
-     NSError *error;
-     if (![context save:&error])
-     {
-     NSLog(@"Couldn't save data: %@", [error localizedDescription]);
-     }
-     
-     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Assets"
-     inManagedObjectContext:context];
-     [fetchRequest setEntity:entity];
-     NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
-     for (Assets *assets in fetchedObjects)
-     {
-     NSLog(@"assetName: %@", assets.assetName);
-     }
-     */
   }
   else
   {
-    NSLog(@"Unable to add Asset");
+    NSLog(@"Unable to update Asset");
   }
 }
 
@@ -439,10 +467,10 @@
 {
   UIAlertView *addAssetValidateAlert = [[UIAlertView alloc]
                                         initWithTitle:@"Incomplete Information"
-                                              message:@"Please fill out the necessary fields."
-                                              delegate:nil
-                                     cancelButtonTitle:@"OK"
-                                     otherButtonTitles:nil];
+                                        message:@"Please fill out the necessary fields."
+                                        delegate:nil
+                                        cancelButtonTitle:@"OK"
+                                        otherButtonTitles:nil];
   
   if([assetNameField.text isEqualToString:(@"")]
      || [assetTypeField.text isEqualToString:(@"")]

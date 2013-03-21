@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="cUl-TL-YfF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="cUl-TL-YfF">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -775,6 +775,7 @@
                     <connections>
                         <segue destination="d0p-Nw-XaW" kind="push" identifier="assetsToViewAssets" id="dii-57-Vof"/>
                         <segue destination="mua-XU-nCb" kind="push" identifier="assetsToAddAsset" id="kdW-Ar-wIQ"/>
+                        <segue destination="ynN-k4-vBm" kind="push" identifier="assetsToUpdateAsset" id="EcC-EB-ttm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wc9-bH-06t" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -789,93 +790,92 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Asset Name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mLL-7M-9dd">
-                                <rect key="frame" x="20" y="4" width="122" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Aircon-3811" borderStyle="roundedRect" minimumFontSize="17" id="1lH-nU-Pe1">
-                                <rect key="frame" x="20" y="29" width="280" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Airconditioner" borderStyle="roundedRect" minimumFontSize="17" id="spU-ie-55P">
-                                <rect key="frame" x="20" y="91" width="280" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Carrier" borderStyle="roundedRect" minimumFontSize="17" id="N3K-2E-88e">
-                                <rect key="frame" x="20" y="154" width="280" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Asset Type:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5ZU-S1-Vnd">
-                                <rect key="frame" x="20" y="66" width="122" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Model:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Qb9-u9-dxu">
-                                <rect key="frame" x="20" y="129" width="90" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Brand:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bmG-dz-nYo">
-                                <rect key="frame" x="-86" y="244" width="51" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Power Consumption:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZBl-gJ-K3A">
-                                <rect key="frame" x="20" y="252" width="191" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Brand:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YpR-jI-92m">
-                                <rect key="frame" x="20" y="192" width="85" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Remarks:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zta-bK-eL0">
-                                <rect key="frame" x="20" y="316" width="104" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="C100" borderStyle="roundedRect" minimumFontSize="17" id="Axg-iV-08Y">
-                                <rect key="frame" x="20" y="214" width="280" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1000 watts" borderStyle="roundedRect" minimumFontSize="17" id="jAE-ZA-wxH">
-                                <rect key="frame" x="20" y="278" width="280" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="J2I-oY-yyK">
-                                <rect key="frame" x="16" y="347" width="287" height="57"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
-                                <string key="text">Placed in living room. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="FQ4-QJ-RKM" customClass="TPKeyboardAvoidingScrollView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Asset Name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mLL-7M-9dd">
+                                        <rect key="frame" x="20" y="5" width="122" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Aircon-3811" borderStyle="roundedRect" minimumFontSize="17" id="1lH-nU-Pe1">
+                                        <rect key="frame" x="20" y="34" width="280" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Asset Type:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5ZU-S1-Vnd">
+                                        <rect key="frame" x="20" y="72" width="122" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Airconditioner" borderStyle="roundedRect" minimumFontSize="17" id="spU-ie-55P">
+                                        <rect key="frame" x="20" y="101" width="280" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Model:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Qb9-u9-dxu">
+                                        <rect key="frame" x="20" y="139" width="90" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Carrier" borderStyle="roundedRect" minimumFontSize="17" id="N3K-2E-88e">
+                                        <rect key="frame" x="20" y="163" width="280" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Brand:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YpR-jI-92m">
+                                        <rect key="frame" x="20" y="201" width="85" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="C100" borderStyle="roundedRect" minimumFontSize="17" id="Axg-iV-08Y">
+                                        <rect key="frame" x="19" y="230" width="280" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Power Consumption:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZBl-gJ-K3A">
+                                        <rect key="frame" x="20" y="270" width="191" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1000 watts" borderStyle="roundedRect" minimumFontSize="17" id="jAE-ZA-wxH">
+                                        <rect key="frame" x="19" y="296" width="280" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Remarks:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zta-bK-eL0">
+                                        <rect key="frame" x="20" y="337" width="104" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="J2I-oY-yyK">
+                                        <rect key="frame" x="17" y="366" width="287" height="153"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
+                                        <string key="text">Placed in living room. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -893,11 +893,12 @@
                         <outlet property="powerConsumptionLabel" destination="ZBl-gJ-K3A" id="DwJ-cO-blo"/>
                         <outlet property="remarksArea" destination="J2I-oY-yyK" id="qt0-OD-kUz"/>
                         <outlet property="remarksLabel" destination="zta-bK-eL0" id="ayJ-4d-XuD"/>
+                        <outlet property="singleAssetViewScroller" destination="FQ4-QJ-RKM" id="i3p-8D-jYn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yA5-GW-nk8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1921" y="-1925"/>
+            <point key="canvasLocation" x="1929" y="-2477"/>
         </scene>
         <!--View Assets Page View Controller - View Asset-->
         <scene sceneID="Dis-He-RHO">
@@ -946,7 +947,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7ZW-CW-i1l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1505" y="-1933"/>
+            <point key="canvasLocation" x="1505" y="-2493"/>
         </scene>
         <!--Login View Controller - Vertex-->
         <scene sceneID="2tN-0K-i6W">
@@ -1130,7 +1131,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Bj-K2-whK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1505" y="-1308"/>
+            <point key="canvasLocation" x="1505" y="-1864"/>
         </scene>
         <!--Feedback List View Controller-->
         <scene sceneID="KYd-m9-d66">
@@ -1242,7 +1243,348 @@
             </objects>
             <point key="canvasLocation" x="1935" y="636"/>
         </scene>
+        <!--Update Asset List View Controller - Asset List-->
+        <scene sceneID="GOe-ch-WaQ">
+            <objects>
+                <viewController id="ynN-k4-vBm" customClass="UpdateAssetListViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iQQ-4C-4P2">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="fxA-E7-svH">
+                                <rect key="frame" x="1" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="updateAssetListCell" textLabel="Akc-7l-4LT" style="IBUITableViewCellStyleDefault" id="KKp-ex-qjB">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Akc-7l-4LT">
+                                                    <rect key="frame" x="10" y="0.0" width="280" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="ynN-k4-vBm" id="UDT-x9-hhe"/>
+                                    <outlet property="delegate" destination="ynN-k4-vBm" id="GXx-Ro-15q"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Asset List" id="t2X-yw-SgW"/>
+                    <connections>
+                        <segue destination="qMR-In-l8h" kind="push" identifier="updateAssetListToUpdateAssetPage" id="OYT-bQ-xlD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ycl-Yj-eZu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1505" y="-1245"/>
+        </scene>
+        <!--Update Asset Page View Controller - Update Asset-->
+        <scene sceneID="75t-dE-1XP">
+            <objects>
+                <viewController storyboardIdentifier="" id="qMR-In-l8h" customClass="UpdateAssetPageViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="P1M-ab-rYx">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="PWY-cy-wMT" customClass="TPKeyboardAvoidingScrollView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Asset Name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TNT-Lg-vGF">
+                                        <rect key="frame" x="20" y="5" width="122" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="O6d-Xf-Gj7">
+                                        <rect key="frame" x="20" y="34" width="280" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Asset Type:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fLj-G2-oms">
+                                        <rect key="frame" x="20" y="72" width="122" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="ina-N1-25n">
+                                        <rect key="frame" x="20" y="101" width="280" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Model:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gqg-NH-RQy">
+                                        <rect key="frame" x="20" y="139" width="90" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="nvr-hV-l1b">
+                                        <rect key="frame" x="20" y="163" width="280" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Brand:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fYz-I3-CqL">
+                                        <rect key="frame" x="20" y="201" width="85" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="gt9-63-Z0d">
+                                        <rect key="frame" x="19" y="230" width="280" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Power Consumption:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dl0-2K-tfb">
+                                        <rect key="frame" x="20" y="270" width="191" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="gLa-uZ-qjO">
+                                        <rect key="frame" x="19" y="296" width="280" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Remarks:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qog-7P-6pL">
+                                        <rect key="frame" x="20" y="337" width="104" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="IJB-R0-FVv">
+                                        <rect key="frame" x="17" y="366" width="287" height="153"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Update Asset" id="hqa-87-moK"/>
+                    <connections>
+                        <outlet property="assetNameField" destination="O6d-Xf-Gj7" id="ukH-lk-GJL"/>
+                        <outlet property="assetNameLabel" destination="TNT-Lg-vGF" id="esc-kV-etz"/>
+                        <outlet property="assetTypeField" destination="ina-N1-25n" id="ovV-S6-aBf"/>
+                        <outlet property="assetTypeLabel" destination="fLj-G2-oms" id="IW4-yh-qQl"/>
+                        <outlet property="brandField" destination="gt9-63-Z0d" id="w5d-rT-3WK"/>
+                        <outlet property="brandLabel" destination="fYz-I3-CqL" id="7Er-YA-03x"/>
+                        <outlet property="modelField" destination="nvr-hV-l1b" id="8yn-4w-5Ix"/>
+                        <outlet property="modelLabel" destination="gqg-NH-RQy" id="Kjk-33-unk"/>
+                        <outlet property="powerConsumptionField" destination="gLa-uZ-qjO" id="9OI-lQ-lvZ"/>
+                        <outlet property="powerConsumptionLabel" destination="dl0-2K-tfb" id="GKE-qA-c3B"/>
+                        <outlet property="remarksArea" destination="IJB-R0-FVv" id="ycq-2C-Snr"/>
+                        <outlet property="remarksLabel" destination="qog-7P-6pL" id="JOS-Eg-l8Q"/>
+                        <outlet property="singleAssetViewScroller" destination="PWY-cy-wMT" id="Ud3-19-VwO"/>
+                        <outlet property="updateAssetPageScroller" destination="PWY-cy-wMT" id="KqA-mt-5EL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hVo-GX-SzJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1935" y="-1245"/>
+        </scene>
     </scenes>
+    <classes>
+        <class className="AddAssetPageViewController" superclassName="ViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddAssetPageViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="addAssetScroller" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="assetNameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="assetNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="assetTypeField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="assetTypeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="brandField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="brandLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="modelField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="modelLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="powerConsumptionField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="powerConsumptionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="remarksArea" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="remarksLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="AdminTasksViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AdminTasksViewController.h"/>
+        </class>
+        <class className="AssetPageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AssetPageViewController.h"/>
+        </class>
+        <class className="BillingTasksViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BillingTasksViewController.h"/>
+        </class>
+        <class className="CreateSRViewController" superclassName="ViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CreateSRViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="assetField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="assetPicker" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="chooseAssetLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="chooseLifecycleLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="chooseServicePicker" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="contactNumberField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="contactNumberLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="createSRScroller" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="currentArray" candidateClass="NSArray"/>
+                <relationship kind="outlet" name="currentTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="detailsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="detailsTextArea" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="lifecycleField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="lifecyclePicker" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="nameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="nameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="priorityField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="priorityLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="priorityPicker" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="serviceField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="servicePicker" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="srGenericPicker" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="unitLocationField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="unitLocationLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="DisplaySRViewController" superclassName="ViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DisplaySRViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="assetField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="assetLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="contactNumberField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="contactNumberLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="displaySRScroller" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="lifecycleField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="lifecycleLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="nameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="nameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="priorityField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="priorityLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="serviceField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="serviceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="srDateField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="srDateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="srDetailsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="srDetailsTextArea" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="unitLocationField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="unitLocationLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="HomePageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HomePageViewController.h"/>
+        </class>
+        <class className="LoginViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="login:"/>
+                <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="passwordLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userNameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="userNameLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="NavigationController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NavigationController.h"/>
+        </class>
+        <class className="NoticesViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NoticesViewController.h"/>
+        </class>
+        <class className="ReportsPageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReportsPageViewController.h"/>
+        </class>
+        <class className="SRFeedbackListViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SRFeedbackListViewController.h"/>
+        </class>
+        <class className="SRFeedbackPageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SRFeedbackPageViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="srCommentsTextArea" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="srFeedbackScroller" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="SchedulePageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SchedulePageViewController.h"/>
+        </class>
+        <class className="ServiceRequestViewController" superclassName="ViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ServiceRequestViewController.h"/>
+        </class>
+        <class className="SettingsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
+        </class>
+        <class className="SingleAssetViewController" superclassName="ViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SingleAssetViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="assetNameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="assetNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="assetTypeField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="assetTypeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="brandField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="brandLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="modelField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="modelLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="powerConsumptionField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="powerConsumptionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="remarksArea" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="remarksLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="singleAssetViewScroller" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="TPKeyboardAvoidingScrollView" superclassName="UIScrollView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TPKeyboardAvoidingScrollView.h"/>
+        </class>
+        <class className="UpdateAssetListViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UpdateAssetListViewController.h"/>
+        </class>
+        <class className="UpdateAssetPageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UpdateAssetPageViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="assetNameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="assetNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="assetTypeField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="assetTypeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="brandField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="brandLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="modelField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="modelLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="powerConsumptionField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="powerConsumptionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="remarksArea" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="remarksLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="updateAssetPageScroller" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="ViewAssetsPageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewAssetsPageViewController.h"/>
+        </class>
+        <class className="ViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
+        </class>
+        <class className="ViewSRViewController" superclassName="ViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewSRViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

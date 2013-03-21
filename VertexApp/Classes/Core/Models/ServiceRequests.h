@@ -2,7 +2,7 @@
 //  ServiceRequests.h
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 3/11/13.
+//  Created by Mary Rose Oh on 3/19/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
@@ -24,14 +24,15 @@
 @property (nonatomic, retain) NSNumber * serviceId;
 @property (nonatomic, retain) NSNumber * serviceRequestId;
 @property (nonatomic, retain) NSNumber * statusId;
+@property (nonatomic, retain) NSString * adminRemarks;
 @property (nonatomic, retain) Assets *srToAsset;
 @property (nonatomic, retain) Feedbacks *srToFeedbacks;
 @property (nonatomic, retain) Priorities *srToPriorities;
 @property (nonatomic, retain) Services *srToServices;
-@property (nonatomic, retain) ServiceRequestSchedules *srToSRSchedule;
+@property (nonatomic, retain) NSSet *srToSRSchedule;
 @property (nonatomic, retain) Statuses *srToStatuses;
 @property (nonatomic, retain) Tasks *srToTasks;
-@property (nonatomic, retain) UserAccounts *srToUserAccount;
+@property (nonatomic, retain) NSSet *srToUserAccount;
 @end
 
 @interface ServiceRequests (CoreDataGeneratedAccessors)

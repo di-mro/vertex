@@ -10,6 +10,8 @@
 
 @interface SingleAssetViewController : ViewController
 
+@property (strong, nonatomic) IBOutlet UIScrollView *singleAssetViewScroller;
+
 @property (strong, nonatomic) IBOutlet UILabel *assetNameLabel;
 @property (strong, nonatomic) IBOutlet UITextField *assetNameField;
 
@@ -29,6 +31,9 @@
 @property (strong, nonatomic) IBOutlet UITextView *remarksArea;
 
 @property (strong, nonatomic) NSString *managedAssetId;
+@property (strong, nonatomic) NSNumber *assetOwnedId;
+@property (strong, nonatomic) NSMutableDictionary *assetInfo;
 
+@property (nonatomic, strong) NSString *URL;
 
 @end

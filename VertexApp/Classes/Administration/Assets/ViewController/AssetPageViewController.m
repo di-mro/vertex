@@ -46,11 +46,15 @@
   assetPageEntries = [[NSMutableArray alloc] init];
   
   /* !- For demo only, remove hard coded values. Must retrieve listing in DB -! */
-  NSString *entry1 = @"View Asset";
-  NSString *entry2 = @"Add Assets";
+  NSString *entry1 = @"Add Asset";
+  NSString *entry2 = @"View Assets";
+  NSString *entry3 = @"Update Asset";
+  //NSString *entry4 = @"Delete Assets";
   
   [assetPageEntries addObject:entry1];
   [assetPageEntries addObject:entry2];
+  [assetPageEntries addObject:entry3];
+  //[assetPageEntries addObject:entry4];
 }
 
 #pragma mark - Table view data source implementation
@@ -89,10 +93,17 @@
 {
   switch (indexPath.row)
   {
-    case 0: [self performSegueWithIdentifier:@"assetsToViewAssets" sender:self];
+    //Add
+    case 0: [self performSegueWithIdentifier:@"assetsToAddAsset" sender:self];
       break;
-    case 1: [self performSegueWithIdentifier:@"assetsToAddAsset" sender:self];
+    //View
+    case 1: [self performSegueWithIdentifier:@"assetsToViewAssets" sender:self];
       break;
+    //Update
+    case 2: [self performSegueWithIdentifier:@"assetsToUpdateAsset" sender:self];
+      break;
+    //case 3: [self performSegueWithIdentifier:@"assetsToViewAssets" sender:self];
+    //  break;
     default: break;
   }
 }
