@@ -47,8 +47,9 @@
 //@synthesize assetAttributesObject;
 
 @synthesize assetTypes;
-@synthesize URL;
+@synthesize assetTypeAttributes;
 @synthesize selectedAssetTypeId;
+@synthesize URL;
 @synthesize httpResponseCode;
 
 @synthesize context;
@@ -152,6 +153,9 @@
                                  options:kNilOptions
                                  error:&error];
     NSLog(@"getAssetTypes JSON Result: %@", assetTypes);
+    
+    assetTypeAttributes = [assetTypes valueForKey:@"attributes"];
+    NSLog(@"assetTypeAttributes: %@", assetTypeAttributes);
     
     assetTypePickerArray = [assetTypes valueForKey:@"name"]; //store assetType names only in PickerArray
     NSLog(@"assetTypePickerArray: %@", assetTypePickerArray);

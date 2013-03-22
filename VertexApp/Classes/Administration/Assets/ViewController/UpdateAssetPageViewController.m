@@ -95,6 +95,14 @@
 }
 
 
+#pragma mark - Set Asset ID to the selected assetID from previous page
+- (void) setAssetOwnedId:(NSNumber *) assetId
+{
+  assetOwnedId = assetId;
+  NSLog(@"UpdateAssetPageViewController - assetOwnedId: %@", assetOwnedId);
+}
+
+
 #pragma mark - Call WS endpoint to get details for the selected asset
 -(void) getAssetInfo
 {
@@ -345,6 +353,7 @@
     //Asset
     NSMutableDictionary *mainDictionary = [[NSMutableDictionary alloc] init];
     [mainDictionary setObject:assetNameField.text forKey:@"name"];
+    [mainDictionary setObject:assetOwnedId forKey:@"id"];
     
     //AssetType Object
     NSMutableDictionary *assetTypeDict = [[NSMutableDictionary alloc] init];
@@ -385,17 +394,18 @@
     
     //Set URL for Update Asset
     URL = @"http://192.168.2.13:8080/vertex-api/asset/updateAsset";
-    NSMutableURLRequest *postRequest = [NSMutableURLRequest
+    NSMutableURLRequest *putRequest = [NSMutableURLRequest
                                         requestWithURL:[NSURL URLWithString:URL]];
     
-    [postRequest setValue:@"application/json" forHTTPHeaderField:@"userId=20130101005100000"];
-    [postRequest setHTTPMethod:@"POST"];
-    [postRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String]
+    //PUT method
+    [putRequest setValue:@"application/json" forHTTPHeaderField:@"userId=20130101005100000"];
+    [putRequest setHTTPMethod:@"PUT"];
+    [putRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String]
                                             length:[jsonString length]]];
-    NSLog(@"%@", postRequest);
+    NSLog(@"%@", putRequest);
     
     NSURLConnection *connection = [[NSURLConnection alloc]
-                                   initWithRequest:postRequest
+                                   initWithRequest:putRequest
                                    delegate:self];
     
     [connection start];
@@ -425,7 +435,7 @@
     }
     
     [self dismissViewControllerAnimated:YES completion:nil];
-    NSLog(@"Create Asset");
+    NSLog(@"Update Asset");
   }
   else
   {

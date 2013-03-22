@@ -40,6 +40,7 @@
 
 @property (nonatomic, retain) NSArray *assetTypePickerArray;
 @property (nonatomic, strong) NSMutableDictionary *assetTypes;
+@property (nonatomic, strong) NSMutableDictionary *assetTypeAttributes;
 @property (nonatomic, strong) NSNumber *selectedAssetTypeId;
 
 @property (strong, nonatomic) NSString *URL;

@@ -15,22 +15,7 @@
 @implementation SingleAssetViewController
 
 @synthesize singleAssetViewScroller;
-
 @synthesize assetDetailsTextArea;
-
-/*
-@synthesize assetNameField;
-@synthesize assetTypeField;
-@synthesize modelField;
-@synthesize brandField;
-@synthesize powerConsumptionField;
-@synthesize remarksArea;
-
-@synthesize modelLabel;
-@synthesize brandLabel;
-@synthesize powerConsumptionLabel;
-@synthesize remarksLabel;
-*/
 
 @synthesize managedAssetId;
 @synthesize assetOwnedId;
@@ -143,11 +128,10 @@
     assetAttributesDict = [assetInfo objectForKey:@"attributes"];
     for(NSString *key in assetAttributesDict)
     {
-      NSLog(@"Key: %@", key);
       [assetAttribKeyArray addObject:[key valueForKey:@"keyName"]];
+      NSLog(@"assetAttribKeyArray: %@", [key valueForKey:@"keyName"]);
       [assetAttribValueArray addObject:[key valueForKey:@"value"]];
-      NSLog(@"assetAttribKeyArray: %@", assetAttribKeyArray);
-      NSLog(@"assetAttribValueArray: %@", assetAttribValueArray);
+      NSLog(@"assetAttribValueArray: %@", [key valueForKey:@"value"]);
     }
     
     //Format as string the key-value pair and save in an array
@@ -164,101 +148,16 @@
     NSString *assetAttribStringFormatted = [[NSString alloc] init];
     assetAttribStringFormatted = [assetAttribListing componentsJoinedByString:@"\n  "];
     
-    //[assetAttributesDict setObject:[[assetInfo valueForKey:@"attributes"] valueForKey:@"keyName"] forKey:@"keyName"];
-    //[assetAttributesDict setObject:[[assetInfo valueForKey:@"attributes"] valueForKey:@"value"] forKey:@"value"];
-    /*
-    NSMutableArray *assetAttribKeyArray = [[NSMutableArray alloc] init];
-    NSMutableArray *assetAttribValueArray = [[NSMutableArray alloc] init];
-    NSMutableArray *assetAttribListing = [[NSMutableArray alloc] init];
-    
-    [assetAttribKeyArray addObject:[[assetInfo valueForKey:@"attributes"] valueForKey:@"keyName"]];
-    [assetAttribValueArray addObject:[[assetInfo valueForKey:@"attributes"] valueForKey:@"value"]];
-    
-    NSLog(@"assetAttribKeyArray: %@", assetAttribKeyArray);
-    NSLog(@"assetAttribValueArray: %@", assetAttribValueArray);
-    
-    for(int i = 0; i < [assetAttribKeyArray count]; i++)
-    {
-      assetAttribString = [NSMutableString stringWithFormat:@"%@ : %@",
-                           [assetAttribKeyArray objectAtIndex:i], [assetAttribValueArray objectAtIndex:i]];
-      NSLog(@"assetAttribString: %@", assetAttribString);
-      [assetAttribListing addObject:assetAttribString];
-      assetAttribString = [[NSMutableString alloc] init];
-    }
-    NSLog(@"assetAttribListing: %@", assetAttribListing);
-    */
-    
     //Setting the display for the Text Area
     NSMutableString *assetDetailsDisplay = [[NSMutableString alloc] init];
-    NSRange boldedRange = NSMakeRange(22, 4);
     
-    //Format the labels to be bold text
-    NSMutableAttributedString *assetNameLabel = [[NSMutableAttributedString alloc] initWithString:@"Asset Name: "];
-    NSMutableAttributedString *assetTypeLabel = [[NSMutableAttributedString alloc] initWithString:@"Asset Type: "];
-    NSMutableAttributedString *assetAttribLabel = [[NSMutableAttributedString alloc] initWithString:@"Asset Attributes: "];
-     
-    [assetNameLabel addAttribute:NSFontAttributeName
-                           value:[UIFont fontWithName:@"Helvetica" size:18.0] //Helvetica-Bold
-                           range:boldedRange];
-    [assetTypeLabel addAttribute:NSFontAttributeName
-                           value:[UIFont fontWithName:@"Helvetica" size:18.0]
-                           range:boldedRange];
-    [assetAttribLabel addAttribute:NSFontAttributeName
-                           value:[UIFont fontWithName:@"Helvetica" size:18.0]
-                           range:boldedRange];
-    
-    //Format string
+    //Format display string
     assetDetailsDisplay = [NSMutableString
                            stringWithFormat:@"ASSET NAME: \n  %@ \n\nASSET TYPE: \n  %@ \n\nASSET ATTRIBUTES: \n  %@ \n\n",
                            [assetInfo valueForKey:@"name"], [[assetInfo valueForKey:@"assetType"] valueForKey:@"name"], assetAttribStringFormatted];
     
     assetDetailsTextArea.text = assetDetailsDisplay;
-    
-    /*
-    //Set the field texts using the retrieved values
-    assetNameField.text = [assetInfo valueForKey:@"name"];
-    assetTypeField.text = [[assetInfo valueForKey:@"assetType"] valueForKey:@"name"];
-    
-    //For TESTING
-    //modelLabel.text = [[assetInfo valueForKey:@"attributes"] valueOfAttribute:@"keyName" forResultAtIndex:0];
-    //modelField.text = [[assetInfo valueForKey:@"attributes"] valueOfAttribute:@"value" forResultAtIndex:0];
-    modelField.text = @"Lorem Ipsum";
-    brandField.text = @"Lorem Ipsum";
-    powerConsumptionField.text = @"Lorem Ipsum";
-    remarksArea.text = @"Lorem Ipsum";
-    */
-    
-    /*
-    //AssetAttributes
-    modelField.text = [assetInfo valueForKey:@"attributes"];
-    brandField.text = [assetInfo valueForKey:@"attributes"];
-    powerConsumptionField.text = [assetInfo valueForKey:@"attributes"];
-    remarksArea.text = [assetInfo valueForKey:@"attributes"];
-    */
-    
-    /*
-     viewAssetsPageEntries = [assetOwned valueForKey:@"name"];
-    
-    assetNameArray = [[NSMutableArray alloc] init];
-    assetIdArray = [[NSMutableArray alloc] init];
-    NSMutableDictionary *assetInfoDict = [[NSMutableDictionary alloc] init];
-    
-    assetNameArray = [assetOwned valueForKey:@"name"];
-    assetIdArray = [assetOwned valueForKey:@"id"];
-    
-    for(int i = 0; i < [viewAssetsPageEntries count]; i++)
-    {
-      [assetInfoDict setObject:[assetIdArray objectAtIndex:i] forKey:@"id"];
-      [assetInfoDict setObject:[assetNameArray objectAtIndex:i] forKey:@"name"];
-      
-      [assetIdNameArray insertObject:assetInfoDict atIndex:i];
-      assetInfoDict = [[NSMutableDictionary alloc] init]; //container of id-name pair for asset
-      NSLog(@"assetInfoDict: %@", assetInfoDict);
-    }
-     */
-  }
-
-  
+  } //end - else if (responseData == nil)
 }
 
 @end
