@@ -19,7 +19,9 @@
 @property (strong, nonatomic) UIPickerView *assetTypePicker;
 @property (strong, nonatomic) IBOutlet UITextField *assetTypeField;
 @property (strong, nonatomic) UIActionSheet *actionSheet;
+@property (strong, nonatomic) IBOutlet UILabel *assetAttributesLabel;
 
+/*
 @property (strong, nonatomic) IBOutlet UILabel *modelLabel;
 @property (strong, nonatomic) IBOutlet UITextField *modelField;
 
@@ -31,6 +33,11 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *remarksLabel;
 @property (strong, nonatomic) IBOutlet UITextView *remarksArea;
+*/
+
+@property (nonatomic, strong) NSMutableArray *assetTypeAttributes;
+@property int selectedIndex;
+@property (nonatomic, strong) NSMutableDictionary *attribTextFields;
 
 @property (nonatomic, retain) NSArray *assetTypePickerArray;
 @property (nonatomic, strong) NSMutableDictionary *assetTypes;

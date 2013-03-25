@@ -17,6 +17,7 @@
 #import "AssetTypes.h"
 
 #import <CoreData/CoreData.h>
+#import <QuartzCore/QuartzCore.h>
 
 
 @interface AddAssetPageViewController ()
@@ -32,19 +33,26 @@
 
 @synthesize assetNameField;
 @synthesize assetTypeField;
+
+/*
 @synthesize modelField;
 @synthesize brandField;
 @synthesize powerConsumptionField;
-@synthesize remarksArea;
 
 @synthesize modelLabel;
 @synthesize brandLabel;
 @synthesize powerConsumptionLabel;
+ 
+@synthesize remarksArea;
 @synthesize remarksLabel;
+*/
 
 //@synthesize assetObject;
 //@synthesize assetTypesObject;
 //@synthesize assetAttributesObject;
+
+@synthesize selectedIndex;
+@synthesize attribTextFields;
 
 @synthesize assetTypes;
 @synthesize assetTypeAttributes;
@@ -79,6 +87,7 @@
   
   //Configure Scroller size
   self.addAssetScroller.contentSize = CGSizeMake(320, 720);
+  [self.view addSubview:addAssetScroller];
   
   //Configure Picker array
   self.assetTypePickerArray = [[NSArray alloc] init];
@@ -154,9 +163,6 @@
                                  error:&error];
     NSLog(@"getAssetTypes JSON Result: %@", assetTypes);
     
-    assetTypeAttributes = [assetTypes valueForKey:@"attributes"];
-    NSLog(@"assetTypeAttributes: %@", assetTypeAttributes);
-    
     assetTypePickerArray = [assetTypes valueForKey:@"name"]; //store assetType names only in PickerArray
     NSLog(@"assetTypePickerArray: %@", assetTypePickerArray);
   }
@@ -201,10 +207,6 @@
     
     return YES;
   }
-  else if(remarksArea.isEditable)
-  {
-    remarksArea.text = @"";
-  }
   else
   {
     return NO;
@@ -233,20 +235,72 @@
 {
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
   
-  int selectedIndex = [assetTypePicker selectedRowInComponent:0];
+  selectedIndex = [assetTypePicker selectedRowInComponent:0];
   NSString *assetTypeName = [assetTypePickerArray objectAtIndex:selectedIndex];
   assetTypeField.text = assetTypeName;
   
   NSMutableArray *assetTypeIdArray = [[NSMutableArray alloc] init];
   assetTypeIdArray = [assetTypes valueForKey:@"id"];
   selectedAssetTypeId = [assetTypeIdArray objectAtIndex:selectedIndex];
+  NSLog(@"selectedRow-selectedAssetTypeId: %@", selectedAssetTypeId);
   //selectedAssetTypeId = @111000; //TEST only
+  
+  [self setAttributesField];
 }
 
-#pragma mark - End editing for the fields, dismiss onscreen keyboard
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+
+#pragma mark - Dynamically set the text fields for Asset Attributes based on Asset Type
+-(void) setAttributesField
 {
-  [self.view endEditing:YES];
+  //TODO: retrieveAssetType
+  NSMutableArray *allAssetAttrib = [[NSMutableArray alloc] init];
+  attribTextFields = [[NSMutableDictionary alloc] init];
+  
+  if(selectedAssetTypeId == nil)
+  {
+    NSLog(@"Nil assetTypeId");
+  }
+  else
+  {
+    allAssetAttrib = [assetTypes valueForKey:@"attributes"];
+    NSLog(@"allAssetAttrib: %@", allAssetAttrib);
+    
+    assetTypeAttributes = [allAssetAttrib objectAtIndex:selectedIndex]; //array
+    NSLog(@"assetTypeAttributes: %@", assetTypeAttributes);
+    
+    int textfieldHeight;
+    int textfieldWidth;
+    
+    for(int i = 0; i < [assetTypeAttributes count]; i++)
+    {
+      NSLog(@"attribute atIndex: %@", [[assetTypeAttributes objectAtIndex:i] description]);
+      
+      NSString *textFieldLabel = [[NSString alloc] initWithString:[[assetTypeAttributes objectAtIndex:i] description]];
+      UITextField *attribField = [[UITextField alloc] init];
+      textfieldHeight = 30;
+      textfieldWidth = 280;
+      
+      attribField = [[UITextField alloc] initWithFrame:CGRectMake(0, (i * textfieldHeight + 10), textfieldWidth, textfieldHeight)];
+        
+      attribField.borderStyle = UITextBorderStyleRoundedRect;
+      attribField.placeholder = textFieldLabel;
+      attribField.tag = i;
+      
+      CGRect textFieldFrame = attribField.frame;
+      textFieldFrame.origin.x = 20;
+      textFieldFrame.origin.y += (170 + (15 * i));
+      attribField.frame = textFieldFrame;
+        
+      [addAssetScroller addSubview:attribField];
+              
+      //Store attribute field-label in array
+      [attribTextFields setObject:attribField forKey:textFieldLabel];
+      NSLog(@"attribTextFields: %@", attribTextFields);
+      
+      attribField = [[UITextField alloc] init];
+
+    }
+  }
 }
 
 
@@ -299,8 +353,26 @@
     
     //AssetAttributes Array of Objects - Store key and name in array first before consolidating in a dictionary
     //Use Core Data Model Objects
-    NSMutableArray *assetAttribKeyArray = [[NSMutableArray alloc] initWithObjects:@"Model", @"Brand", @"Power Consumption", @"Remark", nil];
-    NSMutableArray *assetAttribValueArray = [[NSMutableArray alloc] initWithObjects:modelField.text, brandField.text, powerConsumptionField.text, remarksArea.text , nil];
+    
+    //NSMutableArray *assetAttribKeyArray = [[NSMutableArray alloc] initWithObjects:@"Model", @"Brand", @"Power Consumption", @"Remark", nil];
+    //NSMutableArray *assetAttribValueArray = [[NSMutableArray alloc] initWithObjects:modelField.text, brandField.text, powerConsumptionField.text, remarksArea.text , nil];
+    
+    //Getting and setting Asset Attributes
+    NSMutableArray *assetAttribKeyArray = [[NSMutableArray alloc] init];
+    NSMutableArray *assetAttribValueArray = [[NSMutableArray alloc] init];
+    UITextField *fieldContent = [[UITextField alloc] init];
+    //NSString *fieldContent = [[NSString alloc] init];
+    for(NSString *key in [attribTextFields allKeys])
+    {
+      [assetAttribKeyArray addObject:key];
+      NSLog(@"assetAttribKeyArray: %@", assetAttribKeyArray);
+      
+      fieldContent = [attribTextFields valueForKey:key];
+      [assetAttribValueArray addObject:fieldContent.text];
+      //[assetAttribValueArray addObject:[[attribTextFields valueForKey:key] description]];
+      fieldContent = [[UITextField alloc] init];
+      NSLog(@"assetAttribValueArray: %@", assetAttribValueArray);
+    }
     
     NSMutableDictionary *assetAttributesDict = [[NSMutableDictionary alloc] init];
     NSMutableArray *innerAssetAttribArray = [[NSMutableArray alloc] init];
@@ -335,7 +407,8 @@
                                        requestWithURL:[NSURL URLWithString:URL]];
     
     //[postRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [postRequest setValue:@"application/json" forHTTPHeaderField:@"userId=20130101005100000"];
+    //POST method - Create
+    [postRequest setValue:@"application/json" forHTTPHeaderField:@"userId=20130101005100000"]; //make userID dynamic
     [postRequest setHTTPMethod:@"POST"];
     [postRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String]
                                             length:[jsonString length]]];
@@ -348,7 +421,18 @@
     [connection start];
     
     //POST
-    if(httpResponseCode >= 400)
+    if(httpResponseCode == 201) //add
+    {
+      UIAlertView *createAssetAlert = [[UIAlertView alloc]
+                                       initWithTitle:@"Add Asset"
+                                       message:@"Asset Created."
+                                       delegate:self
+                                       cancelButtonTitle:@"OK"
+                                       otherButtonTitles:nil];
+      [createAssetAlert show];
+      //Transition to Assets Page - alertView clickedButtonAtIndex
+    }
+    else //(httpResponseCode >= 400)
     {
       UIAlertView *createAssetFailAlert = [[UIAlertView alloc]
                                            initWithTitle:@"Add Asset Failed"
@@ -358,17 +442,6 @@
                                            otherButtonTitles:nil];
       [createAssetFailAlert show];
       
-    }
-    else
-    {
-       UIAlertView *createAssetAlert = [[UIAlertView alloc]
-                                          initWithTitle:@"Add Asset"
-                                                message:@"Asset Created."
-                                               delegate:self
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles:nil];
-       [createAssetAlert show];
-      //Transition to Assets Page - alertView clickedButtonAtIndex
     }
 
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -441,24 +514,35 @@
 #pragma mark - Login fields validation
 -(BOOL) validateAddAssetFields
 {
-  UIAlertView *addAssetValidateAlert = [[UIAlertView alloc]
+  UIAlertView *updateAssetValidateAlert = [[UIAlertView alloc]
                                         initWithTitle:@"Incomplete Information"
                                               message:@"Please fill out the necessary fields."
                                               delegate:nil
                                      cancelButtonTitle:@"OK"
                                      otherButtonTitles:nil];
   
-  if([assetNameField.text isEqualToString:(@"")]
-     || [assetTypeField.text isEqualToString:(@"")]
-     || [modelField.text isEqualToString:(@"")]
-     || [brandField.text isEqualToString:(@"")])
+  if([assetNameField.text isEqualToString:(@"")] || [assetTypeField.text isEqualToString:(@"")])
   {
-    [addAssetValidateAlert show];
+    [updateAssetValidateAlert show];
     return false;
   }
   else
   {
     return true;
+  }
+  
+  for(NSString *key in [attribTextFields allKeys])
+  {
+    if([[attribTextFields objectForKey:key] isEqualToString:@""])
+    {
+      [updateAssetValidateAlert show];
+      return false;
+    }
+    else
+    {
+      return true;
+    
+    }
   }
 }
 
@@ -470,15 +554,22 @@
 }
 
 
+#pragma mark - Dismiss the onscreen keyboard when not in use
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+  [self.view endEditing:YES];
+}
+
 #pragma mark - Dismiss onscreen keyboard
 -(void)dismissKeyboard
 {
   [assetNameField resignFirstResponder];
   [assetTypeField resignFirstResponder];
-  [modelField resignFirstResponder];
-  [brandField resignFirstResponder];
-  [powerConsumptionField resignFirstResponder];
-  [remarksArea resignFirstResponder];
+  
+  //Iterate over the asset attribute fields and resignFirstResponder each
+  for(NSString *key in [attribTextFields allKeys])
+  {
+    [[attribTextFields objectForKey:key] resignFirstResponder];
+  }
 }
 
 

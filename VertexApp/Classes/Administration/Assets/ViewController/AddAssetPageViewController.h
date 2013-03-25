@@ -26,6 +26,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *assetTypeField;
 @property (strong, nonatomic) UIActionSheet *actionSheet;
 
+/*
 @property (strong, nonatomic) IBOutlet UILabel *modelLabel;
 @property (strong, nonatomic) IBOutlet UITextField *modelField;
 
@@ -34,14 +35,20 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *powerConsumptionLabel;
 @property (strong, nonatomic) IBOutlet UITextField *powerConsumptionField;
-
+ 
 @property (strong, nonatomic) IBOutlet UILabel *remarksLabel;
 @property (strong, nonatomic) IBOutlet UITextView *remarksArea;
+*/
+
+@property (strong, nonatomic) IBOutlet UILabel *assetAttributesMainLabel;
 
 @property (nonatomic, retain) NSArray *assetTypePickerArray;
 @property (nonatomic, strong) NSMutableDictionary *assetTypes;
-@property (nonatomic, strong) NSMutableDictionary *assetTypeAttributes;
+
+@property (nonatomic, strong) NSMutableArray *assetTypeAttributes;
 @property (nonatomic, strong) NSNumber *selectedAssetTypeId;
+@property int selectedIndex;
+@property (nonatomic, strong) NSMutableDictionary *attribTextFields;
 
 @property (strong, nonatomic) NSString *URL;
 @property int httpResponseCode;

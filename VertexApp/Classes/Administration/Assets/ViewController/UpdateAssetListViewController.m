@@ -39,6 +39,7 @@
 
 - (void)viewDidLoad
 {
+  NSLog(@"Update Assets List Page");
   
   [self displayUpdateAssetsPageEntries];
   [super viewDidLoad];
@@ -193,7 +194,6 @@
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  NSLog(@"Update Assets List Page");
   static NSString *CellIdentifier = @"updateAssetListCell";
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   

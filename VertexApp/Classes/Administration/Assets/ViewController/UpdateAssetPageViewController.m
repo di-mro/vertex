@@ -24,6 +24,8 @@
 
 @synthesize assetNameField;
 @synthesize assetTypeField;
+
+/*
 @synthesize modelField;
 @synthesize brandField;
 @synthesize powerConsumptionField;
@@ -33,6 +35,10 @@
 @synthesize brandLabel;
 @synthesize powerConsumptionLabel;
 @synthesize remarksLabel;
+*/
+@synthesize assetTypeAttributes;
+@synthesize selectedIndex;
+@synthesize attribTextFields;
 
 @synthesize assetTypes;
 @synthesize URL;
@@ -69,19 +75,21 @@
   
   //Configure Scroller size
   self.updateAssetPageScroller.contentSize = CGSizeMake(320, 720);
+  [self.view addSubview:updateAssetPageScroller];
   
   //Configure Picker array
   self.assetTypePickerArray = [[NSArray alloc] init];
   
+  //Connect to WS endpoint to retrieve details for the chosen Asset - Initialize fields
+  [self getAssetInfo];
+  
+  //Initialize values for Asset Types
   [self getAssetTypes];
   
   //assetTypePicker in assetTypeField
   [assetTypeField setDelegate:self];
   
   NSLog(@"UpdateAssetPageViewController - assetOwnedId: %@", assetOwnedId);
-  
-  //Connect to WS endpoint to retrieve details for the chosen Asset - Initialize fields
-  [self getAssetInfo];
   
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -117,6 +125,7 @@
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:urlParams]];
   
+  //GET - Read
   [getRequest setValue:@"application/json" forHTTPHeaderField:@"userId=20130101005100000"];
   [getRequest setHTTPMethod:@"GET"];
   NSLog(@"%@", getRequest);
@@ -159,15 +168,61 @@
     //Set the field texts using the retrieved values
     assetNameField.text = [assetInfo valueForKey:@"name"];
     assetTypeField.text = [[assetInfo valueForKey:@"assetType"] valueForKey:@"name"];
+  
+    //Setting the asset type fields and values of the particular asset to be edited
+    NSNumber *assetTypeId = [[assetInfo valueForKey:@"assetType"] valueForKey:@"id"];
+    NSLog(@"assetTypeId: %@", assetTypeId);
+    NSMutableDictionary *assetAttribs = [[NSMutableDictionary alloc] init];
     
-    //For TESTING
-    //modelLabel.text = [[assetInfo valueForKey:@"attributes"] valueOfAttribute:@"keyName" forResultAtIndex:0];
-    //modelField.text = [[assetInfo valueForKey:@"attributes"] valueOfAttribute:@"value" forResultAtIndex:0];
-    modelField.text = @"Lorem Ipsum";
-    brandField.text = @"Lorem Ipsum";
-    powerConsumptionField.text = @"Lorem Ipsum";
-    remarksArea.text = @"Lorem Ipsum";
-    
+    if(assetTypeId == nil)
+    {
+      NSLog(@"Nil assetTypeId");
+    }
+    else
+    {
+      assetAttribs = [assetInfo valueForKey:@"attributes"]; //dictionary keyName-value
+      NSLog(@"initial-assetAttrib: %@", assetAttribs);
+      
+      int textfieldHeight;
+      int textfieldWidth;
+      //NSString *textFieldLabel = [[NSString alloc] initWithString:[[assetTypeAttributes objectAtIndex:i] description]];
+      NSMutableArray *attribKeys = [[NSMutableArray alloc] init];
+      NSMutableArray *attribValues = [[NSMutableArray alloc] init];
+      
+      attribKeys = [assetAttribs valueForKey:@"keyName"];
+      attribValues = [assetAttribs valueForKey:@"value"];
+      
+      //for(NSString *key in [assetAttribs allKeys])
+      for(int i = 0; i < [assetAttribs count]; i++)
+      {
+        UITextField *attribField = [[UITextField alloc] init];
+        textfieldHeight = 30;
+        textfieldWidth = 280;
+        
+        NSLog(@"initial-attribKeys atIndex: %@", [attribKeys objectAtIndex:i]);
+        NSLog(@"initial-attribValues atIndex: %@", [attribValues objectAtIndex:i]);
+        
+        attribField = [[UITextField alloc] initWithFrame:CGRectMake(0, (i * textfieldHeight + 10), textfieldWidth, textfieldHeight)];
+        attribField.borderStyle = UITextBorderStyleRoundedRect;
+        attribField.placeholder = [attribKeys objectAtIndex:i];
+        attribField.text = [attribValues objectAtIndex:i];
+        attribField.tag = i;
+        
+        CGRect textFieldFrame = attribField.frame;
+        textFieldFrame.origin.x = 20;
+        textFieldFrame.origin.y += (170 + (15 * i));
+        attribField.frame = textFieldFrame;
+        
+        [updateAssetPageScroller addSubview:attribField];
+        
+        //Store attribute field-label in array
+        [attribTextFields setObject:attribField forKey:[attribKeys objectAtIndex:i]];
+        NSLog(@"initial-attribTextFields: %@", attribTextFields);
+        
+        attribField = [[UITextField alloc] init];
+      }
+      
+    }
   }
 }
 
@@ -266,10 +321,6 @@
     
     return YES;
   }
-  else if(remarksArea.isEditable)
-  {
-    remarksArea.text = @"";
-  }
   else
   {
     return NO;
@@ -298,7 +349,7 @@
 {
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
   
-  int selectedIndex = [assetTypePicker selectedRowInComponent:0];
+  selectedIndex = [assetTypePicker selectedRowInComponent:0];
   NSString *assetTypeName = [assetTypePickerArray objectAtIndex:selectedIndex];
   assetTypeField.text = assetTypeName;
   
@@ -306,6 +357,8 @@
   assetTypeIdArray = [assetTypes valueForKey:@"id"];
   selectedAssetTypeId = [assetTypeIdArray objectAtIndex:selectedIndex];
   //selectedAssetTypeId = @111000; //TEST only
+  
+  [self setAttributesField];
 }
 
 #pragma mark - End editing for the fields, dismiss onscreen keyboard
@@ -315,11 +368,65 @@
 }
 
 
+#pragma mark - Dynamically set the text fields for Asset Attributes based on Asset Type
+-(void) setAttributesField
+{
+   //TODO: retrieveAssetType
+   NSMutableArray *allAssetAttrib = [[NSMutableArray alloc] init];
+   attribTextFields = [[NSMutableDictionary alloc] init];
+   
+   if(selectedAssetTypeId == nil)
+   {
+     NSLog(@"Nil assetTypeId");
+   }
+   else
+   {
+     allAssetAttrib = [assetTypes valueForKey:@"attributes"];
+     NSLog(@"allAssetAttrib: %@", allAssetAttrib);
+   
+     assetTypeAttributes = [allAssetAttrib objectAtIndex:selectedIndex]; //array
+     NSLog(@"assetTypeAttributes: %@", assetTypeAttributes);
+     
+     int textfieldHeight;
+     int textfieldWidth;
+   
+     for(int i = 0; i < [assetTypeAttributes count]; i++)
+     {
+       NSLog(@"attribute atIndex: %@", [[assetTypeAttributes objectAtIndex:i] description]);
+   
+       NSString *textFieldLabel = [[NSString alloc] initWithString:[[assetTypeAttributes objectAtIndex:i] description]];
+       UITextField *attribField = [[UITextField alloc] init];
+       textfieldHeight = 30;
+       textfieldWidth = 280;
+   
+       attribField = [[UITextField alloc] initWithFrame:CGRectMake(0, (i * textfieldHeight + 10), textfieldWidth, textfieldHeight)];
+   
+       attribField.borderStyle = UITextBorderStyleRoundedRect;
+       attribField.placeholder = textFieldLabel;
+       attribField.tag = i;
+   
+       CGRect textFieldFrame = attribField.frame;
+       textFieldFrame.origin.x = 20;
+       textFieldFrame.origin.y += (170 + (15 * i));
+       attribField.frame = textFieldFrame;
+   
+       [updateAssetPageScroller addSubview:attribField];
+   
+       //Store attribute field-label in array
+       [attribTextFields setObject:attribField forKey:textFieldLabel];
+       NSLog(@"attribTextFields: %@", attribTextFields);
+   
+       attribField = [[UITextField alloc] init];
+     }
+   }
+}
+
+
 #pragma mark - [Cancel] button implementation
 -(void) cancelAddAsset
 {
   [self dismissViewControllerAnimated:YES completion:nil];
-  NSLog(@"Cancel Add Asset");
+  NSLog(@"Cancel Update Asset");
   
   //Go back to Home Page
   HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
@@ -362,8 +469,25 @@
     
     //AssetAttributes Array of Objects - Store key and name in array first before consolidating in a dictionary
     //Use Core Data Model Objects
-    NSMutableArray *assetAttribKeyArray = [[NSMutableArray alloc] initWithObjects:@"Model", @"Brand", @"Power Consumption", @"Remark", nil];
-    NSMutableArray *assetAttribValueArray = [[NSMutableArray alloc] initWithObjects:modelField.text, brandField.text, powerConsumptionField.text, remarksArea.text , nil];
+    //NSMutableArray *assetAttribKeyArray = [[NSMutableArray alloc] initWithObjects:@"Model", @"Brand", @"Power Consumption", @"Remark", nil];
+    //NSMutableArray *assetAttribValueArray = [[NSMutableArray alloc] initWithObjects:modelField.text, brandField.text, powerConsumptionField.text, remarksArea.text , nil];
+    
+    //Getting and setting Asset Attributes
+    NSMutableArray *assetAttribKeyArray = [[NSMutableArray alloc] init];
+    NSMutableArray *assetAttribValueArray = [[NSMutableArray alloc] init];
+    UITextField *fieldContent = [[UITextField alloc] init];
+    
+    for(NSString *key in [attribTextFields allKeys])
+    {
+      [assetAttribKeyArray addObject:key];
+      NSLog(@"assetAttribKeyArray: %@", assetAttribKeyArray);
+      
+      fieldContent = [attribTextFields valueForKey:key];
+      [assetAttribValueArray addObject:fieldContent.text];
+      //[assetAttribValueArray addObject:[[attribTextFields valueForKey:key] description]];
+      fieldContent = [[UITextField alloc] init];
+      NSLog(@"assetAttribValueArray: %@", assetAttribValueArray);
+    }
     
     NSMutableDictionary *assetAttributesDict = [[NSMutableDictionary alloc] init];
     NSMutableArray *innerAssetAttribArray = [[NSMutableArray alloc] init];
@@ -397,7 +521,7 @@
     NSMutableURLRequest *putRequest = [NSMutableURLRequest
                                         requestWithURL:[NSURL URLWithString:URL]];
     
-    //PUT method
+    //PUT method - Update
     [putRequest setValue:@"application/json" forHTTPHeaderField:@"userId=20130101005100000"];
     [putRequest setHTTPMethod:@"PUT"];
     [putRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String]
@@ -411,18 +535,7 @@
     [connection start];
     
     //POST
-    if(httpResponseCode >= 400)
-    {
-      UIAlertView *updateAssetFailAlert = [[UIAlertView alloc]
-                                           initWithTitle:@"Update Asset Failed"
-                                           message:@"Asset not updated. Please try again later"
-                                           delegate:self
-                                           cancelButtonTitle:@"OK"
-                                           otherButtonTitles:nil];
-      [updateAssetFailAlert show];
-      
-    }
-    else
+    if(httpResponseCode == 200) //ok
     {
       UIAlertView *updateAssetAlert = [[UIAlertView alloc]
                                        initWithTitle:@"Update Asset"
@@ -433,7 +546,18 @@
       [updateAssetAlert show];
       //Transition to Assets Page - alertView clickedButtonAtIndex
     }
-    
+    else //(httpResponseCode >= 400)
+    {
+      UIAlertView *updateAssetFailAlert = [[UIAlertView alloc]
+                                           initWithTitle:@"Update Asset Failed"
+                                           message:@"Asset not updated. Please try again later"
+                                           delegate:self
+                                           cancelButtonTitle:@"OK"
+                                           otherButtonTitles:nil];
+      [updateAssetFailAlert show];
+      
+    }
+        
     [self dismissViewControllerAnimated:YES completion:nil];
     NSLog(@"Update Asset");
   }
@@ -475,27 +599,37 @@
 #pragma mark - Login fields validation
 -(BOOL) validateAddAssetFields
 {
-  UIAlertView *addAssetValidateAlert = [[UIAlertView alloc]
-                                        initWithTitle:@"Incomplete Information"
-                                        message:@"Please fill out the necessary fields."
-                                        delegate:nil
-                                        cancelButtonTitle:@"OK"
-                                        otherButtonTitles:nil];
+  UIAlertView *updateAssetValidateAlert = [[UIAlertView alloc]
+                                           initWithTitle:@"Incomplete Information"
+                                           message:@"Please fill out the necessary fields."
+                                           delegate:nil
+                                           cancelButtonTitle:@"OK"
+                                           otherButtonTitles:nil];
   
-  if([assetNameField.text isEqualToString:(@"")]
-     || [assetTypeField.text isEqualToString:(@"")]
-     || [modelField.text isEqualToString:(@"")]
-     || [brandField.text isEqualToString:(@"")])
+  if([assetNameField.text isEqualToString:(@"")] || [assetTypeField.text isEqualToString:(@"")])
   {
-    [addAssetValidateAlert show];
+    [updateAssetValidateAlert show];
     return false;
   }
   else
   {
     return true;
   }
+  
+  for(NSString *key in [attribTextFields allKeys])
+  {
+    if([[attribTextFields objectForKey:key] isEqualToString:@""])
+    {
+      [updateAssetValidateAlert show];
+      return false;
+    }
+    else
+    {
+      return true;
+      
+    }
+  }
 }
-
 
 #pragma mark - Dismiss assetTypePicker action sheet
 -(void)dismissActionSheet:(id) sender
@@ -509,10 +643,12 @@
 {
   [assetNameField resignFirstResponder];
   [assetTypeField resignFirstResponder];
-  [modelField resignFirstResponder];
-  [brandField resignFirstResponder];
-  [powerConsumptionField resignFirstResponder];
-  [remarksArea resignFirstResponder];
+  
+  //Iterate over the asset attribute fields and resignFirstResponder each
+  for(NSString *key in [attribTextFields allKeys])
+  {
+    [[attribTextFields objectForKey:key] resignFirstResponder];
+  }
 }
 
 
