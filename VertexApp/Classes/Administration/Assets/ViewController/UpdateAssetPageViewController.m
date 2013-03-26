@@ -46,7 +46,7 @@
 @synthesize httpResponseCode;
 
 @synthesize managedAssetId;
-@synthesize assetOwnedId;
+@synthesize selectedAssetId;
 @synthesize assetInfo;
 
 
@@ -63,6 +63,8 @@
 
 - (void)viewDidLoad
 {
+  NSLog(@"Update Asset Page");
+  
   //Keyboard dismissal
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
@@ -80,6 +82,8 @@
   //Configure Picker array
   self.assetTypePickerArray = [[NSArray alloc] init];
   
+  NSLog(@"01: selectedAssetId: %@", selectedAssetId);
+  
   //Connect to WS endpoint to retrieve details for the chosen Asset - Initialize fields
   [self getAssetInfo];
   
@@ -88,8 +92,6 @@
   
   //assetTypePicker in assetTypeField
   [assetTypeField setDelegate:self];
-  
-  NSLog(@"UpdateAssetPageViewController - assetOwnedId: %@", assetOwnedId);
   
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -104,10 +106,11 @@
 
 
 #pragma mark - Set Asset ID to the selected assetID from previous page
-- (void) setAssetOwnedId:(NSNumber *) assetId
+- (void) setIds:(NSNumber *) assetId : (NSNumber *)assetTypeId
 {
-  assetOwnedId = assetId;
-  NSLog(@"UpdateAssetPageViewController - assetOwnedId: %@", assetOwnedId);
+  selectedAssetId = assetId;
+  selectedAssetTypeId = assetTypeId;
+  NSLog(@"UpdateAssetPageViewController - assetOwnedId: %@", selectedAssetId);
 }
 
 
@@ -117,16 +120,15 @@
   URL = @"http://192.168.2.13:8080/vertex-api/asset/getAsset/";
   
   //! TEST
-  //NSString *assetId = @"20130101010200000";
   NSMutableString *urlParams = [NSMutableString
                                 stringWithFormat:@"http://192.168.2.13:8080/vertex-api/asset/getAsset/%@"
-                                , assetOwnedId];
+                                , selectedAssetId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:urlParams]];
   
   //GET - Read
-  [getRequest setValue:@"application/json" forHTTPHeaderField:@"userId=20130101005100000"];
+  [getRequest setValue:@"application/json" forHTTPHeaderField:@"userId=20130101005100000"]; //Update userId
   [getRequest setHTTPMethod:@"GET"];
   NSLog(@"%@", getRequest);
   
@@ -166,15 +168,16 @@
     NSLog(@"assetInfo JSON: %@", assetInfo);
     
     //Set the field texts using the retrieved values
+    //assetId
     assetNameField.text = [assetInfo valueForKey:@"name"];
     assetTypeField.text = [[assetInfo valueForKey:@"assetType"] valueForKey:@"name"];
   
     //Setting the asset type fields and values of the particular asset to be edited
-    NSNumber *assetTypeId = [[assetInfo valueForKey:@"assetType"] valueForKey:@"id"];
-    NSLog(@"assetTypeId: %@", assetTypeId);
+    selectedAssetTypeId = [[assetInfo valueForKey:@"assetType"] valueForKey:@"id"];
+    NSLog(@"selectedAssetTypeId: %@", selectedAssetTypeId);
     NSMutableDictionary *assetAttribs = [[NSMutableDictionary alloc] init];
     
-    if(assetTypeId == nil)
+    if(selectedAssetTypeId == nil)
     {
       NSLog(@"Nil assetTypeId");
     }
@@ -278,7 +281,7 @@
     NSLog(@"getAssetTypes JSON Result: %@", assetTypes);
     
     assetTypePickerArray = [assetTypes valueForKey:@"name"]; //store assetType names only in PickerArray
-    NSLog(@"assetTypePickerArray: %@", assetTypePickerArray);
+    //NSLog(@"assetTypePickerArray: %@", assetTypePickerArray);
   }
 }
 
@@ -460,7 +463,8 @@
     //Asset
     NSMutableDictionary *mainDictionary = [[NSMutableDictionary alloc] init];
     [mainDictionary setObject:assetNameField.text forKey:@"name"];
-    [mainDictionary setObject:assetOwnedId forKey:@"id"];
+    [mainDictionary setObject:selectedAssetId forKey:@"id"];
+    NSLog(@"updateAsset: %@", selectedAssetId);
     
     //AssetType Object
     NSMutableDictionary *assetTypeDict = [[NSMutableDictionary alloc] init];
@@ -469,9 +473,6 @@
     
     //AssetAttributes Array of Objects - Store key and name in array first before consolidating in a dictionary
     //Use Core Data Model Objects
-    //NSMutableArray *assetAttribKeyArray = [[NSMutableArray alloc] initWithObjects:@"Model", @"Brand", @"Power Consumption", @"Remark", nil];
-    //NSMutableArray *assetAttribValueArray = [[NSMutableArray alloc] initWithObjects:modelField.text, brandField.text, powerConsumptionField.text, remarksArea.text , nil];
-    
     //Getting and setting Asset Attributes
     NSMutableArray *assetAttribKeyArray = [[NSMutableArray alloc] init];
     NSMutableArray *assetAttribValueArray = [[NSMutableArray alloc] init];
@@ -484,7 +485,6 @@
       
       fieldContent = [attribTextFields valueForKey:key];
       [assetAttribValueArray addObject:fieldContent.text];
-      //[assetAttribValueArray addObject:[[attribTextFields valueForKey:key] description]];
       fieldContent = [[UITextField alloc] init];
       NSLog(@"assetAttribValueArray: %@", assetAttribValueArray);
     }

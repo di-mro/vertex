@@ -406,12 +406,11 @@
     NSMutableURLRequest *postRequest = [NSMutableURLRequest
                                        requestWithURL:[NSURL URLWithString:URL]];
     
-    //[postRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     //POST method - Create
-    [postRequest setValue:@"application/json" forHTTPHeaderField:@"userId=20130101005100000"]; //make userID dynamic
-    [postRequest setHTTPMethod:@"POST"];
-    [postRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String]
-                                            length:[jsonString length]]];
+    [postRequest setValue:@"20130101005100000" forHTTPHeaderField:@"userId"]; //make userID dynamic
+    [postRequest setHTTPMethod:@"POST"]; //POST
+    [postRequest setHTTPBody:jsonData];
+    //[postRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String] length:[jsonString length]]];
     NSLog(@"%@", postRequest);
     
     NSURLConnection *connection = [[NSURLConnection alloc]

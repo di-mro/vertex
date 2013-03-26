@@ -35,7 +35,7 @@
 - (void)viewDidLoad
 {
   //Set URL for Login
-  URL = @"http://192.168.2.102:8080/vertex/ws/user/loginform";
+  URL = @"http://192.168.2.13:8080/vertex-api/user/login";
   
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -55,6 +55,8 @@
 #pragma mark - [Login] button functions
 - (IBAction)login:(id)sender
 {
+  [self performSegueWithIdentifier: @"loginToHome" sender: self];
+  /*
   if([self validateLoginFields])
   {
     NSString *username = userNameField.text;
@@ -70,83 +72,58 @@
                                         requestWithURL:[NSURL URLWithString:URL]];
     
     // Set the request's content type to application/x-www-form-urlencoded
-    [postRequest setValue:@"application/x-www-form-urlencoded"
-       forHTTPHeaderField:@"Content-Type"];
-    // Designate the request a POST request and specify its body data
+    //POST method
+    [postRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [postRequest setHTTPMethod:@"POST"];
     [postRequest setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String]
                                             length:[bodyData length]]];
     NSLog(@"%@", postRequest);
-    
-    if([self reachable])
-    {
-      NSLog(@"Reachable");
-      
-      // Initialize the NSURLConnection and proceed as usual
-      NSURLConnection *connection = [[NSURLConnection alloc]
+    // Initialize the NSURLConnection and proceed as usual
+    NSURLConnection *connection = [[NSURLConnection alloc]
                                      initWithRequest:postRequest
                                      delegate:self];
-      //start the connection
-      [connection start];
+    //start the connection
+    [connection start];
       
-      // Get Response. Validation before proceeding to next page. Retrieve confirmation from the ws that user is valid.
-      NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
-      NSError *error = [[NSError alloc] init];
+    // Get Response. Validation before proceeding to next page. Retrieve confirmation from the ws that user is valid.
+    NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+    NSError *error = [[NSError alloc] init];
       
-      NSData *responseData = [NSURLConnection
+    NSData *responseData = [NSURLConnection
                               sendSynchronousRequest:postRequest
                               returningResponse:&urlResponse
                               error:&error];
       
-      NSString *result = [[NSString alloc] initWithData:responseData
+    NSString *result = [[NSString alloc] initWithData:responseData
                                                encoding:NSUTF8StringEncoding];
-      NSMutableDictionary *json = [NSJSONSerialization
+    NSMutableDictionary *json = [NSJSONSerialization
                                    JSONObjectWithData:responseData
                                    options:kNilOptions
                                    error:&error];
-      NSString *loginProceed = [json objectForKey:@"valid"];
       
-      NSLog(@"Response code- %ld",(long)[urlResponse statusCode]);
-      NSLog(@"Login Response: %@", result);
-      NSLog(@"Response JSON: %@", json);
-      NSLog(@"Login Response JSON: %@", loginProceed);
+    NSLog(@"Login Response: %@", result);
+    NSLog(@"Response JSON: %@", json);
       
-      if([loginProceed boolValue])
-      {
-        [self performSegueWithIdentifier: @"loginToHome" sender: self];
-      }
-      else
-      {
-        UIAlertView *loginAlert = [[UIAlertView alloc]
+    //POST
+    if(httpResponseCode == 200) //ok
+    {
+      [self performSegueWithIdentifier: @"loginToHome" sender: self];
+    }
+    else //(httpResponseCode >= 400)
+    {
+      UIAlertView *loginAlert = [[UIAlertView alloc]
                                    initWithTitle:@"Invalid User"
                                    message:@"Username and password is incorrect."
                                    delegate:self
                                    cancelButtonTitle:@"OK"
                                    otherButtonTitles:nil];
-        [loginAlert show];
-      }
-    }
-    else
-    {
-      NSLog(@"Non Reachable");
-      
-      //Show an alert if connection is not available
-      UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                      initWithTitle:@"Warning"
-                                      message:@"No network connection detected. Some functions may be unavailable."
-                                      delegate:self
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles:nil];
-      [connectionAlert show];
-      
-      //If OK is pressed, go to Home Page
-      //Connect to CoreData for local data
+      [loginAlert show];
     }
   }
   else
   {
     NSLog(@"Unable to login");
-  }
+  }*/
   
   //TESTING PURPOSES ONLY
   //[self performSegueWithIdentifier: @"loginToHome" sender: self];
@@ -176,7 +153,7 @@
    */
 }
 
-/*
+
 #pragma mark - Connection didFailWithError
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
@@ -191,7 +168,7 @@
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
-*/
+
 
 #pragma mark - Present warning that there is no network connection before proceeding to Home Page
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

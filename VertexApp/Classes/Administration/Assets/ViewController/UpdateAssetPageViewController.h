@@ -44,7 +44,7 @@
 @property (nonatomic, strong) NSNumber *selectedAssetTypeId;
 
 @property (strong, nonatomic) NSString *managedAssetId;
-@property (strong, nonatomic) NSNumber *assetOwnedId;
+@property (strong, nonatomic) NSNumber *selectedAssetId;
 @property (strong, nonatomic) NSMutableDictionary *assetInfo;
 
 @property (strong, nonatomic) NSString *URL;

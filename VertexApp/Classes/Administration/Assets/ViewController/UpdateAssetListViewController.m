@@ -228,7 +228,8 @@
 {
   if ([segue.identifier isEqualToString:@"updateAssetListToUpdateAssetPage"])
   {
-    [segue.destinationViewController setAssetOwnedId:selectedAssetId];
+    [segue.destinationViewController setSelectedAssetId:selectedAssetId];
+    //[segue.destinationViewController setIds:selectedAssetId, ];
   }
 }
 

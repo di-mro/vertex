@@ -40,6 +40,7 @@
 //@synthesize srObject;
 
 @synthesize URL;
+@synthesize lifecycles;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -66,9 +67,6 @@
   
   //Scroller size
   self.createSRScroller.contentSize = CGSizeMake(320.0, 900.0);
-  
-  //Set URL
-  URL = @"http://localhost:8080/vertex/lifecycle/getLifecycles";
   
   /* TODO
    !-Remove hardcoded data. Retrieve listing in DB-!
@@ -105,71 +103,59 @@
 #pragma mark - getLifecycle
 -(void) getLifecycles
 {
-  //userId / request parameters ??
-  NSMutableString *bodyData = [NSMutableString
-                               stringWithFormat:@"userId=1"];
-  NSLog(@"%@", bodyData);
+  //endpoint for getLifecycles
+  URL = @"http://192.168.2.13:8080/vertex-api/lifecycle/getLifecycles";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                       requestWithURL:[NSURL URLWithString:URL]];
   
-  // Set the request's content type to application/x-www-form-urlencoded
-  [getRequest setValue:@"application/x-www-form-urlencoded" //content type ??
-     forHTTPHeaderField:@"Content-Type"];
-  // Designate the request a GET request and specify its body data
+  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
   [getRequest setHTTPMethod:@"GET"];
-  [getRequest setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String]
-                                         length:[bodyData length]]];
-  NSLog(@"%@", getRequest);
   
-  if([self reachable])
-  {
-    NSLog(@"Reachable");
-    
-    // Initialize the NSURLConnection and proceed as usual
-    NSURLConnection *connection = [[NSURLConnection alloc]
+  NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:getRequest
                                    delegate:self];
-    //start the connection
-    [connection start];
+  [connection start];
+  
+  NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+  NSError *error = [[NSError alloc] init];
     
-    // Get Response. Validation before proceeding to next page. Retrieve confirmation from the ws that user is valid.
-    NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
-    NSError *error = [[NSError alloc] init];
-    
-    NSData *responseData = [NSURLConnection
+  NSData *responseData = [NSURLConnection
                             sendSynchronousRequest:getRequest
                             returningResponse:&urlResponse
                             error:&error];
     
-    NSString *result = [[NSString alloc] initWithData:responseData
+  NSString *result = [[NSString alloc] initWithData:responseData
                                              encoding:NSUTF8StringEncoding];
-    NSLog(@"Response: %@", result);
-    
-    /*NSMutableDictionary *json = [NSJSONSerialization
-     JSONObjectWithData:responseData
-     options:kNilOptions
-     error:&error];
-     NSString *loginProceed = [json objectForKey:@"valid"];
-     
-     NSLog(@"Response code- %ld",(long)[urlResponse statusCode]);
-     NSLog(@"Response JSON: %@", json);
-     NSLog(@"Login Response JSON: %@", loginProceed);
-     */
-    
-    [lifecyclePickerArray initWithObjects:responseData, nil];
-    NSLog(@"lifecyclePickerArray: %@", lifecyclePickerArray);
-  }
-  else
+  
+  if(responseData == nil)
   {
-    NSLog(@"Non Reachable");
-    NSLog(@"Connect to CoreData");
+    //Show an alert if connection is not available
+    UIAlertView *lifecycleAlert = [[UIAlertView alloc]
+                                    initWithTitle:@"Warning"
+                                    message:@"No network connection detected. Displaying data from phone cache."
+                                    delegate:nil
+                                    cancelButtonTitle:@"OK"
+                                    otherButtonTitles:nil];
+    [lifecycleAlert show];
     
     //Connect to CoreData for local data
     //!- FOR TESTING ONLY -!
-    self.lifecyclePickerArray = [[NSArray alloc] initWithObjects: @"Canvas", @"Requisition", @"Purchase", @"Installation", @"Repair", @"Decommission", nil];
+    self.lifecyclePickerArray = [[NSArray alloc] initWithObjects: @"Canvas", @"Requisition", @"Purchase", @"Installation", @"Repair", @"Decommission", nil];  }
+  else
+  {
+    lifecycles = [NSJSONSerialization
+                  JSONObjectWithData:responseData
+                  options:kNilOptions
+                  error:&error];
+    NSLog(@"lifecycles JSON Result: %@", lifecycles);
+    
+    lifecyclePickerArray = [lifecycles valueForKey:@"name"]; //store lifecycles names only in PickerArray
+    NSLog(@"lifecyclePickerArray: %@", lifecyclePickerArray);
+    
   }
 }
+
 
 #pragma mark - Check for network availability
 -(BOOL)reachable
