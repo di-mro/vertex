@@ -42,7 +42,6 @@
   
   //Connect to WS endpoint to retrieve details for the chosen Asset
   [self getAssetInfo];
-  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -66,18 +65,18 @@
 #pragma mark - Call WS endpoint to get details for the selected asset
 -(void) getAssetInfo
 {
-  URL = @"http://192.168.2.13:8080/vertex-api/asset/getAsset/";
+  URL = @"http://192.168.2.113:8080/vertex-api/asset/getAsset/";
   
   //! TEST
   //NSString *assetId = @"20130101010200000";
   NSMutableString *urlParams = [NSMutableString
-                                stringWithFormat:@"http://192.168.2.13:8080/vertex-api/asset/getAsset/%@"
+                                stringWithFormat:@"http://192.168.2.113:8080/vertex-api/asset/getAsset/%@"
                                 , assetOwnedId];
 
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:urlParams]];
   
-  [getRequest setValue:@"application/json" forHTTPHeaderField:@"userId=20130101005100000"];
+  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
   [getRequest setHTTPMethod:@"GET"];
   NSLog(@"%@", getRequest);
   

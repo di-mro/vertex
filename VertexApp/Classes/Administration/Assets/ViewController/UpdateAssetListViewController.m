@@ -58,13 +58,13 @@
 - (void) displayUpdateAssetsPageEntries
 {
   updateAssetsPageEntries = [[NSMutableArray alloc] init];
-  URL = @"http://192.168.2.13:8080/vertex-api/asset/getOwnership/";
+  URL = @"http://192.168.2.113:8080/vertex-api/asset/getOwnership/";
   
   //TEST
   //Where to get userId
-  NSString *userId = @"20130101005100000";
+  NSString *userId = @"20130101500000001";
   NSMutableString *urlParams = [NSMutableString
-                                stringWithFormat:@"http://192.168.2.13:8080/vertex-api/asset/getOwnership/%@"
+                                stringWithFormat:@"http://192.168.2.113:8080/vertex-api/asset/getOwnership/%@"
                                 , userId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
@@ -215,12 +215,7 @@
   NSLog(@"selectedAssetId: %@", selectedAssetId);
   
   [self performSegueWithIdentifier:@"updateAssetListToUpdateAssetPage" sender:self];
-  
-  /*
-   !- TODO -!
-   Call a function to populate the fields in Single Asset View passing the assetId
-   Remove hardcoded fields in Single Asset View Storyboard
-   */
+
 }
 
 #pragma mark - prepare for segue

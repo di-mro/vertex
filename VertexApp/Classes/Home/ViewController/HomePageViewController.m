@@ -61,7 +61,7 @@
   NSString *entry7 = @"Options/Configurations";
   */
   
-  NSString *entry1 = @"Notices";
+  NSString *entry1 = @"Notification";
   NSString *entry2 = @"Service Request";
   NSString *entry3 = @"Asset";
   NSString *entry4 = @"Billing";

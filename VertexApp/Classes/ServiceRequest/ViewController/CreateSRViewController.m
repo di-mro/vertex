@@ -29,18 +29,19 @@
 @synthesize serviceField;
 @synthesize priorityField;
 @synthesize srGenericPicker;
+/*
 @synthesize nameField;
 @synthesize unitLocationField;
 @synthesize contactNumberField;
+ */
 @synthesize detailsTextArea;
 
 @synthesize currentArray;
 @synthesize currentTextField;
 
-//@synthesize srObject;
-
 @synthesize URL;
 @synthesize lifecycles;
+@synthesize assetTypes;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -71,15 +72,15 @@
   /* TODO
    !-Remove hardcoded data. Retrieve listing in DB-!
    */
-  self.assetPickerArray = [[NSArray alloc] initWithObjects:@"Aircon",@"Window", @"Bathtub",@"Bathroom Faucet",@"Toilet",@"Kitchen Sink",@"Lighting Fixtures", nil];
+  self.assetPickerArray = [[NSArray alloc] initWithObjects:@"Demo - Aircon",@"Demo - Window", @"Demo - Bathtub", @"Demo - Bathroom Faucet", @"Demo - Toilet", @"Demo - Kitchen Sink", @"Demo - Lighting Fixtures", nil];
   
   //getLifecycle
   self.lifecyclePickerArray = [[NSArray alloc] init];
   [self getLifecycles];
   
-  self.servicePickerArray = [[NSArray alloc] initWithObjects:@"Fix broken pipes", @"Clean filter", @"Fix wiring", @"Declog pipes", @"Repaint", @"Miscellaneous", nil];
+  self.servicePickerArray = [[NSArray alloc] initWithObjects:@"Demo - Fix broken pipes", @"Demo - Clean filter", @"Demo - Fix wiring", @"Demo - Declog pipes", @"Demo - Repaint", @"Demo - Miscellaneous", nil];
   
-  self.priorityPickerArray = [[NSArray alloc] initWithObjects:@"Emergency", @"Scheduled", @"Routine", @"Urgent", nil];
+  self.priorityPickerArray = [[NSArray alloc] initWithObjects:@"Demo - Emergency", @"Demo - Scheduled", @"Demo - Routine", @"Demo - Urgent", nil];
   
   //Set delegates for the picker fields
   [assetField setDelegate:self];
@@ -100,11 +101,68 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+#pragma mark - getAssetType
+- (void) getAssetType
+{
+  //Set URL for retrieving AssetTypes
+  URL = @"http://192.168.2.113:8080/vertex-api/asset/getAssetTypes";
+  
+  NSMutableURLRequest *getRequest = [NSMutableURLRequest
+                                     requestWithURL:[NSURL URLWithString:URL]];
+  
+  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+  [getRequest setHTTPMethod:@"GET"];
+  NSLog(@"%@", getRequest);
+  
+  NSURLConnection *connection = [[NSURLConnection alloc]
+                                 initWithRequest:getRequest
+                                 delegate:self];
+  [connection start];
+  
+  NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+  NSError *error = [[NSError alloc] init];
+  
+  //GET
+  NSData *responseData = [NSURLConnection
+                          sendSynchronousRequest:getRequest
+                          returningResponse:&urlResponse
+                          error:&error];
+  
+  if (responseData == nil)
+  {
+    //Show an alert if connection is not available
+    UIAlertView *connectionAlert = [[UIAlertView alloc]
+                                    initWithTitle:@"Warning"
+                                    message:@"No network connection detected. Displaying data from phone cache."
+                                    delegate:nil
+                                    cancelButtonTitle:@"OK"
+                                    otherButtonTitles:nil];
+    [connectionAlert show];
+    
+    //TODO: Connect to CoreData for local data
+    //!- FOR TESTING ONLY -!
+    self.assetPickerArray = [[NSArray alloc] initWithObjects:@"Demo - Aircon",@"Demo - Door", @"Demo - Exhaust Fan", @"Demo - Faucet", @"Demo - Toilet", @"Demo - Kitchen Sink", @"Demo - Lighting Fixtures", nil];
+  }
+  else
+  {
+    assetTypes = [NSJSONSerialization
+                  JSONObjectWithData:responseData
+                  options:kNilOptions
+                  error:&error];
+    NSLog(@"getAssetTypes JSON Result: %@", assetTypes);
+    
+    assetPickerArray = [assetTypes valueForKey:@"name"]; //store assetType names only in PickerArray
+    NSLog(@"assetPickerArray: %@", assetPickerArray);
+  }
+}
+
+
 #pragma mark - getLifecycle
 -(void) getLifecycles
 {
   //endpoint for getLifecycles
-  URL = @"http://192.168.2.13:8080/vertex-api/lifecycle/getLifecycles";
+  URL = @"http://192.168.2.113:8080/vertex-api/lifecycle/getLifecycles";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                       requestWithURL:[NSURL URLWithString:URL]];
@@ -266,10 +324,6 @@
     
     return YES;
   }
-  else if(detailsTextArea.isEditable)
-  {
-    detailsTextArea.text = @"";
-  }
   else
   {
     return NO;
@@ -377,21 +431,6 @@
   }
 }
 
-/* !- TODO -! */
-#pragma mark - Check if saved to DB properly
--(BOOL) validateSaveToDB
-{
-  /*
-   if()
-   {
-   return true;
-   }
-   else
-   {
-   return false;
-   }
-   */
-}
 
 #pragma mark - Dismiss Picker action sheet
 -(void)dismissActionSheet:(id) sender
@@ -412,10 +451,7 @@
   if([assetField.text isEqualToString:(@"")]
      || [lifecycleField.text isEqualToString:(@"")]
      || [serviceField.text isEqualToString:(@"")]
-     || [priorityField.text isEqualToString:(@"")]
-     || [nameField.text isEqualToString:(@"")]
-     || [unitLocationField.text isEqualToString:(@"")]
-     || [contactNumberField.text isEqualToString:(@"")])
+     || [priorityField.text isEqualToString:(@"")])
   {
     [createSRValidateAlert show];
     return false;
@@ -433,9 +469,6 @@
   [lifecycleField resignFirstResponder];
   [serviceField resignFirstResponder];
   [priorityField resignFirstResponder];
-  [nameField resignFirstResponder];
-  [unitLocationField resignFirstResponder];
-  [contactNumberField resignFirstResponder];
   [detailsTextArea resignFirstResponder];
 }
 

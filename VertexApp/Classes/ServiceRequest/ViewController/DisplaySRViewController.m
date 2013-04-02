@@ -14,9 +14,11 @@
 
 @implementation DisplaySRViewController
 
+/*
 @synthesize nameField;
 @synthesize unitLocationField;
 @synthesize contactNumberField;
+*/
 @synthesize assetField;
 @synthesize lifecycleField;
 @synthesize serviceField;
@@ -53,9 +55,6 @@
 - (void) initField
 {
   //Viewing only, editing disabled
-  nameField.enabled          = NO;
-  unitLocationField.enabled  = NO;
-  contactNumberField.enabled = NO;
   assetField.enabled         = NO;
   lifecycleField.enabled     = NO;
   serviceField.enabled       = NO;

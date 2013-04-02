@@ -28,6 +28,8 @@
 
 - (void)viewDidLoad
 {
+  NSLog(@"Service Request Page View");
+  
   [self displayServiceRequestPageEntries];
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -82,7 +84,6 @@
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  NSLog(@"Service Request Page View");
   static NSString *CellIdentifier = @"serviceRequestPageCell";
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   

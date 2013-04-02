@@ -1,25 +1,26 @@
 //
-//  BillingTasksViewController.m
+//  SystemFunctionConfigurationPageViewController.m
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 3/8/13.
+//  Created by Mary Rose Oh on 3/30/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
-#import "BillingTasksViewController.h"
+#import "SystemFunctionConfigurationPageViewController.h"
 
-@interface BillingTasksViewController ()
+@interface SystemFunctionConfigurationPageViewController ()
 
 @end
 
-@implementation BillingTasksViewController
+@implementation SystemFunctionConfigurationPageViewController
 
-@synthesize billingTasksPageEntries;
+@synthesize systemFunctionConfigPageEntries;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -27,32 +28,28 @@
 
 - (void)viewDidLoad
 {
-  [self displayBillingTasksPageEntries];
+  NSLog(@"System Function Configuration Page View");
+  
+  [self displaySystemFunctionConfigPageEntries];
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
 }
 
-# pragma mark - Display entries in Billing Page
-- (void) displayBillingTasksPageEntries
+# pragma mark - Display entries in System Function Configurations Page
+- (void) displaySystemFunctionConfigPageEntries
 {
-  billingTasksPageEntries = [[NSMutableArray alloc] init];
+  systemFunctionConfigPageEntries = [[NSMutableArray alloc] init];
   
   /* !- For demo only, remove hard coded values. Must retrieve listing in DB -! */
-  NSString *entry1 = @"Generate One-Time Billing";
-  NSString *entry2 = @"View One-Time Billing";
-  NSString *entry3 = @"Recurring Bill Configuration";
-  NSString *entry4 = @"View Recurring Info";
-  
-  [billingTasksPageEntries addObject:entry1];
-  [billingTasksPageEntries addObject:entry2];
-  [billingTasksPageEntries addObject:entry3];
-  [billingTasksPageEntries addObject:entry4];
+  NSString *entry1 = @"View System Functions";
+    
+  [systemFunctionConfigPageEntries addObject:entry1];
 }
 
 #pragma mark - Table view data source implementation
@@ -64,59 +61,47 @@
 
 - (NSString *) tableView:(UITableView *) tableView titleForHeaderInSection:(NSInteger)section
 {
-  NSString *myTitle = [[NSString alloc] initWithFormat:@"Billing Tasks"];
+  NSString *myTitle = [[NSString alloc] initWithFormat:@"System Function Configuration"];
   return myTitle;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
   //Return the number of rows in the section
-  return [billingTasksPageEntries count];
-  NSLog(@"%d", [billingTasksPageEntries count]);
+  return [systemFunctionConfigPageEntries count];
+  NSLog(@"%d", [systemFunctionConfigPageEntries count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  NSLog(@"Billing Tasks Page View");
-  static NSString *CellIdentifier = @"billingTasksPageCell";
+  static NSString *CellIdentifier = @"systemFunctionConfigPageCell";
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.billingTasksPageEntries objectAtIndex:indexPath.row];
+  cell.textLabel.text = [self.systemFunctionConfigPageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
   return cell;
 }
 
+
 //Change the Height of the Cell [Default is 45]:
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-  return 70;
+  return 50;
 }
+
 
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  /*
   switch (indexPath.row)
   {
-    //
+    /*
     case 0: [self performSegueWithIdentifier:@"" sender:self];
       break;
-    //
-    case 1: [self performSegueWithIdentifier:@"" sender:self];
-      break;
-    //
-    case 2: [self performSegueWithIdentifier:@"" sender:self];
-      break;
-    //
     default: break;
-  }
-  */
-  
-  /*
-   !- TODO -!
-   Segue to additional storyboards
-   */
+    */
+  }  
 }
 
 

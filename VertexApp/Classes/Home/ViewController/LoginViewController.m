@@ -21,6 +21,7 @@
 @synthesize passwordField;
 @synthesize URL;
 @synthesize httpResponseCode;
+@synthesize token;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,7 +36,7 @@
 - (void)viewDidLoad
 {
   //Set URL for Login
-  URL = @"http://192.168.2.13:8080/vertex-api/user/login";
+  URL = @"http://192.168.2.113:8080/vertex-api/user/login";
   
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -55,8 +56,8 @@
 #pragma mark - [Login] button functions
 - (IBAction)login:(id)sender
 {
-  [self performSegueWithIdentifier: @"loginToHome" sender: self];
-  /*
+  //[self performSegueWithIdentifier: @"loginToHome" sender: self];
+  
   if([self validateLoginFields])
   {
     NSString *username = userNameField.text;
@@ -73,7 +74,7 @@
     
     // Set the request's content type to application/x-www-form-urlencoded
     //POST method
-    [postRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [postRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [postRequest setHTTPMethod:@"POST"];
     [postRequest setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String]
                                             length:[bodyData length]]];
@@ -93,41 +94,25 @@
                               sendSynchronousRequest:postRequest
                               returningResponse:&urlResponse
                               error:&error];
-      
-    NSString *result = [[NSString alloc] initWithData:responseData
-                                               encoding:NSUTF8StringEncoding];
+    
+    NSDictionary *loginHeaderResponse = [[NSDictionary alloc] init];
+    loginHeaderResponse = [(NSHTTPURLResponse *)urlResponse allHeaderFields];
+    NSLog(@"loginHeaderResponse: %@", loginHeaderResponse);
+    token = [loginHeaderResponse valueForKey:@"token"];
+    NSLog(@"token: %@", token);
+
     NSMutableDictionary *json = [NSJSONSerialization
                                    JSONObjectWithData:responseData
                                    options:kNilOptions
                                    error:&error];
-      
-    NSLog(@"Login Response: %@", result);
+
     NSLog(@"Response JSON: %@", json);
-      
-    //POST
-    if(httpResponseCode == 200) //ok
-    {
-      [self performSegueWithIdentifier: @"loginToHome" sender: self];
-    }
-    else //(httpResponseCode >= 400)
-    {
-      UIAlertView *loginAlert = [[UIAlertView alloc]
-                                   initWithTitle:@"Invalid User"
-                                   message:@"Username and password is incorrect."
-                                   delegate:self
-                                   cancelButtonTitle:@"OK"
-                                   otherButtonTitles:nil];
-      [loginAlert show];
-    }
   }
   else
   {
     NSLog(@"Unable to login");
-  }*/
-  
-  //TESTING PURPOSES ONLY
-  //[self performSegueWithIdentifier: @"loginToHome" sender: self];
-  
+  }
+
   /*
    //RestKit
    NSString *username = userNameField.text;
@@ -166,10 +151,27 @@
   NSHTTPURLResponse *httpResponse;
   httpResponse = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
-  NSLog(@"httpResponse status code: %d", httpResponseCode);
+  NSLog(@"connection-httpResponse status code: %d", httpResponseCode);
+  
+  //POST
+  if(httpResponseCode == 200) //ok
+  {
+    [self performSegueWithIdentifier: @"loginToHome" sender: self];
+  }
+  else //(httpResponseCode >= 400)
+  {
+    UIAlertView *loginAlert = [[UIAlertView alloc]
+                               initWithTitle:@"Invalid User"
+                               message:@"Username and password is incorrect."
+                               delegate:nil
+                               cancelButtonTitle:@"OK"
+                               otherButtonTitles:nil];
+    [loginAlert show];
+  }
 }
 
 
+/*
 #pragma mark - Present warning that there is no network connection before proceeding to Home Page
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -178,6 +180,7 @@
     [self performSegueWithIdentifier: @"loginToHome" sender: self];
   }
 }
+*/
 
 
 #pragma mark - Login fields validation

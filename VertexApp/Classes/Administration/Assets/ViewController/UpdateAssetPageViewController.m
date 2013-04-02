@@ -117,7 +117,7 @@
 #pragma mark - Call WS endpoint to get details for the selected asset
 -(void) getAssetInfo
 {
-  URL = @"http://192.168.2.13:8080/vertex-api/asset/getAsset/";
+  URL = @"http://192.168.2.113:8080/vertex-api/asset/getAsset/";
   
   //! TEST
   NSMutableString *urlParams = [NSMutableString
@@ -224,7 +224,6 @@
         
         attribField = [[UITextField alloc] init];
       }
-      
     }
   }
 }
@@ -464,7 +463,7 @@
     NSMutableDictionary *mainDictionary = [[NSMutableDictionary alloc] init];
     [mainDictionary setObject:assetNameField.text forKey:@"name"];
     [mainDictionary setObject:selectedAssetId forKey:@"id"];
-    NSLog(@"updateAsset: %@", selectedAssetId);
+    NSLog(@"updateAsset-selectedAssetId: %@", selectedAssetId);
     
     //AssetType Object
     NSMutableDictionary *assetTypeDict = [[NSMutableDictionary alloc] init];
@@ -522,7 +521,8 @@
                                         requestWithURL:[NSURL URLWithString:URL]];
     
     //PUT method - Update
-    [putRequest setValue:@"application/json" forHTTPHeaderField:@"userId=20130101005100000"];
+    [putRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    //[putRequest setValue:@"20130101500000001" forHTTPHeaderField:@"userId"]; //make userID dynamic
     [putRequest setHTTPMethod:@"PUT"];
     [putRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String]
                                             length:[jsonString length]]];
@@ -613,23 +613,23 @@
   }
   else
   {
-    return true;
-  }
-  
-  for(NSString *key in [attribTextFields allKeys])
-  {
-    if([[attribTextFields objectForKey:key] isEqualToString:@""])
+    for(NSString *key in [attribTextFields allKeys])
     {
-      [updateAssetValidateAlert show];
-      return false;
-    }
-    else
-    {
-      return true;
-      
+      UITextField *tempField = [[UITextField alloc] init];
+      tempField = [attribTextFields objectForKey:key];
+      if(tempField.hasText)
+      {
+        return true;
+      }
+      else
+      {
+        [updateAssetValidateAlert show];
+        return false;
+      }
     }
   }
 }
+
 
 #pragma mark - Dismiss assetTypePicker action sheet
 -(void)dismissActionSheet:(id) sender

@@ -16,6 +16,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *currentTextField;
 @property (strong, nonatomic) UIActionSheet *actionSheet;
 
+/*
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UITextField *nameField;
 
@@ -24,6 +25,7 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *contactNumberLabel;
 @property (strong, nonatomic) IBOutlet UITextField *contactNumberField;
+*/
 
 @property (strong, nonatomic) IBOutlet UILabel *chooseAssetLabel;
 @property (strong, nonatomic) IBOutlet UIPickerView *assetPicker;
@@ -49,9 +51,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *detailsLabel;
 @property (strong, nonatomic) IBOutlet UITextView *detailsTextArea;
 
-//@property (strong, nonatomic) SRObject *srObject;
-
 @property (strong, nonatomic) NSString *URL;
 @property (strong, nonatomic) NSMutableDictionary *lifecycles;
+@property (strong, nonatomic) NSMutableDictionary *assetTypes;
 
 @end

@@ -45,7 +45,6 @@
   
   //URL = @"http://192.168.2.13:8080/vertex-api/asset/getManagedAssets";
   [self displayViewAssetsPageEntries];
-  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -61,19 +60,19 @@
 - (void) displayViewAssetsPageEntries
 {
   viewAssetsPageEntries = [[NSMutableArray alloc] init];
-  URL = @"http://192.168.2.13:8080/vertex-api/asset/getOwnership/";
+  URL = @"http://192.168.2.113:8080/vertex-api/asset/getOwnership/";
   
   //TEST
   //Where to get userId
-  NSString *userId = @"20130101005100000";
+  NSString *userId = @"20130101500000001";
   NSMutableString *urlParams = [NSMutableString
-                               stringWithFormat:@"http://192.168.2.13:8080/vertex-api/asset/getOwnership/%@"
+                               stringWithFormat:@"http://192.168.2.113:8080/vertex-api/asset/getOwnership/%@"
                                , userId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                       requestWithURL:[NSURL URLWithString:urlParams]];
   
-  [getRequest setValue:@"application/json" forHTTPHeaderField:@"userId=20130101010200000"]; //@"Content-Type" / userId / userId=20130101010200000
+  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Conent-Type"]; //@"Content-Type" / userId / userId=20130101010200000
   [getRequest setHTTPMethod:@"GET"];
   NSLog(@"%@", getRequest);
 

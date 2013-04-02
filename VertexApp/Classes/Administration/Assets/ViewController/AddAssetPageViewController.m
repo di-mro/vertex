@@ -117,7 +117,7 @@
 - (void) getAssetTypes
 {
   //Set URL for retrieving AssetTypes
-  URL = @"http://192.168.2.13:8080/vertex-api/asset/getAssetTypes";
+  URL = @"http://192.168.2.113:8080/vertex-api/asset/getAssetTypes";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                       requestWithURL:[NSURL URLWithString:URL]];
@@ -402,15 +402,16 @@
     NSLog(@"jsonString Request: %@", jsonString);
     
     //Set URL for Add Asset
-    URL = @"http://192.168.2.13:8080/vertex-api/asset/addAsset";
+    URL = @"http://192.168.2.113:8080/vertex-api/asset/addAsset";
     NSMutableURLRequest *postRequest = [NSMutableURLRequest
                                        requestWithURL:[NSURL URLWithString:URL]];
     
     //POST method - Create
-    [postRequest setValue:@"20130101005100000" forHTTPHeaderField:@"userId"]; //make userID dynamic
-    [postRequest setHTTPMethod:@"POST"]; //POST
-    [postRequest setHTTPBody:jsonData];
-    //[postRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String] length:[jsonString length]]];
+    [postRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [postRequest setValue:@"20130101500000001" forHTTPHeaderField:@"userId"]; //make userID dynamic
+    [postRequest setHTTPMethod:@"POST"];
+    //[postRequest setHTTPBody:jsonData];
+    [postRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String] length:[jsonString length]]]; //pass JSON as string
     NSLog(@"%@", postRequest);
     
     NSURLConnection *connection = [[NSURLConnection alloc]
@@ -419,8 +420,8 @@
     
     [connection start];
     
-    //POST
-    if(httpResponseCode == 201) //add
+    NSLog(@"createAsset - httpResponseCode: %d", httpResponseCode);
+    if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
     {
       UIAlertView *createAssetAlert = [[UIAlertView alloc]
                                        initWithTitle:@"Add Asset"
@@ -440,7 +441,6 @@
                                            cancelButtonTitle:@"OK"
                                            otherButtonTitles:nil];
       [createAssetFailAlert show];
-      
     }
 
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -527,20 +527,19 @@
   }
   else
   {
-    return true;
-  }
-  
-  for(NSString *key in [attribTextFields allKeys])
-  {
-    if([[attribTextFields objectForKey:key] isEqualToString:@""])
+    for(NSString *key in [attribTextFields allKeys])
     {
-      [updateAssetValidateAlert show];
-      return false;
-    }
-    else
-    {
-      return true;
-    
+      UITextField *tempField = [[UITextField alloc] init];
+      tempField = [attribTextFields objectForKey:key];
+      if(tempField.hasText)
+      {
+        return true;
+      }
+      else
+      {
+        [updateAssetValidateAlert show];
+        return false;
+      }
     }
   }
 }

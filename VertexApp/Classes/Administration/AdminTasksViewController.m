@@ -19,7 +19,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -27,6 +28,8 @@
 
 - (void)viewDidLoad
 {
+  NSLog(@"Admin Tasks Page View");
+  
   [self displayAdminTaskPageEntries];
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -44,13 +47,12 @@
   adminTaskPageEntries = [[NSMutableArray alloc] init];
   
   /* !- For demo only, remove hard coded values. Must retrieve listing in DB -! */
-  NSString *entry1 = @"Add Service";
-  NSString *entry2 = @"Update Services";
-  NSString *entry3 = @"Remove Service";
-  NSString *entry4 = @"Add Lifecycle";
-  NSString *entry5 = @"Update Lifecycle";
-  NSString *entry6 = @"Activate User Account";
-  NSString *entry7 = @"Add Asset Types";
+  NSString *entry1 = @"Asset Configuration";
+  NSString *entry2 = @"Lifecycle Configuration";
+  NSString *entry3 = @"Service Configuration";
+  NSString *entry4 = @"User Account Configuration";
+  NSString *entry5 = @"System Function Configuration";
+  NSString *entry6 = @"Esse Info Configuration";
   
   [adminTaskPageEntries addObject:entry1];
   [adminTaskPageEntries addObject:entry2];
@@ -58,7 +60,6 @@
   [adminTaskPageEntries addObject:entry4];
   [adminTaskPageEntries addObject:entry5];
   [adminTaskPageEntries addObject:entry6];
-  [adminTaskPageEntries addObject:entry7];
 }
 
 #pragma mark - Table view data source implementation
@@ -83,7 +84,6 @@
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  NSLog(@"Admin Tasks Page View");
   static NSString *CellIdentifier = @"adminTasksPageCell";
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
@@ -93,34 +93,39 @@
   return cell;
 }
 
+
+//Change the Height of the Cell [Default is 45]:
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
+{
+  return 50;
+}
+
+
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  /*
   switch (indexPath.row)
   {
-    case 0: [self performSegueWithIdentifier:@"" sender:self];
+    //Asset Configuration
+    case 0: [self performSegueWithIdentifier:@"adminToAssetConfig" sender:self];
       break;
-    case 1: [self performSegueWithIdentifier:@"" sender:self];
+    //Lifecycle Configuration
+    case 1: [self performSegueWithIdentifier:@"adminToLifecycle" sender:self];
       break;
-    case 2: [self performSegueWithIdentifier:@"" sender:self];
+    //Service Configuration
+    case 2: [self performSegueWithIdentifier:@"adminToService" sender:self];
       break;
-    case 3: [self performSegueWithIdentifier:@"" sender:self];
+    //User Configuration
+    case 3: [self performSegueWithIdentifier:@"adminToUserConfig" sender:self];
       break;
-    case 4: [self performSegueWithIdentifier:@"" sender:self];
+    //System Function Configuration
+    case 4: [self performSegueWithIdentifier:@"adminToSystemFunction" sender:self];
       break;
-    case 5: [self performSegueWithIdentifier:@"" sender:self];
-      break;
-    case 6: [self performSegueWithIdentifier:@"" sender:self];
+    //Esse Info Configuration
+    case 5: [self performSegueWithIdentifier:@"adminToEsse" sender:self];
       break;
     default: break;
-  }
-  */
-  
-  /*
-   !- TODO -!
-   Segue to additinal storyboards 
-   */
+  }  
 }
 
 

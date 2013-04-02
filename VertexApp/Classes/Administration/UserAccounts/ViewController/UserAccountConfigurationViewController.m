@@ -1,20 +1,20 @@
 //
-//  NoticesViewController.m
+//  UserAccountConfigurationViewController.m
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 2/26/13.
+//  Created by Mary Rose Oh on 3/30/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
-#import "NoticesViewController.h"
+#import "UserAccountConfigurationViewController.h"
 
-@interface NoticesViewController ()
+@interface UserAccountConfigurationViewController ()
 
 @end
 
-@implementation NoticesViewController
+@implementation UserAccountConfigurationViewController
 
-@synthesize noticesPageEntries;
+@synthesize userAccountConfigPageEntries;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,30 +28,36 @@
 
 - (void)viewDidLoad
 {
-  [self displayNoticesPageEntries];
+  NSLog(@"User Account Configuration Page View");
+  
+  [self displayUserAccountConfigPageEntries];
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
 
-
-# pragma mark - Display entries in Notices Page
-- (void) displayNoticesPageEntries
+- (void)didReceiveMemoryWarning
 {
-  noticesPageEntries = [[NSMutableArray alloc] init];
-  
-  /* !-For demo only, remove hard coded values. Must retrieve listing in DB -! */
-  NSString *entry1 = @"Create Memo";
-  NSString *entry2 = @"View Memo";
-  NSString *entry3 = @"Create Notice";
-  NSString *entry4 = @"View Notice";
-  NSString *entry5 = @"Create Billing Notice";
-  
-  [noticesPageEntries addObject:entry1];
-  [noticesPageEntries addObject:entry2];
-  [noticesPageEntries addObject:entry3];
-  [noticesPageEntries addObject:entry4];
-  [noticesPageEntries addObject:entry5];
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
+}
 
+# pragma mark - Display entries in Admin Page
+- (void) displayUserAccountConfigPageEntries
+{
+  userAccountConfigPageEntries = [[NSMutableArray alloc] init];
+  
+  /* !- For demo only, remove hard coded values. Must retrieve listing in DB -! */
+  NSString *entry1 = @"User Account Activation";
+  NSString *entry2 = @"User Group Configuration";
+  NSString *entry3 = @"Edit User Account Details";
+  NSString *entry4 = @"Add User Profile";
+  NSString *entry5 = @"Edit User Profile";
+  
+  [userAccountConfigPageEntries addObject:entry1];
+  [userAccountConfigPageEntries addObject:entry2];
+  [userAccountConfigPageEntries addObject:entry3];
+  [userAccountConfigPageEntries addObject:entry4];
+  [userAccountConfigPageEntries addObject:entry5];
 }
 
 #pragma mark - Table view data source implementation
@@ -63,25 +69,24 @@
 
 - (NSString *) tableView:(UITableView *) tableView titleForHeaderInSection:(NSInteger)section
 {
-  NSString *myTitle = [[NSString alloc] initWithFormat:@""];
+  NSString *myTitle = [[NSString alloc] initWithFormat:@"User Account Management"];
   return myTitle;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
   //Return the number of rows in the section
-  return [noticesPageEntries count];
-  NSLog(@"%d", [noticesPageEntries count]);
+  return [userAccountConfigPageEntries count];
+  NSLog(@"%d", [userAccountConfigPageEntries count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  NSLog(@"Notices Page View");
-  static NSString *CellIdentifier = @"noticesPageCell";
+  static NSString *CellIdentifier = @"userConfigPageCell";
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.noticesPageEntries objectAtIndex:indexPath.row];
+  cell.textLabel.text = [self.userAccountConfigPageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
   return cell;
 }
@@ -89,22 +94,19 @@
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  /* !-Remove these hardcoded cases -! */
   switch (indexPath.row)
   {
       /*
-       //Create Memo
+       //Add Service
        case 0: [self performSegueWithIdentifier:@"" sender:self];
        break;
-       //View Memo
        case 1: [self performSegueWithIdentifier:@"" sender:self];
        break;
-       //Create Notice
        case 2: [self performSegueWithIdentifier:@"" sender:self];
        break;
-       //View Notice
        case 3: [self performSegueWithIdentifier:@"" sender:self];
        break;
+       default: break;
        */
   }
 }
