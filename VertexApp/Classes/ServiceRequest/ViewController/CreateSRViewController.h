@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-//#import "SRObject.h"
 
 @interface CreateSRViewController : ViewController
 @property (strong, nonatomic) IBOutlet UIScrollView *createSRScroller;
@@ -15,17 +14,6 @@
 @property (strong, nonatomic) IBOutlet NSArray *currentArray;
 @property (strong, nonatomic) IBOutlet UITextField *currentTextField;
 @property (strong, nonatomic) UIActionSheet *actionSheet;
-
-/*
-@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
-@property (strong, nonatomic) IBOutlet UITextField *nameField;
-
-@property (strong, nonatomic) IBOutlet UILabel *unitLocationLabel;
-@property (strong, nonatomic) IBOutlet UITextField *unitLocationField;
-
-@property (strong, nonatomic) IBOutlet UILabel *contactNumberLabel;
-@property (strong, nonatomic) IBOutlet UITextField *contactNumberField;
-*/
 
 @property (strong, nonatomic) IBOutlet UILabel *chooseAssetLabel;
 @property (strong, nonatomic) IBOutlet UIPickerView *assetPicker;
@@ -52,7 +40,11 @@
 @property (strong, nonatomic) IBOutlet UITextView *detailsTextArea;
 
 @property (strong, nonatomic) NSString *URL;
+@property int httpResponseCode;
 @property (strong, nonatomic) NSMutableDictionary *lifecycles;
 @property (strong, nonatomic) NSMutableDictionary *assetTypes;
+@property (strong, nonatomic) NSMutableDictionary *services;
+
+@property (strong, nonatomic) NSMutableDictionary *createSRJson;
 
 @end

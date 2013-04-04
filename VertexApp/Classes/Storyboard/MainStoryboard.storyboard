@@ -110,7 +110,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zqh-kO-yln" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1022" y="4746"/>
+            <point key="canvasLocation" x="774" y="5258"/>
         </scene>
         <!--Esse Info Configuration View Controller - Esse-->
         <scene sceneID="x8D-i9-6ZW">
@@ -156,7 +156,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BPT-sG-3ix" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1557" y="6700"/>
+            <point key="canvasLocation" x="1488" y="9644"/>
         </scene>
         <!--Service Request View Controller - Service Request-->
         <scene sceneID="rPQ-1h-sve">
@@ -207,7 +207,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wDa-Wc-o40" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1014" y="-632"/>
+            <point key="canvasLocation" x="966" y="-2588"/>
         </scene>
         <!--CreateSR View Controller - Request-->
         <scene sceneID="gGc-4v-f07">
@@ -309,7 +309,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vvh-P2-1jn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1505" y="-641"/>
+            <point key="canvasLocation" x="1505" y="-3393"/>
         </scene>
         <!--DisplaySR View Controller - Request Summary-->
         <scene sceneID="cOU-vZ-1pj">
@@ -426,7 +426,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QBr-Fx-Qc4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1929" y="-6"/>
+            <point key="canvasLocation" x="1978" y="-2720"/>
         </scene>
         <!--Reports Page View Controller - Reports & Statistics-->
         <scene sceneID="0wz-q6-TYF">
@@ -463,7 +463,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u72-qP-gRD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1022" y="4164"/>
+            <point key="canvasLocation" x="766" y="4492"/>
         </scene>
         <!--System Function Configuration Page View Controller - System Function-->
         <scene sceneID="KcV-sJ-4db">
@@ -509,7 +509,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jg4-gw-MVO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1548" y="6116"/>
+            <point key="canvasLocation" x="1488" y="8820"/>
         </scene>
         <!--Delete Service Page View Controller - Delete Service-->
         <scene sceneID="eUl-oC-CsD">
@@ -524,7 +524,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mUF-3h-QzC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2006" y="5828"/>
+            <point key="canvasLocation" x="2000" y="7516"/>
         </scene>
         <!--Settings View Controller - Settings-->
         <scene sceneID="bPs-fd-aIS">
@@ -570,7 +570,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aez-eD-Mtj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1006" y="756"/>
+            <point key="canvasLocation" x="982" y="-320"/>
         </scene>
         <!--Admin Tasks View Controller - Admin-->
         <scene sceneID="53w-8x-b70">
@@ -615,7 +615,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ylD-hO-kDm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="956" y="2598"/>
+            <point key="canvasLocation" x="956" y="1150"/>
         </scene>
         <!--Billing Tasks View Controller - Billing-->
         <scene sceneID="zRB-sN-v8X">
@@ -652,7 +652,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RSu-XO-1i1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1022" y="3554"/>
+            <point key="canvasLocation" x="766" y="3746"/>
         </scene>
         <!--User Account Configuration View Controller - User-->
         <scene sceneID="uzM-Hs-C9H">
@@ -698,7 +698,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fon-JI-qVG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1548" y="5504"/>
+            <point key="canvasLocation" x="1480" y="8024"/>
         </scene>
         <!--Update Service Page View Controller - Update Service-->
         <scene sceneID="Rk7-gZ-V8X">
@@ -713,7 +713,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yRO-Wi-5cV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2000" y="5220"/>
+            <point key="canvasLocation" x="2000" y="6828"/>
         </scene>
         <!--View Services Page View Controller - View Service-->
         <scene sceneID="crw-cN-afj">
@@ -728,7 +728,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tUs-gA-IZx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1992" y="4614"/>
+            <point key="canvasLocation" x="2000" y="6174"/>
         </scene>
         <!--Delete Lifecycle Page View Controller - Delete Lifecycle-->
         <scene sceneID="zRb-BL-am1">
@@ -765,7 +765,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IsC-jf-ndP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1976" y="3422"/>
+            <point key="canvasLocation" x="1967" y="4862"/>
         </scene>
         <!--Service Configuration Page View Controller - Service-->
         <scene sceneID="mTw-AT-8EK">
@@ -817,7 +817,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZBS-IJ-E1r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1536" y="4712"/>
+            <point key="canvasLocation" x="1456" y="6584"/>
         </scene>
         <!--Add Service Page View Controller - Add Service-->
         <scene sceneID="LmX-By-ATM">
@@ -888,7 +888,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="abv-XC-Hzf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1986" y="4004"/>
+            <point key="canvasLocation" x="1986" y="5548"/>
         </scene>
         <!--Update Lifecyle List View Controller - Lifecycles-->
         <scene sceneID="BCu-hV-WdA">
@@ -937,7 +937,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zPS-0B-J6J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1976" y="2836"/>
+            <point key="canvasLocation" x="1960" y="4188"/>
         </scene>
         <!--Update Lifecycle Page View Controller - Update Lifecycle-->
         <scene sceneID="RkL-XV-9eb">
@@ -1008,7 +1008,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GH5-FP-p8N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2376" y="2836"/>
+            <point key="canvasLocation" x="2384" y="4188"/>
         </scene>
         <!--View Lifecycles Page View Controller - Lifecycles-->
         <scene sceneID="HQ8-sB-yfp">
@@ -1057,7 +1057,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="38N-q7-9wp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1981" y="2240"/>
+            <point key="canvasLocation" x="1967" y="3504"/>
         </scene>
         <!--Lifecycle Detail Page View Controller - Lifecycle Detail-->
         <scene sceneID="Wch-MF-2CG">
@@ -1084,7 +1084,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9qy-GA-hwK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2370" y="2248"/>
+            <point key="canvasLocation" x="2402" y="3512"/>
         </scene>
         <!--Lifecycle Configuration Page View Controller - Lifecycle-->
         <scene sceneID="1K9-1m-idH">
@@ -1136,7 +1136,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lQ0-Lm-O4l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1496" y="2574"/>
+            <point key="canvasLocation" x="1432" y="3890"/>
         </scene>
         <!--Add Lifecycle Page View Controller - Add Lifecycle-->
         <scene sceneID="2pl-Jv-enR">
@@ -1207,12 +1207,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lM9-Hd-P9P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1981" y="1608"/>
+            <point key="canvasLocation" x="1960" y="2856"/>
         </scene>
-        <!--Notices View Controller - Notices-->
+        <!--Notices View Controller - Notification-->
         <scene sceneID="OiC-fL-hbA">
             <objects>
-                <viewController id="i2X-C3-sEf" customClass="NoticesViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NotificationPage" id="i2X-C3-sEf" customClass="NoticesViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ui6-uV-VXj">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1249,11 +1249,102 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Notices" id="sys-tG-wpq"/>
+                    <navigationItem key="navigationItem" title="Notification" id="sys-tG-wpq"/>
+                    <connections>
+                        <segue destination="NPs-7a-2Nq" kind="push" identifier="noticesToCreateNotice" id="kAu-I0-RWZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="piN-CD-cDR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="994" y="128"/>
+            <point key="canvasLocation" x="974" y="-1120"/>
+        </scene>
+        <!--Create Notice Page View Controller - Create Notice-->
+        <scene sceneID="awS-rk-DXN">
+            <objects>
+                <viewController id="NPs-7a-2Nq" customClass="CreateNoticePageViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lVG-Ua-sKl">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="qSN-Ln-pRT" customClass="TPKeyboardAvoidingScrollView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Message:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="L83-dj-W8O">
+                                        <rect key="frame" x="13" y="11" width="280" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="XLm-4l-QPv">
+                                        <rect key="frame" x="13" y="40" width="292" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
+                                    </textView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Priority Level:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="uZI-xe-PM1">
+                                        <rect key="frame" x="13" y="176" width="280" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="High" minimumFontSize="17" id="XYY-OY-yuG">
+                                        <rect key="frame" x="13" y="203" width="292" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="User Group Name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hpt-eh-YdF">
+                                        <rect key="frame" x="13" y="241" width="280" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Validity:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pLz-Tb-Kia">
+                                        <rect key="frame" x="13" y="308" width="280" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User Group" minimumFontSize="17" id="miD-0N-h23">
+                                        <rect key="frame" x="13" y="270" width="292" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="04 / 03 / 2013" minimumFontSize="17" id="86n-vh-FPA">
+                                        <rect key="frame" x="13" y="337" width="292" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Create Notice" id="SYt-L3-pWR"/>
+                    <connections>
+                        <outlet property="createNoticeScroller" destination="qSN-Ln-pRT" id="C0S-mI-IH3"/>
+                        <outlet property="messageLabel" destination="L83-dj-W8O" id="VCJ-vW-XzF"/>
+                        <outlet property="messageTextArea" destination="XLm-4l-QPv" id="33E-1z-LJU"/>
+                        <outlet property="priorityLevelField" destination="XYY-OY-yuG" id="27R-Lt-hlW"/>
+                        <outlet property="priorityLevelLabel" destination="uZI-xe-PM1" id="8Uj-5k-EmI"/>
+                        <outlet property="userGroupNameField" destination="miD-0N-h23" id="4x6-ly-PoU"/>
+                        <outlet property="userGroupNameLabel" destination="Hpt-eh-YdF" id="G9S-tL-kwa"/>
+                        <outlet property="validityField" destination="86n-vh-FPA" id="0I2-tc-vQT"/>
+                        <outlet property="validityLabel" destination="pLz-Tb-Kia" id="X7z-Vg-W4B"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Kss-54-5uS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1520" y="-1304"/>
         </scene>
         <!--ViewSR View Controller-->
         <scene sceneID="sFG-nc-dYz">
@@ -1309,7 +1400,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XmT-9W-yvt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1505" y="-16"/>
+            <point key="canvasLocation" x="1529" y="-2728"/>
         </scene>
         <!--Asset Page View Controller - Assets-->
         <scene sceneID="S75-1i-gWo">
@@ -1360,7 +1451,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wc9-bH-06t" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="977" y="-1629"/>
+            <point key="canvasLocation" x="942" y="-4261"/>
         </scene>
         <!--Single Asset View Controller - Asset Details-->
         <scene sceneID="rjr-a5-LH5">
@@ -1394,7 +1485,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yA5-GW-nk8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1929" y="-2493"/>
+            <point key="canvasLocation" x="1927" y="-5429"/>
         </scene>
         <!--View Assets Page View Controller - View Asset-->
         <scene sceneID="Dis-He-RHO">
@@ -1443,7 +1534,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7ZW-CW-i1l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1505" y="-2493"/>
+            <point key="canvasLocation" x="1464" y="-5429"/>
         </scene>
         <!--Login View Controller - Vertex-->
         <scene sceneID="2tN-0K-i6W">
@@ -1574,7 +1665,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Bj-K2-whK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1505" y="-1864"/>
+            <point key="canvasLocation" x="1480" y="-4792"/>
         </scene>
         <!--Feedback List View Controller-->
         <scene sceneID="KYd-m9-d66">
@@ -1630,12 +1721,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZhI-dM-v7c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1505" y="636"/>
+            <point key="canvasLocation" x="1536" y="-2080"/>
         </scene>
         <!--Asset Configuration Page View Controller - Asset-->
         <scene sceneID="OH6-EB-viy">
             <objects>
-                <viewController id="gUc-lX-aoL" customClass="AssetConfigurationPageViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AssetConfig" id="gUc-lX-aoL" customClass="AssetConfigurationPageViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ifI-0F-DGk">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1673,10 +1764,180 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Asset" id="TpV-dd-rOG"/>
+                    <connections>
+                        <segue destination="OMR-gZ-CJM" kind="push" identifier="assetConfigToUpdateAssetAccountability" id="o95-Yy-QqI"/>
+                        <segue destination="y7y-02-reX" kind="push" identifier="assetConfigToUpdateAssetOwnership" id="9Bh-j8-wOi"/>
+                        <segue destination="MFX-wB-Hhm" kind="push" identifier="assetConfigToDeleteAsset" id="Fsk-iC-nLl"/>
+                        <segue destination="Td2-gi-sVv" kind="push" identifier="assetConfigToAddAssetType" id="A3Y-WZ-wXb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MIK-3n-fn5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1512" y="1216"/>
+            <point key="canvasLocation" x="1520" y="774"/>
+        </scene>
+        <!--Update Asset Accountability Page View Controller - Accountability-->
+        <scene sceneID="6EC-ra-S6B">
+            <objects>
+                <viewController id="OMR-gZ-CJM" customClass="UpdateAssetAccountabilityPageViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Teb-0Q-KAw">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="AYX-hF-8wB" customClass="TPKeyboardAvoidingScrollView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Asset Name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yh5-Bw-pvC">
+                                        <rect key="frame" x="20" y="14" width="280" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="myAircon" minimumFontSize="17" id="1XT-W1-UX3">
+                                        <rect key="frame" x="20" y="43" width="280" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="User Account:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qVP-ev-fmw">
+                                        <rect key="frame" x="20" y="81" width="280" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="admin" minimumFontSize="17" id="Gcy-IG-qrY">
+                                        <rect key="frame" x="20" y="109" width="280" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Accountability" id="Y9s-cV-8pU"/>
+                    <connections>
+                        <outlet property="assetNameField" destination="1XT-W1-UX3" id="NFu-ek-Ocr"/>
+                        <outlet property="assetNameLabel" destination="yh5-Bw-pvC" id="9ic-0O-rnh"/>
+                        <outlet property="updateAssetAccountabilityScroller" destination="AYX-hF-8wB" id="fHs-8a-iHY"/>
+                        <outlet property="userAccountField" destination="Gcy-IG-qrY" id="hxm-Fy-NcV"/>
+                        <outlet property="userAccountLabel" destination="qVP-ev-fmw" id="517-x5-few"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MQd-fz-c4V" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2122" y="-288"/>
+        </scene>
+        <!--Update Asset Ownership Page View Controller - Ownership-->
+        <scene sceneID="zEY-e0-J6u">
+            <objects>
+                <viewController id="y7y-02-reX" customClass="UpdateAssetOwnershipPageViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Wxk-lx-WC4">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="0bO-lc-8Kr" customClass="TPKeyboardAvoidingScrollView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Asset Name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="stn-p8-47N">
+                                        <rect key="frame" x="20" y="12" width="280" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Esse Info:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rcJ-qx-6gk">
+                                        <rect key="frame" x="20" y="74" width="280" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="myAircon" minimumFontSize="17" id="ROj-2N-vmb">
+                                        <rect key="frame" x="20" y="36" width="280" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Steve Jobs" minimumFontSize="17" id="ZAL-r8-TRe">
+                                        <rect key="frame" x="20" y="98" width="280" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Ownership" id="Vnt-88-0zb"/>
+                    <connections>
+                        <outlet property="assetNameField" destination="ROj-2N-vmb" id="wtv-oO-U5j"/>
+                        <outlet property="assetNameLabel" destination="stn-p8-47N" id="nmY-3B-pyY"/>
+                        <outlet property="esseInfoField" destination="ZAL-r8-TRe" id="23F-3U-Xal"/>
+                        <outlet property="esseInfoLabel" destination="rcJ-qx-6gk" id="QuD-CE-e5x"/>
+                        <outlet property="updateAssetOwnershipScroller" destination="0bO-lc-8Kr" id="DOP-d7-IVA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="I9M-EZ-k1J" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2108" y="400"/>
+        </scene>
+        <!--Delete Asset Page View Controller - Delete Asset-->
+        <scene sceneID="EmL-C2-fwH">
+            <objects>
+                <viewController id="MFX-wB-Hhm" customClass="DeleteAssetPageViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="U6q-GS-v5O">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gRl-7D-MoR">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="deleteAssetPageCell" id="mub-1N-N4V">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="MFX-wB-Hhm" id="ogh-H7-gSc"/>
+                                    <outlet property="delegate" destination="MFX-wB-Hhm" id="KJf-mJ-s8c"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Delete Asset" id="H8x-WZ-jma"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sT0-0m-J9s" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2102" y="1044"/>
+        </scene>
+        <!--Add Asset Type Page View Controller - Add Asset Type-->
+        <scene sceneID="hTB-fZ-gVv">
+            <objects>
+                <viewController id="Td2-gi-sVv" customClass="AddAssetTypePageViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GqA-VN-aZU">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Add Asset Type" id="4zH-SQ-PrE"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HZ4-MX-Ldt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2104" y="1640"/>
         </scene>
         <!--Feedback Page View Controller-->
         <scene sceneID="BSW-Ci-jUj">
@@ -1730,7 +1991,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ry-t9-fVF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1935" y="636"/>
+            <point key="canvasLocation" x="1973" y="-2072"/>
         </scene>
         <!--Update Asset List View Controller - Asset List-->
         <scene sceneID="GOe-ch-WaQ">
@@ -1779,7 +2040,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ycl-Yj-eZu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1505" y="-1245"/>
+            <point key="canvasLocation" x="1488" y="-4185"/>
         </scene>
         <!--Update Asset Page View Controller - Update Asset-->
         <scene sceneID="75t-dE-1XP">
@@ -1843,7 +2104,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hVo-GX-SzJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1935" y="-1245"/>
+            <point key="canvasLocation" x="1913" y="-4185"/>
         </scene>
     </scenes>
     <classes>
@@ -1857,6 +2118,9 @@
                 <relationship kind="outlet" name="assetTypeField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="assetTypeLabel" candidateClass="UILabel"/>
             </relationships>
+        </class>
+        <class className="AddAssetTypePageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddAssetTypePageViewController.h"/>
         </class>
         <class className="AddLifecyclePageViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AddLifecyclePageViewController.h"/>
@@ -1894,6 +2158,20 @@
         <class className="BillingTasksViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BillingTasksViewController.h"/>
         </class>
+        <class className="CreateNoticePageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CreateNoticePageViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="createNoticeScroller" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="messageLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="messageTextArea" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="priorityLevelField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="priorityLevelLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userGroupNameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="userGroupNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="validityField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="validityLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
         <class className="CreateSRViewController" superclassName="ViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CreateSRViewController.h"/>
             <relationships>
@@ -1916,6 +2194,9 @@
                 <relationship kind="outlet" name="servicePicker" candidateClass="UIPickerView"/>
                 <relationship kind="outlet" name="srGenericPicker" candidateClass="UIPickerView"/>
             </relationships>
+        </class>
+        <class className="DeleteAssetPageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DeleteAssetPageViewController.h"/>
         </class>
         <class className="DeleteLifecyclePageViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/DeleteLifecyclePageViewController.h"/>
@@ -2010,8 +2291,28 @@
         <class className="TPKeyboardAvoidingScrollView" superclassName="UIScrollView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TPKeyboardAvoidingScrollView.h"/>
         </class>
+        <class className="UpdateAssetAccountabilityPageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UpdateAssetAccountabilityPageViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="assetNameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="assetNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="updateAssetAccountabilityScroller" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="userAccountField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="userAccountLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
         <class className="UpdateAssetListViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UpdateAssetListViewController.h"/>
+        </class>
+        <class className="UpdateAssetOwnershipPageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UpdateAssetOwnershipPageViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="assetNameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="assetNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="esseInfoField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="esseInfoLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="updateAssetOwnershipScroller" candidateClass="UIScrollView"/>
+            </relationships>
         </class>
         <class className="UpdateAssetPageViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UpdateAssetPageViewController.h"/>

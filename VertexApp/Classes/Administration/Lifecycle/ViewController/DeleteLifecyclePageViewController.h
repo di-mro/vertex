@@ -10,8 +10,6 @@
 
 @interface DeleteLifecyclePageViewController : UIViewController
 
--(void) displayViewLifecyclesPageEntries;
-
 @property (nonatomic, retain) NSMutableArray *deleteLifecyclePageEntries;
 @property (nonatomic, retain) NSMutableArray *lifecycleNameArray;
 @property (nonatomic, retain) NSMutableArray *lifecycleIdArray;

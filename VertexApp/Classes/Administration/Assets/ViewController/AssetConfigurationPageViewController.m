@@ -108,22 +108,27 @@
 {
   switch (indexPath.row)
   {
-    /*
-    case 0: [self performSegueWithIdentifier:@"" sender:self];
+    //Update Asset Accountability
+    case 0: [self performSegueWithIdentifier:@"assetConfigToUpdateAssetAccountability" sender:self];
       break;
-    case 1: [self performSegueWithIdentifier:@"" sender:self];
+    //Update Asset Ownership
+    case 1: [self performSegueWithIdentifier:@"assetConfigToUpdateAssetOwnership" sender:self];
       break;
-    case 2: [self performSegueWithIdentifier:@"" sender:self];
+    //Remove Asset
+    case 2: [self performSegueWithIdentifier:@"assetConfigToDeleteAsset" sender:self];
       break;
-    case 3: [self performSegueWithIdentifier:@"" sender:self];
+    //Add Asset Type
+    case 3: [self performSegueWithIdentifier:@"assetConfigToAddAssetType" sender:self];
        break;
-    case 4: [self performSegueWithIdentifier:@"" sender:self];
+    //View Asset Type
+    case 4: [self performSegueWithIdentifier:@"assetConfigToViewAssetType" sender:self];
        break;
-    case 5: [self performSegueWithIdentifier:@"" sender:self];
+    //Update Asset Type
+    case 5: [self performSegueWithIdentifier:@"assetConfigToUpdateAssetType" sender:self];
        break;
-    case 6: [self performSegueWithIdentifier:@"" sender:self];
+    //Remove Asset Type
+    case 6: [self performSegueWithIdentifier:@"assetConfigToRemoveAssetType" sender:self];
        break;
-    */
     default: break;
   }  
 }

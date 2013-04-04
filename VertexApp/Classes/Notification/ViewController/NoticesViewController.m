@@ -28,6 +28,8 @@
 
 - (void)viewDidLoad
 {
+  NSLog(@"Notices Page View");
+  
   [self displayNoticesPageEntries];
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -40,10 +42,10 @@
   noticesPageEntries = [[NSMutableArray alloc] init];
   
   /* !-For demo only, remove hard coded values. Must retrieve listing in DB -! */
-  NSString *entry1 = @"Create Memo";
-  NSString *entry2 = @"View Memo";
-  NSString *entry3 = @"Create Notice";
-  NSString *entry4 = @"View Notice";
+  NSString *entry1 = @"Create Notice";
+  NSString *entry2 = @"View Notice";
+  NSString *entry3 = @"Create Memorandum";
+  NSString *entry4 = @"View Memorandum";
   NSString *entry5 = @"Create Billing Notice";
   
   [noticesPageEntries addObject:entry1];
@@ -76,7 +78,6 @@
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  NSLog(@"Notices Page View");
   static NSString *CellIdentifier = @"noticesPageCell";
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
@@ -86,26 +87,34 @@
   return cell;
 }
 
+
+//Change the Height of the Cell [Default is 45]:
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
+{
+  return 50;
+}
+
+
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  /* !-Remove these hardcoded cases -! */
   switch (indexPath.row)
   {
-      /*
-       //Create Memo
-       case 0: [self performSegueWithIdentifier:@"" sender:self];
-       break;
-       //View Memo
-       case 1: [self performSegueWithIdentifier:@"" sender:self];
-       break;
-       //Create Notice
-       case 2: [self performSegueWithIdentifier:@"" sender:self];
-       break;
-       //View Notice
-       case 3: [self performSegueWithIdentifier:@"" sender:self];
-       break;
-       */
+    //Create Notice
+    case 0: [self performSegueWithIdentifier:@"noticesToCreateNotice" sender:self];
+      break;
+    //View Notice
+    case 1: [self performSegueWithIdentifier:@"noticesToViewNotice" sender:self];
+      break;
+    //Create Memorandum
+    case 2: [self performSegueWithIdentifier:@"noticesToCreateMemo" sender:self];
+      break;
+    //View Memorandum
+    case 3: [self performSegueWithIdentifier:@"noticesToViewMemo" sender:self];
+      break;
+    //Create Billing Notice
+    case 4: [self performSegueWithIdentifier:@"noticesToCreateBillingNotice" sender:self];
+      break;
   }
 }
 

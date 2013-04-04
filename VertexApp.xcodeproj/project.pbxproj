@@ -31,6 +31,13 @@
 		ED4BF185170AE798009CAEE4 /* ViewServicesPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED4BF184170AE797009CAEE4 /* ViewServicesPageViewController.m */; };
 		ED4BF188170AE824009CAEE4 /* UpdateServicePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED4BF187170AE824009CAEE4 /* UpdateServicePageViewController.m */; };
 		ED4BF18B170AE875009CAEE4 /* DeleteServicePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED4BF18A170AE874009CAEE4 /* DeleteServicePageViewController.m */; };
+		ED4BF18E170B0F69009CAEE4 /* UpdateSRListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED4BF18D170B0F69009CAEE4 /* UpdateSRListViewController.m */; };
+		ED4BF191170B1153009CAEE4 /* UpdateSRPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED4BF190170B1152009CAEE4 /* UpdateSRPageViewController.m */; };
+		ED59637F170BE69500FCD141 /* CreateNoticePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED59637E170BE69500FCD141 /* CreateNoticePageViewController.m */; };
+		ED596385170C0FB400FCD141 /* UpdateAssetAccountabilityPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED596384170C0FB400FCD141 /* UpdateAssetAccountabilityPageViewController.m */; };
+		ED596388170C18A600FCD141 /* UpdateAssetOwnershipPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED596387170C18A600FCD141 /* UpdateAssetOwnershipPageViewController.m */; };
+		ED59638B170C21CA00FCD141 /* DeleteAssetPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED59638A170C21CA00FCD141 /* DeleteAssetPageViewController.m */; };
+		ED59638E170C288800FCD141 /* AddAssetTypePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED59638D170C288700FCD141 /* AddAssetTypePageViewController.m */; };
 		ED59996616EDDDD700681941 /* BroadcastUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = ED59996516EDDDD700681941 /* BroadcastUsers.m */; };
 		ED59997516EDE77400681941 /* Services.m in Sources */ = {isa = PBXBuildFile; fileRef = ED59997416EDE77400681941 /* Services.m */; };
 		ED59997816EDE7B800681941 /* Tasks.m in Sources */ = {isa = PBXBuildFile; fileRef = ED59997716EDE7B700681941 /* Tasks.m */; };
@@ -201,6 +208,20 @@
 		ED4BF187170AE824009CAEE4 /* UpdateServicePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateServicePageViewController.m; sourceTree = "<group>"; };
 		ED4BF189170AE874009CAEE4 /* DeleteServicePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteServicePageViewController.h; sourceTree = "<group>"; };
 		ED4BF18A170AE874009CAEE4 /* DeleteServicePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteServicePageViewController.m; sourceTree = "<group>"; };
+		ED4BF18C170B0F69009CAEE4 /* UpdateSRListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateSRListViewController.h; sourceTree = "<group>"; };
+		ED4BF18D170B0F69009CAEE4 /* UpdateSRListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateSRListViewController.m; sourceTree = "<group>"; };
+		ED4BF18F170B1152009CAEE4 /* UpdateSRPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateSRPageViewController.h; sourceTree = "<group>"; };
+		ED4BF190170B1152009CAEE4 /* UpdateSRPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateSRPageViewController.m; sourceTree = "<group>"; };
+		ED59637D170BE69500FCD141 /* CreateNoticePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateNoticePageViewController.h; sourceTree = "<group>"; };
+		ED59637E170BE69500FCD141 /* CreateNoticePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateNoticePageViewController.m; sourceTree = "<group>"; };
+		ED596383170C0FB400FCD141 /* UpdateAssetAccountabilityPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateAssetAccountabilityPageViewController.h; sourceTree = "<group>"; };
+		ED596384170C0FB400FCD141 /* UpdateAssetAccountabilityPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateAssetAccountabilityPageViewController.m; sourceTree = "<group>"; };
+		ED596386170C18A600FCD141 /* UpdateAssetOwnershipPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateAssetOwnershipPageViewController.h; sourceTree = "<group>"; };
+		ED596387170C18A600FCD141 /* UpdateAssetOwnershipPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateAssetOwnershipPageViewController.m; sourceTree = "<group>"; };
+		ED596389170C21CA00FCD141 /* DeleteAssetPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteAssetPageViewController.h; sourceTree = "<group>"; };
+		ED59638A170C21CA00FCD141 /* DeleteAssetPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteAssetPageViewController.m; sourceTree = "<group>"; };
+		ED59638C170C288700FCD141 /* AddAssetTypePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddAssetTypePageViewController.h; sourceTree = "<group>"; };
+		ED59638D170C288700FCD141 /* AddAssetTypePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddAssetTypePageViewController.m; sourceTree = "<group>"; };
 		ED59996416EDDDD700681941 /* BroadcastUsers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BroadcastUsers.h; sourceTree = "<group>"; };
 		ED59996516EDDDD700681941 /* BroadcastUsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BroadcastUsers.m; sourceTree = "<group>"; };
 		ED59997316EDE77300681941 /* Services.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Services.h; sourceTree = "<group>"; };
@@ -508,14 +529,22 @@
 			children = (
 				EDEFE76616DF3C51002C35D6 /* AddAssetPageViewController.h */,
 				EDEFE76716DF3C51002C35D6 /* AddAssetPageViewController.m */,
+				ED59638C170C288700FCD141 /* AddAssetTypePageViewController.h */,
+				ED59638D170C288700FCD141 /* AddAssetTypePageViewController.m */,
 				ED08BDB5170732C700588760 /* AssetConfigurationPageViewController.h */,
 				ED08BDB6170732C700588760 /* AssetConfigurationPageViewController.m */,
 				EDEFE76816DF3C51002C35D6 /* AssetPageViewController.h */,
 				EDEFE76916DF3C51002C35D6 /* AssetPageViewController.m */,
+				ED596389170C21CA00FCD141 /* DeleteAssetPageViewController.h */,
+				ED59638A170C21CA00FCD141 /* DeleteAssetPageViewController.m */,
 				EDEFE7DC16DF46F5002C35D6 /* SingleAssetViewController.h */,
 				EDEFE7DD16DF46F5002C35D6 /* SingleAssetViewController.m */,
 				EDEFE76C16DF3C51002C35D6 /* ViewAssetsPageViewController.h */,
 				EDEFE76D16DF3C51002C35D6 /* ViewAssetsPageViewController.m */,
+				ED596383170C0FB400FCD141 /* UpdateAssetAccountabilityPageViewController.h */,
+				ED596384170C0FB400FCD141 /* UpdateAssetAccountabilityPageViewController.m */,
+				ED596386170C18A600FCD141 /* UpdateAssetOwnershipPageViewController.h */,
+				ED596387170C18A600FCD141 /* UpdateAssetOwnershipPageViewController.m */,
 				ED300D6D16F9B99300F3063E /* UpdateAssetListViewController.h */,
 				ED300D6E16F9B99400F3063E /* UpdateAssetListViewController.m */,
 				ED300D7016F9B9AD00F3063E /* UpdateAssetPageViewController.h */,
@@ -779,6 +808,8 @@
 		EDEFE7A516DF3C51002C35D6 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				ED59637D170BE69500FCD141 /* CreateNoticePageViewController.h */,
+				ED59637E170BE69500FCD141 /* CreateNoticePageViewController.m */,
 				EDEFE7A616DF3C51002C35D6 /* NoticesViewController.h */,
 				EDEFE7A716DF3C51002C35D6 /* NoticesViewController.m */,
 			);
@@ -806,6 +837,10 @@
 				ED3BB35516E0524400468E44 /* SRFeedbackPageViewController.m */,
 				EDEFE7AE16DF3C51002C35D6 /* ServiceRequestViewController.h */,
 				EDEFE7AF16DF3C51002C35D6 /* ServiceRequestViewController.m */,
+				ED4BF18C170B0F69009CAEE4 /* UpdateSRListViewController.h */,
+				ED4BF18D170B0F69009CAEE4 /* UpdateSRListViewController.m */,
+				ED4BF18F170B1152009CAEE4 /* UpdateSRPageViewController.h */,
+				ED4BF190170B1152009CAEE4 /* UpdateSRPageViewController.m */,
 				EDEFE7B016DF3C51002C35D6 /* ViewSRViewController.h */,
 				EDEFE7B116DF3C51002C35D6 /* ViewSRViewController.m */,
 			);
@@ -1070,6 +1105,13 @@
 				ED4BF185170AE798009CAEE4 /* ViewServicesPageViewController.m in Sources */,
 				ED4BF188170AE824009CAEE4 /* UpdateServicePageViewController.m in Sources */,
 				ED4BF18B170AE875009CAEE4 /* DeleteServicePageViewController.m in Sources */,
+				ED4BF18E170B0F69009CAEE4 /* UpdateSRListViewController.m in Sources */,
+				ED4BF191170B1153009CAEE4 /* UpdateSRPageViewController.m in Sources */,
+				ED59637F170BE69500FCD141 /* CreateNoticePageViewController.m in Sources */,
+				ED596385170C0FB400FCD141 /* UpdateAssetAccountabilityPageViewController.m in Sources */,
+				ED596388170C18A600FCD141 /* UpdateAssetOwnershipPageViewController.m in Sources */,
+				ED59638B170C21CA00FCD141 /* DeleteAssetPageViewController.m in Sources */,
+				ED59638E170C288800FCD141 /* AddAssetTypePageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

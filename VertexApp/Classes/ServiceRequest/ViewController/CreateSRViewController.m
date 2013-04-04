@@ -29,19 +29,18 @@
 @synthesize serviceField;
 @synthesize priorityField;
 @synthesize srGenericPicker;
-/*
-@synthesize nameField;
-@synthesize unitLocationField;
-@synthesize contactNumberField;
- */
 @synthesize detailsTextArea;
 
 @synthesize currentArray;
 @synthesize currentTextField;
 
 @synthesize URL;
+@synthesize httpResponseCode;
 @synthesize lifecycles;
 @synthesize assetTypes;
+@synthesize services;
+
+@synthesize createSRJson;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -56,6 +55,8 @@
 
 - (void)viewDidLoad
 {
+  NSLog(@"Create Service Request Page");
+  
   //Keyboard dismissal
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
@@ -72,7 +73,9 @@
   /* TODO
    !-Remove hardcoded data. Retrieve listing in DB-!
    */
+  //getAssetTypes
   self.assetPickerArray = [[NSArray alloc] initWithObjects:@"Demo - Aircon",@"Demo - Window", @"Demo - Bathtub", @"Demo - Bathroom Faucet", @"Demo - Toilet", @"Demo - Kitchen Sink", @"Demo - Lighting Fixtures", nil];
+  [self getAssetType];
   
   //getLifecycle
   self.lifecyclePickerArray = [[NSArray alloc] init];
@@ -87,9 +90,6 @@
   [lifecycleField setDelegate:self];
   [serviceField setDelegate:self];
   [priorityField setDelegate:self];
-  
-  //SRObject initialization
-  //srObject = [[SRObject alloc] init];
   
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -210,9 +210,67 @@
     
     lifecyclePickerArray = [lifecycles valueForKey:@"name"]; //store lifecycles names only in PickerArray
     NSLog(@"lifecyclePickerArray: %@", lifecyclePickerArray);
-    
   }
 }
+
+
+#pragma mark - getServices
+-(void) getServices
+{
+  //endpoint for getServices
+  //URL = @"http://192.168.2.113:8080/vertex-api/service/getServices/{assetTypeId}/{lifecycleId}";
+  //TODO - get selected assetTypeId & lifecycleId, construct URL
+  
+  NSMutableURLRequest *getRequest = [NSMutableURLRequest
+                                     requestWithURL:[NSURL URLWithString:URL]];
+  
+  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+  [getRequest setHTTPMethod:@"GET"];
+  
+  NSURLConnection *connection = [[NSURLConnection alloc]
+                                 initWithRequest:getRequest
+                                 delegate:self];
+  [connection start];
+  
+  NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+  NSError *error = [[NSError alloc] init];
+  
+  NSData *responseData = [NSURLConnection
+                          sendSynchronousRequest:getRequest
+                          returningResponse:&urlResponse
+                          error:&error];
+  
+  NSString *result = [[NSString alloc] initWithData:responseData
+                                           encoding:NSUTF8StringEncoding];
+  
+  if(responseData == nil)
+  {
+    //Show an alert if connection is not available
+    UIAlertView *servicesAlert = [[UIAlertView alloc]
+                                   initWithTitle:@"Warning"
+                                   message:@"No network connection detected. Displaying data from phone cache."
+                                   delegate:nil
+                                   cancelButtonTitle:@"OK"
+                                   otherButtonTitles:nil];
+    [servicesAlert show];
+    
+    //Connect to CoreData for local data
+    //!- FOR TESTING ONLY -!
+    self.servicePickerArray = [[NSArray alloc] initWithObjects: @"Demo - Fix broken pipe", @"Demo - Replace wiring", @"Demo - Repaint unit", @"Demo - Fix cooling unit", nil];
+  }
+  else
+  {
+    services = [NSJSONSerialization
+                  JSONObjectWithData:responseData
+                  options:kNilOptions
+                  error:&error];
+    NSLog(@"services JSON Result: %@", services);
+    
+    servicePickerArray = [lifecycles valueForKey:@"name"]; //store lifecycles names only in PickerArray
+    NSLog(@"servicePickerArray: %@", servicePickerArray);
+  }
+}
+
 
 
 #pragma mark - Check for network availability
@@ -330,6 +388,7 @@
   }
 }
 
+
 #pragma mark - Get selected row in Picker
 -(void)selectedRow {
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
@@ -364,6 +423,7 @@
   return [currentArray objectAtIndex:row];
 }
 
+
 #pragma mark - [Cancel] button implementation
 -(void) cancelSR
 {
@@ -376,22 +436,87 @@
   [self.navigationController pushViewController:controller animated:YES];
 }
 
+
 #pragma mark - [Create] button implementation
 -(void) createSR
 {
   if ([self validateCreateSRFields])
   {
     /*
-    // !- TODO Put Service Request info into SRObject. Save SR info to db - PUT -!
-    srObject.asset = assetField.text;
-    srObject.lifecycle = lifecycleField.text;
-    srObject.service = serviceField.text;
-    srObject.priority = priorityField.text;
-    srObject.name = nameField.text;
-    srObject.unitLocation = unitLocationField.text;
-    srObject.contactNumber = contactNumberField.text;
-    srObject.details = detailsTextArea.text;
-    */
+     "{
+        ""asset"" :
+        {
+          ""id"" : number
+        },
+        ""lifecycle"" :
+        {
+          ""id"" : number
+        },
+        ""service"" :
+        {
+          ""id"" : number
+        },
+        ""admin"" :
+        {
+          ""id"" : number
+        },
+        ""requestor"" :
+        {
+          ""id"" : number
+        },
+        ""cost"" : double,
+        ""remarks"" : string,
+        ""adminRemarks"" : string,
+        ""priority"" :
+        {
+          ""id"" : number
+        },
+        ""status"" :
+        {
+          ""id"" : number
+        }
+        ""schedules"" :
+        [
+          ""schedDate"" : date
+        ]
+     }"
+     */
+    //TODO : Construct JSON request body
+    createSRJson = [[NSMutableDictionary alloc] init];
+    //[createSRJson setObject:@"" forKey:@""];
+    [createSRJson setObject:detailsTextArea.text forKey:@"remarks"];
+    
+    NSError *error = [[NSError alloc] init];
+    NSData *jsonData = [NSJSONSerialization
+                        dataWithJSONObject:createSRJson
+                        options:NSJSONWritingPrettyPrinted
+                        error:&error];
+    NSString *jsonString = [[NSString alloc]
+                            initWithData:jsonData
+                            encoding:NSUTF8StringEncoding];
+    
+    NSLog(@"jsonData Request: %@", jsonData);
+    NSLog(@"jsonString Request: %@", jsonString);
+    
+    //Set URL for Add Service Request
+    URL = @"http://192.168.2.113:8080/vertex-api/service-request/addServiceRequest";
+    NSMutableURLRequest *postRequest = [NSMutableURLRequest
+                                        requestWithURL:[NSURL URLWithString:URL]];
+    
+    //POST method - Create
+    [postRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [postRequest setHTTPMethod:@"POST"];
+    [postRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String] length:[jsonString length]]];
+    NSLog(@"%@", postRequest);
+    
+    NSURLConnection *connection = [[NSURLConnection alloc]
+                                   initWithRequest:postRequest
+                                   delegate:self];
+    
+    [connection start];
+    
+    NSLog(@"addServiceRequest - httpResponseCode: %d", httpResponseCode);
+    
     
     [self dismissViewControllerAnimated:YES completion:nil];
     NSLog(@"Create Service Request");
@@ -412,6 +537,49 @@
     NSLog(@"Unable to create Service Request");
   }
 }
+
+
+#pragma mark - Connection didFailWithError
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+  NSLog(@"connection didFailWithError: %@", [error localizedDescription]);
+}
+
+
+#pragma mark - Connection didReceiveResponse
+-(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+  NSHTTPURLResponse *httpResponse;
+  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponseCode = [httpResponse statusCode];
+  NSLog(@"httpResponse status code: %d", httpResponseCode);
+  
+  if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
+  {
+    UIAlertView *createSRAlert = [[UIAlertView alloc]
+                                      initWithTitle:@"Create Service Request"
+                                      message:@"Service Request Created."
+                                      delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+    [createSRAlert show];
+  }
+  else //(httpResponseCode >= 400)
+  {
+    UIAlertView *createSRFailAlert = [[UIAlertView alloc]
+                                          initWithTitle:@"Create Service Request Failed"
+                                          message:@"Service Request not created. Please try again later"
+                                          delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [createSRFailAlert show];
+  }
+  
+  [self dismissViewControllerAnimated:YES completion:nil];
+  NSLog(@"Service Request Created");
+}
+
+
 
 #pragma mark - Transition to Assets Page when OK on Alert Box is clicked
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
