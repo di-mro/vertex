@@ -17,15 +17,4 @@
 
 @property (strong, nonatomic) NSString *URL;
 
-/*
- @property (strong, nonatomic) IBOutlet UIScrollView *singleAssetViewScroller;
- @property (strong, nonatomic) IBOutlet UITextView *assetDetailsTextArea;
- 
- @property (strong, nonatomic) NSString *managedAssetId;
- @property (strong, nonatomic) NSNumber *assetOwnedId;
- @property (strong, nonatomic) NSMutableDictionary *assetInfo;
- 
- @property (nonatomic, strong) NSString *URL;
- */
-
 @end

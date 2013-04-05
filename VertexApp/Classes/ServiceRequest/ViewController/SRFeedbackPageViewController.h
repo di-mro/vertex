@@ -17,6 +17,6 @@
 @property (strong, nonatomic) IBOutlet UITextView *srCommentsTextArea;
 @property (strong, nonatomic) IBOutlet UIScrollView *srFeedbackScroller;
 
-@property NSInteger *srRatings;
+@property int srRatings;
 
 @end

@@ -176,7 +176,7 @@
 {
   if (buttonIndex == 0)
   {
-    AssetConfigurationPageViewController *controller = (AssetConfigurationPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"AssetConfig"];
+    AssetConfigurationPageViewController *controller = (AssetConfigurationPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"AssetConfigPage"];
     
     [self.navigationController pushViewController:controller animated:YES];
   }

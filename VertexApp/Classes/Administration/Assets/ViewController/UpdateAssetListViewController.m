@@ -17,7 +17,6 @@
 @implementation UpdateAssetListViewController
 
 @synthesize updateAssetsPageEntries;
-@synthesize URL;
 @synthesize managedAssets;
 @synthesize assetsTableView;
 @synthesize assetOwned;
@@ -26,6 +25,10 @@
 @synthesize selectedAssetId;
 @synthesize assetNameArray;
 @synthesize assetIdArray;
+
+@synthesize URL;
+@synthesize httpResponseCode;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -70,7 +73,7 @@
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:urlParams]];
   
-  [getRequest setValue:@"application/json" forHTTPHeaderField:@"userId=20130101010200000"]; //@"Content-Type" / userId / userId=20130101010200000
+  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
   [getRequest setHTTPMethod:@"GET"];
   NSLog(@"%@", getRequest);
   
@@ -155,6 +158,22 @@
     }
     NSLog(@"assetIdNameArray: %@", assetIdNameArray);
   }
+}
+
+
+#pragma mark - Connection didFailWithError
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+  NSLog(@"connection didFailWithError: %@", [error localizedDescription]);
+}
+
+#pragma mark - Connection didReceiveResponse
+-(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+  NSHTTPURLResponse *httpResponse;
+  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponseCode = [httpResponse statusCode];
+  NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
 
 

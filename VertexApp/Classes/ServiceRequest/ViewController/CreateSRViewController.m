@@ -182,10 +182,7 @@
                             sendSynchronousRequest:getRequest
                             returningResponse:&urlResponse
                             error:&error];
-    
-  NSString *result = [[NSString alloc] initWithData:responseData
-                                             encoding:NSUTF8StringEncoding];
-  
+
   if(responseData == nil)
   {
     //Show an alert if connection is not available

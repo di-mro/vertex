@@ -1,33 +1,27 @@
 //
-//  UpdateLifecyclePageViewController.m
+//  UpdateAssetTypePageViewController.m
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 4/2/13.
+//  Created by Mary Rose Oh on 4/4/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
-#import "UpdateLifecyclePageViewController.h"
+#import "UpdateAssetTypePageViewController.h"
 #import "HomePageViewController.h"
-#import "LifecycleConfigurationPageViewController.h"
+#import "AssetConfigurationPageViewController.h"
 
-@interface UpdateLifecyclePageViewController ()
+@interface UpdateAssetTypePageViewController ()
 
 @end
 
-@implementation UpdateLifecyclePageViewController
+@implementation UpdateAssetTypePageViewController
 
-@synthesize updateLifecycleScroller;
+@synthesize updateAssetTypeScroller;
+@synthesize assetTypeNameLabel;
+@synthesize assetTypeNameField;
 
-@synthesize lifecycleNameLabel;
-@synthesize lifecycleNameField;
-@synthesize lifecycleDescriptionLabel;
-@synthesize lifecycleDescriptionField;
-@synthesize lifecyclePreviousLabel;
-@synthesize lifecyclePreviousField;
-
-@synthesize lifecycleId;
-@synthesize lifecycleInfo;
-
+@synthesize assetTypeId;
+@synthesize assetTypeInfo;
 @synthesize URL;
 @synthesize httpResponseCode;
 
@@ -43,23 +37,21 @@
 
 - (void)viewDidLoad
 {
-  NSLog(@"Update Lifecycle Page View");
-  
   //Keyboard dismissal
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //Configure Scroller size
-  self.updateLifecycleScroller.contentSize = CGSizeMake(320, 720);
+  //self.updateLifecycleScroller.contentSize = CGSizeMake(320, 720);
   
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelUpdateLifecycle)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelUpdateAssetType)];
   
-  //[Update] navigation button - Update Lifecycle
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Update" style:UIBarButtonItemStylePlain target:self action:@selector(updateLifecycle)];
+  //[Update] navigation button - Update AssetType
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Update" style:UIBarButtonItemStylePlain target:self action:@selector(updateAssetType)];
   
-  //Get info for the selected Lifecycle
-  [self getLifecycleInfo];
+  //Get info for the selected Asset Type
+  [self getAssetTypeInfo];
   
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -67,24 +59,22 @@
 
 - (void)didReceiveMemoryWarning
 {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
-
-#pragma mark - Set Lifecycle ID to the selected lifecycleID from previous page
-- (void) setLifecycleId:(NSNumber *) lifecycleIdFromPrev
+-(void) setAssetTypeId:(NSNumber *) assetTypeIdFromPrev
 {
-  lifecycleId = lifecycleIdFromPrev;
-  NSLog(@"LifeCycleDetailPage - lifecycleId: %@", lifecycleId);
+  assetTypeId = assetTypeIdFromPrev;
+  NSLog(@"assetTypeId: %@", assetTypeId);
 }
 
 
 #pragma mark - [Cancel] button implementation
--(void) cancelUpdateLifecycle
+-(void) cancelUpdateAssetType
 {
   [self dismissViewControllerAnimated:YES completion:nil];
-  NSLog(@"Cancel Update Lifecycle");
+  NSLog(@"Cancel Update Asset Type");
   
   //Go back to Home Page
   HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
@@ -93,15 +83,16 @@
 }
 
 
-#pragma mark - Get chosen lifecycle info
--(void) getLifecycleInfo
+#pragma mark - Get chosen asset type info
+-(void) getAssetTypeInfo
 {
-  URL = @"http://192.168.2.113:8080/vertex-api/lifecycle/getLifecycle/";
+  //URL for retrieving particular asset type info
+  URL = @"http://192.168.2.113:8080/vertex-api/asset/getAssetType/";
   
   //! TEST
   NSMutableString *urlParams = [NSMutableString
-                                stringWithFormat:@"http://192.168.2.113:8080/vertex-api/lifecycle/getLifecycle/%@"
-                                , lifecycleId];
+                                stringWithFormat:@"http://192.168.2.113:8080/vertex-api/asset/getAssetType/%@"
+                                , assetTypeId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:urlParams]];
@@ -136,42 +127,49 @@
     
     //TODO: Retrieve local records from CoreData
     //TEST DATA ONLY
+    /*
     lifecycleNameField.text = @"Demo - repair";
     lifecycleDescriptionField.text = @"Demo - repair";
     lifecyclePreviousField.text = @"Demo - 1";
+    */
   }
   else
   {
     //JSON
-    lifecycleInfo = [NSJSONSerialization
+    assetTypeInfo = [NSJSONSerialization
                      JSONObjectWithData:responseData
                      options:kNilOptions
                      error:&error];
-    NSLog(@"lifecycleInfo JSON: %@", lifecycleInfo);
+    NSLog(@"assetTypeInfo JSON: %@", assetTypeInfo);
     
+    assetTypeNameField.text = [assetTypeInfo objectForKey:@"name"];
+    /*
     lifecycleNameField.text = [lifecycleInfo objectForKey:@"name"];
     lifecycleDescriptionField.text = [lifecycleInfo objectForKey:@"description"];
     lifecyclePreviousField.text = [lifecycleInfo objectForKey:@"prev"];
-  
+    */
+    
   }//end - else if (responseData == nil)
 }
 
 
-#pragma mark - Update Lifecycle
--(void) updateLifecycle
+#pragma mark - Update Asset Type
+-(void) updateAssetType
 {
-  if([self validateUpdateLifecycleFields])
+  if([self validateUpdateAssetTypeFields])
   {
     //Set JSON Request
-    NSMutableDictionary *updateLifecycleJson = [[NSMutableDictionary alloc] init];
-    [updateLifecycleJson setObject:lifecycleId forKey:@"id"];
-    [updateLifecycleJson setObject:lifecycleNameField.text forKey:@"name"];
-    [updateLifecycleJson setObject:lifecycleDescriptionField.text forKey:@"description"];
-    [updateLifecycleJson setObject:lifecyclePreviousField.text forKey:@"prev"];
+    NSMutableDictionary *updateAssetTypeJson = [[NSMutableDictionary alloc] init];
+    [updateAssetTypeJson setObject:assetTypeId forKey:@"id"];
+    /*
+    [updateAssetTypeJson setObject:@"" forKey:@""];
+    [updateAssetTypeJson setObject: forKey:@""];
+    [updateAssetTypeJson setObject: forKey:@""];
+    */
     
     NSError *error = [[NSError alloc] init];
     NSData *jsonData = [NSJSONSerialization
-                        dataWithJSONObject:updateLifecycleJson
+                        dataWithJSONObject:updateAssetTypeJson
                         options:NSJSONWritingPrettyPrinted
                         error:&error];
     NSString *jsonString = [[NSString alloc]
@@ -181,10 +179,11 @@
     NSLog(@"jsonData Request: %@", jsonData);
     NSLog(@"jsonString Request: %@", jsonString);
     
-    //Set URL for Update Lifecycle
-    URL = @"http://192.168.2.113:8080/vertex-api/lifecycle/updateLifecycle";
+    //Set URL for Update Asset Type
+    //TODO : WS Endpoint for Update Asset Type
+    URL = @"";
     NSMutableURLRequest *putRequest = [NSMutableURLRequest
-                                        requestWithURL:[NSURL URLWithString:URL]];
+                                       requestWithURL:[NSURL URLWithString:URL]];
     
     //PUT method - Update
     [putRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
@@ -198,34 +197,34 @@
     
     [connection start];
     
-    NSLog(@"updateLifecycle - httpResponseCode: %d", httpResponseCode);
+    NSLog(@"updateAssetType - httpResponseCode: %d", httpResponseCode);
     if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
     {
-      UIAlertView *updateLifecycleAlert = [[UIAlertView alloc]
-                                        initWithTitle:@"Update Lifecycle"
-                                        message:@"Lifecycle Updated."
+      UIAlertView *updateAssetTypeAlert = [[UIAlertView alloc]
+                                        initWithTitle:@"Update Asset Type"
+                                        message:@"Asset Type Updated."
                                         delegate:self
                                         cancelButtonTitle:@"OK"
                                         otherButtonTitles:nil];
-      [updateLifecycleAlert show];
+      [updateAssetTypeAlert show];
     }
     else //(httpResponseCode >= 400)
     {
-      UIAlertView *updateLifecycleFailAlert = [[UIAlertView alloc]
-                                            initWithTitle:@"Update Lifecycle Failed"
-                                            message:@"Lifecycle not updated. Please try again later"
+      UIAlertView *updateAssetTypeFailAlert = [[UIAlertView alloc]
+                                            initWithTitle:@"Update Asset Type Failed"
+                                            message:@"Asset Type not updated. Please try again later"
                                             delegate:self
                                             cancelButtonTitle:@"OK"
                                             otherButtonTitles:nil];
-      [updateLifecycleFailAlert show];
+      [updateAssetTypeFailAlert show];
     }
     
     [self dismissViewControllerAnimated:YES completion:nil];
-    NSLog(@"Updated Lifecycle");
+    NSLog(@"Updated Asset Type");
   }
   else
   {
-    NSLog(@"Unable to update lifecycle");
+    NSLog(@"Unable to update Asset Type");
   }
 }
 
@@ -252,7 +251,7 @@
 {
   if (buttonIndex == 0)
   {
-    LifecycleConfigurationPageViewController* controller = (LifecycleConfigurationPageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"LifecycleConfigPage"];
+    AssetConfigurationPageViewController *controller = (AssetConfigurationPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"AssetConfigPage"];
     
     [self.navigationController pushViewController:controller animated:YES];
   }
@@ -260,26 +259,28 @@
 
 
 #pragma mark - Login fields validation
--(BOOL) validateUpdateLifecycleFields
+-(BOOL) validateUpdateAssetTypeFields
 {
-  UIAlertView *updateLifeycleValidateAlert = [[UIAlertView alloc]
-                                           initWithTitle:@"Incomplete Information"
-                                           message:@"Please fill out the necessary fields."
-                                           delegate:nil
-                                           cancelButtonTitle:@"OK"
-                                           otherButtonTitles:nil];
-  
+  UIAlertView *updateAssetTypeValidateAlert = [[UIAlertView alloc]
+                                              initWithTitle:@"Incomplete Information"
+                                              message:@"Please fill out the necessary fields."
+                                              delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+  return true;
+  /*
   if([lifecycleNameField.text isEqualToString:(@"")]
      || [lifecycleDescriptionField.text isEqualToString:(@"")]
      || [lifecyclePreviousField.text isEqualToString:(@"")])
   {
-    [updateLifeycleValidateAlert show];
+    [updateAssetTypeValidateAlert show];
     return false;
   }
   else
   {
     return true;
   }
+   */
 }
 
 
@@ -298,9 +299,11 @@
 #pragma mark - Dismiss onscreen keyboard
 -(void)dismissKeyboard
 {
+  /*
   [lifecycleNameField resignFirstResponder];
   [lifecycleDescriptionField resignFirstResponder];
   [lifecyclePreviousField resignFirstResponder];
+  */
 }
 
 

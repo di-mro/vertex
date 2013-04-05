@@ -14,6 +14,11 @@
 		ED08BDBA1707367600588760 /* UserAccountConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED08BDB91707367600588760 /* UserAccountConfigurationViewController.m */; };
 		ED08BDBD170738A400588760 /* SystemFunctionConfigurationPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED08BDBC170738A400588760 /* SystemFunctionConfigurationPageViewController.m */; };
 		ED08BDC017073AD800588760 /* EsseInfoConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED08BDBF17073AD800588760 /* EsseInfoConfigurationViewController.m */; };
+		ED0A1A65170D424E0093FE4B /* UpdateAssetTypeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0A1A64170D424E0093FE4B /* UpdateAssetTypeListViewController.m */; };
+		ED0A1A6B170D42630093FE4B /* UpdateAssetTypePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0A1A6A170D42630093FE4B /* UpdateAssetTypePageViewController.m */; };
+		ED0A1A6E170D66640093FE4B /* ViewAssetTypePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0A1A6D170D66630093FE4B /* ViewAssetTypePageViewController.m */; };
+		ED0A1A71170D67740093FE4B /* AssetTypeDetailPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0A1A70170D67730093FE4B /* AssetTypeDetailPageViewController.m */; };
+		ED0A1A74170D82F60093FE4B /* DeleteAssetTypePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0A1A73170D82F40093FE4B /* DeleteAssetTypePageViewController.m */; };
 		ED300D6316F80F5000F3063E /* ServiceRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = ED300D6216F80F5000F3063E /* ServiceRequests.m */; };
 		ED300D6916F80F8B00F3063E /* Lifecycles.m in Sources */ = {isa = PBXBuildFile; fileRef = ED300D6816F80F8B00F3063E /* Lifecycles.m */; };
 		ED300D6F16F9B99400F3063E /* UpdateAssetListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED300D6E16F9B99400F3063E /* UpdateAssetListViewController.m */; };
@@ -174,6 +179,16 @@
 		ED08BDBC170738A400588760 /* SystemFunctionConfigurationPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemFunctionConfigurationPageViewController.m; sourceTree = "<group>"; };
 		ED08BDBE17073AD800588760 /* EsseInfoConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EsseInfoConfigurationViewController.h; sourceTree = "<group>"; };
 		ED08BDBF17073AD800588760 /* EsseInfoConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EsseInfoConfigurationViewController.m; sourceTree = "<group>"; };
+		ED0A1A63170D424E0093FE4B /* UpdateAssetTypeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateAssetTypeListViewController.h; sourceTree = "<group>"; };
+		ED0A1A64170D424E0093FE4B /* UpdateAssetTypeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateAssetTypeListViewController.m; sourceTree = "<group>"; };
+		ED0A1A69170D42620093FE4B /* UpdateAssetTypePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateAssetTypePageViewController.h; sourceTree = "<group>"; };
+		ED0A1A6A170D42630093FE4B /* UpdateAssetTypePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateAssetTypePageViewController.m; sourceTree = "<group>"; };
+		ED0A1A6C170D66620093FE4B /* ViewAssetTypePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewAssetTypePageViewController.h; sourceTree = "<group>"; };
+		ED0A1A6D170D66630093FE4B /* ViewAssetTypePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewAssetTypePageViewController.m; sourceTree = "<group>"; };
+		ED0A1A6F170D67720093FE4B /* AssetTypeDetailPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetTypeDetailPageViewController.h; sourceTree = "<group>"; };
+		ED0A1A70170D67730093FE4B /* AssetTypeDetailPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetTypeDetailPageViewController.m; sourceTree = "<group>"; };
+		ED0A1A72170D82F20093FE4B /* DeleteAssetTypePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteAssetTypePageViewController.h; sourceTree = "<group>"; };
+		ED0A1A73170D82F40093FE4B /* DeleteAssetTypePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteAssetTypePageViewController.m; sourceTree = "<group>"; };
 		ED300D6116F80F5000F3063E /* ServiceRequests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceRequests.h; sourceTree = "<group>"; };
 		ED300D6216F80F5000F3063E /* ServiceRequests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceRequests.m; sourceTree = "<group>"; };
 		ED300D6716F80F8B00F3063E /* Lifecycles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lifecycles.h; sourceTree = "<group>"; };
@@ -529,6 +544,8 @@
 			children = (
 				EDEFE76616DF3C51002C35D6 /* AddAssetPageViewController.h */,
 				EDEFE76716DF3C51002C35D6 /* AddAssetPageViewController.m */,
+				ED0A1A6F170D67720093FE4B /* AssetTypeDetailPageViewController.h */,
+				ED0A1A70170D67730093FE4B /* AssetTypeDetailPageViewController.m */,
 				ED59638C170C288700FCD141 /* AddAssetTypePageViewController.h */,
 				ED59638D170C288700FCD141 /* AddAssetTypePageViewController.m */,
 				ED08BDB5170732C700588760 /* AssetConfigurationPageViewController.h */,
@@ -537,10 +554,10 @@
 				EDEFE76916DF3C51002C35D6 /* AssetPageViewController.m */,
 				ED596389170C21CA00FCD141 /* DeleteAssetPageViewController.h */,
 				ED59638A170C21CA00FCD141 /* DeleteAssetPageViewController.m */,
+				ED0A1A72170D82F20093FE4B /* DeleteAssetTypePageViewController.h */,
+				ED0A1A73170D82F40093FE4B /* DeleteAssetTypePageViewController.m */,
 				EDEFE7DC16DF46F5002C35D6 /* SingleAssetViewController.h */,
 				EDEFE7DD16DF46F5002C35D6 /* SingleAssetViewController.m */,
-				EDEFE76C16DF3C51002C35D6 /* ViewAssetsPageViewController.h */,
-				EDEFE76D16DF3C51002C35D6 /* ViewAssetsPageViewController.m */,
 				ED596383170C0FB400FCD141 /* UpdateAssetAccountabilityPageViewController.h */,
 				ED596384170C0FB400FCD141 /* UpdateAssetAccountabilityPageViewController.m */,
 				ED596386170C18A600FCD141 /* UpdateAssetOwnershipPageViewController.h */,
@@ -549,6 +566,14 @@
 				ED300D6E16F9B99400F3063E /* UpdateAssetListViewController.m */,
 				ED300D7016F9B9AD00F3063E /* UpdateAssetPageViewController.h */,
 				ED300D7116F9B9AD00F3063E /* UpdateAssetPageViewController.m */,
+				ED0A1A63170D424E0093FE4B /* UpdateAssetTypeListViewController.h */,
+				ED0A1A64170D424E0093FE4B /* UpdateAssetTypeListViewController.m */,
+				ED0A1A69170D42620093FE4B /* UpdateAssetTypePageViewController.h */,
+				ED0A1A6A170D42630093FE4B /* UpdateAssetTypePageViewController.m */,
+				EDEFE76C16DF3C51002C35D6 /* ViewAssetsPageViewController.h */,
+				EDEFE76D16DF3C51002C35D6 /* ViewAssetsPageViewController.m */,
+				ED0A1A6C170D66620093FE4B /* ViewAssetTypePageViewController.h */,
+				ED0A1A6D170D66630093FE4B /* ViewAssetTypePageViewController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1112,6 +1137,11 @@
 				ED596388170C18A600FCD141 /* UpdateAssetOwnershipPageViewController.m in Sources */,
 				ED59638B170C21CA00FCD141 /* DeleteAssetPageViewController.m in Sources */,
 				ED59638E170C288800FCD141 /* AddAssetTypePageViewController.m in Sources */,
+				ED0A1A65170D424E0093FE4B /* UpdateAssetTypeListViewController.m in Sources */,
+				ED0A1A6B170D42630093FE4B /* UpdateAssetTypePageViewController.m in Sources */,
+				ED0A1A6E170D66640093FE4B /* ViewAssetTypePageViewController.m in Sources */,
+				ED0A1A71170D67740093FE4B /* AssetTypeDetailPageViewController.m in Sources */,
+				ED0A1A74170D82F60093FE4B /* DeleteAssetTypePageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

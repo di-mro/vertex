@@ -120,7 +120,7 @@
     //Format display string
     lifecycleDetailsDisplay = [NSMutableString
                                stringWithFormat:@"LIFECYCLE NAME: \n  %@ \n\nLIFECYCLE DESCRIPTION: \n  %@",
-                               [lifecycleInfo objectForKey:@"name"], [lifecycleInfo objectForKey:@"description"]];
+                               [lifecycleInfo valueForKey:@"name"], [lifecycleInfo valueForKey:@"description"]];
     
     lifecycleDetailTextArea.text = lifecycleDetailsDisplay;
   } //end - else if (responseData == nil)

@@ -127,7 +127,7 @@
     case 5: [self performSegueWithIdentifier:@"assetConfigToUpdateAssetType" sender:self];
        break;
     //Remove Asset Type
-    case 6: [self performSegueWithIdentifier:@"assetConfigToRemoveAssetType" sender:self];
+    case 6: [self performSegueWithIdentifier:@"assetConfigToDeleteAssetType" sender:self];
        break;
     default: break;
   }  

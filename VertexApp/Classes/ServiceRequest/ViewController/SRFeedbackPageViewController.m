@@ -156,12 +156,12 @@
 {
   [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Submit Service Request Feedback");
-  NSInteger *finalRating = 0;
+  int finalRating = 0;
   NSString *comments = [[NSString alloc] init];
   
-  finalRating = (*srRatings / 100) * 10;
-  NSLog(@"srRating: %i", *srRatings);
-  NSLog(@"finalRating: %i", *finalRating);
+  finalRating = (srRatings / 100) * 10;
+  NSLog(@"srRating: %d", srRatings);
+  NSLog(@"finalRating: %i", finalRating);
   
   comments = srCommentsTextArea.text;
   NSLog(@"Comments: %@", comments);
