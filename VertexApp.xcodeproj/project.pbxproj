@@ -11,7 +11,7 @@
 		ED08BDB1170704FB00588760 /* AddLifecyclePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED08BDB0170704FB00588760 /* AddLifecyclePageViewController.m */; };
 		ED08BDB41707114A00588760 /* ServiceConfigurationPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED08BDB31707114A00588760 /* ServiceConfigurationPageViewController.m */; };
 		ED08BDB7170732C800588760 /* AssetConfigurationPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED08BDB6170732C700588760 /* AssetConfigurationPageViewController.m */; };
-		ED08BDBA1707367600588760 /* UserAccountConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED08BDB91707367600588760 /* UserAccountConfigurationViewController.m */; };
+		ED08BDBA1707367600588760 /* UserAccountConfigurationPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED08BDB91707367600588760 /* UserAccountConfigurationPageViewController.m */; };
 		ED08BDBD170738A400588760 /* SystemFunctionConfigurationPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED08BDBC170738A400588760 /* SystemFunctionConfigurationPageViewController.m */; };
 		ED08BDC017073AD800588760 /* EsseInfoConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED08BDBF17073AD800588760 /* EsseInfoConfigurationViewController.m */; };
 		ED0A1A65170D424E0093FE4B /* UpdateAssetTypeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0A1A64170D424E0093FE4B /* UpdateAssetTypeListViewController.m */; };
@@ -64,6 +64,8 @@
 		EDA8E71216F0630B00B9C57E /* AssetTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA8E71116F062FE00B9C57E /* AssetTypes.m */; };
 		EDB1A0C716E9E24300BCD1F4 /* AdminTasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB1A0C616E9E24300BCD1F4 /* AdminTasksViewController.m */; };
 		EDB1A0CA16E9F71900BCD1F4 /* BillingTasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB1A0C916E9F71900BCD1F4 /* BillingTasksViewController.m */; };
+		EDC372CB170EA61D007FB975 /* UserAccountActivationPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDC372CA170EA61D007FB975 /* UserAccountActivationPageViewController.m */; };
+		EDC372D1170EC8A1007FB975 /* UserGroupConfigurationPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDC372D0170EC8A1007FB975 /* UserGroupConfigurationPageViewController.m */; };
 		EDE0E8AF16CB744700B9D0E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE0E8AE16CB744700B9D0E7 /* UIKit.framework */; };
 		EDE0E8B116CB744700B9D0E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE0E8B016CB744700B9D0E7 /* Foundation.framework */; };
 		EDE0E8B316CB744700B9D0E7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE0E8B216CB744700B9D0E7 /* CoreGraphics.framework */; };
@@ -173,8 +175,8 @@
 		ED08BDB31707114A00588760 /* ServiceConfigurationPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceConfigurationPageViewController.m; sourceTree = "<group>"; };
 		ED08BDB5170732C700588760 /* AssetConfigurationPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetConfigurationPageViewController.h; sourceTree = "<group>"; };
 		ED08BDB6170732C700588760 /* AssetConfigurationPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetConfigurationPageViewController.m; sourceTree = "<group>"; };
-		ED08BDB81707367600588760 /* UserAccountConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAccountConfigurationViewController.h; sourceTree = "<group>"; };
-		ED08BDB91707367600588760 /* UserAccountConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAccountConfigurationViewController.m; sourceTree = "<group>"; };
+		ED08BDB81707367600588760 /* UserAccountConfigurationPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAccountConfigurationPageViewController.h; sourceTree = "<group>"; };
+		ED08BDB91707367600588760 /* UserAccountConfigurationPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAccountConfigurationPageViewController.m; sourceTree = "<group>"; };
 		ED08BDBB170738A300588760 /* SystemFunctionConfigurationPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemFunctionConfigurationPageViewController.h; sourceTree = "<group>"; };
 		ED08BDBC170738A400588760 /* SystemFunctionConfigurationPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemFunctionConfigurationPageViewController.m; sourceTree = "<group>"; };
 		ED08BDBE17073AD800588760 /* EsseInfoConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EsseInfoConfigurationViewController.h; sourceTree = "<group>"; };
@@ -270,6 +272,10 @@
 		EDB1A0C616E9E24300BCD1F4 /* AdminTasksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdminTasksViewController.m; sourceTree = "<group>"; };
 		EDB1A0C816E9F71900BCD1F4 /* BillingTasksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BillingTasksViewController.h; sourceTree = "<group>"; };
 		EDB1A0C916E9F71900BCD1F4 /* BillingTasksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BillingTasksViewController.m; sourceTree = "<group>"; };
+		EDC372C9170EA61D007FB975 /* UserAccountActivationPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAccountActivationPageViewController.h; sourceTree = "<group>"; };
+		EDC372CA170EA61D007FB975 /* UserAccountActivationPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAccountActivationPageViewController.m; sourceTree = "<group>"; };
+		EDC372CF170EC8A1007FB975 /* UserGroupConfigurationPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserGroupConfigurationPageViewController.h; sourceTree = "<group>"; };
+		EDC372D0170EC8A1007FB975 /* UserGroupConfigurationPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserGroupConfigurationPageViewController.m; sourceTree = "<group>"; };
 		EDE0E8AB16CB744700B9D0E7 /* VertexApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VertexApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDE0E8AE16CB744700B9D0E7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		EDE0E8B016CB744700B9D0E7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -645,8 +651,12 @@
 			children = (
 				ED08BDBE17073AD800588760 /* EsseInfoConfigurationViewController.h */,
 				ED08BDBF17073AD800588760 /* EsseInfoConfigurationViewController.m */,
-				ED08BDB81707367600588760 /* UserAccountConfigurationViewController.h */,
-				ED08BDB91707367600588760 /* UserAccountConfigurationViewController.m */,
+				EDC372C9170EA61D007FB975 /* UserAccountActivationPageViewController.h */,
+				EDC372CA170EA61D007FB975 /* UserAccountActivationPageViewController.m */,
+				ED08BDB81707367600588760 /* UserAccountConfigurationPageViewController.h */,
+				ED08BDB91707367600588760 /* UserAccountConfigurationPageViewController.m */,
+				EDC372CF170EC8A1007FB975 /* UserGroupConfigurationPageViewController.h */,
+				EDC372D0170EC8A1007FB975 /* UserGroupConfigurationPageViewController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1118,7 +1128,7 @@
 				ED08BDB1170704FB00588760 /* AddLifecyclePageViewController.m in Sources */,
 				ED08BDB41707114A00588760 /* ServiceConfigurationPageViewController.m in Sources */,
 				ED08BDB7170732C800588760 /* AssetConfigurationPageViewController.m in Sources */,
-				ED08BDBA1707367600588760 /* UserAccountConfigurationViewController.m in Sources */,
+				ED08BDBA1707367600588760 /* UserAccountConfigurationPageViewController.m in Sources */,
 				ED08BDBD170738A400588760 /* SystemFunctionConfigurationPageViewController.m in Sources */,
 				ED08BDC017073AD800588760 /* EsseInfoConfigurationViewController.m in Sources */,
 				ED4BF173170A82E9009CAEE4 /* ViewLifecyclesPageViewController.m in Sources */,
@@ -1142,6 +1152,8 @@
 				ED0A1A6E170D66640093FE4B /* ViewAssetTypePageViewController.m in Sources */,
 				ED0A1A71170D67740093FE4B /* AssetTypeDetailPageViewController.m in Sources */,
 				ED0A1A74170D82F60093FE4B /* DeleteAssetTypePageViewController.m in Sources */,
+				EDC372CB170EA61D007FB975 /* UserAccountActivationPageViewController.m in Sources */,
+				EDC372D1170EC8A1007FB975 /* UserGroupConfigurationPageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

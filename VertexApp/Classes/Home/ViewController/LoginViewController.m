@@ -56,8 +56,9 @@
 #pragma mark - [Login] button functions
 - (IBAction)login:(id)sender
 {
-  //[self performSegueWithIdentifier: @"loginToHome" sender: self];
+  [self performSegueWithIdentifier: @"loginToHome" sender: self];
   
+  /*
   if([self validateLoginFields])
   {
     NSString *username = userNameField.text;
@@ -112,6 +113,7 @@
   {
     NSLog(@"Unable to login");
   }
+   */
 
   /*
    //RestKit

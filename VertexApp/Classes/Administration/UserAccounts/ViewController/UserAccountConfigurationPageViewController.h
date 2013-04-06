@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UserAccountConfigurationViewController : UIViewController
+@interface UserAccountConfigurationPageViewController : UIViewController
 
 - (void) displayUserAccountConfigPageEntries;
 

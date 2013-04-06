@@ -6,13 +6,13 @@
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
-#import "UserAccountConfigurationViewController.h"
+#import "UserAccountConfigurationPageViewController.h"
 
-@interface UserAccountConfigurationViewController ()
+@interface UserAccountConfigurationPageViewController ()
 
 @end
 
-@implementation UserAccountConfigurationViewController
+@implementation UserAccountConfigurationPageViewController
 
 @synthesize userAccountConfigPageEntries;
 
@@ -96,18 +96,22 @@
 {
   switch (indexPath.row)
   {
-      /*
-       //Add Service
-       case 0: [self performSegueWithIdentifier:@"" sender:self];
-       break;
-       case 1: [self performSegueWithIdentifier:@"" sender:self];
-       break;
-       case 2: [self performSegueWithIdentifier:@"" sender:self];
-       break;
-       case 3: [self performSegueWithIdentifier:@"" sender:self];
-       break;
-       default: break;
-       */
+    //User Account Activation
+    case 0: [self performSegueWithIdentifier:@"userAccountConfigToUserAccountActivation" sender:self];
+      break;
+    //User Group Configuration
+    case 1: [self performSegueWithIdentifier:@"userAccountConfigToUserGroupConfig" sender:self];
+      break;
+    //Edit User Account Details
+    case 2: [self performSegueWithIdentifier:@"userAccountConfigToEditUserAccountDetails" sender:self];
+      break;
+    //Add User Profile
+    case 3: [self performSegueWithIdentifier:@"userAccountConfigToAddUserProfile" sender:self];
+      break;
+    //Edit User Profile
+    case 4: [self performSegueWithIdentifier:@"userAccountConfigToEditUserProfile" sender:self];
+      break;
+    default: break;
   }
 }
 
