@@ -143,31 +143,6 @@
     case 7: [self performSegueWithIdentifier:@"homeToSettings" sender:self];
       break;
     default: break;
-
-    /*
-    //Home
-    case 0: [self performSegueWithIdentifier:@"homeToAssets" sender:self];
-      break;
-    //Service Request
-    case 1: [self performSegueWithIdentifier:@"homeToServiceRequest" sender:self];
-      break;
-    //Notices
-    case 2: [self performSegueWithIdentifier:@"homeToNotices" sender:self];
-      break;
-    //Billing ~
-    case 3: [self performSegueWithIdentifier:@"homeToServiceRequest" sender:self];
-      break;
-    //Schedule ~
-    case 4: [self performSegueWithIdentifier:@"homeToServiceRequest" sender:self];
-      break;
-    //Administration ~
-    case 5: [self performSegueWithIdentifier:@"homeToServiceRequest" sender:self];
-      break;
-    //Options/Configurations
-    case 6: [self performSegueWithIdentifier:@"homeToSettings" sender:self];
-      break;
-    default: break;
-    */
   }
 }
 

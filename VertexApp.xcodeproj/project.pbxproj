@@ -19,10 +19,64 @@
 		ED0A1A6E170D66640093FE4B /* ViewAssetTypePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0A1A6D170D66630093FE4B /* ViewAssetTypePageViewController.m */; };
 		ED0A1A71170D67740093FE4B /* AssetTypeDetailPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0A1A70170D67730093FE4B /* AssetTypeDetailPageViewController.m */; };
 		ED0A1A74170D82F60093FE4B /* DeleteAssetTypePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0A1A73170D82F40093FE4B /* DeleteAssetTypePageViewController.m */; };
+		ED2E13F61712793C0012CB99 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E13F51712793C0012CB99 /* Notifications.m */; };
+		ED2E13F9171279860012CB99 /* Memoranda.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E13F8171279860012CB99 /* Memoranda.m */; };
+		ED2E13FC171280020012CB99 /* NoticePriorities.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E13FB171280020012CB99 /* NoticePriorities.m */; };
+		ED2E13FF171283010012CB99 /* Services.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E13FE171283010012CB99 /* Services.m */; };
+		ED2E14051712891B0012CB99 /* MeasurementUnits.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E14041712891B0012CB99 /* MeasurementUnits.m */; };
+		ED2E1408171289420012CB99 /* AttributeUnits.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E1407171289420012CB99 /* AttributeUnits.m */; };
+		ED2E140B1712895A0012CB99 /* Attributes.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E140A1712895A0012CB99 /* Attributes.m */; };
+		ED2E140E1712898A0012CB99 /* AssetAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E140D1712898A0012CB99 /* AssetAttributes.m */; };
+		ED2E1414171289D20012CB99 /* AssetTypeAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E1413171289D10012CB99 /* AssetTypeAttributes.m */; };
+		ED2E1417171289F70012CB99 /* MasterBills.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E1416171289F70012CB99 /* MasterBills.m */; };
+		ED2E141A17129FE40012CB99 /* SystemProfileSequence.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E141917129FE30012CB99 /* SystemProfileSequence.m */; };
+		ED2E141D171405600012CB99 /* AssetsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E141C171405600012CB99 /* AssetsObject.m */; };
+		ED2E1420171405BE0012CB99 /* AssetAccountabilityObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E141F171405BE0012CB99 /* AssetAccountabilityObject.m */; };
+		ED2E14231714061A0012CB99 /* AssetAttributesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E1422171406190012CB99 /* AssetAttributesObject.m */; };
+		ED2E14261714066B0012CB99 /* AssetTypesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E14251714066B0012CB99 /* AssetTypesObject.m */; };
+		ED2E1429171406BD0012CB99 /* AssetTypeAttributesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E1428171406BB0012CB99 /* AssetTypeAttributesObject.m */; };
+		ED2E142C171408300012CB99 /* AssetTypeLifecyclesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E142B1714082F0012CB99 /* AssetTypeLifecyclesObject.m */; };
+		ED2E142F171408770012CB99 /* AssetSupersObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E142E171408760012CB99 /* AssetSupersObject.m */; };
+		ED2E1432171408BD0012CB99 /* AssetOwnershipObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E1431171408BC0012CB99 /* AssetOwnershipObject.m */; };
+		ED2E1435171408F20012CB99 /* AttributesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E1434171408F20012CB99 /* AttributesObject.m */; };
+		ED2E1438171409590012CB99 /* AttributeUnitsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E1437171409570012CB99 /* AttributeUnitsObject.m */; };
+		ED2E143B171409B00012CB99 /* BillsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E143A171409AF0012CB99 /* BillsObject.m */; };
+		ED2E143E17140A810012CB99 /* BroadcastGroupsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E143D17140A7F0012CB99 /* BroadcastGroupsObject.m */; };
+		ED2E144117140AC60012CB99 /* BroadcastUsersObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E144017140AC30012CB99 /* BroadcastUsersObject.m */; };
+		ED2E144417140B590012CB99 /* ContactInfoObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E144317140B550012CB99 /* ContactInfoObject.m */; };
+		ED2E144717140BB60012CB99 /* ContactTypesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E144617140BB30012CB99 /* ContactTypesObject.m */; };
+		ED2E144A17140BFD0012CB99 /* DuesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E144917140BF80012CB99 /* DuesObject.m */; };
+		ED2E144D17140C4F0012CB99 /* EsseObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E144C17140C4C0012CB99 /* EsseObject.m */; };
+		ED2E145017140CA70012CB99 /* EsseContactsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E144F17140CA30012CB99 /* EsseContactsObject.m */; };
+		ED2E145317140CEE0012CB99 /* EsseInfoObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E145217140CE80012CB99 /* EsseInfoObject.m */; };
+		ED2E145617140D4C0012CB99 /* FeedbacksObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E145517140D470012CB99 /* FeedbacksObject.m */; };
+		ED2E145917140D940012CB99 /* LifecyclesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E145817140D8E0012CB99 /* LifecyclesObject.m */; };
+		ED2E145C17140DE30012CB99 /* LifecycleServicesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E145B17140DDC0012CB99 /* LifecycleServicesObject.m */; };
+		ED2E145F17140E710012CB99 /* ManagedAssetsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E145E17140E6B0012CB99 /* ManagedAssetsObject.m */; };
+		ED2E146217140F270012CB99 /* MasterBillsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E146117140F200012CB99 /* MasterBillsObject.m */; };
+		ED2E146517140FA80012CB99 /* MeasurementUnitsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E146417140F9F0012CB99 /* MeasurementUnitsObject.m */; };
+		ED2E14681714100B0012CB99 /* Memoranda.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E1467171410010012CB99 /* Memoranda.m */; };
+		ED2E146B171410B50012CB99 /* NoticePrioritiesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E146A171410AA0012CB99 /* NoticePrioritiesObject.m */; };
+		ED2E146E1714112E0012CB99 /* NotificationsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E146D171411250012CB99 /* NotificationsObject.m */; };
+		ED2E1471171411B60012CB99 /* OneTimeBillsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E1470171411AB0012CB99 /* OneTimeBillsObject.m */; };
+		ED2E1474171412410012CB99 /* PersonnelContactsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E1473171412310012CB99 /* PersonnelContactsObject.m */; };
+		ED2E1477171412B60012CB99 /* PersonnelInfoObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E1476171412A80012CB99 /* PersonnelInfoObject.m */; };
+		ED2E147A171413370012CB99 /* PersonnelsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E1479171413280012CB99 /* PersonnelsObject.m */; };
+		ED2E147D171413BD0012CB99 /* PrioritiesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E147C171413AB0012CB99 /* PrioritiesObject.m */; };
+		ED2E1480171414380012CB99 /* ProfileFunctionsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E147F171414240012CB99 /* ProfileFunctionsObject.m */; };
+		ED2E1483171414A20012CB99 /* RecurringBillsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E14821714148C0012CB99 /* RecurringBillsObject.m */; };
+		ED2E1486171415520012CB99 /* ServicesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E14851714153B0012CB99 /* ServicesObject.m */; };
+		ED2E1489171415D30012CB99 /* ServiceRequestsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E1488171415BC0012CB99 /* ServiceRequestsObject.m */; };
+		ED2E148C1714220F0012CB99 /* ServiceRequestSchedulesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E148B171421F70012CB99 /* ServiceRequestSchedulesObject.m */; };
+		ED2E148F171422820012CB99 /* StatusesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E148E171422680012CB99 /* StatusesObject.m */; };
+		ED2E14921714231C0012CB99 /* SystemFunctionsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E1491171422FE0012CB99 /* SystemFunctionsObject.m */; };
+		ED2E1495171423EF0012CB99 /* SystemProfileSequenceObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E1494171423D20012CB99 /* SystemProfileSequenceObject.m */; };
 		ED300D6316F80F5000F3063E /* ServiceRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = ED300D6216F80F5000F3063E /* ServiceRequests.m */; };
 		ED300D6916F80F8B00F3063E /* Lifecycles.m in Sources */ = {isa = PBXBuildFile; fileRef = ED300D6816F80F8B00F3063E /* Lifecycles.m */; };
 		ED300D6F16F9B99400F3063E /* UpdateAssetListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED300D6E16F9B99400F3063E /* UpdateAssetListViewController.m */; };
 		ED300D7216F9B9AD00F3063E /* UpdateAssetPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED300D7116F9B9AD00F3063E /* UpdateAssetPageViewController.m */; };
+		ED324C471710143B00DED66B /* EditUserAccountDetailsPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED324C461710143B00DED66B /* EditUserAccountDetailsPageViewController.m */; };
+		ED324C4D1710146000DED66B /* AddUserProfilePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED324C4C1710146000DED66B /* AddUserProfilePageViewController.m */; };
 		ED3BB35016E04EA900468E44 /* SRFeedbackListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3BB34F16E04EA900468E44 /* SRFeedbackListViewController.m */; };
 		ED3BB35616E0524400468E44 /* SRFeedbackPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3BB35516E0524400468E44 /* SRFeedbackPageViewController.m */; };
 		ED3D573B16EB11A800497F80 /* ReportsPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3D573A16EB11A800497F80 /* ReportsPageViewController.m */; };
@@ -44,7 +98,6 @@
 		ED59638B170C21CA00FCD141 /* DeleteAssetPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED59638A170C21CA00FCD141 /* DeleteAssetPageViewController.m */; };
 		ED59638E170C288800FCD141 /* AddAssetTypePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED59638D170C288700FCD141 /* AddAssetTypePageViewController.m */; };
 		ED59996616EDDDD700681941 /* BroadcastUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = ED59996516EDDDD700681941 /* BroadcastUsers.m */; };
-		ED59997516EDE77400681941 /* Services.m in Sources */ = {isa = PBXBuildFile; fileRef = ED59997416EDE77400681941 /* Services.m */; };
 		ED59997816EDE7B800681941 /* Tasks.m in Sources */ = {isa = PBXBuildFile; fileRef = ED59997716EDE7B700681941 /* Tasks.m */; };
 		ED59EC5A16DCA78100FCA959 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC5116DCA6D700FCA959 /* libRestKit.a */; };
 		ED59EC5C16DCA78C00FCA959 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC5B16DCA78C00FCA959 /* CFNetwork.framework */; };
@@ -57,6 +110,13 @@
 		ED63134B16E5BD2800987E2D /* ReachabilityAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ED63134A16E5BCFD00987E2D /* ReachabilityAppDelegate.m */; };
 		ED63134C16E5BD2F00987E2D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = ED63134516E5BCEB00987E2D /* Reachability.m */; };
 		ED63134F16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ED63134D16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodeld */; };
+		ED68A0C217150E8A0090DF1E /* TasksObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED68A0C117150E8A0090DF1E /* TasksObject.m */; };
+		ED68A0C817150F0B0090DF1E /* UserAccountsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED68A0C717150F0B0090DF1E /* UserAccountsObject.m */; };
+		ED68A0CB17150F9C0090DF1E /* UserAccountOwnershipObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED68A0CA17150F9C0090DF1E /* UserAccountOwnershipObject.m */; };
+		ED68A0CE17150FC80090DF1E /* UserContactsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED68A0CD17150FC70090DF1E /* UserContactsObject.m */; };
+		ED68A0D1171510130090DF1E /* UserCredentialsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED68A0D0171510130090DF1E /* UserCredentialsObject.m */; };
+		ED68A0D4171510750090DF1E /* UserInfoObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED68A0D3171510750090DF1E /* UserInfoObject.m */; };
+		ED68A0D7171510CC0090DF1E /* UserProfilesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED68A0D6171510CB0090DF1E /* UserProfilesObject.m */; };
 		ED8A7C7D16E4A34200F06AF1 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8A7C7716E4941200F06AF1 /* TPKeyboardAvoidingScrollView.m */; };
 		ED8A7C7E16E4A34D00F06AF1 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8A7C7916E4941200F06AF1 /* TPKeyboardAvoidingTableView.m */; };
 		EDA8E70916F05C2D00B9C57E /* UserAccounts.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA8E70816F05C2000B9C57E /* UserAccounts.m */; };
@@ -94,10 +154,8 @@
 		EDFC534316EDD72E009AE92F /* UserContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFC534216EDD72D009AE92F /* UserContacts.m */; };
 		EDFC534616EDD77D009AE92F /* UserCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFC534516EDD77B009AE92F /* UserCredentials.m */; };
 		EDFC534C16EDD7D2009AE92F /* UserProfiles.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFC534B16EDD7D0009AE92F /* UserProfiles.m */; };
-		EDFE622116EDC432002EB414 /* AssetAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE622016EDC432002EB414 /* AssetAttributes.m */; };
 		EDFE622416EDC448002EB414 /* AssetOwnership.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE622316EDC448002EB414 /* AssetOwnership.m */; };
 		EDFE622A16EDC4E3002EB414 /* AssetSupers.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE622916EDC4E3002EB414 /* AssetSupers.m */; };
-		EDFE622D16EDC515002EB414 /* AssetTypeAttributesTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE622C16EDC515002EB414 /* AssetTypeAttributesTemplate.m */; };
 		EDFE623016EDC532002EB414 /* AssetTypeLifecycles.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE622F16EDC532002EB414 /* AssetTypeLifecycles.m */; };
 		EDFE623616EDC56E002EB414 /* AssetAccountability.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE623516EDC56E002EB414 /* AssetAccountability.m */; };
 		EDFE623916EDC6C1002EB414 /* Assets.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE623816EDC6C1002EB414 /* Assets.m */; };
@@ -112,8 +170,6 @@
 		EDFE625716EDC918002EB414 /* Feedbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE625616EDC917002EB414 /* Feedbacks.m */; };
 		EDFE625D16EDC96F002EB414 /* LifecycleServices.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE625C16EDC96E002EB414 /* LifecycleServices.m */; };
 		EDFE626016EDC9A2002EB414 /* ManagedAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE625F16EDC9A1002EB414 /* ManagedAssets.m */; };
-		EDFE626316EDC9D2002EB414 /* Memoranda.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE626216EDC9D1002EB414 /* Memoranda.m */; };
-		EDFE626616EDCA12002EB414 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE626516EDCA0D002EB414 /* Notifications.m */; };
 		EDFE626916EDCA67002EB414 /* OneTimeBills.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE626816EDCA66002EB414 /* OneTimeBills.m */; };
 		EDFE626C16EDCA8C002EB414 /* PersonnelContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE626B16EDCA8B002EB414 /* PersonnelContacts.m */; };
 		EDFE626F16EDCAB3002EB414 /* PersonnelInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE626E16EDCAB1002EB414 /* PersonnelInfo.m */; };
@@ -123,7 +179,6 @@
 		EDFE627B16EDCB92002EB414 /* RecurringBills.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE627A16EDCB91002EB414 /* RecurringBills.m */; };
 		EDFE628116EDCC02002EB414 /* ServiceRequestSchedules.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE628016EDCC00002EB414 /* ServiceRequestSchedules.m */; };
 		EDFE628716EDCCE6002EB414 /* Statuses.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE628616EDCCE3002EB414 /* Statuses.m */; };
-		EDFE628A16EDCD4C002EB414 /* SystemFunctionHierarchies.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE628916EDCD4A002EB414 /* SystemFunctionHierarchies.m */; };
 		EDFE628D16EDCD7C002EB414 /* SystemFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE628C16EDCD79002EB414 /* SystemFunctions.m */; };
 		EDFE629316EDCDFD002EB414 /* UserAccountOwnership.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE629216EDCDFB002EB414 /* UserAccountOwnership.m */; };
 /* End PBXBuildFile section */
@@ -191,6 +246,110 @@
 		ED0A1A70170D67730093FE4B /* AssetTypeDetailPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetTypeDetailPageViewController.m; sourceTree = "<group>"; };
 		ED0A1A72170D82F20093FE4B /* DeleteAssetTypePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteAssetTypePageViewController.h; sourceTree = "<group>"; };
 		ED0A1A73170D82F40093FE4B /* DeleteAssetTypePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteAssetTypePageViewController.m; sourceTree = "<group>"; };
+		ED2E13F41712793C0012CB99 /* Notifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notifications.h; sourceTree = "<group>"; };
+		ED2E13F51712793C0012CB99 /* Notifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notifications.m; sourceTree = "<group>"; };
+		ED2E13F7171279860012CB99 /* Memoranda.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Memoranda.h; sourceTree = "<group>"; };
+		ED2E13F8171279860012CB99 /* Memoranda.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Memoranda.m; sourceTree = "<group>"; };
+		ED2E13FA171280020012CB99 /* NoticePriorities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticePriorities.h; sourceTree = "<group>"; };
+		ED2E13FB171280020012CB99 /* NoticePriorities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticePriorities.m; sourceTree = "<group>"; };
+		ED2E13FD171283010012CB99 /* Services.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Services.h; sourceTree = "<group>"; };
+		ED2E13FE171283010012CB99 /* Services.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Services.m; sourceTree = "<group>"; };
+		ED2E14031712891B0012CB99 /* MeasurementUnits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeasurementUnits.h; sourceTree = "<group>"; };
+		ED2E14041712891B0012CB99 /* MeasurementUnits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasurementUnits.m; sourceTree = "<group>"; };
+		ED2E1406171289420012CB99 /* AttributeUnits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttributeUnits.h; sourceTree = "<group>"; };
+		ED2E1407171289420012CB99 /* AttributeUnits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttributeUnits.m; sourceTree = "<group>"; };
+		ED2E14091712895A0012CB99 /* Attributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attributes.h; sourceTree = "<group>"; };
+		ED2E140A1712895A0012CB99 /* Attributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Attributes.m; sourceTree = "<group>"; };
+		ED2E140C1712898A0012CB99 /* AssetAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetAttributes.h; sourceTree = "<group>"; };
+		ED2E140D1712898A0012CB99 /* AssetAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetAttributes.m; sourceTree = "<group>"; };
+		ED2E1412171289D00012CB99 /* AssetTypeAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetTypeAttributes.h; sourceTree = "<group>"; };
+		ED2E1413171289D10012CB99 /* AssetTypeAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetTypeAttributes.m; sourceTree = "<group>"; };
+		ED2E1415171289F70012CB99 /* MasterBills.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterBills.h; sourceTree = "<group>"; };
+		ED2E1416171289F70012CB99 /* MasterBills.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterBills.m; sourceTree = "<group>"; };
+		ED2E141817129FE30012CB99 /* SystemProfileSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemProfileSequence.h; sourceTree = "<group>"; };
+		ED2E141917129FE30012CB99 /* SystemProfileSequence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemProfileSequence.m; sourceTree = "<group>"; };
+		ED2E141B171405600012CB99 /* AssetsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetsObject.h; sourceTree = "<group>"; };
+		ED2E141C171405600012CB99 /* AssetsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetsObject.m; sourceTree = "<group>"; };
+		ED2E141E171405BD0012CB99 /* AssetAccountabilityObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetAccountabilityObject.h; sourceTree = "<group>"; };
+		ED2E141F171405BE0012CB99 /* AssetAccountabilityObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetAccountabilityObject.m; sourceTree = "<group>"; };
+		ED2E1421171406190012CB99 /* AssetAttributesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetAttributesObject.h; sourceTree = "<group>"; };
+		ED2E1422171406190012CB99 /* AssetAttributesObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetAttributesObject.m; sourceTree = "<group>"; };
+		ED2E14241714066B0012CB99 /* AssetTypesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetTypesObject.h; sourceTree = "<group>"; };
+		ED2E14251714066B0012CB99 /* AssetTypesObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetTypesObject.m; sourceTree = "<group>"; };
+		ED2E1427171406BB0012CB99 /* AssetTypeAttributesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetTypeAttributesObject.h; sourceTree = "<group>"; };
+		ED2E1428171406BB0012CB99 /* AssetTypeAttributesObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetTypeAttributesObject.m; sourceTree = "<group>"; };
+		ED2E142A1714082E0012CB99 /* AssetTypeLifecyclesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetTypeLifecyclesObject.h; sourceTree = "<group>"; };
+		ED2E142B1714082F0012CB99 /* AssetTypeLifecyclesObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetTypeLifecyclesObject.m; sourceTree = "<group>"; };
+		ED2E142D171408750012CB99 /* AssetSupersObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetSupersObject.h; sourceTree = "<group>"; };
+		ED2E142E171408760012CB99 /* AssetSupersObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetSupersObject.m; sourceTree = "<group>"; };
+		ED2E1430171408BB0012CB99 /* AssetOwnershipObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetOwnershipObject.h; sourceTree = "<group>"; };
+		ED2E1431171408BC0012CB99 /* AssetOwnershipObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetOwnershipObject.m; sourceTree = "<group>"; };
+		ED2E1433171408F10012CB99 /* AttributesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttributesObject.h; sourceTree = "<group>"; };
+		ED2E1434171408F20012CB99 /* AttributesObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttributesObject.m; sourceTree = "<group>"; };
+		ED2E1436171409560012CB99 /* AttributeUnitsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttributeUnitsObject.h; sourceTree = "<group>"; };
+		ED2E1437171409570012CB99 /* AttributeUnitsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttributeUnitsObject.m; sourceTree = "<group>"; };
+		ED2E1439171409AE0012CB99 /* BillsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BillsObject.h; sourceTree = "<group>"; };
+		ED2E143A171409AF0012CB99 /* BillsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BillsObject.m; sourceTree = "<group>"; };
+		ED2E143C17140A7D0012CB99 /* BroadcastGroupsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BroadcastGroupsObject.h; sourceTree = "<group>"; };
+		ED2E143D17140A7F0012CB99 /* BroadcastGroupsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BroadcastGroupsObject.m; sourceTree = "<group>"; };
+		ED2E143F17140AC10012CB99 /* BroadcastUsersObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BroadcastUsersObject.h; sourceTree = "<group>"; };
+		ED2E144017140AC30012CB99 /* BroadcastUsersObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BroadcastUsersObject.m; sourceTree = "<group>"; };
+		ED2E144217140B530012CB99 /* ContactInfoObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactInfoObject.h; sourceTree = "<group>"; };
+		ED2E144317140B550012CB99 /* ContactInfoObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactInfoObject.m; sourceTree = "<group>"; };
+		ED2E144517140BB00012CB99 /* ContactTypesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactTypesObject.h; sourceTree = "<group>"; };
+		ED2E144617140BB30012CB99 /* ContactTypesObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactTypesObject.m; sourceTree = "<group>"; };
+		ED2E144817140BF60012CB99 /* DuesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuesObject.h; sourceTree = "<group>"; };
+		ED2E144917140BF80012CB99 /* DuesObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuesObject.m; sourceTree = "<group>"; };
+		ED2E144B17140C480012CB99 /* EsseObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EsseObject.h; sourceTree = "<group>"; };
+		ED2E144C17140C4C0012CB99 /* EsseObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EsseObject.m; sourceTree = "<group>"; };
+		ED2E144E17140CA00012CB99 /* EsseContactsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EsseContactsObject.h; sourceTree = "<group>"; };
+		ED2E144F17140CA30012CB99 /* EsseContactsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EsseContactsObject.m; sourceTree = "<group>"; };
+		ED2E145117140CE50012CB99 /* EsseInfoObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EsseInfoObject.h; sourceTree = "<group>"; };
+		ED2E145217140CE80012CB99 /* EsseInfoObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EsseInfoObject.m; sourceTree = "<group>"; };
+		ED2E145417140D430012CB99 /* FeedbacksObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbacksObject.h; sourceTree = "<group>"; };
+		ED2E145517140D470012CB99 /* FeedbacksObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbacksObject.m; sourceTree = "<group>"; };
+		ED2E145717140D8A0012CB99 /* LifecyclesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LifecyclesObject.h; sourceTree = "<group>"; };
+		ED2E145817140D8E0012CB99 /* LifecyclesObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LifecyclesObject.m; sourceTree = "<group>"; };
+		ED2E145A17140DD80012CB99 /* LifecycleServicesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LifecycleServicesObject.h; sourceTree = "<group>"; };
+		ED2E145B17140DDC0012CB99 /* LifecycleServicesObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LifecycleServicesObject.m; sourceTree = "<group>"; };
+		ED2E145D17140E660012CB99 /* ManagedAssetsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagedAssetsObject.h; sourceTree = "<group>"; };
+		ED2E145E17140E6B0012CB99 /* ManagedAssetsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagedAssetsObject.m; sourceTree = "<group>"; };
+		ED2E146017140F1B0012CB99 /* MasterBillsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterBillsObject.h; sourceTree = "<group>"; };
+		ED2E146117140F200012CB99 /* MasterBillsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterBillsObject.m; sourceTree = "<group>"; };
+		ED2E146317140F990012CB99 /* MeasurementUnitsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeasurementUnitsObject.h; sourceTree = "<group>"; };
+		ED2E146417140F9F0012CB99 /* MeasurementUnitsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasurementUnitsObject.m; sourceTree = "<group>"; };
+		ED2E146617140FFA0012CB99 /* Memoranda.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Memoranda.h; sourceTree = "<group>"; };
+		ED2E1467171410010012CB99 /* Memoranda.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Memoranda.m; sourceTree = "<group>"; };
+		ED2E1469171410A50012CB99 /* NoticePrioritiesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticePrioritiesObject.h; sourceTree = "<group>"; };
+		ED2E146A171410AA0012CB99 /* NoticePrioritiesObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticePrioritiesObject.m; sourceTree = "<group>"; };
+		ED2E146C1714111D0012CB99 /* NotificationsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationsObject.h; sourceTree = "<group>"; };
+		ED2E146D171411250012CB99 /* NotificationsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationsObject.m; sourceTree = "<group>"; };
+		ED2E146F171411A40012CB99 /* OneTimeBillsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneTimeBillsObject.h; sourceTree = "<group>"; };
+		ED2E1470171411AB0012CB99 /* OneTimeBillsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneTimeBillsObject.m; sourceTree = "<group>"; };
+		ED2E1472171412280012CB99 /* PersonnelContactsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonnelContactsObject.h; sourceTree = "<group>"; };
+		ED2E1473171412310012CB99 /* PersonnelContactsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonnelContactsObject.m; sourceTree = "<group>"; };
+		ED2E14751714129F0012CB99 /* PersonnelInfoObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonnelInfoObject.h; sourceTree = "<group>"; };
+		ED2E1476171412A80012CB99 /* PersonnelInfoObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonnelInfoObject.m; sourceTree = "<group>"; };
+		ED2E14781714131F0012CB99 /* PersonnelsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonnelsObject.h; sourceTree = "<group>"; };
+		ED2E1479171413280012CB99 /* PersonnelsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonnelsObject.m; sourceTree = "<group>"; };
+		ED2E147B171413A00012CB99 /* PrioritiesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrioritiesObject.h; sourceTree = "<group>"; };
+		ED2E147C171413AB0012CB99 /* PrioritiesObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrioritiesObject.m; sourceTree = "<group>"; };
+		ED2E147E171414190012CB99 /* ProfileFunctionsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileFunctionsObject.h; sourceTree = "<group>"; };
+		ED2E147F171414240012CB99 /* ProfileFunctionsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileFunctionsObject.m; sourceTree = "<group>"; };
+		ED2E1481171414800012CB99 /* RecurringBillsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecurringBillsObject.h; sourceTree = "<group>"; };
+		ED2E14821714148C0012CB99 /* RecurringBillsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecurringBillsObject.m; sourceTree = "<group>"; };
+		ED2E14841714152F0012CB99 /* ServicesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServicesObject.h; sourceTree = "<group>"; };
+		ED2E14851714153B0012CB99 /* ServicesObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServicesObject.m; sourceTree = "<group>"; };
+		ED2E1487171415AE0012CB99 /* ServiceRequestsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceRequestsObject.h; sourceTree = "<group>"; };
+		ED2E1488171415BC0012CB99 /* ServiceRequestsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceRequestsObject.m; sourceTree = "<group>"; };
+		ED2E148A171421E80012CB99 /* ServiceRequestSchedulesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceRequestSchedulesObject.h; sourceTree = "<group>"; };
+		ED2E148B171421F70012CB99 /* ServiceRequestSchedulesObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceRequestSchedulesObject.m; sourceTree = "<group>"; };
+		ED2E148D1714225A0012CB99 /* StatusesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusesObject.h; sourceTree = "<group>"; };
+		ED2E148E171422680012CB99 /* StatusesObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusesObject.m; sourceTree = "<group>"; };
+		ED2E1490171422E90012CB99 /* SystemFunctionsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemFunctionsObject.h; sourceTree = "<group>"; };
+		ED2E1491171422FE0012CB99 /* SystemFunctionsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemFunctionsObject.m; sourceTree = "<group>"; };
+		ED2E1493171423C20012CB99 /* SystemProfileSequenceObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemProfileSequenceObject.h; sourceTree = "<group>"; };
+		ED2E1494171423D20012CB99 /* SystemProfileSequenceObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemProfileSequenceObject.m; sourceTree = "<group>"; };
 		ED300D6116F80F5000F3063E /* ServiceRequests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceRequests.h; sourceTree = "<group>"; };
 		ED300D6216F80F5000F3063E /* ServiceRequests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceRequests.m; sourceTree = "<group>"; };
 		ED300D6716F80F8B00F3063E /* Lifecycles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lifecycles.h; sourceTree = "<group>"; };
@@ -199,6 +358,10 @@
 		ED300D6E16F9B99400F3063E /* UpdateAssetListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateAssetListViewController.m; sourceTree = "<group>"; };
 		ED300D7016F9B9AD00F3063E /* UpdateAssetPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateAssetPageViewController.h; sourceTree = "<group>"; };
 		ED300D7116F9B9AD00F3063E /* UpdateAssetPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateAssetPageViewController.m; sourceTree = "<group>"; };
+		ED324C451710143B00DED66B /* EditUserAccountDetailsPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditUserAccountDetailsPageViewController.h; sourceTree = "<group>"; };
+		ED324C461710143B00DED66B /* EditUserAccountDetailsPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditUserAccountDetailsPageViewController.m; sourceTree = "<group>"; };
+		ED324C4B1710146000DED66B /* AddUserProfilePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddUserProfilePageViewController.h; sourceTree = "<group>"; };
+		ED324C4C1710146000DED66B /* AddUserProfilePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddUserProfilePageViewController.m; sourceTree = "<group>"; };
 		ED3BB34E16E04EA900468E44 /* SRFeedbackListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRFeedbackListViewController.h; sourceTree = "<group>"; };
 		ED3BB34F16E04EA900468E44 /* SRFeedbackListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRFeedbackListViewController.m; sourceTree = "<group>"; };
 		ED3BB35416E0524400468E44 /* SRFeedbackPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRFeedbackPageViewController.h; sourceTree = "<group>"; };
@@ -241,8 +404,6 @@
 		ED59638D170C288700FCD141 /* AddAssetTypePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddAssetTypePageViewController.m; sourceTree = "<group>"; };
 		ED59996416EDDDD700681941 /* BroadcastUsers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BroadcastUsers.h; sourceTree = "<group>"; };
 		ED59996516EDDDD700681941 /* BroadcastUsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BroadcastUsers.m; sourceTree = "<group>"; };
-		ED59997316EDE77300681941 /* Services.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Services.h; sourceTree = "<group>"; };
-		ED59997416EDE77400681941 /* Services.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Services.m; sourceTree = "<group>"; };
 		ED59997616EDE7B700681941 /* Tasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tasks.h; sourceTree = "<group>"; };
 		ED59997716EDE7B700681941 /* Tasks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tasks.m; sourceTree = "<group>"; };
 		ED59EC4916DCA6D600FCA959 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = ../RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
@@ -258,6 +419,20 @@
 		ED63134916E5BCFD00987E2D /* ReachabilityAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReachabilityAppDelegate.h; sourceTree = "<group>"; };
 		ED63134A16E5BCFD00987E2D /* ReachabilityAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReachabilityAppDelegate.m; sourceTree = "<group>"; };
 		ED63134E16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VertexCoreDataModel.xcdatamodel; sourceTree = "<group>"; };
+		ED68A0C017150E8A0090DF1E /* TasksObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksObject.h; sourceTree = "<group>"; };
+		ED68A0C117150E8A0090DF1E /* TasksObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksObject.m; sourceTree = "<group>"; };
+		ED68A0C617150F0A0090DF1E /* UserAccountsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAccountsObject.h; sourceTree = "<group>"; };
+		ED68A0C717150F0B0090DF1E /* UserAccountsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAccountsObject.m; sourceTree = "<group>"; };
+		ED68A0C917150F9C0090DF1E /* UserAccountOwnershipObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAccountOwnershipObject.h; sourceTree = "<group>"; };
+		ED68A0CA17150F9C0090DF1E /* UserAccountOwnershipObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAccountOwnershipObject.m; sourceTree = "<group>"; };
+		ED68A0CC17150FC70090DF1E /* UserContactsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserContactsObject.h; sourceTree = "<group>"; };
+		ED68A0CD17150FC70090DF1E /* UserContactsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserContactsObject.m; sourceTree = "<group>"; };
+		ED68A0CF171510130090DF1E /* UserCredentialsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCredentialsObject.h; sourceTree = "<group>"; };
+		ED68A0D0171510130090DF1E /* UserCredentialsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCredentialsObject.m; sourceTree = "<group>"; };
+		ED68A0D2171510750090DF1E /* UserInfoObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoObject.h; sourceTree = "<group>"; };
+		ED68A0D3171510750090DF1E /* UserInfoObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoObject.m; sourceTree = "<group>"; };
+		ED68A0D5171510CB0090DF1E /* UserProfilesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfilesObject.h; sourceTree = "<group>"; };
+		ED68A0D6171510CB0090DF1E /* UserProfilesObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfilesObject.m; sourceTree = "<group>"; };
 		ED8A7C7616E4941200F06AF1 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
 		ED8A7C7716E4941200F06AF1 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
 		ED8A7C7816E4941200F06AF1 /* TPKeyboardAvoidingTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingTableView.h; sourceTree = "<group>"; };
@@ -328,14 +503,10 @@
 		EDFC534B16EDD7D0009AE92F /* UserProfiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfiles.m; sourceTree = "<group>"; };
 		EDFE621716EDBFAC002EB414 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EDFE621816EDBFAC002EB414 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		EDFE621F16EDC432002EB414 /* AssetAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetAttributes.h; sourceTree = "<group>"; };
-		EDFE622016EDC432002EB414 /* AssetAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetAttributes.m; sourceTree = "<group>"; };
 		EDFE622216EDC448002EB414 /* AssetOwnership.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetOwnership.h; sourceTree = "<group>"; };
 		EDFE622316EDC448002EB414 /* AssetOwnership.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetOwnership.m; sourceTree = "<group>"; };
 		EDFE622816EDC4E3002EB414 /* AssetSupers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetSupers.h; sourceTree = "<group>"; };
 		EDFE622916EDC4E3002EB414 /* AssetSupers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetSupers.m; sourceTree = "<group>"; };
-		EDFE622B16EDC514002EB414 /* AssetTypeAttributesTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetTypeAttributesTemplate.h; sourceTree = "<group>"; };
-		EDFE622C16EDC515002EB414 /* AssetTypeAttributesTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetTypeAttributesTemplate.m; sourceTree = "<group>"; };
 		EDFE622E16EDC532002EB414 /* AssetTypeLifecycles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetTypeLifecycles.h; sourceTree = "<group>"; };
 		EDFE622F16EDC532002EB414 /* AssetTypeLifecycles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetTypeLifecycles.m; sourceTree = "<group>"; };
 		EDFE623416EDC56D002EB414 /* AssetAccountability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetAccountability.h; sourceTree = "<group>"; };
@@ -364,10 +535,6 @@
 		EDFE625C16EDC96E002EB414 /* LifecycleServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LifecycleServices.m; sourceTree = "<group>"; };
 		EDFE625E16EDC9A0002EB414 /* ManagedAssets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagedAssets.h; sourceTree = "<group>"; };
 		EDFE625F16EDC9A1002EB414 /* ManagedAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagedAssets.m; sourceTree = "<group>"; };
-		EDFE626116EDC9D1002EB414 /* Memoranda.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Memoranda.h; sourceTree = "<group>"; };
-		EDFE626216EDC9D1002EB414 /* Memoranda.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Memoranda.m; sourceTree = "<group>"; };
-		EDFE626416EDCA08002EB414 /* Notifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notifications.h; sourceTree = "<group>"; };
-		EDFE626516EDCA0D002EB414 /* Notifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notifications.m; sourceTree = "<group>"; };
 		EDFE626716EDCA65002EB414 /* OneTimeBills.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneTimeBills.h; sourceTree = "<group>"; };
 		EDFE626816EDCA66002EB414 /* OneTimeBills.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneTimeBills.m; sourceTree = "<group>"; };
 		EDFE626A16EDCA8A002EB414 /* PersonnelContacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonnelContacts.h; sourceTree = "<group>"; };
@@ -386,8 +553,6 @@
 		EDFE628016EDCC00002EB414 /* ServiceRequestSchedules.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceRequestSchedules.m; sourceTree = "<group>"; };
 		EDFE628516EDCCE2002EB414 /* Statuses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Statuses.h; sourceTree = "<group>"; };
 		EDFE628616EDCCE3002EB414 /* Statuses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Statuses.m; sourceTree = "<group>"; };
-		EDFE628816EDCD48002EB414 /* SystemFunctionHierarchies.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemFunctionHierarchies.h; sourceTree = "<group>"; };
-		EDFE628916EDCD4A002EB414 /* SystemFunctionHierarchies.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemFunctionHierarchies.m; sourceTree = "<group>"; };
 		EDFE628B16EDCD77002EB414 /* SystemFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemFunctions.h; sourceTree = "<group>"; };
 		EDFE628C16EDCD79002EB414 /* SystemFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemFunctions.m; sourceTree = "<group>"; };
 		EDFE629116EDCDF9002EB414 /* UserAccountOwnership.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAccountOwnership.h; sourceTree = "<group>"; };
@@ -416,6 +581,109 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ED2E13F0171278960012CB99 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				ED2E141B171405600012CB99 /* AssetsObject.h */,
+				ED2E141C171405600012CB99 /* AssetsObject.m */,
+				ED2E141E171405BD0012CB99 /* AssetAccountabilityObject.h */,
+				ED2E141F171405BE0012CB99 /* AssetAccountabilityObject.m */,
+				ED2E1421171406190012CB99 /* AssetAttributesObject.h */,
+				ED2E1422171406190012CB99 /* AssetAttributesObject.m */,
+				ED2E14241714066B0012CB99 /* AssetTypesObject.h */,
+				ED2E14251714066B0012CB99 /* AssetTypesObject.m */,
+				ED2E1427171406BB0012CB99 /* AssetTypeAttributesObject.h */,
+				ED2E1428171406BB0012CB99 /* AssetTypeAttributesObject.m */,
+				ED2E142A1714082E0012CB99 /* AssetTypeLifecyclesObject.h */,
+				ED2E142B1714082F0012CB99 /* AssetTypeLifecyclesObject.m */,
+				ED2E142D171408750012CB99 /* AssetSupersObject.h */,
+				ED2E142E171408760012CB99 /* AssetSupersObject.m */,
+				ED2E1430171408BB0012CB99 /* AssetOwnershipObject.h */,
+				ED2E1431171408BC0012CB99 /* AssetOwnershipObject.m */,
+				ED2E1433171408F10012CB99 /* AttributesObject.h */,
+				ED2E1434171408F20012CB99 /* AttributesObject.m */,
+				ED2E1436171409560012CB99 /* AttributeUnitsObject.h */,
+				ED2E1437171409570012CB99 /* AttributeUnitsObject.m */,
+				ED2E1439171409AE0012CB99 /* BillsObject.h */,
+				ED2E143A171409AF0012CB99 /* BillsObject.m */,
+				ED2E143C17140A7D0012CB99 /* BroadcastGroupsObject.h */,
+				ED2E143D17140A7F0012CB99 /* BroadcastGroupsObject.m */,
+				ED2E143F17140AC10012CB99 /* BroadcastUsersObject.h */,
+				ED2E144017140AC30012CB99 /* BroadcastUsersObject.m */,
+				ED2E144217140B530012CB99 /* ContactInfoObject.h */,
+				ED2E144317140B550012CB99 /* ContactInfoObject.m */,
+				ED2E144517140BB00012CB99 /* ContactTypesObject.h */,
+				ED2E144617140BB30012CB99 /* ContactTypesObject.m */,
+				ED2E144817140BF60012CB99 /* DuesObject.h */,
+				ED2E144917140BF80012CB99 /* DuesObject.m */,
+				ED2E144B17140C480012CB99 /* EsseObject.h */,
+				ED2E144C17140C4C0012CB99 /* EsseObject.m */,
+				ED2E144E17140CA00012CB99 /* EsseContactsObject.h */,
+				ED2E144F17140CA30012CB99 /* EsseContactsObject.m */,
+				ED2E145117140CE50012CB99 /* EsseInfoObject.h */,
+				ED2E145217140CE80012CB99 /* EsseInfoObject.m */,
+				ED2E145417140D430012CB99 /* FeedbacksObject.h */,
+				ED2E145517140D470012CB99 /* FeedbacksObject.m */,
+				ED2E145717140D8A0012CB99 /* LifecyclesObject.h */,
+				ED2E145817140D8E0012CB99 /* LifecyclesObject.m */,
+				ED2E145A17140DD80012CB99 /* LifecycleServicesObject.h */,
+				ED2E145B17140DDC0012CB99 /* LifecycleServicesObject.m */,
+				ED2E145D17140E660012CB99 /* ManagedAssetsObject.h */,
+				ED2E145E17140E6B0012CB99 /* ManagedAssetsObject.m */,
+				ED2E146017140F1B0012CB99 /* MasterBillsObject.h */,
+				ED2E146117140F200012CB99 /* MasterBillsObject.m */,
+				ED2E146317140F990012CB99 /* MeasurementUnitsObject.h */,
+				ED2E146417140F9F0012CB99 /* MeasurementUnitsObject.m */,
+				ED2E146617140FFA0012CB99 /* Memoranda.h */,
+				ED2E1467171410010012CB99 /* Memoranda.m */,
+				ED2E1469171410A50012CB99 /* NoticePrioritiesObject.h */,
+				ED2E146A171410AA0012CB99 /* NoticePrioritiesObject.m */,
+				ED2E146C1714111D0012CB99 /* NotificationsObject.h */,
+				ED2E146D171411250012CB99 /* NotificationsObject.m */,
+				ED2E146F171411A40012CB99 /* OneTimeBillsObject.h */,
+				ED2E1470171411AB0012CB99 /* OneTimeBillsObject.m */,
+				ED2E1472171412280012CB99 /* PersonnelContactsObject.h */,
+				ED2E1473171412310012CB99 /* PersonnelContactsObject.m */,
+				ED2E14751714129F0012CB99 /* PersonnelInfoObject.h */,
+				ED2E1476171412A80012CB99 /* PersonnelInfoObject.m */,
+				ED2E14781714131F0012CB99 /* PersonnelsObject.h */,
+				ED2E1479171413280012CB99 /* PersonnelsObject.m */,
+				ED2E147B171413A00012CB99 /* PrioritiesObject.h */,
+				ED2E147C171413AB0012CB99 /* PrioritiesObject.m */,
+				ED2E147E171414190012CB99 /* ProfileFunctionsObject.h */,
+				ED2E147F171414240012CB99 /* ProfileFunctionsObject.m */,
+				ED2E1481171414800012CB99 /* RecurringBillsObject.h */,
+				ED2E14821714148C0012CB99 /* RecurringBillsObject.m */,
+				ED2E14841714152F0012CB99 /* ServicesObject.h */,
+				ED2E14851714153B0012CB99 /* ServicesObject.m */,
+				ED2E1487171415AE0012CB99 /* ServiceRequestsObject.h */,
+				ED2E1488171415BC0012CB99 /* ServiceRequestsObject.m */,
+				ED2E148A171421E80012CB99 /* ServiceRequestSchedulesObject.h */,
+				ED2E148B171421F70012CB99 /* ServiceRequestSchedulesObject.m */,
+				ED2E148D1714225A0012CB99 /* StatusesObject.h */,
+				ED2E148E171422680012CB99 /* StatusesObject.m */,
+				ED2E1490171422E90012CB99 /* SystemFunctionsObject.h */,
+				ED2E1491171422FE0012CB99 /* SystemFunctionsObject.m */,
+				ED2E1493171423C20012CB99 /* SystemProfileSequenceObject.h */,
+				ED2E1494171423D20012CB99 /* SystemProfileSequenceObject.m */,
+				ED68A0C017150E8A0090DF1E /* TasksObject.h */,
+				ED68A0C117150E8A0090DF1E /* TasksObject.m */,
+				ED68A0C617150F0A0090DF1E /* UserAccountsObject.h */,
+				ED68A0C717150F0B0090DF1E /* UserAccountsObject.m */,
+				ED68A0C917150F9C0090DF1E /* UserAccountOwnershipObject.h */,
+				ED68A0CA17150F9C0090DF1E /* UserAccountOwnershipObject.m */,
+				ED68A0CC17150FC70090DF1E /* UserContactsObject.h */,
+				ED68A0CD17150FC70090DF1E /* UserContactsObject.m */,
+				ED68A0CF171510130090DF1E /* UserCredentialsObject.h */,
+				ED68A0D0171510130090DF1E /* UserCredentialsObject.m */,
+				ED68A0D2171510750090DF1E /* UserInfoObject.h */,
+				ED68A0D3171510750090DF1E /* UserInfoObject.m */,
+				ED68A0D5171510CB0090DF1E /* UserProfilesObject.h */,
+				ED68A0D6171510CB0090DF1E /* UserProfilesObject.m */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
 		ED3D573416EB115600497F80 /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
@@ -649,6 +917,10 @@
 		EDEFE77316DF3C51002C35D6 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				ED324C4B1710146000DED66B /* AddUserProfilePageViewController.h */,
+				ED324C4C1710146000DED66B /* AddUserProfilePageViewController.m */,
+				ED324C451710143B00DED66B /* EditUserAccountDetailsPageViewController.h */,
+				ED324C461710143B00DED66B /* EditUserAccountDetailsPageViewController.m */,
 				ED08BDBE17073AD800588760 /* EsseInfoConfigurationViewController.h */,
 				ED08BDBF17073AD800588760 /* EsseInfoConfigurationViewController.m */,
 				EDC372C9170EA61D007FB975 /* UserAccountActivationPageViewController.h */,
@@ -694,6 +966,7 @@
 		EDEFE77916DF3C51002C35D6 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				ED2E13F0171278960012CB99 /* Objects */,
 				EDEFE77A16DF3C51002C35D6 /* Models */,
 				EDEFE79716DF3C51002C35D6 /* Utilities */,
 			);
@@ -708,18 +981,22 @@
 				EDFE623816EDC6C1002EB414 /* Assets.m */,
 				EDFE623416EDC56D002EB414 /* AssetAccountability.h */,
 				EDFE623516EDC56E002EB414 /* AssetAccountability.m */,
+				ED2E140C1712898A0012CB99 /* AssetAttributes.h */,
+				ED2E140D1712898A0012CB99 /* AssetAttributes.m */,
 				EDA8E71016F062F400B9C57E /* AssetTypes.h */,
 				EDA8E71116F062FE00B9C57E /* AssetTypes.m */,
+				ED2E1412171289D00012CB99 /* AssetTypeAttributes.h */,
+				ED2E1413171289D10012CB99 /* AssetTypeAttributes.m */,
 				EDFE622E16EDC532002EB414 /* AssetTypeLifecycles.h */,
 				EDFE622F16EDC532002EB414 /* AssetTypeLifecycles.m */,
-				EDFE622B16EDC514002EB414 /* AssetTypeAttributesTemplate.h */,
-				EDFE622C16EDC515002EB414 /* AssetTypeAttributesTemplate.m */,
 				EDFE622816EDC4E3002EB414 /* AssetSupers.h */,
 				EDFE622916EDC4E3002EB414 /* AssetSupers.m */,
 				EDFE622216EDC448002EB414 /* AssetOwnership.h */,
 				EDFE622316EDC448002EB414 /* AssetOwnership.m */,
-				EDFE621F16EDC432002EB414 /* AssetAttributes.h */,
-				EDFE622016EDC432002EB414 /* AssetAttributes.m */,
+				ED2E14091712895A0012CB99 /* Attributes.h */,
+				ED2E140A1712895A0012CB99 /* Attributes.m */,
+				ED2E1406171289420012CB99 /* AttributeUnits.h */,
+				ED2E1407171289420012CB99 /* AttributeUnits.m */,
 				EDFE623A16EDC6E4002EB414 /* Bills.h */,
 				EDFE623B16EDC6E4002EB414 /* Bills.m */,
 				EDFE623D16EDC7ED002EB414 /* BroadcastGroups.h */,
@@ -746,10 +1023,16 @@
 				EDFE625C16EDC96E002EB414 /* LifecycleServices.m */,
 				EDFE625E16EDC9A0002EB414 /* ManagedAssets.h */,
 				EDFE625F16EDC9A1002EB414 /* ManagedAssets.m */,
-				EDFE626116EDC9D1002EB414 /* Memoranda.h */,
-				EDFE626216EDC9D1002EB414 /* Memoranda.m */,
-				EDFE626416EDCA08002EB414 /* Notifications.h */,
-				EDFE626516EDCA0D002EB414 /* Notifications.m */,
+				ED2E1415171289F70012CB99 /* MasterBills.h */,
+				ED2E1416171289F70012CB99 /* MasterBills.m */,
+				ED2E14031712891B0012CB99 /* MeasurementUnits.h */,
+				ED2E14041712891B0012CB99 /* MeasurementUnits.m */,
+				ED2E13F7171279860012CB99 /* Memoranda.h */,
+				ED2E13F8171279860012CB99 /* Memoranda.m */,
+				ED2E13FA171280020012CB99 /* NoticePriorities.h */,
+				ED2E13FB171280020012CB99 /* NoticePriorities.m */,
+				ED2E13F41712793C0012CB99 /* Notifications.h */,
+				ED2E13F51712793C0012CB99 /* Notifications.m */,
 				EDFE626716EDCA65002EB414 /* OneTimeBills.h */,
 				EDFE626816EDCA66002EB414 /* OneTimeBills.m */,
 				EDFE626A16EDCA8A002EB414 /* PersonnelContacts.h */,
@@ -764,18 +1047,18 @@
 				EDFE627716EDCB5A002EB414 /* ProfileFunctions.m */,
 				EDFE627916EDCB8F002EB414 /* RecurringBills.h */,
 				EDFE627A16EDCB91002EB414 /* RecurringBills.m */,
-				ED59997316EDE77300681941 /* Services.h */,
-				ED59997416EDE77400681941 /* Services.m */,
+				ED2E13FD171283010012CB99 /* Services.h */,
+				ED2E13FE171283010012CB99 /* Services.m */,
 				ED300D6116F80F5000F3063E /* ServiceRequests.h */,
 				ED300D6216F80F5000F3063E /* ServiceRequests.m */,
 				EDFE627F16EDCBFF002EB414 /* ServiceRequestSchedules.h */,
 				EDFE628016EDCC00002EB414 /* ServiceRequestSchedules.m */,
 				EDFE628516EDCCE2002EB414 /* Statuses.h */,
 				EDFE628616EDCCE3002EB414 /* Statuses.m */,
-				EDFE628816EDCD48002EB414 /* SystemFunctionHierarchies.h */,
-				EDFE628916EDCD4A002EB414 /* SystemFunctionHierarchies.m */,
 				EDFE628B16EDCD77002EB414 /* SystemFunctions.h */,
 				EDFE628C16EDCD79002EB414 /* SystemFunctions.m */,
+				ED2E141817129FE30012CB99 /* SystemProfileSequence.h */,
+				ED2E141917129FE30012CB99 /* SystemProfileSequence.m */,
 				ED59997616EDE7B700681941 /* Tasks.h */,
 				ED59997716EDE7B700681941 /* Tasks.m */,
 				EDA8E70716F05C1300B9C57E /* UserAccounts.h */,
@@ -1079,10 +1362,8 @@
 				EDB1A0CA16E9F71900BCD1F4 /* BillingTasksViewController.m in Sources */,
 				ED3D573B16EB11A800497F80 /* ReportsPageViewController.m in Sources */,
 				ED3D573E16EB128000497F80 /* SchedulePageViewController.m in Sources */,
-				EDFE622116EDC432002EB414 /* AssetAttributes.m in Sources */,
 				EDFE622416EDC448002EB414 /* AssetOwnership.m in Sources */,
 				EDFE622A16EDC4E3002EB414 /* AssetSupers.m in Sources */,
-				EDFE622D16EDC515002EB414 /* AssetTypeAttributesTemplate.m in Sources */,
 				EDFE623016EDC532002EB414 /* AssetTypeLifecycles.m in Sources */,
 				EDFE623616EDC56E002EB414 /* AssetAccountability.m in Sources */,
 				EDFE623916EDC6C1002EB414 /* Assets.m in Sources */,
@@ -1097,8 +1378,6 @@
 				EDFE625716EDC918002EB414 /* Feedbacks.m in Sources */,
 				EDFE625D16EDC96F002EB414 /* LifecycleServices.m in Sources */,
 				EDFE626016EDC9A2002EB414 /* ManagedAssets.m in Sources */,
-				EDFE626316EDC9D2002EB414 /* Memoranda.m in Sources */,
-				EDFE626616EDCA12002EB414 /* Notifications.m in Sources */,
 				EDFE626916EDCA67002EB414 /* OneTimeBills.m in Sources */,
 				EDFE626C16EDCA8C002EB414 /* PersonnelContacts.m in Sources */,
 				EDFE626F16EDCAB3002EB414 /* PersonnelInfo.m in Sources */,
@@ -1108,14 +1387,12 @@
 				EDFE627B16EDCB92002EB414 /* RecurringBills.m in Sources */,
 				EDFE628116EDCC02002EB414 /* ServiceRequestSchedules.m in Sources */,
 				EDFE628716EDCCE6002EB414 /* Statuses.m in Sources */,
-				EDFE628A16EDCD4C002EB414 /* SystemFunctionHierarchies.m in Sources */,
 				EDFE628D16EDCD7C002EB414 /* SystemFunctions.m in Sources */,
 				EDFE629316EDCDFD002EB414 /* UserAccountOwnership.m in Sources */,
 				EDFC534316EDD72E009AE92F /* UserContacts.m in Sources */,
 				EDFC534616EDD77D009AE92F /* UserCredentials.m in Sources */,
 				EDFC534C16EDD7D2009AE92F /* UserProfiles.m in Sources */,
 				ED59996616EDDDD700681941 /* BroadcastUsers.m in Sources */,
-				ED59997516EDE77400681941 /* Services.m in Sources */,
 				ED59997816EDE7B800681941 /* Tasks.m in Sources */,
 				EDA8E70916F05C2D00B9C57E /* UserAccounts.m in Sources */,
 				EDA8E70F16F05D3300B9C57E /* UserInfo.m in Sources */,
@@ -1154,6 +1431,67 @@
 				ED0A1A74170D82F60093FE4B /* DeleteAssetTypePageViewController.m in Sources */,
 				EDC372CB170EA61D007FB975 /* UserAccountActivationPageViewController.m in Sources */,
 				EDC372D1170EC8A1007FB975 /* UserGroupConfigurationPageViewController.m in Sources */,
+				ED324C471710143B00DED66B /* EditUserAccountDetailsPageViewController.m in Sources */,
+				ED324C4D1710146000DED66B /* AddUserProfilePageViewController.m in Sources */,
+				ED2E13F61712793C0012CB99 /* Notifications.m in Sources */,
+				ED2E13F9171279860012CB99 /* Memoranda.m in Sources */,
+				ED2E13FC171280020012CB99 /* NoticePriorities.m in Sources */,
+				ED2E13FF171283010012CB99 /* Services.m in Sources */,
+				ED2E14051712891B0012CB99 /* MeasurementUnits.m in Sources */,
+				ED2E1408171289420012CB99 /* AttributeUnits.m in Sources */,
+				ED2E140B1712895A0012CB99 /* Attributes.m in Sources */,
+				ED2E140E1712898A0012CB99 /* AssetAttributes.m in Sources */,
+				ED2E1414171289D20012CB99 /* AssetTypeAttributes.m in Sources */,
+				ED2E1417171289F70012CB99 /* MasterBills.m in Sources */,
+				ED2E141A17129FE40012CB99 /* SystemProfileSequence.m in Sources */,
+				ED2E141D171405600012CB99 /* AssetsObject.m in Sources */,
+				ED2E1420171405BE0012CB99 /* AssetAccountabilityObject.m in Sources */,
+				ED2E14231714061A0012CB99 /* AssetAttributesObject.m in Sources */,
+				ED2E14261714066B0012CB99 /* AssetTypesObject.m in Sources */,
+				ED2E1429171406BD0012CB99 /* AssetTypeAttributesObject.m in Sources */,
+				ED2E142C171408300012CB99 /* AssetTypeLifecyclesObject.m in Sources */,
+				ED2E142F171408770012CB99 /* AssetSupersObject.m in Sources */,
+				ED2E1432171408BD0012CB99 /* AssetOwnershipObject.m in Sources */,
+				ED2E1435171408F20012CB99 /* AttributesObject.m in Sources */,
+				ED2E1438171409590012CB99 /* AttributeUnitsObject.m in Sources */,
+				ED2E143B171409B00012CB99 /* BillsObject.m in Sources */,
+				ED2E143E17140A810012CB99 /* BroadcastGroupsObject.m in Sources */,
+				ED2E144117140AC60012CB99 /* BroadcastUsersObject.m in Sources */,
+				ED2E144417140B590012CB99 /* ContactInfoObject.m in Sources */,
+				ED2E144717140BB60012CB99 /* ContactTypesObject.m in Sources */,
+				ED2E144A17140BFD0012CB99 /* DuesObject.m in Sources */,
+				ED2E144D17140C4F0012CB99 /* EsseObject.m in Sources */,
+				ED2E145017140CA70012CB99 /* EsseContactsObject.m in Sources */,
+				ED2E145317140CEE0012CB99 /* EsseInfoObject.m in Sources */,
+				ED2E145617140D4C0012CB99 /* FeedbacksObject.m in Sources */,
+				ED2E145917140D940012CB99 /* LifecyclesObject.m in Sources */,
+				ED2E145C17140DE30012CB99 /* LifecycleServicesObject.m in Sources */,
+				ED2E145F17140E710012CB99 /* ManagedAssetsObject.m in Sources */,
+				ED2E146217140F270012CB99 /* MasterBillsObject.m in Sources */,
+				ED2E146517140FA80012CB99 /* MeasurementUnitsObject.m in Sources */,
+				ED2E14681714100B0012CB99 /* Memoranda.m in Sources */,
+				ED2E146B171410B50012CB99 /* NoticePrioritiesObject.m in Sources */,
+				ED2E146E1714112E0012CB99 /* NotificationsObject.m in Sources */,
+				ED2E1471171411B60012CB99 /* OneTimeBillsObject.m in Sources */,
+				ED2E1474171412410012CB99 /* PersonnelContactsObject.m in Sources */,
+				ED2E1477171412B60012CB99 /* PersonnelInfoObject.m in Sources */,
+				ED2E147A171413370012CB99 /* PersonnelsObject.m in Sources */,
+				ED2E147D171413BD0012CB99 /* PrioritiesObject.m in Sources */,
+				ED2E1480171414380012CB99 /* ProfileFunctionsObject.m in Sources */,
+				ED2E1483171414A20012CB99 /* RecurringBillsObject.m in Sources */,
+				ED2E1486171415520012CB99 /* ServicesObject.m in Sources */,
+				ED2E1489171415D30012CB99 /* ServiceRequestsObject.m in Sources */,
+				ED2E148C1714220F0012CB99 /* ServiceRequestSchedulesObject.m in Sources */,
+				ED2E148F171422820012CB99 /* StatusesObject.m in Sources */,
+				ED2E14921714231C0012CB99 /* SystemFunctionsObject.m in Sources */,
+				ED2E1495171423EF0012CB99 /* SystemProfileSequenceObject.m in Sources */,
+				ED68A0C217150E8A0090DF1E /* TasksObject.m in Sources */,
+				ED68A0C817150F0B0090DF1E /* UserAccountsObject.m in Sources */,
+				ED68A0CB17150F9C0090DF1E /* UserAccountOwnershipObject.m in Sources */,
+				ED68A0CE17150FC80090DF1E /* UserContactsObject.m in Sources */,
+				ED68A0D1171510130090DF1E /* UserCredentialsObject.m in Sources */,
+				ED68A0D4171510750090DF1E /* UserInfoObject.m in Sources */,
+				ED68A0D7171510CC0090DF1E /* UserProfilesObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

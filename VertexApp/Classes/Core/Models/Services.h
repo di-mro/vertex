@@ -2,7 +2,7 @@
 //  Services.h
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 3/11/13.
+//  Created by Mary Rose Oh on 4/8/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
@@ -15,7 +15,8 @@
 
 @property (nonatomic, retain) NSNumber * serviceId;
 @property (nonatomic, retain) NSString * serviceName;
-@property (nonatomic, retain) LifecycleServices *servicesToLifecycleServices;
+@property (nonatomic, retain) NSNumber * cost;
+@property (nonatomic, retain) NSSet *servicesToLifecycleServices;
 @property (nonatomic, retain) ServiceRequests *servicesToSR;
 @end
 

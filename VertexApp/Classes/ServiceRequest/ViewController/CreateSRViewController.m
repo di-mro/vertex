@@ -36,9 +36,25 @@
 
 @synthesize URL;
 @synthesize httpResponseCode;
+
+//***
 @synthesize lifecycles;
 @synthesize assetTypes;
 @synthesize services;
+@synthesize priority;
+
+@synthesize selectedIndex;
+
+@synthesize lifecycleIdArray;
+@synthesize assetTypeIdArray;
+@synthesize servicesIdArray;
+@synthesize priorityIdArray;
+
+@synthesize selectedLifecycleId;
+@synthesize selectedAssetTypeId;
+@synthesize selectedServicesId;
+@synthesize selectedPriorityId;
+//***
 
 @synthesize createSRJson;
 
@@ -70,20 +86,23 @@
   //Scroller size
   self.createSRScroller.contentSize = CGSizeMake(320.0, 900.0);
   
-  /* TODO
-   !-Remove hardcoded data. Retrieve listing in DB-!
-   */
   //getAssetTypes
-  self.assetPickerArray = [[NSArray alloc] initWithObjects:@"Demo - Aircon",@"Demo - Window", @"Demo - Bathtub", @"Demo - Bathroom Faucet", @"Demo - Toilet", @"Demo - Kitchen Sink", @"Demo - Lighting Fixtures", nil];
+  self.assetPickerArray = [[NSArray alloc] init];
+  assetTypeIdArray = [[NSMutableArray alloc] init];
   [self getAssetType];
   
   //getLifecycle
   self.lifecyclePickerArray = [[NSArray alloc] init];
+  lifecycleIdArray = [[NSMutableArray alloc] init];
   [self getLifecycles];
   
-  self.servicePickerArray = [[NSArray alloc] initWithObjects:@"Demo - Fix broken pipes", @"Demo - Clean filter", @"Demo - Fix wiring", @"Demo - Declog pipes", @"Demo - Repaint", @"Demo - Miscellaneous", nil];
+  //getServices
+  self.servicePickerArray = [[NSArray alloc] init];
+  servicesIdArray = [[NSMutableArray alloc] init];
   
+  //getPriority
   self.priorityPickerArray = [[NSArray alloc] initWithObjects:@"Demo - Emergency", @"Demo - Scheduled", @"Demo - Routine", @"Demo - Urgent", nil];
+  priorityIdArray = [[NSMutableArray alloc] init];
   
   //Set delegates for the picker fields
   [assetField setDelegate:self];
@@ -153,6 +172,7 @@
     NSLog(@"getAssetTypes JSON Result: %@", assetTypes);
     
     assetPickerArray = [assetTypes valueForKey:@"name"]; //store assetType names only in PickerArray
+    assetTypeIdArray = [assetTypes valueForKey:@"id"];
     NSLog(@"assetPickerArray: %@", assetPickerArray);
   }
 }
@@ -206,6 +226,7 @@
     NSLog(@"lifecycles JSON Result: %@", lifecycles);
     
     lifecyclePickerArray = [lifecycles valueForKey:@"name"]; //store lifecycles names only in PickerArray
+    lifecycleIdArray = [lifecycles valueForKey:@"id"];
     NSLog(@"lifecyclePickerArray: %@", lifecyclePickerArray);
   }
 }
@@ -263,7 +284,8 @@
                   error:&error];
     NSLog(@"services JSON Result: %@", services);
     
-    servicePickerArray = [lifecycles valueForKey:@"name"]; //store lifecycles names only in PickerArray
+    servicePickerArray = [services valueForKey:@"name"]; //store lifecycles names only in PickerArray
+    servicesIdArray = [services valueForKey:@"id"];
     NSLog(@"servicePickerArray: %@", servicePickerArray);
   }
 }
@@ -331,6 +353,8 @@
     currentArray = assetPickerArray;
     currentTextField = assetField;
     assetField.inputView = actionSheet;
+    
+    selectedAssetTypeId = [assetTypeIdArray objectAtIndex:selectedIndex];
 
     return YES;
   }
@@ -347,6 +371,8 @@
     currentTextField = lifecycleField;
     lifecycleField.inputView = actionSheet;
     
+    selectedLifecycleId = [lifecycleIdArray objectAtIndex:selectedIndex];
+    
     return YES;
   }
   else if(serviceField.isEditing)
@@ -361,6 +387,8 @@
     currentArray = servicePickerArray;
     currentTextField = serviceField;
     serviceField.inputView = actionSheet;
+    
+    selectedServicesId = [servicesIdArray objectAtIndex:selectedIndex];
     
     return YES;
   }
@@ -377,6 +405,8 @@
     currentTextField = priorityField;
     priorityField.inputView = actionSheet;
     
+    selectedPriorityId = [priorityIdArray objectAtIndex:selectedIndex];
+    
     return YES;
   }
   else
@@ -387,14 +417,13 @@
 
 
 #pragma mark - Get selected row in Picker
--(void)selectedRow {
+-(void)selectedRow
+{
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
   
-  int selectedIndex = [srGenericPicker selectedRowInComponent:0];
+  selectedIndex = [srGenericPicker selectedRowInComponent:0];
   NSString *selectedEntity = [currentArray objectAtIndex:selectedIndex];
   currentTextField.text = selectedEntity;
-  
-  //Do something with the selected row, store then save in DB
 }
 
 #pragma mark - Dismissing onscreen keyboard
@@ -478,10 +507,56 @@
         ]
      }"
      */
-    //TODO : Construct JSON request body
+    //TODO : Construct JSON request body from user inputs in UI
     createSRJson = [[NSMutableDictionary alloc] init];
-    //[createSRJson setObject:@"" forKey:@""];
-    [createSRJson setObject:detailsTextArea.text forKey:@"remarks"];
+    
+    //asset
+    NSMutableDictionary *assetJson = [[NSMutableDictionary alloc] init];
+    [assetJson setObject:selectedAssetTypeId forKey:@"id"];
+    [createSRJson setObject:assetJson forKey:@"asset"];
+    
+    //lifecycle
+    NSMutableDictionary *lifecycleJson = [[NSMutableDictionary alloc] init];
+    [lifecycleJson setObject:selectedLifecycleId forKey:@"id"];
+    [createSRJson setObject:lifecycleJson forKey:@"lifecycle"];
+    
+    //service
+    NSMutableDictionary *serviceJson = [[NSMutableDictionary alloc] init];
+    [serviceJson setObject:selectedServicesId forKey:@"id"];
+    [createSRJson setObject:serviceJson forKey:@"service"];
+    
+    //admin
+    NSMutableDictionary *adminJson = [[NSMutableDictionary alloc] init];
+    [adminJson setObject:@1000000000 forKey:@"id"]; //TEST ONLY !!!
+    [createSRJson setObject:adminJson forKey:@"admin"];
+    
+    //requestor
+    NSMutableDictionary *requestorJson = [[NSMutableDictionary alloc] init];
+    [requestorJson setObject:@000000001 forKey:@"id"]; //TEST ONLY!!!
+    [createSRJson setObject:requestorJson forKey:@"requestor"];
+    
+    //TEST ONLY!!! - ***
+    [createSRJson setObject:@100.00 forKey:@"cost"];
+    [createSRJson setObject:@"DEMO - Remarks" forKey:@"remarks"];
+    [createSRJson setObject:@"DEMO - Admin Remarks" forKey:@"adminRemarks"];
+    //***
+    
+    //priority
+    NSMutableDictionary *priorityJson = [[NSMutableDictionary alloc] init];
+    [priorityJson setObject:@2000000000 forKey:@"id"]; //TEST ONLY !!!
+    [createSRJson setObject:priorityJson forKey:@"priority"];
+    
+    //status
+    NSMutableDictionary *statusJson = [[NSMutableDictionary alloc] init];
+    [statusJson setObject:@3000000000 forKey:@"id"]; //TEST ONLY !!!
+    [createSRJson setObject:statusJson forKey:@"status"];
+    
+    //schedules
+    NSMutableDictionary *scheduleJson = [[NSMutableDictionary alloc] init];
+    [scheduleJson setObject:@"2013/04/09" forKey:@"schedDate"];
+    [createSRJson setObject:scheduleJson forKey:@"schedules"];
+    
+    NSLog(@"Create Service Request JSON: %@", createSRJson);
     
     NSError *error = [[NSError alloc] init];
     NSData *jsonData = [NSJSONSerialization
@@ -513,13 +588,30 @@
     [connection start];
     
     NSLog(@"addServiceRequest - httpResponseCode: %d", httpResponseCode);
-    
+    if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
+    {
+      UIAlertView *createSRAlert = [[UIAlertView alloc]
+                                    initWithTitle:@"Create Service Request"
+                                    message:@"Service Request Created."
+                                    delegate:self
+                                    cancelButtonTitle:@"OK"
+                                    otherButtonTitles:nil];
+      [createSRAlert show];
+    }
+    else //(httpResponseCode >= 400)
+    {
+      UIAlertView *createSRFailAlert = [[UIAlertView alloc]
+                                        initWithTitle:@"Create Service Request Failed"
+                                        message:@"Service Request not created. Please try again later"
+                                        delegate:self
+                                        cancelButtonTitle:@"OK"
+                                        otherButtonTitles:nil];
+      [createSRFailAlert show];
+    }
     
     [self dismissViewControllerAnimated:YES completion:nil];
-    NSLog(@"Create Service Request");
+    NSLog(@"Service Request Created");
     
-    /* !- TODO -! */
-    //if(validateSaveToDB)
     //Inform user Service Request is saved
     UIAlertView *createSRAlert = [[UIAlertView alloc] initWithTitle:@"Service Request"
                                                             message:@"Service Request Created."
@@ -550,32 +642,7 @@
   httpResponse = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
-  
-  if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
-  {
-    UIAlertView *createSRAlert = [[UIAlertView alloc]
-                                      initWithTitle:@"Create Service Request"
-                                      message:@"Service Request Created."
-                                      delegate:self
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles:nil];
-    [createSRAlert show];
-  }
-  else //(httpResponseCode >= 400)
-  {
-    UIAlertView *createSRFailAlert = [[UIAlertView alloc]
-                                          initWithTitle:@"Create Service Request Failed"
-                                          message:@"Service Request not created. Please try again later"
-                                          delegate:self
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [createSRFailAlert show];
-  }
-  
-  [self dismissViewControllerAnimated:YES completion:nil];
-  NSLog(@"Service Request Created");
 }
-
 
 
 #pragma mark - Transition to Assets Page when OK on Alert Box is clicked

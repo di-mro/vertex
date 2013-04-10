@@ -2,7 +2,7 @@
 //  Notifications.m
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 3/11/13.
+//  Created by Mary Rose Oh on 4/8/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
@@ -16,7 +16,11 @@
 @dynamic creator;
 @dynamic message;
 @dynamic notificationId;
-@dynamic priorityLevel;
+@dynamic noticePriorityId;
+@dynamic dateCreated;
+@dynamic endDate;
+@dynamic validity;
 @dynamic notificationToBroadcastGroup;
+@dynamic notificationsToNoticePriorities;
 
 @end

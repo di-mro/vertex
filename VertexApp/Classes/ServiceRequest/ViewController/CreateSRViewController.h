@@ -9,6 +9,7 @@
 #import "ViewController.h"
 
 @interface CreateSRViewController : ViewController
+
 @property (strong, nonatomic) IBOutlet UIScrollView *createSRScroller;
 @property (strong, nonatomic) IBOutlet UIPickerView *srGenericPicker;
 @property (strong, nonatomic) IBOutlet NSArray *currentArray;
@@ -16,23 +17,18 @@
 @property (strong, nonatomic) UIActionSheet *actionSheet;
 
 @property (strong, nonatomic) IBOutlet UILabel *chooseAssetLabel;
-@property (strong, nonatomic) IBOutlet UIPickerView *assetPicker;
 @property (nonatomic, retain) NSArray *assetPickerArray;
 @property (strong, nonatomic) IBOutlet UITextField *assetField;
 
 @property (strong, nonatomic) IBOutlet UILabel *chooseLifecycleLabel;
-@property (strong, nonatomic) IBOutlet UIPickerView *lifecyclePicker;
 @property (nonatomic, retain) NSArray *lifecyclePickerArray;
 @property (strong, nonatomic) IBOutlet UITextField *lifecycleField;
 
-
 @property (strong, nonatomic) IBOutlet UILabel *chooseServicePicker;
-@property (strong, nonatomic) IBOutlet UIPickerView *servicePicker;
 @property (nonatomic, retain) NSArray *servicePickerArray;
 @property (strong, nonatomic) IBOutlet UITextField *serviceField;
 
 @property (strong, nonatomic) IBOutlet UILabel *priorityLabel;
-@property (strong, nonatomic) IBOutlet UIPickerView *priorityPicker;
 @property (nonatomic, retain) NSArray *priorityPickerArray;
 @property (strong, nonatomic) IBOutlet UITextField *priorityField;
 
@@ -41,9 +37,25 @@
 
 @property (strong, nonatomic) NSString *URL;
 @property int httpResponseCode;
+
+/***/
 @property (strong, nonatomic) NSMutableDictionary *lifecycles;
 @property (strong, nonatomic) NSMutableDictionary *assetTypes;
 @property (strong, nonatomic) NSMutableDictionary *services;
+@property (strong, nonatomic) NSMutableDictionary *priority;
+
+@property int selectedIndex;
+
+@property (strong, nonatomic) NSMutableArray *lifecycleIdArray;
+@property (strong, nonatomic) NSMutableArray *assetTypeIdArray;
+@property (strong, nonatomic) NSMutableArray *servicesIdArray;
+@property (strong, nonatomic) NSMutableArray *priorityIdArray;
+
+@property (strong, nonatomic) NSNumber *selectedLifecycleId;
+@property (strong, nonatomic) NSNumber *selectedAssetTypeId;
+@property (strong, nonatomic) NSNumber *selectedServicesId;
+@property (strong, nonatomic) NSNumber *selectedPriorityId;
+/***/
 
 @property (strong, nonatomic) NSMutableDictionary *createSRJson;
 

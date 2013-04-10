@@ -1,8 +1,8 @@
 //
-//  AssetTypeAttributesTemplate.h
+//  AssetTypeAttributes.h
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 3/11/13.
+//  Created by Mary Rose Oh on 4/8/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
@@ -11,10 +11,11 @@
 
 @class AssetTypes;
 
-@interface AssetTypeAttributesTemplate : NSManagedObject
+@interface AssetTypeAttributes : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * assetTypeId;
-@property (nonatomic, retain) id attributes;
+@property (nonatomic, retain) NSNumber * attributeId;
+@property (nonatomic, retain) NSNumber * required;
 @property (nonatomic, retain) AssetTypes *assetTypeAttributesToAssetTypes;
 
 @end

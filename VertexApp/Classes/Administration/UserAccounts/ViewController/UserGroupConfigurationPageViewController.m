@@ -66,6 +66,12 @@
   //Initialize userAccounts array
   userAccountsArray = [[NSMutableArray alloc] init];
   
+  //Populate User Accounts Picker
+  [self getUsers];
+  
+  //userAccountsPicker in addUserAccountsField
+  [addUserAccountsField setDelegate:self];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -280,7 +286,28 @@
     [connection start];
     
     NSLog(@"configureUserGroup - httpResponseCode: %d", httpResponseCode);
-    //***
+    if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
+    {
+      UIAlertView *userGroupConfigAlert = [[UIAlertView alloc]
+                                           initWithTitle:@"User Group Configuration"
+                                           message:@"User group configured."
+                                           delegate:self
+                                           cancelButtonTitle:@"OK"
+                                           otherButtonTitles:nil];
+      [userGroupConfigAlert show];
+    }
+    else //(httpResponseCode >= 400)
+    {
+      UIAlertView *userGroupConfigFailAlert = [[UIAlertView alloc]
+                                               initWithTitle:@"User Group Configuration Failed"
+                                               message:@"User group not configured. Please try again later"
+                                               delegate:self
+                                               cancelButtonTitle:@"OK"
+                                               otherButtonTitles:nil];
+      [userGroupConfigFailAlert show];
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
   }
   else
   {
@@ -303,30 +330,6 @@
   httpResponse = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
-  
-  if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
-  {
-    UIAlertView *userGroupConfigAlert = [[UIAlertView alloc]
-                                      initWithTitle:@"User Group Configuration"
-                                      message:@"User group configured."
-                                      delegate:self
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles:nil];
-    [userGroupConfigAlert show];
-  }
-  else //(httpResponseCode >= 400)
-  {
-    UIAlertView *userGroupConfigFailAlert = [[UIAlertView alloc]
-                                          initWithTitle:@"User Group Configuration Failed"
-                                          message:@"User group not configured. Please try again later"
-                                          delegate:self
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [userGroupConfigFailAlert show];
-  }
-  
-  [self dismissViewControllerAnimated:YES completion:nil];
-  NSLog(@"User Group Config Failed");
 }
 
 
@@ -415,9 +418,6 @@
   [userGroupNameField resignFirstResponder];
   [addUserAccountsField resignFirstResponder];
 }
-
-
-
 
 
 @end

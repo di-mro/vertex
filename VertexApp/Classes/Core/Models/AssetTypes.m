@@ -7,7 +7,7 @@
 //
 
 #import "AssetTypes.h"
-#import "AssetTypeAttributesTemplate.h"
+#import "AssetTypeAttributes.h"
 #import "AssetTypeLifecycles.h"
 #import "Assets.h"
 
