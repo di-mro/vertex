@@ -20,7 +20,6 @@
 		ED0A1A71170D67740093FE4B /* AssetTypeDetailPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0A1A70170D67730093FE4B /* AssetTypeDetailPageViewController.m */; };
 		ED0A1A74170D82F60093FE4B /* DeleteAssetTypePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0A1A73170D82F40093FE4B /* DeleteAssetTypePageViewController.m */; };
 		ED2E13F61712793C0012CB99 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E13F51712793C0012CB99 /* Notifications.m */; };
-		ED2E13F9171279860012CB99 /* Memoranda.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E13F8171279860012CB99 /* Memoranda.m */; };
 		ED2E13FC171280020012CB99 /* NoticePriorities.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E13FB171280020012CB99 /* NoticePriorities.m */; };
 		ED2E13FF171283010012CB99 /* Services.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E13FE171283010012CB99 /* Services.m */; };
 		ED2E14051712891B0012CB99 /* MeasurementUnits.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E14041712891B0012CB99 /* MeasurementUnits.m */; };
@@ -55,7 +54,6 @@
 		ED2E145F17140E710012CB99 /* ManagedAssetsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E145E17140E6B0012CB99 /* ManagedAssetsObject.m */; };
 		ED2E146217140F270012CB99 /* MasterBillsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E146117140F200012CB99 /* MasterBillsObject.m */; };
 		ED2E146517140FA80012CB99 /* MeasurementUnitsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E146417140F9F0012CB99 /* MeasurementUnitsObject.m */; };
-		ED2E14681714100B0012CB99 /* Memoranda.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E1467171410010012CB99 /* Memoranda.m */; };
 		ED2E146B171410B50012CB99 /* NoticePrioritiesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E146A171410AA0012CB99 /* NoticePrioritiesObject.m */; };
 		ED2E146E1714112E0012CB99 /* NotificationsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E146D171411250012CB99 /* NotificationsObject.m */; };
 		ED2E1471171411B60012CB99 /* OneTimeBillsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E1470171411AB0012CB99 /* OneTimeBillsObject.m */; };
@@ -117,6 +115,8 @@
 		ED68A0D1171510130090DF1E /* UserCredentialsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED68A0D0171510130090DF1E /* UserCredentialsObject.m */; };
 		ED68A0D4171510750090DF1E /* UserInfoObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED68A0D3171510750090DF1E /* UserInfoObject.m */; };
 		ED68A0D7171510CC0090DF1E /* UserProfilesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED68A0D6171510CB0090DF1E /* UserProfilesObject.m */; };
+		ED68A0DA17151E1E0090DF1E /* Memoranda.m in Sources */ = {isa = PBXBuildFile; fileRef = ED68A0D917151E1E0090DF1E /* Memoranda.m */; };
+		ED68A0DD17151EAB0090DF1E /* MemorandaObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED68A0DC17151EAB0090DF1E /* MemorandaObject.m */; };
 		ED8A7C7D16E4A34200F06AF1 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8A7C7716E4941200F06AF1 /* TPKeyboardAvoidingScrollView.m */; };
 		ED8A7C7E16E4A34D00F06AF1 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8A7C7916E4941200F06AF1 /* TPKeyboardAvoidingTableView.m */; };
 		EDA8E70916F05C2D00B9C57E /* UserAccounts.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA8E70816F05C2000B9C57E /* UserAccounts.m */; };
@@ -248,8 +248,6 @@
 		ED0A1A73170D82F40093FE4B /* DeleteAssetTypePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteAssetTypePageViewController.m; sourceTree = "<group>"; };
 		ED2E13F41712793C0012CB99 /* Notifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notifications.h; sourceTree = "<group>"; };
 		ED2E13F51712793C0012CB99 /* Notifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notifications.m; sourceTree = "<group>"; };
-		ED2E13F7171279860012CB99 /* Memoranda.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Memoranda.h; sourceTree = "<group>"; };
-		ED2E13F8171279860012CB99 /* Memoranda.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Memoranda.m; sourceTree = "<group>"; };
 		ED2E13FA171280020012CB99 /* NoticePriorities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticePriorities.h; sourceTree = "<group>"; };
 		ED2E13FB171280020012CB99 /* NoticePriorities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticePriorities.m; sourceTree = "<group>"; };
 		ED2E13FD171283010012CB99 /* Services.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Services.h; sourceTree = "<group>"; };
@@ -318,8 +316,6 @@
 		ED2E146117140F200012CB99 /* MasterBillsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterBillsObject.m; sourceTree = "<group>"; };
 		ED2E146317140F990012CB99 /* MeasurementUnitsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeasurementUnitsObject.h; sourceTree = "<group>"; };
 		ED2E146417140F9F0012CB99 /* MeasurementUnitsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasurementUnitsObject.m; sourceTree = "<group>"; };
-		ED2E146617140FFA0012CB99 /* Memoranda.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Memoranda.h; sourceTree = "<group>"; };
-		ED2E1467171410010012CB99 /* Memoranda.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Memoranda.m; sourceTree = "<group>"; };
 		ED2E1469171410A50012CB99 /* NoticePrioritiesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticePrioritiesObject.h; sourceTree = "<group>"; };
 		ED2E146A171410AA0012CB99 /* NoticePrioritiesObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticePrioritiesObject.m; sourceTree = "<group>"; };
 		ED2E146C1714111D0012CB99 /* NotificationsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationsObject.h; sourceTree = "<group>"; };
@@ -433,6 +429,10 @@
 		ED68A0D3171510750090DF1E /* UserInfoObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoObject.m; sourceTree = "<group>"; };
 		ED68A0D5171510CB0090DF1E /* UserProfilesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfilesObject.h; sourceTree = "<group>"; };
 		ED68A0D6171510CB0090DF1E /* UserProfilesObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfilesObject.m; sourceTree = "<group>"; };
+		ED68A0D817151E1E0090DF1E /* Memoranda.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Memoranda.h; sourceTree = "<group>"; };
+		ED68A0D917151E1E0090DF1E /* Memoranda.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Memoranda.m; sourceTree = "<group>"; };
+		ED68A0DB17151EAA0090DF1E /* MemorandaObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemorandaObject.h; sourceTree = "<group>"; };
+		ED68A0DC17151EAB0090DF1E /* MemorandaObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemorandaObject.m; sourceTree = "<group>"; };
 		ED8A7C7616E4941200F06AF1 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
 		ED8A7C7716E4941200F06AF1 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
 		ED8A7C7816E4941200F06AF1 /* TPKeyboardAvoidingTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingTableView.h; sourceTree = "<group>"; };
@@ -634,8 +634,8 @@
 				ED2E146117140F200012CB99 /* MasterBillsObject.m */,
 				ED2E146317140F990012CB99 /* MeasurementUnitsObject.h */,
 				ED2E146417140F9F0012CB99 /* MeasurementUnitsObject.m */,
-				ED2E146617140FFA0012CB99 /* Memoranda.h */,
-				ED2E1467171410010012CB99 /* Memoranda.m */,
+				ED68A0DB17151EAA0090DF1E /* MemorandaObject.h */,
+				ED68A0DC17151EAB0090DF1E /* MemorandaObject.m */,
 				ED2E1469171410A50012CB99 /* NoticePrioritiesObject.h */,
 				ED2E146A171410AA0012CB99 /* NoticePrioritiesObject.m */,
 				ED2E146C1714111D0012CB99 /* NotificationsObject.h */,
@@ -1027,8 +1027,8 @@
 				ED2E1416171289F70012CB99 /* MasterBills.m */,
 				ED2E14031712891B0012CB99 /* MeasurementUnits.h */,
 				ED2E14041712891B0012CB99 /* MeasurementUnits.m */,
-				ED2E13F7171279860012CB99 /* Memoranda.h */,
-				ED2E13F8171279860012CB99 /* Memoranda.m */,
+				ED68A0D817151E1E0090DF1E /* Memoranda.h */,
+				ED68A0D917151E1E0090DF1E /* Memoranda.m */,
 				ED2E13FA171280020012CB99 /* NoticePriorities.h */,
 				ED2E13FB171280020012CB99 /* NoticePriorities.m */,
 				ED2E13F41712793C0012CB99 /* Notifications.h */,
@@ -1434,7 +1434,6 @@
 				ED324C471710143B00DED66B /* EditUserAccountDetailsPageViewController.m in Sources */,
 				ED324C4D1710146000DED66B /* AddUserProfilePageViewController.m in Sources */,
 				ED2E13F61712793C0012CB99 /* Notifications.m in Sources */,
-				ED2E13F9171279860012CB99 /* Memoranda.m in Sources */,
 				ED2E13FC171280020012CB99 /* NoticePriorities.m in Sources */,
 				ED2E13FF171283010012CB99 /* Services.m in Sources */,
 				ED2E14051712891B0012CB99 /* MeasurementUnits.m in Sources */,
@@ -1469,7 +1468,6 @@
 				ED2E145F17140E710012CB99 /* ManagedAssetsObject.m in Sources */,
 				ED2E146217140F270012CB99 /* MasterBillsObject.m in Sources */,
 				ED2E146517140FA80012CB99 /* MeasurementUnitsObject.m in Sources */,
-				ED2E14681714100B0012CB99 /* Memoranda.m in Sources */,
 				ED2E146B171410B50012CB99 /* NoticePrioritiesObject.m in Sources */,
 				ED2E146E1714112E0012CB99 /* NotificationsObject.m in Sources */,
 				ED2E1471171411B60012CB99 /* OneTimeBillsObject.m in Sources */,
@@ -1492,6 +1490,8 @@
 				ED68A0D1171510130090DF1E /* UserCredentialsObject.m in Sources */,
 				ED68A0D4171510750090DF1E /* UserInfoObject.m in Sources */,
 				ED68A0D7171510CC0090DF1E /* UserProfilesObject.m in Sources */,
+				ED68A0DA17151E1E0090DF1E /* Memoranda.m in Sources */,
+				ED68A0DD17151EAB0090DF1E /* MemorandaObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

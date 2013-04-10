@@ -9,13 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class BroadcastUsers, Memoranda, Notifications;
+@class BroadcastUsers, MemorandaObject, Notifications;
 
 @interface BroadcastGroups : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * broadcastGroupId;
 @property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) Memoranda *broadcastGroupsToMemoranda;
+@property (nonatomic, retain) MemorandaObject *broadcastGroupsToMemoranda;
 @property (nonatomic, retain) BroadcastUsers *broadcastGroupToBroadcastUsers;
 @property (nonatomic, retain) Notifications *broadcastGroupToNotifications;
 @end

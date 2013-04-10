@@ -35,9 +35,6 @@
 
 - (void)viewDidLoad
 {
-  //Set URL for Login
-  URL = @"http://192.168.2.113:8080/vertex-api/user/login";
-  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -56,9 +53,12 @@
 #pragma mark - [Login] button functions
 - (IBAction)login:(id)sender
 {
-  [self performSegueWithIdentifier: @"loginToHome" sender: self];
+  //[self performSegueWithIdentifier: @"loginToHome" sender: self];
   
-  /*
+  //Set URL for Login
+  //URL = @"http://192.168.2.113:8080/vertex-api/user/login";
+  URL = @"http://192.168.2.113/vertex-api/user/login";
+
   if([self validateLoginFields])
   {
     NSString *username = userNameField.text;
@@ -113,7 +113,6 @@
   {
     NSLog(@"Unable to login");
   }
-   */
 
   /*
    //RestKit

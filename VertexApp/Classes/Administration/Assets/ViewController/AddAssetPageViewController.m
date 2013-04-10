@@ -31,25 +31,10 @@
 @synthesize addAssetScroller;
 @synthesize actionSheet;
 
+@synthesize addAssetView;
+
 @synthesize assetNameField;
 @synthesize assetTypeField;
-
-/*
-@synthesize modelField;
-@synthesize brandField;
-@synthesize powerConsumptionField;
-
-@synthesize modelLabel;
-@synthesize brandLabel;
-@synthesize powerConsumptionLabel;
- 
-@synthesize remarksArea;
-@synthesize remarksLabel;
-*/
-
-//@synthesize assetObject;
-//@synthesize assetTypesObject;
-//@synthesize assetAttributesObject;
 
 @synthesize selectedIndex;
 @synthesize attribTextFields;
@@ -117,7 +102,8 @@
 - (void) getAssetTypes
 {
   //Set URL for retrieving AssetTypes
-  URL = @"http://192.168.2.113:8080/vertex-api/asset/getAssetTypes";
+  //URL = @"http://192.168.2.113:8080/vertex-api/asset/getAssetTypes";
+  URL = @"http://192.168.2.113/vertex-api/asset/getAssetTypes";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                       requestWithURL:[NSURL URLWithString:URL]];
@@ -243,7 +229,6 @@
   assetTypeIdArray = [assetTypes valueForKey:@"id"];
   selectedAssetTypeId = [assetTypeIdArray objectAtIndex:selectedIndex];
   NSLog(@"selectedRow-selectedAssetTypeId: %@", selectedAssetTypeId);
-  //selectedAssetTypeId = @111000; //TEST only
   
   [self setAttributesField];
 }
@@ -252,16 +237,16 @@
 #pragma mark - Dynamically set the text fields for Asset Attributes based on Asset Type
 -(void) setAttributesField
 {
-  //TODO: retrieveAssetType
-  NSMutableArray *allAssetAttrib = [[NSMutableArray alloc] init];
-  attribTextFields = [[NSMutableDictionary alloc] init];
-  
   if(selectedAssetTypeId == nil)
   {
     NSLog(@"Nil assetTypeId");
   }
   else
   {
+    //TODO: assetTypeAttributes
+    NSMutableArray *allAssetAttrib = [[NSMutableArray alloc] init];
+    attribTextFields = [[NSMutableDictionary alloc] init];
+    
     allAssetAttrib = [assetTypes valueForKey:@"attributes"];
     NSLog(@"allAssetAttrib: %@", allAssetAttrib);
     
@@ -273,15 +258,15 @@
     
     for(int i = 0; i < [assetTypeAttributes count]; i++)
     {
-      NSLog(@"attribute atIndex: %@", [[assetTypeAttributes objectAtIndex:i] description]);
+      //NSLog(@"attribute atIndex: %@", [[assetTypeAttributes objectAtIndex:i] description]);
       
-      NSString *textFieldLabel = [[NSString alloc] initWithString:[[assetTypeAttributes objectAtIndex:i] description]];
+      //NSString *textFieldLabel = [[NSString alloc] initWithString:[[assetTypeAttributes objectAtIndex:i] description]];
+      NSString *textFieldLabel = [[NSString alloc] initWithString:[[assetTypeAttributes objectAtIndex:i] valueForKey:@"keyName"]];
       UITextField *attribField = [[UITextField alloc] init];
       textfieldHeight = 30;
       textfieldWidth = 280;
       
       attribField = [[UITextField alloc] initWithFrame:CGRectMake(0, (i * textfieldHeight + 10), textfieldWidth, textfieldHeight)];
-        
       attribField.borderStyle = UITextBorderStyleRoundedRect;
       attribField.placeholder = textFieldLabel;
       attribField.tag = i;
@@ -290,7 +275,7 @@
       textFieldFrame.origin.x = 20;
       textFieldFrame.origin.y += (170 + (15 * i));
       attribField.frame = textFieldFrame;
-        
+
       [addAssetScroller addSubview:attribField];
               
       //Store attribute field-label in array
@@ -298,7 +283,19 @@
       NSLog(@"attribTextFields: %@", attribTextFields);
       
       attribField = [[UITextField alloc] init];
-
+      
+      /*
+      //clear subviews (attribute field)
+      NSArray *subviews = [[addAssetScroller subviews] copy];
+      NSLog(@"subviews: %@", subviews);
+      for (UIView *subview in subviews)
+      {
+        if ([subview isEqual:attribField])
+        {
+          [subview removeFromSuperview];
+        }
+      }
+       */
     }
   }
 }
@@ -335,6 +332,10 @@
         [           {
             keyName: string,
             value : string
+            unit
+            {
+              id: long
+            }
           }, ...
         ]
      }"
@@ -347,21 +348,12 @@
     NSMutableDictionary *assetTypeDict = [[NSMutableDictionary alloc] init];
     [assetTypeDict setObject:selectedAssetTypeId forKey:@"id"];
     NSLog(@"selectedAssetTypeId: %@", selectedAssetTypeId);
-    //id depends on chosen AssetType
-    //hardcoded id aircon - 20130101011100000
-    //hardcoded id window - 20130101011300000
-    
-    //AssetAttributes Array of Objects - Store key and name in array first before consolidating in a dictionary
-    //Use Core Data Model Objects
-    
-    //NSMutableArray *assetAttribKeyArray = [[NSMutableArray alloc] initWithObjects:@"Model", @"Brand", @"Power Consumption", @"Remark", nil];
-    //NSMutableArray *assetAttribValueArray = [[NSMutableArray alloc] initWithObjects:modelField.text, brandField.text, powerConsumptionField.text, remarksArea.text , nil];
     
     //Getting and setting Asset Attributes
     NSMutableArray *assetAttribKeyArray = [[NSMutableArray alloc] init];
     NSMutableArray *assetAttribValueArray = [[NSMutableArray alloc] init];
     UITextField *fieldContent = [[UITextField alloc] init];
-    //NSString *fieldContent = [[NSString alloc] init];
+
     for(NSString *key in [attribTextFields allKeys])
     {
       [assetAttribKeyArray addObject:key];
@@ -369,7 +361,7 @@
       
       fieldContent = [attribTextFields valueForKey:key];
       [assetAttribValueArray addObject:fieldContent.text];
-      //[assetAttribValueArray addObject:[[attribTextFields valueForKey:key] description]];
+
       fieldContent = [[UITextField alloc] init];
       NSLog(@"assetAttribValueArray: %@", assetAttribValueArray);
     }
@@ -402,7 +394,9 @@
     NSLog(@"jsonString Request: %@", jsonString);
     
     //Set URL for Add Asset
-    URL = @"http://192.168.2.113:8080/vertex-api/asset/addAsset";
+    //URL = @"http://192.168.2.113:8080/vertex-api/asset/addAsset";
+    URL = @"http://192.168.2.113/vertex-api/asset/addAsset";
+    
     NSMutableURLRequest *postRequest = [NSMutableURLRequest
                                        requestWithURL:[NSURL URLWithString:URL]];
     

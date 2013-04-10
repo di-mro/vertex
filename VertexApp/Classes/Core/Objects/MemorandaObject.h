@@ -1,14 +1,14 @@
 //
-//  Memoranda.h
+//  MemorandaObject.h
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 4/9/13.
+//  Created by Mary Rose Oh on 4/10/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface Memoranda : NSObject
+@interface MemorandaObject : NSObject
 
 @property (nonatomic, retain) NSNumber * broadcastGroupId;
 @property (nonatomic, retain) NSNumber * creator;
