@@ -16,6 +16,7 @@
 @implementation HomePageViewController
 
 @synthesize homePageEntries;
+@synthesize homePageIcons;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -49,26 +50,15 @@
 - (void) displayHomePageEntries
 {
   homePageEntries = [[NSMutableArray alloc] init];
-  
-  /* !- For demo only, remove hard coded values. Must retrieve listing in DB -! */
-  /*
-  NSString *entry1 = @"Asset";
-  NSString *entry2 = @"Service Request";
-  NSString *entry3 = @"Notices";
-  NSString *entry4 = @"Billing";
-  NSString *entry5 = @"Schedule";
-  NSString *entry6 = @"Administration";
-  NSString *entry7 = @"Options/Configurations";
-  */
-  
-  NSString *entry1 = @"Notification";
-  NSString *entry2 = @"Service Request";
-  NSString *entry3 = @"Asset";
-  NSString *entry4 = @"Billing";
-  NSString *entry5 = @"Reports";
-  NSString *entry6 = @"Administration";
-  NSString *entry7 = @"Schedule";
-  NSString *entry8 = @"Settings";
+
+  NSString *entry1 = @" Notification";
+  NSString *entry2 = @" Service Request";
+  NSString *entry3 = @" Asset";
+  NSString *entry4 = @" Billing";
+  NSString *entry5 = @" Reports";
+  NSString *entry6 = @" Administration";
+  NSString *entry7 = @" Schedule";
+  NSString *entry8 = @" Settings";
   
   [homePageEntries addObject:entry1];
   [homePageEntries addObject:entry2];
@@ -78,6 +68,9 @@
   [homePageEntries addObject:entry6];
   [homePageEntries addObject:entry7];
   [homePageEntries addObject:entry8];
+  
+  
+  homePageIcons = [[NSMutableArray alloc] initWithObjects:@"alarm.png", @"list.png", @"cabinet.png", @"grid_view.png", @"clipboard.png", @"admin.png", @"calendar.png", @"cog.png" ,nil];
 }
 
 
@@ -107,18 +100,27 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
+  
   cell.textLabel.text = [self.homePageEntries objectAtIndex:indexPath.row];
+  cell.imageView.image = [UIImage imageNamed:(NSString*)[self.homePageIcons objectAtIndex:indexPath.row]];
+  
   cell.textLabel.numberOfLines = 0;
   return cell;
+}
+
+
+//Change the Height of the Cell [Default is 45]:
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
+{
+  return 50;
 }
 
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  /* !- Remove these hardcoded cases for Home Page entries -! */
   switch (indexPath.row)
   {
-    //Notices
+    //Notifications
     case 0: [self performSegueWithIdentifier:@"homeToNotices" sender:self];
       break;
     //Service Request

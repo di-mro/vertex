@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
-#import "AssetAccountabilityObject.h"
+#import "AssetAccountablesObject.h"
 
-@implementation AssetAccountabilityObject
+@implementation AssetAccountablesObject
 
 @synthesize assetId;
 @synthesize userId;

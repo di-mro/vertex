@@ -46,7 +46,6 @@
 {
   systemFunctionConfigPageEntries = [[NSMutableArray alloc] init];
   
-  /* !- For demo only, remove hard coded values. Must retrieve listing in DB -! */
   NSString *entry1 = @"View System Functions";
     
   [systemFunctionConfigPageEntries addObject:entry1];

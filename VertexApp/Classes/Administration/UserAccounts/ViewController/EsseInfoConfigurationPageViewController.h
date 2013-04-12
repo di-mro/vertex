@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EsseInfoConfigurationViewController : UIViewController
+@interface EsseInfoConfigurationPageViewController : UIViewController
 
 - (void) displayEsseInfoConfigPageEntries;
 

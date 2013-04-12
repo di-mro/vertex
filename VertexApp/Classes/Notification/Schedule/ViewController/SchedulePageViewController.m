@@ -19,7 +19,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -43,7 +44,6 @@
 {
   schedulePageEntries = [[NSMutableArray alloc] init];
   
-  /* !-For demo only, remove hard coded values. Must retrieve listing in DB -! */
   /*
    NSString *entry1 = @"Edit Password";
    NSString *entry2 = @"Edit Account Details";

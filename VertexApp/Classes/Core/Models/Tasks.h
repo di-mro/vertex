@@ -2,7 +2,7 @@
 //  Tasks.h
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 3/11/13.
+//  Created by Mary Rose Oh on 4/11/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
@@ -16,9 +16,12 @@
 @property (nonatomic, retain) NSNumber * serviceRequestId;
 @property (nonatomic, retain) NSString * taskDescription;
 @property (nonatomic, retain) NSNumber * taskId;
-@property (nonatomic, retain) id tasks;
-@property (nonatomic, retain) Personnels *tasksToPersonnels;
+@property (nonatomic, retain) NSString * taskName;
+@property (nonatomic, retain) NSNumber * assignedTo;
+@property (nonatomic, retain) NSNumber * status;
+@property (nonatomic, retain) NSSet *tasksToPersonnels;
 @property (nonatomic, retain) ServiceRequests *tasksToSR;
+
 @end
 
 @interface Tasks (CoreDataGeneratedAccessors)

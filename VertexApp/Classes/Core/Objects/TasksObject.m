@@ -13,6 +13,8 @@
 @synthesize serviceRequestId;
 @synthesize taskDescription;
 @synthesize taskId;
-@synthesize tasks;
+@synthesize taskName;
+@synthesize assignedTo;
+@synthesize status;
 
 @end

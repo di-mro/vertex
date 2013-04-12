@@ -25,17 +25,6 @@
 @synthesize assetNameField;
 @synthesize assetTypeField;
 
-/*
-@synthesize modelField;
-@synthesize brandField;
-@synthesize powerConsumptionField;
-@synthesize remarksArea;
-
-@synthesize modelLabel;
-@synthesize brandLabel;
-@synthesize powerConsumptionLabel;
-@synthesize remarksLabel;
-*/
 @synthesize assetTypeAttributes;
 @synthesize selectedIndex;
 @synthesize attribTextFields;
@@ -117,11 +106,12 @@
 #pragma mark - Call WS endpoint to get details for the selected asset
 -(void) getAssetInfo
 {
-  URL = @"http://192.168.2.113:8080/vertex-api/asset/getAsset/";
+  //URL = @"http://192.168.2.113:8080/vertex-api/asset/getAsset/";
+  URL = @"http://192.168.2.113/vertex-api/asset/getAsset/";
   
   //! TEST
   NSMutableString *urlParams = [NSMutableString
-                                stringWithFormat:@"http://192.168.2.13:8080/vertex-api/asset/getAsset/%@"
+                                stringWithFormat:@"http://192.168.2.13/vertex-api/asset/getAsset/%@"
                                 , selectedAssetId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
@@ -233,7 +223,8 @@
 - (void) getAssetTypes
 {
   //Set URL for retrieving AssetTypes
-  URL = @"http://192.168.2.13:8080/vertex-api/asset/getAssetTypes";
+  //URL = @"http://192.168.2.13:8080/vertex-api/asset/getAssetTypes";
+  URL = @"http://192.168.2.13/vertex-api/asset/getAssetTypes";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:URL]];
@@ -516,13 +507,14 @@
     NSLog(@"jsonString Request: %@", jsonString);
     
     //Set URL for Update Asset
-    URL = @"http://192.168.2.13:8080/vertex-api/asset/updateAsset";
+    //URL = @"http://192.168.2.13:8080/vertex-api/asset/updateAsset";
+    URL = @"http://192.168.2.13/vertex-api/asset/updateAsset";
+    
     NSMutableURLRequest *putRequest = [NSMutableURLRequest
                                         requestWithURL:[NSURL URLWithString:URL]];
     
     //PUT method - Update
     [putRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    //[putRequest setValue:@"20130101500000001" forHTTPHeaderField:@"userId"]; //make userID dynamic
     [putRequest setHTTPMethod:@"PUT"];
     [putRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String]
                                             length:[jsonString length]]];

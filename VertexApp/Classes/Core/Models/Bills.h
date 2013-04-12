@@ -2,14 +2,14 @@
 //  Bills.h
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 3/11/13.
+//  Created by Mary Rose Oh on 4/10/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class OneTimeBills, RecurringBills, UserAccounts;
+@class MasterBills, OneTimeBills, RecurringBills, UserAccounts;
 
 @interface Bills : NSManagedObject
 
@@ -20,6 +20,8 @@
 @property (nonatomic, retain) NSData * file;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * url;
+@property (nonatomic, retain) NSDate * dueDate;
+@property (nonatomic, retain) MasterBills *billsToMasterBills;
 @property (nonatomic, retain) OneTimeBills *billsToOneTimeBills;
 @property (nonatomic, retain) RecurringBills *billsToRecurringBills;
 @property (nonatomic, retain) UserAccounts *billsToUserAccount;

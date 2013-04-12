@@ -41,7 +41,6 @@
 {
   noticesPageEntries = [[NSMutableArray alloc] init];
   
-  /* !-For demo only, remove hard coded values. Must retrieve listing in DB -! */
   NSString *entry1 = @"Create Notice";
   NSString *entry2 = @"View Notice";
   NSString *entry3 = @"Create Memorandum";

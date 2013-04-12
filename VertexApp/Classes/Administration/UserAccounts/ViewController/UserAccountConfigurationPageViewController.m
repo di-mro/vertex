@@ -46,18 +46,22 @@
 {
   userAccountConfigPageEntries = [[NSMutableArray alloc] init];
   
-  /* !- For demo only, remove hard coded values. Must retrieve listing in DB -! */
   NSString *entry1 = @"User Account Activation";
   NSString *entry2 = @"User Group Configuration";
   NSString *entry3 = @"Edit User Account Details";
   NSString *entry4 = @"Add User Profile";
-  NSString *entry5 = @"Edit User Profile";
+  NSString *entry5 = @"View User Profile";
+  NSString *entry6 = @"Edit User Profile";
+  NSString *entry7 = @"Remove User Profile";
   
   [userAccountConfigPageEntries addObject:entry1];
   [userAccountConfigPageEntries addObject:entry2];
   [userAccountConfigPageEntries addObject:entry3];
   [userAccountConfigPageEntries addObject:entry4];
   [userAccountConfigPageEntries addObject:entry5];
+  [userAccountConfigPageEntries addObject:entry6];
+  [userAccountConfigPageEntries addObject:entry7];
+
 }
 
 #pragma mark - Table view data source implementation
@@ -108,8 +112,14 @@
     //Add User Profile
     case 3: [self performSegueWithIdentifier:@"userAccountConfigToAddUserProfile" sender:self];
       break;
+    //View User Profile
+    case 4: [self performSegueWithIdentifier:@"userAccountConfigToViewUserProfile" sender:self];
+      break;
     //Edit User Profile
-    case 4: [self performSegueWithIdentifier:@"userAccountConfigToEditUserProfile" sender:self];
+    case 5: [self performSegueWithIdentifier:@"userAccountConfigToEditUserProfile" sender:self];
+      break;
+    //Remove User Profile
+    case 6: [self performSegueWithIdentifier:@"userAccountConfigToRemoveUserProfile" sender:self];
       break;
     default: break;
   }

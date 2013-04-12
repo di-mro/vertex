@@ -19,7 +19,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -43,7 +44,6 @@
 {
   billingTasksPageEntries = [[NSMutableArray alloc] init];
   
-  /* !- For demo only, remove hard coded values. Must retrieve listing in DB -! */
   NSString *entry1 = @"Generate One-Time Billing";
   NSString *entry2 = @"View One-Time Billing";
   NSString *entry3 = @"Recurring Bill Configuration";
@@ -93,6 +93,7 @@
   return 70;
 }
 
+
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -111,12 +112,7 @@
     //
     default: break;
   }
-  */
-  
-  /*
-   !- TODO -!
-   Segue to additional storyboards
-   */
+  */  
 }
 
 

@@ -13,6 +13,8 @@
 @property (nonatomic, retain) NSNumber * serviceRequestId;
 @property (nonatomic, retain) NSString * taskDescription;
 @property (nonatomic, retain) NSNumber * taskId;
-@property (nonatomic, retain) NSMutableArray * tasks;
+@property (nonatomic, retain) NSString * taskName;
+@property (nonatomic, retain) NSNumber * assignedTo;
+@property (nonatomic, retain) NSNumber * status;
 
 @end

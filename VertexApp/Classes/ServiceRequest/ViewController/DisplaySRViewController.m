@@ -14,11 +14,6 @@
 
 @implementation DisplaySRViewController
 
-/*
-@synthesize nameField;
-@synthesize unitLocationField;
-@synthesize contactNumberField;
-*/
 @synthesize assetField;
 @synthesize lifecycleField;
 @synthesize serviceField;

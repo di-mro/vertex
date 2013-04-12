@@ -9,7 +9,6 @@
 #import "SRFeedbackPageViewController.h"
 #import "HomePageViewController.h"
 #import "ServiceRequestViewController.h"
-//#import "Feedback.h"
 #import "RestKit/RestKit.h"
 
 @interface SRFeedbackPageViewController ()
@@ -48,7 +47,7 @@
   //Scroller size
   self.srFeedbackScroller.contentSize = CGSizeMake(320.0, 900.0);
   
-  //srRatings
+  //srRatings init
   srRatings = 0;
   
   [self displaySRFeedbackPageQuestions];
@@ -65,7 +64,6 @@
 # pragma mark - Display entries/questions in Service Requests Feedback Page
 - (void) displaySRFeedbackPageQuestions
 {
-  /* !- TODO For demo only, remove hard coded values or finalize the feedback questions to be used-! */
   displaySRFeedbackQuestions = [[NSMutableArray alloc] init];
   NSString *entry1 = @"Service is fast?";
   NSString *entry2 = @"Service is efficient?";
@@ -189,7 +187,6 @@
   */
   
   /* !- TODO -! */
-  //if(validateSaveToDB)
   //Inform user Service Request is saved
   UIAlertView *srFeedbackAlert = [[UIAlertView alloc]
                                 initWithTitle:@"Service Request Feedback"
@@ -201,22 +198,19 @@
   //Transition to Service Request Page - alertView clickedButtonAtIndex
 }
 
+
 #pragma mark - Transition to Service Request Page when OK on Alert Box is clicked
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
   if (buttonIndex == 0) //OK
   {
-    /*
-    ServiceRequestViewController* controller = (ServiceRequestViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"SRPage"];
-    
-    [self.navigationController pushViewController:controller animated:YES];
-    */
     //Go back to Home
     HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
     
     [self.navigationController pushViewController:controller animated:YES];
   }
 }
+
 
 #pragma mark - Dismiss onscreen keyboard
 -(void)dismissKeyboard

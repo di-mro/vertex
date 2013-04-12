@@ -55,11 +55,12 @@
 #pragma mark - Call WS endpoint to get details for the selected lifecycle
 -(void) getLifecycleInfo
 {
-  URL = @"http://192.168.2.113:8080/vertex-api/lifecycle/getLifecycle/";
+  //URL = @"http://192.168.2.113:8080/vertex-api/lifecycle/getLifecycle/";
+  URL = @"http://192.168.2.113/vertex-api/lifecycle/getLifecycle/";
   
   //! TEST
   NSMutableString *urlParams = [NSMutableString
-                                stringWithFormat:@"http://192.168.2.113:8080/vertex-api/lifecycle/getLifecycle/%@"
+                                stringWithFormat:@"http://192.168.2.113/vertex-api/lifecycle/getLifecycle/%@"
                                 , lifecycleId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest

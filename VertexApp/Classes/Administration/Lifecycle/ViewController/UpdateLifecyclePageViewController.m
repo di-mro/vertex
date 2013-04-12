@@ -31,6 +31,7 @@
 @synthesize URL;
 @synthesize httpResponseCode;
 
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -96,11 +97,12 @@
 #pragma mark - Get chosen lifecycle info
 -(void) getLifecycleInfo
 {
-  URL = @"http://192.168.2.113:8080/vertex-api/lifecycle/getLifecycle/";
+  //URL = @"http://192.168.2.113:8080/vertex-api/lifecycle/getLifecycle/";
+  URL = @"http://192.168.2.113/vertex-api/lifecycle/getLifecycle/";
   
   //! TEST
   NSMutableString *urlParams = [NSMutableString
-                                stringWithFormat:@"http://192.168.2.113:8080/vertex-api/lifecycle/getLifecycle/%@"
+                                stringWithFormat:@"http://192.168.2.113/vertex-api/lifecycle/getLifecycle/%@"
                                 , lifecycleId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest

@@ -42,7 +42,7 @@
   [self.view addGestureRecognizer:tap];
   
   //Configure Scroller size
-  //self.updateLifecycleScroller.contentSize = CGSizeMake(320, 720);
+  self.updateAssetTypeScroller.contentSize = CGSizeMake(320, 720);
   
   //[Cancel] navigation button
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelUpdateAssetType)];
@@ -87,11 +87,12 @@
 -(void) getAssetTypeInfo
 {
   //URL for retrieving particular asset type info
-  URL = @"http://192.168.2.113:8080/vertex-api/asset/getAssetType/";
+  //URL = @"http://192.168.2.113:8080/vertex-api/asset/getAssetType/";
+  URL = @"http://192.168.2.113/vertex-api/asset/getAssetType/";
   
   //! TEST
   NSMutableString *urlParams = [NSMutableString
-                                stringWithFormat:@"http://192.168.2.113:8080/vertex-api/asset/getAssetType/%@"
+                                stringWithFormat:@"http://192.168.2.113/vertex-api/asset/getAssetType/%@"
                                 , assetTypeId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest

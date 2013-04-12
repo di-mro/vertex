@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12D78" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="AssetAccountability" representedClassName="AssetAccountability" syncable="YES">
+    <entity name="AssetAccountables" representedClassName="AssetAccountables" syncable="YES">
         <attribute name="assetId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="assetAccountabilityToAsset" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Assets" inverseName="assetToAssetAccountability" inverseEntity="Assets" syncable="YES"/>
@@ -24,7 +24,7 @@
         <attribute name="assetId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="assetName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assetTypeId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <relationship name="assetToAssetAccountability" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="AssetAccountability" inverseName="assetAccountabilityToAsset" inverseEntity="AssetAccountability" syncable="YES"/>
+        <relationship name="assetToAssetAccountability" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="AssetAccountables" inverseName="assetAccountabilityToAsset" inverseEntity="AssetAccountables" syncable="YES"/>
         <relationship name="assetToAssetAttributes" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="AssetAttributes" inverseName="assetAttributesToAssets" inverseEntity="AssetAttributes" syncable="YES"/>
         <relationship name="assetToAssetOwnership" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="AssetOwnership" inverseName="assetOwnershipToAsset" inverseEntity="AssetOwnership" syncable="YES"/>
         <relationship name="assetToAssetSupers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AssetSupers" inverseName="assetSupersToAssets" inverseEntity="AssetSupers" syncable="YES"/>
@@ -75,6 +75,7 @@
         <attribute name="billId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="billsDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="creator" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="dueDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="file" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
@@ -145,6 +146,7 @@
         <attribute name="comment" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="serviceRequestId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="feedbacksToPollResults" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="PollResults" inverseName="pollResultsToFeedbacks" inverseEntity="PollResults" syncable="YES"/>
         <relationship name="feedbacksToSR" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="ServiceRequests" inverseName="srToFeedbacks" inverseEntity="ServiceRequests" syncable="YES"/>
     </entity>
     <entity name="Lifecycles" representedClassName="Lifecycles" syncable="YES">
@@ -156,6 +158,7 @@
     </entity>
     <entity name="LifecycleServices" representedClassName="LifecycleServices" syncable="YES">
         <attribute name="assetTypeLifecycleId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="serviceId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="services" optional="YES" attributeType="Transformable" syncable="YES"/>
         <relationship name="lifecycleServicesToAssetTypeLifecycle" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="AssetTypeLifecycles" inverseName="assetTypeLifecycleToLifecycleServices" inverseEntity="AssetTypeLifecycles" syncable="YES"/>
         <relationship name="lifecycleServicesToServices" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Services" inverseName="servicesToLifecycleServices" inverseEntity="Services" syncable="YES"/>
@@ -188,6 +191,16 @@
         <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="memorandaToBroadcastGroup" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="BroadcastGroups" inverseName="broadcastGroupsToMemoranda" inverseEntity="BroadcastGroups" syncable="YES"/>
+    </entity>
+    <entity name="Notes" representedClassName="Notes" syncable="YES">
+        <attribute name="creationDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="creationTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="creationTimezone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="noteId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="sender" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="serviceRequestId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="notesToSR" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="ServiceRequests" inverseName="srToNotes" inverseEntity="ServiceRequests" syncable="YES"/>
     </entity>
     <entity name="NoticePriorities" representedClassName="NoticePriorities" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -236,6 +249,18 @@
         <relationship name="personnelsToPersonnelInfo" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="PersonnelInfo" inverseName="personnelInfoToPersonnel" inverseEntity="PersonnelInfo" syncable="YES"/>
         <relationship name="personnelsToTask" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Tasks" inverseName="tasksToPersonnels" inverseEntity="Tasks" syncable="YES"/>
     </entity>
+    <entity name="PollQuestions" representedClassName="PollQuestions" syncable="YES">
+        <attribute name="pollId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="question" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="pollQuestionsToPollResults" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="PollResults" inverseName="pollResultsToPollQuestions" inverseEntity="PollResults" syncable="YES"/>
+    </entity>
+    <entity name="PollResults" representedClassName="PollResults" syncable="YES">
+        <attribute name="feedbackId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="pollId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="pollResultsToFeedbacks" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Feedbacks" inverseName="feedbacksToPollResults" inverseEntity="Feedbacks" syncable="YES"/>
+        <relationship name="pollResultsToPollQuestions" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="PollQuestions" inverseName="pollQuestionsToPollResults" inverseEntity="PollQuestions" syncable="YES"/>
+    </entity>
     <entity name="Priorities" representedClassName="Priorities" syncable="YES">
         <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="priorityDescription" optional="YES" attributeType="String" syncable="YES"/>
@@ -270,6 +295,7 @@
         <attribute name="statusId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="srToAsset" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Assets" inverseName="assetToServiceRequests" inverseEntity="Assets" syncable="YES"/>
         <relationship name="srToFeedbacks" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Feedbacks" inverseName="feedbacksToSR" inverseEntity="Feedbacks" syncable="YES"/>
+        <relationship name="srToNotes" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Notes" inverseName="notesToSR" inverseEntity="Notes" syncable="YES"/>
         <relationship name="srToPriorities" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Priorities" inverseName="prioritiesToSR" inverseEntity="Priorities" syncable="YES"/>
         <relationship name="srToServices" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Services" inverseName="servicesToSR" inverseEntity="Services" syncable="YES"/>
         <relationship name="srToSRSchedule" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="ServiceRequestSchedules" inverseName="srScheduleToSR" inverseEntity="ServiceRequestSchedules" syncable="YES"/>
@@ -278,9 +304,17 @@
         <relationship name="srToUserAccount" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="UserAccounts" inverseName="userAccountToServiceRequest" inverseEntity="UserAccounts" syncable="YES"/>
     </entity>
     <entity name="ServiceRequestSchedules" representedClassName="ServiceRequestSchedules" syncable="YES">
-        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="active" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="author" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="fromDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fromTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fromTimezone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="scheduleId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="serviceRequestId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="statusId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="toDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="toTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="toTimezone" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="srScheduleToSR" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="ServiceRequests" inverseName="srToSRSchedule" inverseEntity="ServiceRequests" syncable="YES"/>
     </entity>
     <entity name="Services" representedClassName="Services" syncable="YES">
@@ -309,10 +343,12 @@
         <relationship name="systemFunctionHierarchiesToSystemFunction" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="SystemFunctions" inverseName="systemFunctionToSystemFunctionHierarchies" inverseEntity="SystemFunctions" syncable="YES"/>
     </entity>
     <entity name="Tasks" representedClassName="Tasks" syncable="YES">
+        <attribute name="assignedTo" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="serviceRequestId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="taskDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="taskId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="tasks" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="taskName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="tasksToPersonnels" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Personnels" inverseName="personnelsToTask" inverseEntity="Personnels" syncable="YES"/>
         <relationship name="tasksToSR" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="ServiceRequests" inverseName="srToTasks" inverseEntity="ServiceRequests" syncable="YES"/>
     </entity>
@@ -329,7 +365,7 @@
         <attribute name="userId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="userInfoId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="userAccountToAssetAccountability" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AssetAccountability" inverseName="assetAccountabilityToUserAccount" inverseEntity="AssetAccountability" syncable="YES"/>
+        <relationship name="userAccountToAssetAccountability" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AssetAccountables" inverseName="assetAccountabilityToUserAccount" inverseEntity="AssetAccountables" syncable="YES"/>
         <relationship name="userAccountToBills" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Bills" inverseName="billsToUserAccount" inverseEntity="Bills" syncable="YES"/>
         <relationship name="userAccountToBroadcastUsers" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="BroadcastUsers" inverseName="broadcastUsersToUserAccount" inverseEntity="BroadcastUsers" syncable="YES"/>
         <relationship name="userAccountToServiceRequest" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="ServiceRequests" inverseName="srToUserAccount" inverseEntity="ServiceRequests" syncable="YES"/>
@@ -370,53 +406,56 @@
         <relationship name="userProfileToUserAccount" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="UserAccounts" inverseName="userAccountToUserProfile" inverseEntity="UserAccounts" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AssetAccountability" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="AssetAttributes" positionX="0" positionY="0" width="128" height="135"/>
-        <element name="AssetOwnership" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="Assets" positionX="0" positionY="0" width="128" height="195"/>
-        <element name="AssetSupers" positionX="0" positionY="0" width="128" height="90"/>
-        <element name="AssetTypeAttributes" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="AssetTypeLifecycles" positionX="0" positionY="0" width="128" height="135"/>
-        <element name="AssetTypes" positionX="0" positionY="0" width="128" height="135"/>
-        <element name="Attributes" positionX="0" positionY="0" width="128" height="90"/>
-        <element name="AttributeUnits" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="Bills" positionX="0" positionY="0" width="128" height="210"/>
-        <element name="BroadcastGroups" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="BroadcastUsers" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="ContactInfo" positionX="0" positionY="0" width="128" height="165"/>
-        <element name="ContactTypes" positionX="0" positionY="0" width="128" height="90"/>
-        <element name="Dues" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Esse" positionX="0" positionY="0" width="128" height="135"/>
-        <element name="EsseContacts" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="EsseInfo" positionX="0" positionY="0" width="128" height="150"/>
-        <element name="Feedbacks" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="Lifecycles" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="LifecycleServices" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="ManagedAssets" positionX="0" positionY="0" width="128" height="75"/>
-        <element name="MasterBills" positionX="0" positionY="0" width="128" height="90"/>
-        <element name="MeasurementUnits" positionX="0" positionY="0" width="128" height="135"/>
-        <element name="Memoranda" positionX="-333" positionY="12" width="128" height="193"/>
-        <element name="NoticePriorities" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Notifications" positionX="0" positionY="0" width="128" height="195"/>
-        <element name="OneTimeBills" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="PersonnelContacts" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="PersonnelInfo" positionX="0" positionY="0" width="128" height="150"/>
-        <element name="Personnels" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Priorities" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="ProfileFunctions" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="RecurringBills" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="ServiceRequests" positionX="0" positionY="0" width="128" height="345"/>
-        <element name="ServiceRequestSchedules" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="Services" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Statuses" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="SystemFunctions" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="SystemProfileSequence" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="Tasks" positionX="0" positionY="0" width="128" height="135"/>
-        <element name="UserAccountOwnership" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="UserAccounts" positionX="0" positionY="0" width="128" height="255"/>
-        <element name="UserContacts" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="UserCredentials" positionX="0" positionY="0" width="128" height="150"/>
-        <element name="UserInfo" positionX="0" positionY="0" width="128" height="150"/>
-        <element name="UserProfiles" positionX="-9" positionY="-396" width="128" height="120"/>
+        <element name="AssetAccountables" positionX="-198" positionY="-270" width="182" height="103"/>
+        <element name="AssetAttributes" positionX="225" positionY="-360" width="189" height="135"/>
+        <element name="AssetOwnership" positionX="9" positionY="-405" width="128" height="105"/>
+        <element name="Assets" positionX="70" positionY="-261" width="128" height="195"/>
+        <element name="AssetSupers" positionX="277" positionY="-198" width="128" height="90"/>
+        <element name="AssetTypeAttributes" positionX="493" positionY="-78" width="191" height="105"/>
+        <element name="AssetTypeLifecycles" positionX="288" positionY="108" width="207" height="135"/>
+        <element name="AssetTypes" positionX="268" positionY="-81" width="182" height="135"/>
+        <element name="Attributes" positionX="630" positionY="-198" width="153" height="90"/>
+        <element name="AttributeUnits" positionX="718" positionY="-360" width="191" height="105"/>
+        <element name="Bills" positionX="-495" positionY="-261" width="128" height="223"/>
+        <element name="BroadcastGroups" positionX="-1053" positionY="-333" width="189" height="120"/>
+        <element name="BroadcastUsers" positionX="-792" positionY="-258" width="198" height="105"/>
+        <element name="ContactInfo" positionX="-0" positionY="-1110" width="128" height="165"/>
+        <element name="ContactTypes" positionX="18" positionY="-1260" width="128" height="90"/>
+        <element name="Dues" positionX="-344" positionY="144" width="128" height="120"/>
+        <element name="Esse" positionX="7" positionY="-576" width="128" height="135"/>
+        <element name="EsseContacts" positionX="18" positionY="-909" width="128" height="105"/>
+        <element name="EsseInfo" positionX="-0" positionY="-762" width="128" height="150"/>
+        <element name="Feedbacks" positionX="25" positionY="435" width="128" height="118"/>
+        <element name="Lifecycles" positionX="288" positionY="297" width="189" height="120"/>
+        <element name="LifecycleServices" positionX="673" positionY="242" width="209" height="118"/>
+        <element name="ManagedAssets" positionX="-146" positionY="-135" width="128" height="75"/>
+        <element name="MasterBills" positionX="-506" positionY="45" width="128" height="90"/>
+        <element name="MeasurementUnits" positionX="466" positionY="-360" width="200" height="135"/>
+        <element name="Memoranda" positionX="-1269" positionY="-432" width="173" height="193"/>
+        <element name="NoticePriorities" positionX="-1557" positionY="-138" width="180" height="120"/>
+        <element name="Notifications" positionX="-1269" positionY="-195" width="171" height="195"/>
+        <element name="OneTimeBills" positionX="-693" positionY="-99" width="128" height="105"/>
+        <element name="PersonnelContacts" positionX="205" positionY="-915" width="182" height="105"/>
+        <element name="PersonnelInfo" positionX="1123" positionY="-591" width="128" height="150"/>
+        <element name="Personnels" positionX="619" positionY="522" width="128" height="120"/>
+        <element name="Priorities" positionX="-344" positionY="321" width="128" height="120"/>
+        <element name="ProfileFunctions" positionX="-1008" positionY="-666" width="180" height="105"/>
+        <element name="RecurringBills" positionX="-326" positionY="-72" width="128" height="105"/>
+        <element name="ServiceRequests" positionX="61" positionY="27" width="128" height="358"/>
+        <element name="ServiceRequestSchedules" positionX="-126" positionY="2" width="155" height="223"/>
+        <element name="Services" positionX="304" positionY="684" width="155" height="120"/>
+        <element name="Statuses" positionX="-209" positionY="486" width="128" height="105"/>
+        <element name="SystemFunctions" positionX="-1055" positionY="-816" width="236" height="105"/>
+        <element name="SystemProfileSequence" positionX="-1368" positionY="-819" width="252" height="105"/>
+        <element name="Tasks" positionX="351" positionY="468" width="128" height="163"/>
+        <element name="UserAccountOwnership" positionX="-191" positionY="-540" width="128" height="105"/>
+        <element name="UserAccounts" positionX="-558" positionY="-642" width="209" height="255"/>
+        <element name="UserContacts" positionX="-252" positionY="-909" width="128" height="105"/>
+        <element name="UserCredentials" positionX="-792" positionY="-567" width="180" height="150"/>
+        <element name="UserInfo" positionX="-263" positionY="-756" width="128" height="150"/>
+        <element name="UserProfiles" positionX="-774" positionY="-729" width="164" height="120"/>
+        <element name="Notes" positionX="-243" positionY="621" width="128" height="163"/>
+        <element name="PollResults" positionX="25" positionY="608" width="155" height="118"/>
+        <element name="PollQuestions" positionX="18" positionY="776" width="162" height="88"/>
     </elements>
 </model>

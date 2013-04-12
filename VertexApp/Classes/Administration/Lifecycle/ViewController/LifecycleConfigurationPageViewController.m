@@ -46,7 +46,6 @@
 {
   lifecycleConfigPageEntries = [[NSMutableArray alloc] init];
   
-  /* !- For demo only, remove hard coded values. Must retrieve listing in DB -! */
   NSString *entry1 = @"Add Lifecycle";
   NSString *entry2 = @"View Lifecycle";
   NSString *entry3 = @"Update Lifecycle";

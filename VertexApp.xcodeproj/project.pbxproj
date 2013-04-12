@@ -13,7 +13,7 @@
 		ED08BDB7170732C800588760 /* AssetConfigurationPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED08BDB6170732C700588760 /* AssetConfigurationPageViewController.m */; };
 		ED08BDBA1707367600588760 /* UserAccountConfigurationPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED08BDB91707367600588760 /* UserAccountConfigurationPageViewController.m */; };
 		ED08BDBD170738A400588760 /* SystemFunctionConfigurationPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED08BDBC170738A400588760 /* SystemFunctionConfigurationPageViewController.m */; };
-		ED08BDC017073AD800588760 /* EsseInfoConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED08BDBF17073AD800588760 /* EsseInfoConfigurationViewController.m */; };
+		ED08BDC017073AD800588760 /* EsseInfoConfigurationPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED08BDBF17073AD800588760 /* EsseInfoConfigurationPageViewController.m */; };
 		ED0A1A65170D424E0093FE4B /* UpdateAssetTypeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0A1A64170D424E0093FE4B /* UpdateAssetTypeListViewController.m */; };
 		ED0A1A6B170D42630093FE4B /* UpdateAssetTypePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0A1A6A170D42630093FE4B /* UpdateAssetTypePageViewController.m */; };
 		ED0A1A6E170D66640093FE4B /* ViewAssetTypePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0A1A6D170D66630093FE4B /* ViewAssetTypePageViewController.m */; };
@@ -30,7 +30,7 @@
 		ED2E1417171289F70012CB99 /* MasterBills.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E1416171289F70012CB99 /* MasterBills.m */; };
 		ED2E141A17129FE40012CB99 /* SystemProfileSequence.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E141917129FE30012CB99 /* SystemProfileSequence.m */; };
 		ED2E141D171405600012CB99 /* AssetsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E141C171405600012CB99 /* AssetsObject.m */; };
-		ED2E1420171405BE0012CB99 /* AssetAccountabilityObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E141F171405BE0012CB99 /* AssetAccountabilityObject.m */; };
+		ED2E1420171405BE0012CB99 /* AssetAccountablesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E141F171405BE0012CB99 /* AssetAccountablesObject.m */; };
 		ED2E14231714061A0012CB99 /* AssetAttributesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E1422171406190012CB99 /* AssetAttributesObject.m */; };
 		ED2E14261714066B0012CB99 /* AssetTypesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E14251714066B0012CB99 /* AssetTypesObject.m */; };
 		ED2E1429171406BD0012CB99 /* AssetTypeAttributesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E1428171406BB0012CB99 /* AssetTypeAttributesObject.m */; };
@@ -75,6 +75,24 @@
 		ED300D7216F9B9AD00F3063E /* UpdateAssetPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED300D7116F9B9AD00F3063E /* UpdateAssetPageViewController.m */; };
 		ED324C471710143B00DED66B /* EditUserAccountDetailsPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED324C461710143B00DED66B /* EditUserAccountDetailsPageViewController.m */; };
 		ED324C4D1710146000DED66B /* AddUserProfilePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED324C4C1710146000DED66B /* AddUserProfilePageViewController.m */; };
+		ED36A45C171667F300693797 /* PollResults.m in Sources */ = {isa = PBXBuildFile; fileRef = ED36A45B171667F300693797 /* PollResults.m */; };
+		ED36A462171667F400693797 /* Tasks.m in Sources */ = {isa = PBXBuildFile; fileRef = ED36A461171667F400693797 /* Tasks.m */; };
+		ED36A465171667F400693797 /* AssetAccountables.m in Sources */ = {isa = PBXBuildFile; fileRef = ED36A464171667F400693797 /* AssetAccountables.m */; };
+		ED36A468171667F400693797 /* Notes.m in Sources */ = {isa = PBXBuildFile; fileRef = ED36A467171667F400693797 /* Notes.m */; };
+		ED36A46B171667F400693797 /* ServiceRequestSchedules.m in Sources */ = {isa = PBXBuildFile; fileRef = ED36A46A171667F400693797 /* ServiceRequestSchedules.m */; };
+		ED36A46E171667F400693797 /* PollQuestions.m in Sources */ = {isa = PBXBuildFile; fileRef = ED36A46D171667F400693797 /* PollQuestions.m */; };
+		ED36A47117166A3B00693797 /* PollQuestionsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED36A47017166A3B00693797 /* PollQuestionsObject.m */; };
+		ED36A47417166A9000693797 /* PollResultsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED36A47317166A9000693797 /* PollResultsObject.m */; };
+		ED36A47717166C2800693797 /* NotesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED36A47617166C2800693797 /* NotesObject.m */; };
+		ED36A47A1716A9B700693797 /* ViewUserProfilePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED36A4791716A9B500693797 /* ViewUserProfilePageViewController.m */; };
+		ED36A47D1716B6B200693797 /* EditUserProfilePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED36A47C1716B6B100693797 /* EditUserProfilePageViewController.m */; };
+		ED36A4801716BA6900693797 /* RemoveUserProfilePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED36A47F1716BA6800693797 /* RemoveUserProfilePageViewController.m */; };
+		ED36A4831716BF9000693797 /* AddEssePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED36A4821716BF8E00693797 /* AddEssePageViewController.m */; };
+		ED36A4861717B02600693797 /* UpdateEsseListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED36A4851717B02500693797 /* UpdateEsseListViewController.m */; };
+		ED36A4891717B04000693797 /* UpdateEssePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED36A4881717B03E00693797 /* UpdateEssePageViewController.m */; };
+		ED36A48C1717BD1000693797 /* ViewEssePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED36A48B1717BD0D00693797 /* ViewEssePageViewController.m */; };
+		ED36A48F1717BED300693797 /* EsseDetailPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED36A48E1717BED200693797 /* EsseDetailPageViewController.m */; };
+		ED36A4921717C63B00693797 /* RemoveEssePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED36A4911717C63900693797 /* RemoveEssePageViewController.m */; };
 		ED3BB35016E04EA900468E44 /* SRFeedbackListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3BB34F16E04EA900468E44 /* SRFeedbackListViewController.m */; };
 		ED3BB35616E0524400468E44 /* SRFeedbackPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3BB35516E0524400468E44 /* SRFeedbackPageViewController.m */; };
 		ED3D573B16EB11A800497F80 /* ReportsPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED3D573A16EB11A800497F80 /* ReportsPageViewController.m */; };
@@ -96,7 +114,6 @@
 		ED59638B170C21CA00FCD141 /* DeleteAssetPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED59638A170C21CA00FCD141 /* DeleteAssetPageViewController.m */; };
 		ED59638E170C288800FCD141 /* AddAssetTypePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED59638D170C288700FCD141 /* AddAssetTypePageViewController.m */; };
 		ED59996616EDDDD700681941 /* BroadcastUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = ED59996516EDDDD700681941 /* BroadcastUsers.m */; };
-		ED59997816EDE7B800681941 /* Tasks.m in Sources */ = {isa = PBXBuildFile; fileRef = ED59997716EDE7B700681941 /* Tasks.m */; };
 		ED59EC5A16DCA78100FCA959 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC5116DCA6D700FCA959 /* libRestKit.a */; };
 		ED59EC5C16DCA78C00FCA959 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC5B16DCA78C00FCA959 /* CFNetwork.framework */; };
 		ED59EC5E16DCA79800FCA959 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC5D16DCA79800FCA959 /* CoreData.framework */; };
@@ -117,6 +134,24 @@
 		ED68A0D7171510CC0090DF1E /* UserProfilesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED68A0D6171510CB0090DF1E /* UserProfilesObject.m */; };
 		ED68A0DA17151E1E0090DF1E /* Memoranda.m in Sources */ = {isa = PBXBuildFile; fileRef = ED68A0D917151E1E0090DF1E /* Memoranda.m */; };
 		ED68A0DD17151EAB0090DF1E /* MemorandaObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED68A0DC17151EAB0090DF1E /* MemorandaObject.m */; };
+		ED68A0E017155DA60090DF1E /* Bills.m in Sources */ = {isa = PBXBuildFile; fileRef = ED68A0DF17155DA50090DF1E /* Bills.m */; };
+		ED68A0E317155DEB0090DF1E /* LifecycleServices.m in Sources */ = {isa = PBXBuildFile; fileRef = ED68A0E217155DEB0090DF1E /* LifecycleServices.m */; };
+		ED68A0EC1715D0F30090DF1E /* alarm.png in Resources */ = {isa = PBXBuildFile; fileRef = ED68A0E41715D0F30090DF1E /* alarm.png */; };
+		ED68A0ED1715D0F30090DF1E /* cabinet.png in Resources */ = {isa = PBXBuildFile; fileRef = ED68A0E51715D0F30090DF1E /* cabinet.png */; };
+		ED68A0EE1715D0F30090DF1E /* list.png in Resources */ = {isa = PBXBuildFile; fileRef = ED68A0E61715D0F30090DF1E /* list.png */; };
+		ED68A0EF1715D0F30090DF1E /* clipboard.png in Resources */ = {isa = PBXBuildFile; fileRef = ED68A0E71715D0F30090DF1E /* clipboard.png */; };
+		ED68A0F01715D0F30090DF1E /* admin.png in Resources */ = {isa = PBXBuildFile; fileRef = ED68A0E81715D0F30090DF1E /* admin.png */; };
+		ED68A0F11715D0F30090DF1E /* calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = ED68A0E91715D0F30090DF1E /* calendar.png */; };
+		ED68A0F21715D0F30090DF1E /* clock.png in Resources */ = {isa = PBXBuildFile; fileRef = ED68A0EA1715D0F30090DF1E /* clock.png */; };
+		ED68A0F31715D0F30090DF1E /* cog.png in Resources */ = {isa = PBXBuildFile; fileRef = ED68A0EB1715D0F30090DF1E /* cog.png */; };
+		ED68A0FA1715D10E0090DF1E /* wrench.png in Resources */ = {isa = PBXBuildFile; fileRef = ED68A0F41715D10E0090DF1E /* wrench.png */; };
+		ED68A0FB1715D10E0090DF1E /* grid_view.png in Resources */ = {isa = PBXBuildFile; fileRef = ED68A0F51715D10E0090DF1E /* grid_view.png */; };
+		ED68A0FC1715D10E0090DF1E /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = ED68A0F61715D10E0090DF1E /* home.png */; };
+		ED68A0FD1715D10E0090DF1E /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = ED68A0F71715D10E0090DF1E /* star.png */; };
+		ED68A0FE1715D10E0090DF1E /* remove.png in Resources */ = {isa = PBXBuildFile; fileRef = ED68A0F81715D10E0090DF1E /* remove.png */; };
+		ED68A0FF1715D10E0090DF1E /* eye.png in Resources */ = {isa = PBXBuildFile; fileRef = ED68A0F91715D10E0090DF1E /* eye.png */; };
+		ED68A1011715D6000090DF1E /* vertex_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = ED68A1001715D5EF0090DF1E /* vertex_logo.png */; };
+		ED68A1031715D6AA0090DF1E /* vertex_logo_bw.png in Resources */ = {isa = PBXBuildFile; fileRef = ED68A1021715D6A20090DF1E /* vertex_logo_bw.png */; };
 		ED8A7C7D16E4A34200F06AF1 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8A7C7716E4941200F06AF1 /* TPKeyboardAvoidingScrollView.m */; };
 		ED8A7C7E16E4A34D00F06AF1 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8A7C7916E4941200F06AF1 /* TPKeyboardAvoidingTableView.m */; };
 		EDA8E70916F05C2D00B9C57E /* UserAccounts.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA8E70816F05C2000B9C57E /* UserAccounts.m */; };
@@ -157,9 +192,7 @@
 		EDFE622416EDC448002EB414 /* AssetOwnership.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE622316EDC448002EB414 /* AssetOwnership.m */; };
 		EDFE622A16EDC4E3002EB414 /* AssetSupers.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE622916EDC4E3002EB414 /* AssetSupers.m */; };
 		EDFE623016EDC532002EB414 /* AssetTypeLifecycles.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE622F16EDC532002EB414 /* AssetTypeLifecycles.m */; };
-		EDFE623616EDC56E002EB414 /* AssetAccountability.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE623516EDC56E002EB414 /* AssetAccountability.m */; };
 		EDFE623916EDC6C1002EB414 /* Assets.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE623816EDC6C1002EB414 /* Assets.m */; };
-		EDFE623C16EDC6E5002EB414 /* Bills.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE623B16EDC6E4002EB414 /* Bills.m */; };
 		EDFE623F16EDC7ED002EB414 /* BroadcastGroups.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE623E16EDC7ED002EB414 /* BroadcastGroups.m */; };
 		EDFE624516EDC82D002EB414 /* ContactInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE624416EDC82C002EB414 /* ContactInfo.m */; };
 		EDFE624816EDC84A002EB414 /* ContactTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE624716EDC84A002EB414 /* ContactTypes.m */; };
@@ -168,7 +201,6 @@
 		EDFE625116EDC8AD002EB414 /* EsseContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE625016EDC8AD002EB414 /* EsseContacts.m */; };
 		EDFE625416EDC8F3002EB414 /* EsseInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE625316EDC8F2002EB414 /* EsseInfo.m */; };
 		EDFE625716EDC918002EB414 /* Feedbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE625616EDC917002EB414 /* Feedbacks.m */; };
-		EDFE625D16EDC96F002EB414 /* LifecycleServices.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE625C16EDC96E002EB414 /* LifecycleServices.m */; };
 		EDFE626016EDC9A2002EB414 /* ManagedAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE625F16EDC9A1002EB414 /* ManagedAssets.m */; };
 		EDFE626916EDCA67002EB414 /* OneTimeBills.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE626816EDCA66002EB414 /* OneTimeBills.m */; };
 		EDFE626C16EDCA8C002EB414 /* PersonnelContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE626B16EDCA8B002EB414 /* PersonnelContacts.m */; };
@@ -177,7 +209,6 @@
 		EDFE627516EDCB32002EB414 /* Priorities.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE627416EDCB30002EB414 /* Priorities.m */; };
 		EDFE627816EDCB5B002EB414 /* ProfileFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE627716EDCB5A002EB414 /* ProfileFunctions.m */; };
 		EDFE627B16EDCB92002EB414 /* RecurringBills.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE627A16EDCB91002EB414 /* RecurringBills.m */; };
-		EDFE628116EDCC02002EB414 /* ServiceRequestSchedules.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE628016EDCC00002EB414 /* ServiceRequestSchedules.m */; };
 		EDFE628716EDCCE6002EB414 /* Statuses.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE628616EDCCE3002EB414 /* Statuses.m */; };
 		EDFE628D16EDCD7C002EB414 /* SystemFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE628C16EDCD79002EB414 /* SystemFunctions.m */; };
 		EDFE629316EDCDFD002EB414 /* UserAccountOwnership.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFE629216EDCDFB002EB414 /* UserAccountOwnership.m */; };
@@ -234,8 +265,8 @@
 		ED08BDB91707367600588760 /* UserAccountConfigurationPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAccountConfigurationPageViewController.m; sourceTree = "<group>"; };
 		ED08BDBB170738A300588760 /* SystemFunctionConfigurationPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemFunctionConfigurationPageViewController.h; sourceTree = "<group>"; };
 		ED08BDBC170738A400588760 /* SystemFunctionConfigurationPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemFunctionConfigurationPageViewController.m; sourceTree = "<group>"; };
-		ED08BDBE17073AD800588760 /* EsseInfoConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EsseInfoConfigurationViewController.h; sourceTree = "<group>"; };
-		ED08BDBF17073AD800588760 /* EsseInfoConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EsseInfoConfigurationViewController.m; sourceTree = "<group>"; };
+		ED08BDBE17073AD800588760 /* EsseInfoConfigurationPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EsseInfoConfigurationPageViewController.h; sourceTree = "<group>"; };
+		ED08BDBF17073AD800588760 /* EsseInfoConfigurationPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EsseInfoConfigurationPageViewController.m; sourceTree = "<group>"; };
 		ED0A1A63170D424E0093FE4B /* UpdateAssetTypeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateAssetTypeListViewController.h; sourceTree = "<group>"; };
 		ED0A1A64170D424E0093FE4B /* UpdateAssetTypeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateAssetTypeListViewController.m; sourceTree = "<group>"; };
 		ED0A1A69170D42620093FE4B /* UpdateAssetTypePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateAssetTypePageViewController.h; sourceTree = "<group>"; };
@@ -268,8 +299,8 @@
 		ED2E141917129FE30012CB99 /* SystemProfileSequence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemProfileSequence.m; sourceTree = "<group>"; };
 		ED2E141B171405600012CB99 /* AssetsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetsObject.h; sourceTree = "<group>"; };
 		ED2E141C171405600012CB99 /* AssetsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetsObject.m; sourceTree = "<group>"; };
-		ED2E141E171405BD0012CB99 /* AssetAccountabilityObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetAccountabilityObject.h; sourceTree = "<group>"; };
-		ED2E141F171405BE0012CB99 /* AssetAccountabilityObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetAccountabilityObject.m; sourceTree = "<group>"; };
+		ED2E141E171405BD0012CB99 /* AssetAccountablesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetAccountablesObject.h; sourceTree = "<group>"; };
+		ED2E141F171405BE0012CB99 /* AssetAccountablesObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetAccountablesObject.m; sourceTree = "<group>"; };
 		ED2E1421171406190012CB99 /* AssetAttributesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetAttributesObject.h; sourceTree = "<group>"; };
 		ED2E1422171406190012CB99 /* AssetAttributesObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetAttributesObject.m; sourceTree = "<group>"; };
 		ED2E14241714066B0012CB99 /* AssetTypesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetTypesObject.h; sourceTree = "<group>"; };
@@ -358,6 +389,42 @@
 		ED324C461710143B00DED66B /* EditUserAccountDetailsPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditUserAccountDetailsPageViewController.m; sourceTree = "<group>"; };
 		ED324C4B1710146000DED66B /* AddUserProfilePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddUserProfilePageViewController.h; sourceTree = "<group>"; };
 		ED324C4C1710146000DED66B /* AddUserProfilePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddUserProfilePageViewController.m; sourceTree = "<group>"; };
+		ED36A45A171667F300693797 /* PollResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollResults.h; sourceTree = "<group>"; };
+		ED36A45B171667F300693797 /* PollResults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollResults.m; sourceTree = "<group>"; };
+		ED36A460171667F400693797 /* Tasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tasks.h; sourceTree = "<group>"; };
+		ED36A461171667F400693797 /* Tasks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tasks.m; sourceTree = "<group>"; };
+		ED36A463171667F400693797 /* AssetAccountables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetAccountables.h; sourceTree = "<group>"; };
+		ED36A464171667F400693797 /* AssetAccountables.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetAccountables.m; sourceTree = "<group>"; };
+		ED36A466171667F400693797 /* Notes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notes.h; sourceTree = "<group>"; };
+		ED36A467171667F400693797 /* Notes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notes.m; sourceTree = "<group>"; };
+		ED36A469171667F400693797 /* ServiceRequestSchedules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceRequestSchedules.h; sourceTree = "<group>"; };
+		ED36A46A171667F400693797 /* ServiceRequestSchedules.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceRequestSchedules.m; sourceTree = "<group>"; };
+		ED36A46C171667F400693797 /* PollQuestions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollQuestions.h; sourceTree = "<group>"; };
+		ED36A46D171667F400693797 /* PollQuestions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollQuestions.m; sourceTree = "<group>"; };
+		ED36A46F17166A3B00693797 /* PollQuestionsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollQuestionsObject.h; sourceTree = "<group>"; };
+		ED36A47017166A3B00693797 /* PollQuestionsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollQuestionsObject.m; sourceTree = "<group>"; };
+		ED36A47217166A9000693797 /* PollResultsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollResultsObject.h; sourceTree = "<group>"; };
+		ED36A47317166A9000693797 /* PollResultsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollResultsObject.m; sourceTree = "<group>"; };
+		ED36A47517166C2700693797 /* NotesObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesObject.h; sourceTree = "<group>"; };
+		ED36A47617166C2800693797 /* NotesObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesObject.m; sourceTree = "<group>"; };
+		ED36A4781716A9B400693797 /* ViewUserProfilePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewUserProfilePageViewController.h; sourceTree = "<group>"; };
+		ED36A4791716A9B500693797 /* ViewUserProfilePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewUserProfilePageViewController.m; sourceTree = "<group>"; };
+		ED36A47B1716B6AC00693797 /* EditUserProfilePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditUserProfilePageViewController.h; sourceTree = "<group>"; };
+		ED36A47C1716B6B100693797 /* EditUserProfilePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditUserProfilePageViewController.m; sourceTree = "<group>"; };
+		ED36A47E1716BA6800693797 /* RemoveUserProfilePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoveUserProfilePageViewController.h; sourceTree = "<group>"; };
+		ED36A47F1716BA6800693797 /* RemoveUserProfilePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveUserProfilePageViewController.m; sourceTree = "<group>"; };
+		ED36A4811716BF8E00693797 /* AddEssePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEssePageViewController.h; sourceTree = "<group>"; };
+		ED36A4821716BF8E00693797 /* AddEssePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEssePageViewController.m; sourceTree = "<group>"; };
+		ED36A4841717B02300693797 /* UpdateEsseListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateEsseListViewController.h; sourceTree = "<group>"; };
+		ED36A4851717B02500693797 /* UpdateEsseListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateEsseListViewController.m; sourceTree = "<group>"; };
+		ED36A4871717B03E00693797 /* UpdateEssePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateEssePageViewController.h; sourceTree = "<group>"; };
+		ED36A4881717B03E00693797 /* UpdateEssePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateEssePageViewController.m; sourceTree = "<group>"; };
+		ED36A48A1717BD0B00693797 /* ViewEssePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewEssePageViewController.h; sourceTree = "<group>"; };
+		ED36A48B1717BD0D00693797 /* ViewEssePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewEssePageViewController.m; sourceTree = "<group>"; };
+		ED36A48D1717BED000693797 /* EsseDetailPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EsseDetailPageViewController.h; sourceTree = "<group>"; };
+		ED36A48E1717BED200693797 /* EsseDetailPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EsseDetailPageViewController.m; sourceTree = "<group>"; };
+		ED36A4901717C63700693797 /* RemoveEssePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoveEssePageViewController.h; sourceTree = "<group>"; };
+		ED36A4911717C63900693797 /* RemoveEssePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveEssePageViewController.m; sourceTree = "<group>"; };
 		ED3BB34E16E04EA900468E44 /* SRFeedbackListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRFeedbackListViewController.h; sourceTree = "<group>"; };
 		ED3BB34F16E04EA900468E44 /* SRFeedbackListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRFeedbackListViewController.m; sourceTree = "<group>"; };
 		ED3BB35416E0524400468E44 /* SRFeedbackPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRFeedbackPageViewController.h; sourceTree = "<group>"; };
@@ -400,8 +467,6 @@
 		ED59638D170C288700FCD141 /* AddAssetTypePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddAssetTypePageViewController.m; sourceTree = "<group>"; };
 		ED59996416EDDDD700681941 /* BroadcastUsers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BroadcastUsers.h; sourceTree = "<group>"; };
 		ED59996516EDDDD700681941 /* BroadcastUsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BroadcastUsers.m; sourceTree = "<group>"; };
-		ED59997616EDE7B700681941 /* Tasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tasks.h; sourceTree = "<group>"; };
-		ED59997716EDE7B700681941 /* Tasks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tasks.m; sourceTree = "<group>"; };
 		ED59EC4916DCA6D600FCA959 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = ../RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		ED59EC5B16DCA78C00FCA959 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		ED59EC5D16DCA79800FCA959 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -433,6 +498,26 @@
 		ED68A0D917151E1E0090DF1E /* Memoranda.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Memoranda.m; sourceTree = "<group>"; };
 		ED68A0DB17151EAA0090DF1E /* MemorandaObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemorandaObject.h; sourceTree = "<group>"; };
 		ED68A0DC17151EAB0090DF1E /* MemorandaObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemorandaObject.m; sourceTree = "<group>"; };
+		ED68A0DE17155DA50090DF1E /* Bills.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bills.h; sourceTree = "<group>"; };
+		ED68A0DF17155DA50090DF1E /* Bills.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bills.m; sourceTree = "<group>"; };
+		ED68A0E117155DEA0090DF1E /* LifecycleServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LifecycleServices.h; sourceTree = "<group>"; };
+		ED68A0E217155DEB0090DF1E /* LifecycleServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LifecycleServices.m; sourceTree = "<group>"; };
+		ED68A0E41715D0F30090DF1E /* alarm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alarm.png; sourceTree = "<group>"; };
+		ED68A0E51715D0F30090DF1E /* cabinet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cabinet.png; sourceTree = "<group>"; };
+		ED68A0E61715D0F30090DF1E /* list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = list.png; sourceTree = "<group>"; };
+		ED68A0E71715D0F30090DF1E /* clipboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clipboard.png; sourceTree = "<group>"; };
+		ED68A0E81715D0F30090DF1E /* admin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = admin.png; sourceTree = "<group>"; };
+		ED68A0E91715D0F30090DF1E /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
+		ED68A0EA1715D0F30090DF1E /* clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock.png; sourceTree = "<group>"; };
+		ED68A0EB1715D0F30090DF1E /* cog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cog.png; sourceTree = "<group>"; };
+		ED68A0F41715D10E0090DF1E /* wrench.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wrench.png; sourceTree = "<group>"; };
+		ED68A0F51715D10E0090DF1E /* grid_view.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grid_view.png; sourceTree = "<group>"; };
+		ED68A0F61715D10E0090DF1E /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
+		ED68A0F71715D10E0090DF1E /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
+		ED68A0F81715D10E0090DF1E /* remove.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = remove.png; sourceTree = "<group>"; };
+		ED68A0F91715D10E0090DF1E /* eye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye.png; sourceTree = "<group>"; };
+		ED68A1001715D5EF0090DF1E /* vertex_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = vertex_logo.png; path = ../../../vertex_logo.png; sourceTree = "<group>"; };
+		ED68A1021715D6A20090DF1E /* vertex_logo_bw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = vertex_logo_bw.png; path = ../../../vertex_logo_bw.png; sourceTree = "<group>"; };
 		ED8A7C7616E4941200F06AF1 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
 		ED8A7C7716E4941200F06AF1 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
 		ED8A7C7816E4941200F06AF1 /* TPKeyboardAvoidingTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingTableView.h; sourceTree = "<group>"; };
@@ -509,12 +594,8 @@
 		EDFE622916EDC4E3002EB414 /* AssetSupers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetSupers.m; sourceTree = "<group>"; };
 		EDFE622E16EDC532002EB414 /* AssetTypeLifecycles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetTypeLifecycles.h; sourceTree = "<group>"; };
 		EDFE622F16EDC532002EB414 /* AssetTypeLifecycles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetTypeLifecycles.m; sourceTree = "<group>"; };
-		EDFE623416EDC56D002EB414 /* AssetAccountability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetAccountability.h; sourceTree = "<group>"; };
-		EDFE623516EDC56E002EB414 /* AssetAccountability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetAccountability.m; sourceTree = "<group>"; };
 		EDFE623716EDC6C1002EB414 /* Assets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Assets.h; sourceTree = "<group>"; };
 		EDFE623816EDC6C1002EB414 /* Assets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Assets.m; sourceTree = "<group>"; };
-		EDFE623A16EDC6E4002EB414 /* Bills.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bills.h; sourceTree = "<group>"; };
-		EDFE623B16EDC6E4002EB414 /* Bills.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bills.m; sourceTree = "<group>"; };
 		EDFE623D16EDC7ED002EB414 /* BroadcastGroups.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BroadcastGroups.h; sourceTree = "<group>"; };
 		EDFE623E16EDC7ED002EB414 /* BroadcastGroups.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BroadcastGroups.m; sourceTree = "<group>"; };
 		EDFE624316EDC82C002EB414 /* ContactInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactInfo.h; sourceTree = "<group>"; };
@@ -531,8 +612,6 @@
 		EDFE625316EDC8F2002EB414 /* EsseInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EsseInfo.m; sourceTree = "<group>"; };
 		EDFE625516EDC917002EB414 /* Feedbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Feedbacks.h; sourceTree = "<group>"; };
 		EDFE625616EDC917002EB414 /* Feedbacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feedbacks.m; sourceTree = "<group>"; };
-		EDFE625B16EDC96D002EB414 /* LifecycleServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LifecycleServices.h; sourceTree = "<group>"; };
-		EDFE625C16EDC96E002EB414 /* LifecycleServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LifecycleServices.m; sourceTree = "<group>"; };
 		EDFE625E16EDC9A0002EB414 /* ManagedAssets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagedAssets.h; sourceTree = "<group>"; };
 		EDFE625F16EDC9A1002EB414 /* ManagedAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagedAssets.m; sourceTree = "<group>"; };
 		EDFE626716EDCA65002EB414 /* OneTimeBills.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneTimeBills.h; sourceTree = "<group>"; };
@@ -549,8 +628,6 @@
 		EDFE627716EDCB5A002EB414 /* ProfileFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileFunctions.m; sourceTree = "<group>"; };
 		EDFE627916EDCB8F002EB414 /* RecurringBills.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecurringBills.h; sourceTree = "<group>"; };
 		EDFE627A16EDCB91002EB414 /* RecurringBills.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecurringBills.m; sourceTree = "<group>"; };
-		EDFE627F16EDCBFF002EB414 /* ServiceRequestSchedules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceRequestSchedules.h; sourceTree = "<group>"; };
-		EDFE628016EDCC00002EB414 /* ServiceRequestSchedules.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceRequestSchedules.m; sourceTree = "<group>"; };
 		EDFE628516EDCCE2002EB414 /* Statuses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Statuses.h; sourceTree = "<group>"; };
 		EDFE628616EDCCE3002EB414 /* Statuses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Statuses.m; sourceTree = "<group>"; };
 		EDFE628B16EDCD77002EB414 /* SystemFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemFunctions.h; sourceTree = "<group>"; };
@@ -586,8 +663,8 @@
 			children = (
 				ED2E141B171405600012CB99 /* AssetsObject.h */,
 				ED2E141C171405600012CB99 /* AssetsObject.m */,
-				ED2E141E171405BD0012CB99 /* AssetAccountabilityObject.h */,
-				ED2E141F171405BE0012CB99 /* AssetAccountabilityObject.m */,
+				ED2E141E171405BD0012CB99 /* AssetAccountablesObject.h */,
+				ED2E141F171405BE0012CB99 /* AssetAccountablesObject.m */,
 				ED2E1421171406190012CB99 /* AssetAttributesObject.h */,
 				ED2E1422171406190012CB99 /* AssetAttributesObject.m */,
 				ED2E14241714066B0012CB99 /* AssetTypesObject.h */,
@@ -636,6 +713,8 @@
 				ED2E146417140F9F0012CB99 /* MeasurementUnitsObject.m */,
 				ED68A0DB17151EAA0090DF1E /* MemorandaObject.h */,
 				ED68A0DC17151EAB0090DF1E /* MemorandaObject.m */,
+				ED36A47517166C2700693797 /* NotesObject.h */,
+				ED36A47617166C2800693797 /* NotesObject.m */,
 				ED2E1469171410A50012CB99 /* NoticePrioritiesObject.h */,
 				ED2E146A171410AA0012CB99 /* NoticePrioritiesObject.m */,
 				ED2E146C1714111D0012CB99 /* NotificationsObject.h */,
@@ -648,6 +727,10 @@
 				ED2E1476171412A80012CB99 /* PersonnelInfoObject.m */,
 				ED2E14781714131F0012CB99 /* PersonnelsObject.h */,
 				ED2E1479171413280012CB99 /* PersonnelsObject.m */,
+				ED36A46F17166A3B00693797 /* PollQuestionsObject.h */,
+				ED36A47017166A3B00693797 /* PollQuestionsObject.m */,
+				ED36A47217166A9000693797 /* PollResultsObject.h */,
+				ED36A47317166A9000693797 /* PollResultsObject.m */,
 				ED2E147B171413A00012CB99 /* PrioritiesObject.h */,
 				ED2E147C171413AB0012CB99 /* PrioritiesObject.m */,
 				ED2E147E171414190012CB99 /* ProfileFunctionsObject.h */,
@@ -917,18 +1000,36 @@
 		EDEFE77316DF3C51002C35D6 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				ED36A4811716BF8E00693797 /* AddEssePageViewController.h */,
+				ED36A4821716BF8E00693797 /* AddEssePageViewController.m */,
 				ED324C4B1710146000DED66B /* AddUserProfilePageViewController.h */,
 				ED324C4C1710146000DED66B /* AddUserProfilePageViewController.m */,
 				ED324C451710143B00DED66B /* EditUserAccountDetailsPageViewController.h */,
 				ED324C461710143B00DED66B /* EditUserAccountDetailsPageViewController.m */,
-				ED08BDBE17073AD800588760 /* EsseInfoConfigurationViewController.h */,
-				ED08BDBF17073AD800588760 /* EsseInfoConfigurationViewController.m */,
+				ED36A47B1716B6AC00693797 /* EditUserProfilePageViewController.h */,
+				ED36A47C1716B6B100693797 /* EditUserProfilePageViewController.m */,
+				ED36A48D1717BED000693797 /* EsseDetailPageViewController.h */,
+				ED36A48E1717BED200693797 /* EsseDetailPageViewController.m */,
+				ED08BDBE17073AD800588760 /* EsseInfoConfigurationPageViewController.h */,
+				ED08BDBF17073AD800588760 /* EsseInfoConfigurationPageViewController.m */,
+				ED36A4901717C63700693797 /* RemoveEssePageViewController.h */,
+				ED36A4911717C63900693797 /* RemoveEssePageViewController.m */,
+				ED36A47E1716BA6800693797 /* RemoveUserProfilePageViewController.h */,
+				ED36A47F1716BA6800693797 /* RemoveUserProfilePageViewController.m */,
+				ED36A4841717B02300693797 /* UpdateEsseListViewController.h */,
+				ED36A4851717B02500693797 /* UpdateEsseListViewController.m */,
+				ED36A4871717B03E00693797 /* UpdateEssePageViewController.h */,
+				ED36A4881717B03E00693797 /* UpdateEssePageViewController.m */,
 				EDC372C9170EA61D007FB975 /* UserAccountActivationPageViewController.h */,
 				EDC372CA170EA61D007FB975 /* UserAccountActivationPageViewController.m */,
 				ED08BDB81707367600588760 /* UserAccountConfigurationPageViewController.h */,
 				ED08BDB91707367600588760 /* UserAccountConfigurationPageViewController.m */,
 				EDC372CF170EC8A1007FB975 /* UserGroupConfigurationPageViewController.h */,
 				EDC372D0170EC8A1007FB975 /* UserGroupConfigurationPageViewController.m */,
+				ED36A48A1717BD0B00693797 /* ViewEssePageViewController.h */,
+				ED36A48B1717BD0D00693797 /* ViewEssePageViewController.m */,
+				ED36A4781716A9B400693797 /* ViewUserProfilePageViewController.h */,
+				ED36A4791716A9B500693797 /* ViewUserProfilePageViewController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -979,8 +1080,8 @@
 				ED63134D16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodeld */,
 				EDFE623716EDC6C1002EB414 /* Assets.h */,
 				EDFE623816EDC6C1002EB414 /* Assets.m */,
-				EDFE623416EDC56D002EB414 /* AssetAccountability.h */,
-				EDFE623516EDC56E002EB414 /* AssetAccountability.m */,
+				ED36A463171667F400693797 /* AssetAccountables.h */,
+				ED36A464171667F400693797 /* AssetAccountables.m */,
 				ED2E140C1712898A0012CB99 /* AssetAttributes.h */,
 				ED2E140D1712898A0012CB99 /* AssetAttributes.m */,
 				EDA8E71016F062F400B9C57E /* AssetTypes.h */,
@@ -997,8 +1098,8 @@
 				ED2E140A1712895A0012CB99 /* Attributes.m */,
 				ED2E1406171289420012CB99 /* AttributeUnits.h */,
 				ED2E1407171289420012CB99 /* AttributeUnits.m */,
-				EDFE623A16EDC6E4002EB414 /* Bills.h */,
-				EDFE623B16EDC6E4002EB414 /* Bills.m */,
+				ED68A0DE17155DA50090DF1E /* Bills.h */,
+				ED68A0DF17155DA50090DF1E /* Bills.m */,
 				EDFE623D16EDC7ED002EB414 /* BroadcastGroups.h */,
 				EDFE623E16EDC7ED002EB414 /* BroadcastGroups.m */,
 				ED59996416EDDDD700681941 /* BroadcastUsers.h */,
@@ -1019,8 +1120,8 @@
 				EDFE625616EDC917002EB414 /* Feedbacks.m */,
 				ED300D6716F80F8B00F3063E /* Lifecycles.h */,
 				ED300D6816F80F8B00F3063E /* Lifecycles.m */,
-				EDFE625B16EDC96D002EB414 /* LifecycleServices.h */,
-				EDFE625C16EDC96E002EB414 /* LifecycleServices.m */,
+				ED68A0E117155DEA0090DF1E /* LifecycleServices.h */,
+				ED68A0E217155DEB0090DF1E /* LifecycleServices.m */,
 				EDFE625E16EDC9A0002EB414 /* ManagedAssets.h */,
 				EDFE625F16EDC9A1002EB414 /* ManagedAssets.m */,
 				ED2E1415171289F70012CB99 /* MasterBills.h */,
@@ -1029,6 +1130,8 @@
 				ED2E14041712891B0012CB99 /* MeasurementUnits.m */,
 				ED68A0D817151E1E0090DF1E /* Memoranda.h */,
 				ED68A0D917151E1E0090DF1E /* Memoranda.m */,
+				ED36A466171667F400693797 /* Notes.h */,
+				ED36A467171667F400693797 /* Notes.m */,
 				ED2E13FA171280020012CB99 /* NoticePriorities.h */,
 				ED2E13FB171280020012CB99 /* NoticePriorities.m */,
 				ED2E13F41712793C0012CB99 /* Notifications.h */,
@@ -1041,6 +1144,10 @@
 				EDFE626E16EDCAB1002EB414 /* PersonnelInfo.m */,
 				EDFE627016EDCAE4002EB414 /* Personnels.h */,
 				EDFE627116EDCAE5002EB414 /* Personnels.m */,
+				ED36A46C171667F400693797 /* PollQuestions.h */,
+				ED36A46D171667F400693797 /* PollQuestions.m */,
+				ED36A45A171667F300693797 /* PollResults.h */,
+				ED36A45B171667F300693797 /* PollResults.m */,
 				EDFE627316EDCB2F002EB414 /* Priorities.h */,
 				EDFE627416EDCB30002EB414 /* Priorities.m */,
 				EDFE627616EDCB58002EB414 /* ProfileFunctions.h */,
@@ -1051,16 +1158,16 @@
 				ED2E13FE171283010012CB99 /* Services.m */,
 				ED300D6116F80F5000F3063E /* ServiceRequests.h */,
 				ED300D6216F80F5000F3063E /* ServiceRequests.m */,
-				EDFE627F16EDCBFF002EB414 /* ServiceRequestSchedules.h */,
-				EDFE628016EDCC00002EB414 /* ServiceRequestSchedules.m */,
+				ED36A469171667F400693797 /* ServiceRequestSchedules.h */,
+				ED36A46A171667F400693797 /* ServiceRequestSchedules.m */,
 				EDFE628516EDCCE2002EB414 /* Statuses.h */,
 				EDFE628616EDCCE3002EB414 /* Statuses.m */,
 				EDFE628B16EDCD77002EB414 /* SystemFunctions.h */,
 				EDFE628C16EDCD79002EB414 /* SystemFunctions.m */,
 				ED2E141817129FE30012CB99 /* SystemProfileSequence.h */,
 				ED2E141917129FE30012CB99 /* SystemProfileSequence.m */,
-				ED59997616EDE7B700681941 /* Tasks.h */,
-				ED59997716EDE7B700681941 /* Tasks.m */,
+				ED36A460171667F400693797 /* Tasks.h */,
+				ED36A461171667F400693797 /* Tasks.m */,
 				EDA8E70716F05C1300B9C57E /* UserAccounts.h */,
 				EDA8E70816F05C2000B9C57E /* UserAccounts.m */,
 				EDFE629116EDCDF9002EB414 /* UserAccountOwnership.h */,
@@ -1219,6 +1326,22 @@
 		EDEFE7DA16DF3C63002C35D6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				ED68A0E81715D0F30090DF1E /* admin.png */,
+				ED68A0E41715D0F30090DF1E /* alarm.png */,
+				ED68A0E51715D0F30090DF1E /* cabinet.png */,
+				ED68A0E91715D0F30090DF1E /* calendar.png */,
+				ED68A0E71715D0F30090DF1E /* clipboard.png */,
+				ED68A0EA1715D0F30090DF1E /* clock.png */,
+				ED68A0EB1715D0F30090DF1E /* cog.png */,
+				ED68A0F91715D10E0090DF1E /* eye.png */,
+				ED68A0F51715D10E0090DF1E /* grid_view.png */,
+				ED68A0F61715D10E0090DF1E /* home.png */,
+				ED68A0E61715D0F30090DF1E /* list.png */,
+				ED68A0F81715D10E0090DF1E /* remove.png */,
+				ED68A0F71715D10E0090DF1E /* star.png */,
+				ED68A1021715D6A20090DF1E /* vertex_logo_bw.png */,
+				ED68A1001715D5EF0090DF1E /* vertex_logo.png */,
+				ED68A0F41715D10E0090DF1E /* wrench.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -1324,6 +1447,22 @@
 				EDE0E8C316CB744800B9D0E7 /* Default@2x.png in Resources */,
 				EDE0E8C516CB744800B9D0E7 /* Default-568h@2x.png in Resources */,
 				EDEFE7D816DF3C51002C35D6 /* MainStoryboard.storyboard in Resources */,
+				ED68A0EC1715D0F30090DF1E /* alarm.png in Resources */,
+				ED68A0ED1715D0F30090DF1E /* cabinet.png in Resources */,
+				ED68A0EE1715D0F30090DF1E /* list.png in Resources */,
+				ED68A0EF1715D0F30090DF1E /* clipboard.png in Resources */,
+				ED68A0F01715D0F30090DF1E /* admin.png in Resources */,
+				ED68A0F11715D0F30090DF1E /* calendar.png in Resources */,
+				ED68A0F21715D0F30090DF1E /* clock.png in Resources */,
+				ED68A0F31715D0F30090DF1E /* cog.png in Resources */,
+				ED68A0FA1715D10E0090DF1E /* wrench.png in Resources */,
+				ED68A0FB1715D10E0090DF1E /* grid_view.png in Resources */,
+				ED68A0FC1715D10E0090DF1E /* home.png in Resources */,
+				ED68A0FD1715D10E0090DF1E /* star.png in Resources */,
+				ED68A0FE1715D10E0090DF1E /* remove.png in Resources */,
+				ED68A0FF1715D10E0090DF1E /* eye.png in Resources */,
+				ED68A1011715D6000090DF1E /* vertex_logo.png in Resources */,
+				ED68A1031715D6AA0090DF1E /* vertex_logo_bw.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1365,9 +1504,7 @@
 				EDFE622416EDC448002EB414 /* AssetOwnership.m in Sources */,
 				EDFE622A16EDC4E3002EB414 /* AssetSupers.m in Sources */,
 				EDFE623016EDC532002EB414 /* AssetTypeLifecycles.m in Sources */,
-				EDFE623616EDC56E002EB414 /* AssetAccountability.m in Sources */,
 				EDFE623916EDC6C1002EB414 /* Assets.m in Sources */,
-				EDFE623C16EDC6E5002EB414 /* Bills.m in Sources */,
 				EDFE623F16EDC7ED002EB414 /* BroadcastGroups.m in Sources */,
 				EDFE624516EDC82D002EB414 /* ContactInfo.m in Sources */,
 				EDFE624816EDC84A002EB414 /* ContactTypes.m in Sources */,
@@ -1376,7 +1513,6 @@
 				EDFE625116EDC8AD002EB414 /* EsseContacts.m in Sources */,
 				EDFE625416EDC8F3002EB414 /* EsseInfo.m in Sources */,
 				EDFE625716EDC918002EB414 /* Feedbacks.m in Sources */,
-				EDFE625D16EDC96F002EB414 /* LifecycleServices.m in Sources */,
 				EDFE626016EDC9A2002EB414 /* ManagedAssets.m in Sources */,
 				EDFE626916EDCA67002EB414 /* OneTimeBills.m in Sources */,
 				EDFE626C16EDCA8C002EB414 /* PersonnelContacts.m in Sources */,
@@ -1385,7 +1521,6 @@
 				EDFE627516EDCB32002EB414 /* Priorities.m in Sources */,
 				EDFE627816EDCB5B002EB414 /* ProfileFunctions.m in Sources */,
 				EDFE627B16EDCB92002EB414 /* RecurringBills.m in Sources */,
-				EDFE628116EDCC02002EB414 /* ServiceRequestSchedules.m in Sources */,
 				EDFE628716EDCCE6002EB414 /* Statuses.m in Sources */,
 				EDFE628D16EDCD7C002EB414 /* SystemFunctions.m in Sources */,
 				EDFE629316EDCDFD002EB414 /* UserAccountOwnership.m in Sources */,
@@ -1393,7 +1528,6 @@
 				EDFC534616EDD77D009AE92F /* UserCredentials.m in Sources */,
 				EDFC534C16EDD7D2009AE92F /* UserProfiles.m in Sources */,
 				ED59996616EDDDD700681941 /* BroadcastUsers.m in Sources */,
-				ED59997816EDE7B800681941 /* Tasks.m in Sources */,
 				EDA8E70916F05C2D00B9C57E /* UserAccounts.m in Sources */,
 				EDA8E70F16F05D3300B9C57E /* UserInfo.m in Sources */,
 				EDA8E71216F0630B00B9C57E /* AssetTypes.m in Sources */,
@@ -1407,7 +1541,7 @@
 				ED08BDB7170732C800588760 /* AssetConfigurationPageViewController.m in Sources */,
 				ED08BDBA1707367600588760 /* UserAccountConfigurationPageViewController.m in Sources */,
 				ED08BDBD170738A400588760 /* SystemFunctionConfigurationPageViewController.m in Sources */,
-				ED08BDC017073AD800588760 /* EsseInfoConfigurationViewController.m in Sources */,
+				ED08BDC017073AD800588760 /* EsseInfoConfigurationPageViewController.m in Sources */,
 				ED4BF173170A82E9009CAEE4 /* ViewLifecyclesPageViewController.m in Sources */,
 				ED4BF176170A894B009CAEE4 /* LifecycleDetailPageViewController.m in Sources */,
 				ED4BF179170AAF8C009CAEE4 /* UpdateLifecyleListViewController.m in Sources */,
@@ -1444,7 +1578,7 @@
 				ED2E1417171289F70012CB99 /* MasterBills.m in Sources */,
 				ED2E141A17129FE40012CB99 /* SystemProfileSequence.m in Sources */,
 				ED2E141D171405600012CB99 /* AssetsObject.m in Sources */,
-				ED2E1420171405BE0012CB99 /* AssetAccountabilityObject.m in Sources */,
+				ED2E1420171405BE0012CB99 /* AssetAccountablesObject.m in Sources */,
 				ED2E14231714061A0012CB99 /* AssetAttributesObject.m in Sources */,
 				ED2E14261714066B0012CB99 /* AssetTypesObject.m in Sources */,
 				ED2E1429171406BD0012CB99 /* AssetTypeAttributesObject.m in Sources */,
@@ -1492,6 +1626,26 @@
 				ED68A0D7171510CC0090DF1E /* UserProfilesObject.m in Sources */,
 				ED68A0DA17151E1E0090DF1E /* Memoranda.m in Sources */,
 				ED68A0DD17151EAB0090DF1E /* MemorandaObject.m in Sources */,
+				ED68A0E017155DA60090DF1E /* Bills.m in Sources */,
+				ED68A0E317155DEB0090DF1E /* LifecycleServices.m in Sources */,
+				ED36A45C171667F300693797 /* PollResults.m in Sources */,
+				ED36A462171667F400693797 /* Tasks.m in Sources */,
+				ED36A465171667F400693797 /* AssetAccountables.m in Sources */,
+				ED36A468171667F400693797 /* Notes.m in Sources */,
+				ED36A46B171667F400693797 /* ServiceRequestSchedules.m in Sources */,
+				ED36A46E171667F400693797 /* PollQuestions.m in Sources */,
+				ED36A47117166A3B00693797 /* PollQuestionsObject.m in Sources */,
+				ED36A47417166A9000693797 /* PollResultsObject.m in Sources */,
+				ED36A47717166C2800693797 /* NotesObject.m in Sources */,
+				ED36A47A1716A9B700693797 /* ViewUserProfilePageViewController.m in Sources */,
+				ED36A47D1716B6B200693797 /* EditUserProfilePageViewController.m in Sources */,
+				ED36A4801716BA6900693797 /* RemoveUserProfilePageViewController.m in Sources */,
+				ED36A4831716BF9000693797 /* AddEssePageViewController.m in Sources */,
+				ED36A4861717B02600693797 /* UpdateEsseListViewController.m in Sources */,
+				ED36A4891717B04000693797 /* UpdateEssePageViewController.m in Sources */,
+				ED36A48C1717BD1000693797 /* ViewEssePageViewController.m in Sources */,
+				ED36A48F1717BED300693797 /* EsseDetailPageViewController.m in Sources */,
+				ED36A4921717C63B00693797 /* RemoveEssePageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

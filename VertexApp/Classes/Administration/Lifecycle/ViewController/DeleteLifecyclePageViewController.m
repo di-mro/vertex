@@ -61,7 +61,8 @@
 {
   deleteLifecyclePageEntries = [[NSMutableArray alloc] init];
   //TODO
-  URL = @"http://192.168.2.113:8080/vertex-api/lifecycle/getLifecycles";
+  //URL = @"http://192.168.2.113:8080/vertex-api/lifecycle/getLifecycles";
+  URL = @"http://192.168.2.113/vertex-api/lifecycle/getLifecycles";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:URL]];
@@ -166,10 +167,6 @@
 #pragma mark - Transition to Assets Page when OK on Alert Box is clicked
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-  /*
-  ViewLifecyclesPageViewController *controller = (ViewLifecyclesPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"ViewLifecyclesPage"];
-  */
-  
   HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
   
   if (buttonIndex == 0)

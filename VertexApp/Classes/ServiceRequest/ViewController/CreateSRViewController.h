@@ -28,6 +28,10 @@
 @property (nonatomic, retain) NSArray *servicePickerArray;
 @property (strong, nonatomic) IBOutlet UITextField *serviceField;
 
+@property (strong, nonatomic) IBOutlet UILabel *estimatedCostLabel;
+@property (strong, nonatomic) IBOutlet UITextField *estimatedCostField;
+
+
 @property (strong, nonatomic) IBOutlet UILabel *priorityLabel;
 @property (nonatomic, retain) NSArray *priorityPickerArray;
 @property (strong, nonatomic) IBOutlet UITextField *priorityField;

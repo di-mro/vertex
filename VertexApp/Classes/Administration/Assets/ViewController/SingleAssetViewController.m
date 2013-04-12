@@ -65,12 +65,12 @@
 #pragma mark - Call WS endpoint to get details for the selected asset
 -(void) getAssetInfo
 {
-  URL = @"http://192.168.2.113:8080/vertex-api/asset/getAsset/";
+  //URL for getAsset
+  //URL = @"http://192.168.2.113:8080/vertex-api/asset/getAsset/";
+  URL = @"http://192.168.2.113/vertex-api/asset/getAsset/";
   
-  //! TEST
-  //NSString *assetId = @"20130101010200000";
   NSMutableString *urlParams = [NSMutableString
-                                stringWithFormat:@"http://192.168.2.113:8080/vertex-api/asset/getAsset/%@"
+                                stringWithFormat:@"http://192.168.2.113/vertex-api/asset/getAsset/%@"
                                 , assetOwnedId];
 
   NSMutableURLRequest *getRequest = [NSMutableURLRequest

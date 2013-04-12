@@ -10,8 +10,16 @@
 
 @implementation ServiceRequestSchedulesObject
 
-@synthesize date;
+@synthesize toDate;
 @synthesize scheduleId;
 @synthesize serviceRequestId;
+@synthesize toTime;
+@synthesize toTimezone;
+@synthesize fromDate;
+@synthesize fromTime;
+@synthesize fromTimezone;
+@synthesize active;
+@synthesize author;
+@synthesize statusId;
 
 @end

@@ -101,7 +101,9 @@
     NSLog(@"jsonString Request: %@", jsonString);
     
     //Set URL for Add Service
-    URL = @"http://192.168.2.113:8080/vertex-api/service/addServices";
+    //URL = @"http://192.168.2.113:8080/vertex-api/service/addServices";
+    URL = @"http://192.168.2.113/vertex-api/service/addServices";
+    
     NSMutableURLRequest *postRequest = [NSMutableURLRequest
                                         requestWithURL:[NSURL URLWithString:URL]];
     

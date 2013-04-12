@@ -2,7 +2,7 @@
 //  LifecycleServices.h
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 3/11/13.
+//  Created by Mary Rose Oh on 4/10/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
@@ -15,8 +15,9 @@
 
 @property (nonatomic, retain) NSNumber * assetTypeLifecycleId;
 @property (nonatomic, retain) id services;
+@property (nonatomic, retain) NSNumber * serviceId;
 @property (nonatomic, retain) AssetTypeLifecycles *lifecycleServicesToAssetTypeLifecycle;
-@property (nonatomic, retain) Services *lifecycleServicesToServices;
+@property (nonatomic, retain) NSSet *lifecycleServicesToServices;
 @end
 
 @interface LifecycleServices (CoreDataGeneratedAccessors)

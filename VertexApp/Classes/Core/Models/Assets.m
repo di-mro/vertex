@@ -7,7 +7,7 @@
 //
 
 #import "Assets.h"
-#import "AssetAccountability.h"
+#import "AssetAccountables.h"
 #import "AssetAttributes.h"
 #import "AssetOwnership.h"
 #import "AssetSupers.h"

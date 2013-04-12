@@ -96,7 +96,8 @@
 - (void) getUsers
 {
   //Set URL for retrieving AssetTypes
-  URL = @"http://192.168.2.13:8080/vertex-api/user/getUsers"; //113
+  //URL = @"http://192.168.2.13:8080/vertex-api/user/getUsers"; //113
+  URL = @"http://192.168.2.113/vertex-api/user/getUsers";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:URL]];
@@ -148,7 +149,7 @@
 }
 
 
-#pragma mark - Change assetTypeField to assetTypePicker when clicked
+#pragma mark - Change addUserAccountsField to userAccountsPicker when clicked
 - (BOOL)textFieldDidBeginEditing:(UITextField *)textField
 {
   if(addUserAccountsField.isEditing)
@@ -209,7 +210,7 @@
 }
 
 
-#pragma mark - Get the selected row in assetTypePicker
+#pragma mark - Get the selected row in userAccountsPicker
 -(void)selectedRow
 {
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];

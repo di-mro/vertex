@@ -46,7 +46,6 @@
 {
   serviceRequestPageEntries = [[NSMutableArray alloc] init];
   
-  /* !- TODO For demo only, remove hard coded values -! */
   NSString *entry1 = @"Create";
   NSString *entry2 = @"View";
   NSString *entry3 = @"Acknowledge";

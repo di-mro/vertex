@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface AssetAccountabilityObject : NSObject
+@interface AssetAccountablesObject : NSObject
 
 @property (nonatomic, retain) NSNumber * assetId;
 @property (nonatomic, retain) NSNumber * userId;

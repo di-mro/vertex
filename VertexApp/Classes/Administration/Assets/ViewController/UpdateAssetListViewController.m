@@ -61,13 +61,14 @@
 - (void) displayUpdateAssetsPageEntries
 {
   updateAssetsPageEntries = [[NSMutableArray alloc] init];
-  URL = @"http://192.168.2.113:8080/vertex-api/asset/getOwnership/";
+  //URL = @"http://192.168.2.113:8080/vertex-api/asset/getOwnership/";
+  URL = @"http://192.168.2.113/vertex-api/asset/getOwnership/";
   
   //TEST
-  //Where to get userId
+  //Update userId >> Where to get userId
   NSString *userId = @"20130101500000001";
   NSMutableString *urlParams = [NSMutableString
-                                stringWithFormat:@"http://192.168.2.113:8080/vertex-api/asset/getOwnership/%@"
+                                stringWithFormat:@"http://192.168.2.113/vertex-api/asset/getOwnership/%@"
                                 , userId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
@@ -230,7 +231,6 @@
   NSLog(@"Selected row name: %@", selectedRowName);
   
   selectedAssetId = [assetIdArray objectAtIndex:indexPath.row];
-  //selectedAssetId = @1234567890; //TEST
   NSLog(@"selectedAssetId: %@", selectedAssetId);
   
   [self performSegueWithIdentifier:@"updateAssetListToUpdateAssetPage" sender:self];
@@ -243,7 +243,6 @@
   if ([segue.identifier isEqualToString:@"updateAssetListToUpdateAssetPage"])
   {
     [segue.destinationViewController setSelectedAssetId:selectedAssetId];
-    //[segue.destinationViewController setIds:selectedAssetId, ];
   }
 }
 

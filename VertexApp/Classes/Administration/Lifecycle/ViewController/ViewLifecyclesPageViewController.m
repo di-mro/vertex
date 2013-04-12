@@ -52,12 +52,13 @@
 - (void) displayViewLifecyclesPageEntries
 {
   viewLifecyclesPageEntries = [[NSMutableArray alloc] init];
-  URL = @"http://192.168.2.113:8080/vertex-api/lifecycle/getLifecycles";
+  //URL = @"http://192.168.2.113:8080/vertex-api/lifecycle/getLifecycles";
+  URL = @"http://192.168.2.113/vertex-api/lifecycle/getLifecycles";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:URL]];
   
-  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Conent-Type"]; 
+  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"]; 
   [getRequest setHTTPMethod:@"GET"];
   NSLog(@"%@", getRequest);
   

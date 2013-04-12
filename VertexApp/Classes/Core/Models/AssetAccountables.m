@@ -1,16 +1,17 @@
 //
-//  AssetAccountability.m
+//  AssetAccountables.m
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 3/11/13.
+//  Created by Mary Rose Oh on 4/11/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
-#import "AssetAccountability.h"
+#import "AssetAccountables.h"
 #import "Assets.h"
+#import "UserAccounts.h"
 
 
-@implementation AssetAccountability
+@implementation AssetAccountables
 
 @dynamic assetId;
 @dynamic userId;

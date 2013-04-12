@@ -20,22 +20,4 @@
 @property (nonatomic, strong) NSString *URL;
 @property int httpResponseCode;
 
-/*
-- (void)displayUpdateAssetsPageEntries;
-
-@property (nonatomic, retain) NSMutableArray *updateAssetsPageEntries;
-
-@property (nonatomic, strong) NSMutableDictionary *managedAssets;
-@property (nonatomic, strong) NSMutableDictionary *assetOwned;
-@property (nonatomic, strong) UITableView *assetsTableView;
-
-@property (nonatomic, strong) NSMutableArray *assetNameArray;
-@property (nonatomic, strong) NSMutableArray *assetIdArray;
-@property (nonatomic, strong) NSMutableArray *assetIdNameArray;
-@property (nonatomic, strong) NSNumber *selectedAssetId;
-
-@property (nonatomic, strong) NSString *URL;
-@property int httpResponseCode;
-*/
-
 @end

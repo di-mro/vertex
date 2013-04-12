@@ -13,6 +13,7 @@
 - (void)displayHomePageEntries;
 
 @property (nonatomic, retain) NSMutableArray *homePageEntries;
+@property (nonatomic, retain) NSMutableArray *homePageIcons;
 
 -(void) logout;
 

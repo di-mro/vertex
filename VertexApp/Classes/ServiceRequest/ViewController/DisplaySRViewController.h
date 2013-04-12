@@ -10,17 +10,6 @@
 
 @interface DisplaySRViewController : ViewController
 
-/*
-@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
-@property (strong, nonatomic) IBOutlet UITextField *nameField;
-
-@property (strong, nonatomic) IBOutlet UILabel *unitLocationLabel;
-@property (strong, nonatomic) IBOutlet UITextField *unitLocationField;
-
-@property (strong, nonatomic) IBOutlet UILabel *contactNumberLabel;
-@property (strong, nonatomic) IBOutlet UITextField *contactNumberField;
-*/
-
 @property (strong, nonatomic) IBOutlet UILabel *assetLabel;
 @property (strong, nonatomic) IBOutlet UITextField *assetField;
 

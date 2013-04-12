@@ -27,6 +27,7 @@
 @synthesize assetField;
 @synthesize lifecycleField;
 @synthesize serviceField;
+@synthesize estimatedCostField;
 @synthesize priorityField;
 @synthesize srGenericPicker;
 @synthesize detailsTextArea;
@@ -125,7 +126,8 @@
 - (void) getAssetType
 {
   //Set URL for retrieving AssetTypes
-  URL = @"http://192.168.2.113:8080/vertex-api/asset/getAssetTypes";
+  //URL = @"http://192.168.2.113:8080/vertex-api/asset/getAssetTypes";
+  URL = @"http://192.168.2.113/vertex-api/asset/getAssetTypes";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:URL]];
@@ -182,7 +184,8 @@
 -(void) getLifecycles
 {
   //endpoint for getLifecycles
-  URL = @"http://192.168.2.113:8080/vertex-api/lifecycle/getLifecycles";
+  //URL = @"http://192.168.2.113:8080/vertex-api/lifecycle/getLifecycles";
+  URL = @"http://192.168.2.113/vertex-api/lifecycle/getLifecycles";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                       requestWithURL:[NSURL URLWithString:URL]];
@@ -237,6 +240,7 @@
 {
   //endpoint for getServices
   //URL = @"http://192.168.2.113:8080/vertex-api/service/getServices/{assetTypeId}/{lifecycleId}";
+  //URL = @"http://192.168.2.113/vertex-api/service/getServices/{assetTypeId}/{lifecycleId}";
   //TODO - get selected assetTypeId & lifecycleId, construct URL
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
@@ -522,7 +526,7 @@
     
     //service
     NSMutableDictionary *serviceJson = [[NSMutableDictionary alloc] init];
-    [serviceJson setObject:selectedServicesId forKey:@"id"];
+    [serviceJson setObject:@1000000000 forKey:@"id"]; //TEST ONLY !!!
     [createSRJson setObject:serviceJson forKey:@"service"];
     
     //admin
@@ -571,7 +575,8 @@
     NSLog(@"jsonString Request: %@", jsonString);
     
     //Set URL for Add Service Request
-    URL = @"http://192.168.2.113:8080/vertex-api/service-request/addServiceRequest";
+    //URL = @"http://192.168.2.113:8080/vertex-api/service-request/addServiceRequest";
+    URL = @"http://192.168.2.113/vertex-api/service-request/addServiceRequest";
     NSMutableURLRequest *postRequest = [NSMutableURLRequest
                                         requestWithURL:[NSURL URLWithString:URL]];
     
@@ -650,12 +655,6 @@
 {
   if (buttonIndex == 0) //OK
   {
-    /*
-    ServiceRequestViewController* controller = (ServiceRequestViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"SRPage"];
-    
-    [self.navigationController pushViewController:controller animated:YES];
-    */
-    
     //Go back to Home
     HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
     
@@ -700,6 +699,7 @@
   [assetField resignFirstResponder];
   [lifecycleField resignFirstResponder];
   [serviceField resignFirstResponder];
+  [estimatedCostField resignFirstResponder];
   [priorityField resignFirstResponder];
   [detailsTextArea resignFirstResponder];
 }

@@ -60,7 +60,8 @@
 - (void) displayViewAssetsPageEntries
 {
   viewAssetsPageEntries = [[NSMutableArray alloc] init];
-  URL = @"http://192.168.2.113:8080/vertex-api/asset/getOwnership/";
+  //URL = @"http://192.168.2.113:8080/vertex-api/asset/getOwnership/";
+  URL = @"http://192.168.2.113/vertex-api/asset/getOwnership/";
   
   //TEST
   //Where to get userId
@@ -213,17 +214,11 @@
   NSLog(@"Selected row name: %@", selectedRowName);
   
   selectedAssetId = [assetIdArray objectAtIndex:indexPath.row];
-  //selectedAssetId = @1234567890; //TEST
   NSLog(@"selectedAssetId: %@", selectedAssetId);
   
   [self performSegueWithIdentifier:@"viewAssetsToSingleAsset" sender:self];
-  
-  /*
-   !- TODO -!
-   Call a function to populate the fields in Single Asset View passing the assetId
-   Remove hardcoded fields in Single Asset View Storyboard
-   */
 }
+
 
 #pragma mark - prepare for segue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

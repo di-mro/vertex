@@ -9,14 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class ProfileFunctions, SystemFunctionHierarchies;
+@class ProfileFunctions, SystemProfileSequence;
 
 @interface SystemFunctions : NSManagedObject
 
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * systemFunctionId;
 @property (nonatomic, retain) ProfileFunctions *systemFunctionToProfileFunction;
-@property (nonatomic, retain) SystemFunctionHierarchies *systemFunctionToSystemFunctionHierarchies;
+@property (nonatomic, retain) SystemProfileSequence *systemFunctionToSystemFunctionHierarchies;
 @end
 
 @interface SystemFunctions (CoreDataGeneratedAccessors)
@@ -26,8 +26,8 @@
 - (void)addSystemFunctionToProfileFunction:(NSSet *)values;
 - (void)removeSystemFunctionToProfileFunction:(NSSet *)values;
 
-- (void)addSystemFunctionToSystemFunctionHierarchiesObject:(SystemFunctionHierarchies *)value;
-- (void)removeSystemFunctionToSystemFunctionHierarchiesObject:(SystemFunctionHierarchies *)value;
+- (void)addSystemFunctionToSystemFunctionHierarchiesObject:(SystemProfileSequence *)value;
+- (void)removeSystemFunctionToSystemFunctionHierarchiesObject:(SystemProfileSequence *)value;
 - (void)addSystemFunctionToSystemFunctionHierarchies:(NSSet *)values;
 - (void)removeSystemFunctionToSystemFunctionHierarchies:(NSSet *)values;
 

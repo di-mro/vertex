@@ -6,13 +6,13 @@
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
-#import "EsseInfoConfigurationViewController.h"
+#import "EsseInfoConfigurationPageViewController.h"
 
-@interface EsseInfoConfigurationViewController ()
+@interface EsseInfoConfigurationPageViewController ()
 
 @end
 
-@implementation EsseInfoConfigurationViewController
+@implementation EsseInfoConfigurationPageViewController
 
 @synthesize esseInfoConfigPageEntries;
 
@@ -46,7 +46,6 @@
 {
   esseInfoConfigPageEntries = [[NSMutableArray alloc] init];
   
-  /* !- For demo only, remove hard coded values. Must retrieve listing in DB -! */
   NSString *entry1 = @"Add Esse";
   NSString *entry2 = @"View Esse";
   NSString *entry3 = @"Update Esse";
@@ -94,18 +93,19 @@
 {
   switch (indexPath.row)
   {
-      /*
-       //Add Service
-       case 0: [self performSegueWithIdentifier:@"" sender:self];
-       break;
-       case 1: [self performSegueWithIdentifier:@"" sender:self];
-       break;
-       case 2: [self performSegueWithIdentifier:@"" sender:self];
-       break;
-       case 3: [self performSegueWithIdentifier:@"" sender:self];
-       break;
-       default: break;
-       */
+    //Add Esse
+    case 0: [self performSegueWithIdentifier:@"esseConfigToAddEsse" sender:self];
+      break;
+    //View Esse
+    case 1: [self performSegueWithIdentifier:@"esseConfigToViewEsse" sender:self];
+      break;
+    //Update Esse
+    case 2: [self performSegueWithIdentifier:@"esseConfigToUpdateEsse" sender:self];
+      break;
+    //Remove Esse
+    case 3: [self performSegueWithIdentifier:@"esseConfigToRemoveEsse" sender:self];
+      break;
+    default: break;
   }
 }
 
