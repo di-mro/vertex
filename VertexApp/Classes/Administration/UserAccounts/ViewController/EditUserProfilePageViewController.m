@@ -14,6 +14,8 @@
 
 @implementation EditUserProfilePageViewController
 
+@synthesize userAccountsArray;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -25,7 +27,10 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+  //TEST
+  userAccountsArray = [[NSMutableArray alloc] initWithObjects:@"Demo-1", @"Demo-2", @"Demo-3", nil];
+  
+  [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
 
@@ -34,5 +39,38 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+#pragma mark - Table view data source implementation
+- (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView
+{
+  //Return the number of sections.
+  return 1;
+}
+
+- (NSString *) tableView:(UITableView *) tableView titleForHeaderInSection:(NSInteger)section
+{
+  NSString *myTitle = [[NSString alloc] initWithFormat:@"User Accounts"];
+  return myTitle;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+  //Return the number of rows in the section
+  return [userAccountsArray count];
+  NSLog(@"%d", [userAccountsArray count]);
+}
+
+-(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  static NSString *CellIdentifier = @"editUserProfilePageCell";
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+  
+  //configure the cell
+  cell.textLabel.text = [self.userAccountsArray objectAtIndex:indexPath.row];
+  cell.textLabel.numberOfLines = 0;
+  return cell;
+}
+
 
 @end

@@ -2204,6 +2204,11 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="EaI-rU-A2J" customClass="TPKeyboardAvoidingScrollView">
+                                        <rect key="frame" x="20" y="217" width="280" height="199"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                    </scrollView>
                                 </subviews>
                             </scrollView>
                         </subviews>
@@ -2213,6 +2218,7 @@
                     <connections>
                         <outlet property="addAssetScroller" destination="BWs-q4-y5m" id="dVx-aT-40o"/>
                         <outlet property="addAssetView" destination="SLw-U3-kZS" id="dto-co-rYc"/>
+                        <outlet property="assetAttributeScroller" destination="EaI-rU-A2J" id="OvF-LD-ahZ"/>
                         <outlet property="assetAttributesMainLabel" destination="UIL-rf-gCJ" id="LtT-sV-OSv"/>
                         <outlet property="assetNameField" destination="cis-WE-mHO" id="KIw-YS-9hb"/>
                         <outlet property="assetNameLabel" destination="gdO-5g-6ip" id="SGo-qa-TqL"/>

@@ -29,15 +29,23 @@
 @property (strong, nonatomic) UIActionSheet *actionSheet;
 
 @property (strong, nonatomic) IBOutlet UILabel *assetAttributesMainLabel;
+@property (strong, nonatomic) IBOutlet UIScrollView *assetAttributeScroller;
 
 @property (nonatomic, retain) NSArray *assetTypePickerArray;
+@property (nonatomic, retain) UIPickerView *genericPicker;
+@property (nonatomic, retain) NSArray *currentPickerArray;
+@property (nonatomic, retain) UITextField *currentTextField;
 @property (nonatomic, strong) NSMutableDictionary *assetTypes;
 
 @property (nonatomic, strong) NSMutableArray *assetTypeAttributes;
 //@property (nonatomic, strong) NSMutableDictionary *assetTypeAttributes;
 @property (nonatomic, strong) NSNumber *selectedAssetTypeId;
 @property int selectedIndex;
+
 @property (nonatomic, strong) NSMutableDictionary *attribTextFields;
+@property (nonatomic, strong) NSMutableDictionary *attribUnitFields;
+@property (strong, nonatomic) UIPickerView *attributesPicker;
+@property (strong, nonatomic) NSMutableArray *selectedUnitIds;
 
 @property (strong, nonatomic) NSString *URL;
 @property int httpResponseCode;

@@ -102,6 +102,7 @@
     //Create Notice
     case 0: [self performSegueWithIdentifier:@"noticesToCreateNotice" sender:self];
       break;
+      /*
     //View Notice
     case 1: [self performSegueWithIdentifier:@"noticesToViewNotice" sender:self];
       break;
@@ -114,6 +115,8 @@
     //Create Billing Notice
     case 4: [self performSegueWithIdentifier:@"noticesToCreateBillingNotice" sender:self];
       break;
+       */
+    default:break;
   }
 }
 

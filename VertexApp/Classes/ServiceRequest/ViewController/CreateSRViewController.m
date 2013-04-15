@@ -163,7 +163,8 @@
     
     //TODO: Connect to CoreData for local data
     //!- FOR TESTING ONLY -!
-    self.assetPickerArray = [[NSArray alloc] initWithObjects:@"Demo - Aircon",@"Demo - Door", @"Demo - Exhaust Fan", @"Demo - Faucet", @"Demo - Toilet", @"Demo - Kitchen Sink", @"Demo - Lighting Fixtures", nil];
+    assetPickerArray = [[NSArray alloc] initWithObjects:@"Demo - Aircon",@"Demo - Door", @"Demo - Exhaust Fan", @"Demo - Faucet", @"Demo - Toilet", @"Demo - Kitchen Sink", @"Demo - Lighting Fixtures", nil];
+    assetTypeIdArray = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00004", @"Demo - 00005", nil];
   }
   else
   {
@@ -219,7 +220,9 @@
     
     //Connect to CoreData for local data
     //!- FOR TESTING ONLY -!
-    self.lifecyclePickerArray = [[NSArray alloc] initWithObjects: @"Canvas", @"Requisition", @"Purchase", @"Installation", @"Repair", @"Decommission", nil];  }
+    lifecyclePickerArray = [[NSArray alloc] initWithObjects: @"Demo - Canvas", @"Demo - Requisition", @"Demo - Purchase", @"Demo - Installation", @"Demo - Repair", @"Demo - Decommission", nil];
+    lifecycleIdArray = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00004", @"Demo - 00005", nil];
+  }
   else
   {
     lifecycles = [NSJSONSerialization
@@ -262,9 +265,6 @@
                           returningResponse:&urlResponse
                           error:&error];
   
-  NSString *result = [[NSString alloc] initWithData:responseData
-                                           encoding:NSUTF8StringEncoding];
-  
   if(responseData == nil)
   {
     //Show an alert if connection is not available
@@ -278,7 +278,9 @@
     
     //Connect to CoreData for local data
     //!- FOR TESTING ONLY -!
-    self.servicePickerArray = [[NSArray alloc] initWithObjects: @"Demo - Fix broken pipe", @"Demo - Replace wiring", @"Demo - Repaint unit", @"Demo - Fix cooling unit", nil];
+    servicePickerArray = [[NSArray alloc] initWithObjects: @"Demo - Fix broken pipe", @"Demo - Replace wiring", @"Demo - Repaint unit", @"Demo - Fix cooling unit", nil];
+    servicesIdArray = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00004", @"Demo - 00005", nil];
+    
   }
   else
   {
