@@ -43,9 +43,11 @@
 @property int selectedIndex;
 
 @property (nonatomic, strong) NSMutableDictionary *attribTextFields;
-@property (nonatomic, strong) NSMutableDictionary *attribUnitFields;
+@property (nonatomic, strong) NSMutableDictionary *attribUnits;
 @property (strong, nonatomic) UIPickerView *attributesPicker;
 @property (strong, nonatomic) NSMutableArray *selectedUnitIds;
+
+//@property (strong, nonatomic) UISegmentedControl *unitsSegmentedControl;
 
 @property (strong, nonatomic) NSString *URL;
 @property int httpResponseCode;

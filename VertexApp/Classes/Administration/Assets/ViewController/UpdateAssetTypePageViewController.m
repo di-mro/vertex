@@ -268,6 +268,7 @@
                                               delegate:nil
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
+  [updateAssetTypeValidateAlert show];
   return true;
   /*
   if([lifecycleNameField.text isEqualToString:(@"")]

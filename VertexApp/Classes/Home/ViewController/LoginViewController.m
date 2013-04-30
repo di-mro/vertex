@@ -96,18 +96,33 @@
                               returningResponse:&urlResponse
                               error:&error];
     
-    NSDictionary *loginHeaderResponse = [[NSDictionary alloc] init];
-    loginHeaderResponse = [(NSHTTPURLResponse *)urlResponse allHeaderFields];
-    NSLog(@"loginHeaderResponse: %@", loginHeaderResponse);
-    token = [loginHeaderResponse valueForKey:@"token"];
-    NSLog(@"token: %@", token);
-
-    NSMutableDictionary *json = [NSJSONSerialization
+    if(responseData == nil)
+    {
+      UIAlertView *loginAlert = [[UIAlertView alloc]
+                                 initWithTitle:@"No Connection Detected"
+                                 message:@"Displaying data from phone cache"
+                                 delegate:nil
+                                 cancelButtonTitle:@"OK"
+                                 otherButtonTitles:nil];
+      [loginAlert show];
+      
+      [self performSegueWithIdentifier: @"loginToHome" sender: self];
+    }
+    else
+    {
+      NSDictionary *loginHeaderResponse = [[NSDictionary alloc] init];
+      loginHeaderResponse = [(NSHTTPURLResponse *)urlResponse allHeaderFields];
+      NSLog(@"loginHeaderResponse: %@", loginHeaderResponse);
+      token = [loginHeaderResponse valueForKey:@"token"];
+      NSLog(@"token: %@", token);
+      
+      NSMutableDictionary *json = [NSJSONSerialization
                                    JSONObjectWithData:responseData
                                    options:kNilOptions
                                    error:&error];
-
-    NSLog(@"Response JSON: %@", json);
+      
+      NSLog(@"Response JSON: %@", json);
+    }
   }
   else
   {

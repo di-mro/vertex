@@ -82,7 +82,7 @@
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelSR)];
   
   //[Create] navigation button
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Send" style:UIBarButtonItemStylePlain target:self action:@selector(createSR)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Create" style:UIBarButtonItemStylePlain target:self action:@selector(createSR)];
   
   //Scroller size
   self.createSRScroller.contentSize = CGSizeMake(320.0, 900.0);
@@ -307,6 +307,15 @@
   if(internetStatus == NotReachable)
   {
     return NO;
+    
+    UIAlertView *reachableAlert = [[UIAlertView alloc]
+                                  initWithTitle:@"Warning"
+                                  message:@"No network connection detected. Displaying data from phone cache."
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+    [reachableAlert show];
+    
   }
   
   return YES;
@@ -322,6 +331,7 @@
   srGenericPicker.dataSource = self;
   srGenericPicker.delegate = self;
 }
+
 
 #pragma mark - Set fields to pickers
 - (BOOL)textFieldDidBeginEditing:(UITextField *)textField

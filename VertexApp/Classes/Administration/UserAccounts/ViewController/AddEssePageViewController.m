@@ -97,7 +97,7 @@
   if([self validateAddEsseFields])
   {
     //Set JSON Request
-    NSMutableDictionary *addEsseJson = [[NSMutableDictionary alloc] init];
+    addEsseJson = [[NSMutableDictionary alloc] init];
     //TODO : Construct JSON request body Add Esse
     //[addEsseJson setObject:@"" forKey:@"name"];
     
