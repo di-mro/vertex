@@ -42,7 +42,7 @@
 @synthesize lifecycles;
 @synthesize assetTypes;
 @synthesize services;
-@synthesize priority;
+@synthesize priorities;
 
 @synthesize selectedIndex;
 
@@ -50,6 +50,9 @@
 @synthesize assetTypeIdArray;
 @synthesize servicesIdArray;
 @synthesize priorityIdArray;
+
+@synthesize servicesCostArray;
+@synthesize serviceCost;
 
 @synthesize selectedLifecycleId;
 @synthesize selectedAssetTypeId;
@@ -100,10 +103,15 @@
   //getServices
   self.servicePickerArray = [[NSArray alloc] init];
   servicesIdArray = [[NSMutableArray alloc] init];
+  servicesCostArray = [[NSMutableArray alloc] init];
+  serviceCost = 0;
+  estimatedCostField.enabled = NO;
+  [self getServices];
   
-  //getPriority
-  self.priorityPickerArray = [[NSArray alloc] initWithObjects:@"Demo - Emergency", @"Demo - Scheduled", @"Demo - Routine", @"Demo - Urgent", nil];
+  //getPriorities
+  self.priorityPickerArray = [[NSArray alloc] init];
   priorityIdArray = [[NSMutableArray alloc] init];
+  [self getPriorities];
   
   //Set delegates for the picker fields
   [assetField setDelegate:self];
@@ -242,12 +250,17 @@
 -(void) getServices
 {
   //endpoint for getServices
-  //URL = @"http://192.168.2.113:8080/vertex-api/service/getServices/{assetTypeId}/{lifecycleId}";
   //URL = @"http://192.168.2.113/vertex-api/service/getServices/{assetTypeId}/{lifecycleId}";
+  //URL = @"http://192.168.2.113/vertex-api/service/getServices";
+  
+  NSLog(@"selectedAssetTypeId: %@", selectedAssetTypeId);
+  NSLog(@"selectedLifecycleId: %@", selectedLifecycleId);
+  
   //TODO - get selected assetTypeId & lifecycleId, construct URL
+  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.113/vertex-api/service/getServices/%@/%@", selectedAssetTypeId, selectedLifecycleId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
-                                     requestWithURL:[NSURL URLWithString:URL]];
+                                     requestWithURL:[NSURL URLWithString:urlParams]]; //URL
   
   [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
   [getRequest setHTTPMethod:@"GET"];
@@ -279,8 +292,8 @@
     //Connect to CoreData for local data
     //!- FOR TESTING ONLY -!
     servicePickerArray = [[NSArray alloc] initWithObjects: @"Demo - Fix broken pipe", @"Demo - Replace wiring", @"Demo - Repaint unit", @"Demo - Fix cooling unit", nil];
-    servicesIdArray = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00004", @"Demo - 00005", nil];
-    
+    servicesIdArray = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00003", @"Demo - 00004", nil];
+    servicesCostArray = [[NSMutableArray alloc] initWithObjects:@"Demo - 100.00", @"Demo - 200.00", @"Demo - 300.00", @"Demo - 400.00", nil];
   }
   else
   {
@@ -292,10 +305,66 @@
     
     servicePickerArray = [services valueForKey:@"name"]; //store lifecycles names only in PickerArray
     servicesIdArray = [services valueForKey:@"id"];
+    servicesCostArray = [services valueForKey:@"cost"];
     NSLog(@"servicePickerArray: %@", servicePickerArray);
   }
 }
 
+
+#pragma mark - getPriorities
+-(void) getPriorities
+{
+  //endpoint for getPriorities
+  URL = @"http://192.168.2.113/vertex-api/service-request/getPriorities";
+  
+  NSMutableURLRequest *getRequest = [NSMutableURLRequest
+                                     requestWithURL:[NSURL URLWithString:URL]];
+  
+  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+  [getRequest setHTTPMethod:@"GET"];
+  
+  NSURLConnection *connection = [[NSURLConnection alloc]
+                                 initWithRequest:getRequest
+                                 delegate:self];
+  [connection start];
+  
+  NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+  NSError *error = [[NSError alloc] init];
+  
+  NSData *responseData = [NSURLConnection
+                          sendSynchronousRequest:getRequest
+                          returningResponse:&urlResponse
+                          error:&error];
+  
+  if(responseData == nil)
+  {
+    //Show an alert if connection is not available
+    UIAlertView *prioritiesAlert = [[UIAlertView alloc]
+                                  initWithTitle:@"Warning"
+                                  message:@"No network connection detected. Displaying data from phone cache."
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+    [prioritiesAlert show];
+    
+    //Connect to CoreData for local data
+    //!- FOR TESTING ONLY -!
+    self.priorityPickerArray = [[NSArray alloc] initWithObjects:@"Demo - High", @"Demo - Medium", @"Demo - Low", nil];
+    priorityIdArray = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00003", nil];
+  }
+  else
+  {
+    priorities = [NSJSONSerialization
+                JSONObjectWithData:responseData
+                options:kNilOptions
+                error:&error];
+    NSLog(@"priorities JSON Result: %@", priorities);
+    
+    priorityPickerArray = [priorities valueForKey:@"name"]; //store priority names only in PickerArray
+    priorityIdArray = [priorities valueForKey:@"id"];
+    NSLog(@"priorityPickerArray: %@", priorityPickerArray);
+  }
+}
 
 
 #pragma mark - Check for network availability
@@ -405,6 +474,9 @@
     serviceField.inputView = actionSheet;
     
     selectedServicesId = [servicesIdArray objectAtIndex:selectedIndex];
+    serviceCost = [servicesCostArray objectAtIndex:selectedIndex];
+    NSLog(@"selectedServicesId: %@", selectedServicesId);
+    NSLog(@"serviceCost: %@", serviceCost);
     
     return YES;
   }
@@ -440,6 +512,10 @@
   selectedIndex = [srGenericPicker selectedRowInComponent:0];
   NSString *selectedEntity = [currentArray objectAtIndex:selectedIndex];
   currentTextField.text = selectedEntity;
+  
+  //Show estimated cost based on selected service. Show only, no editing
+  estimatedCostField.text = @"";
+  estimatedCostField.text = serviceCost;
 }
 
 #pragma mark - Dismissing onscreen keyboard
@@ -486,43 +562,75 @@
   {
     /*
      "{
-        ""asset"" :
+        "asset" :
         {
-          ""id"" : number
+          "id" : long
         },
-        ""lifecycle"" :
+        "lifecycle" :
         {
-          ""id"" : number
+          "id" : long
         },
-        ""service"" :
+        "service" :
         {
-          ""id"" : number
+          "id" : long
         },
-        ""admin"" :
+        "priority" :
         {
-          ""id"" : number
+          "id" : long
         },
-        ""requestor"" :
+        "status" :
         {
-          ""id"" : number
+          "id" : long
         },
-        ""cost"" : double,
-        ""remarks"" : string,
-        ""adminRemarks"" : string,
-        ""priority"" :
+        "requestor" :
         {
-          ""id"" : number
+          "id" : long
         },
-        ""status"" :
+        "admin" :
         {
-          ""id"" : number
-        }
-        ""schedules"" :
+          "id" : long
+        },
+        "cost" : double,
+        "schedules": # schedules can be null
         [
-          ""schedDate"" : date
+          {
+            "status":
+            {
+              "id": long
+            },
+            "author":
+            {
+              "id": long
+            },
+            "periods":
+            [
+              {
+                "fromDate"    : string,
+                "fromTime"    : string,
+                "fromTimezone": string,
+                "toDate"      : string,
+                "toTime"      : string,
+                "toTimezone"  : string
+              }
+            , ...
+            ],
+          "active": boolean
+          }
+        ],
+        "notes": # notes can be null
+        [
+          {
+            "sender":
+            {
+              "id": long
+            },
+            "message": string
+          }
+          , ...
         ]
      }"
      */
+    
     //TODO : Construct JSON request body from user inputs in UI
     createSRJson = [[NSMutableDictionary alloc] init];
     
@@ -538,40 +646,48 @@
     
     //service
     NSMutableDictionary *serviceJson = [[NSMutableDictionary alloc] init];
-    [serviceJson setObject:@1000000000 forKey:@"id"]; //TEST ONLY !!!
+    [serviceJson setObject:selectedServicesId forKey:@"id"]; //TEST ONLY !!!
     [createSRJson setObject:serviceJson forKey:@"service"];
+    
+    //priority
+    NSMutableDictionary *priorityJson = [[NSMutableDictionary alloc] init];
+    [priorityJson setObject:selectedPriorityId forKey:@"id"];
+    [createSRJson setObject:priorityJson forKey:@"priority"];
+    
+    //status
+    NSMutableDictionary *statusJson = [[NSMutableDictionary alloc] init];
+    [statusJson setObject:@"Demo - StatusID0001" forKey:@"id"];
+    [createSRJson setObject:statusJson forKey:@"status"];
+    
+    //requestor
+    NSMutableDictionary *requestorJson = [[NSMutableDictionary alloc] init];
+    [requestorJson setObject:@2000000000 forKey:@"id"]; //TEST ONLY!!!
+    [createSRJson setObject:requestorJson forKey:@"requestor"];
     
     //admin
     NSMutableDictionary *adminJson = [[NSMutableDictionary alloc] init];
     [adminJson setObject:@1000000000 forKey:@"id"]; //TEST ONLY !!!
     [createSRJson setObject:adminJson forKey:@"admin"];
     
-    //requestor
-    NSMutableDictionary *requestorJson = [[NSMutableDictionary alloc] init];
-    [requestorJson setObject:@000000001 forKey:@"id"]; //TEST ONLY!!!
-    [createSRJson setObject:requestorJson forKey:@"requestor"];
+    //cost
+    [createSRJson setObject:serviceCost forKey:@"cost"];
     
-    //TEST ONLY!!! - ***
-    [createSRJson setObject:@100.00 forKey:@"cost"];
-    [createSRJson setObject:@"DEMO - Remarks" forKey:@"remarks"];
-    [createSRJson setObject:@"DEMO - Admin Remarks" forKey:@"adminRemarks"];
+    //TODO - schedules !!!
+    NSMutableDictionary *scheduleDictionary = [[NSMutableDictionary alloc] init];
+    //TODO - set structure for schedule JSON
+    [createSRJson setObject:@"nil" forKey:@"schedule"];
+    
+    /*
+     NSDate *fromDate = [NSDate alloc] init];
+     */
+    
+    //TODO - notes !!!
+    NSMutableDictionary *notesDictionary = [[NSMutableDictionary alloc] init];
+    //TODO - set structure for notes JSON
+    [createSRJson setObject:@"nil" forKey:@"notes"];
+    
     //***
-    
-    //priority
-    NSMutableDictionary *priorityJson = [[NSMutableDictionary alloc] init];
-    [priorityJson setObject:@2000000000 forKey:@"id"]; //TEST ONLY !!!
-    [createSRJson setObject:priorityJson forKey:@"priority"];
-    
-    //status
-    NSMutableDictionary *statusJson = [[NSMutableDictionary alloc] init];
-    [statusJson setObject:@3000000000 forKey:@"id"]; //TEST ONLY !!!
-    [createSRJson setObject:statusJson forKey:@"status"];
-    
-    //schedules
-    NSMutableDictionary *scheduleJson = [[NSMutableDictionary alloc] init];
-    [scheduleJson setObject:@"2013/04/09" forKey:@"schedDate"];
-    [createSRJson setObject:scheduleJson forKey:@"schedules"];
-    
+  
     NSLog(@"Create Service Request JSON: %@", createSRJson);
     
     NSError *error = [[NSError alloc] init];
@@ -587,7 +703,6 @@
     NSLog(@"jsonString Request: %@", jsonString);
     
     //Set URL for Add Service Request
-    //URL = @"http://192.168.2.113:8080/vertex-api/service-request/addServiceRequest";
     URL = @"http://192.168.2.113/vertex-api/service-request/addServiceRequest";
     NSMutableURLRequest *postRequest = [NSMutableURLRequest
                                         requestWithURL:[NSURL URLWithString:URL]];
@@ -608,7 +723,7 @@
     if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
     {
       UIAlertView *createSRAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Create Service Request"
+                                    initWithTitle:@"Service Request"
                                     message:@"Service Request Created."
                                     delegate:self
                                     cancelButtonTitle:@"OK"
@@ -628,15 +743,6 @@
     
     [self dismissViewControllerAnimated:YES completion:nil];
     NSLog(@"Service Request Created");
-    
-    //Inform user Service Request is saved
-    UIAlertView *createSRAlert = [[UIAlertView alloc] initWithTitle:@"Service Request"
-                                                            message:@"Service Request Created."
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-    [createSRAlert show];
-    //Transition to Service Request Page - alertView clickedButtonAtIndex
   }
   else
   {

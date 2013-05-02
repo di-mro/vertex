@@ -53,8 +53,6 @@
 @synthesize assetTypeAttributes;
 @synthesize selectedAssetTypeId;
 
-//@synthesize unitsSegmentedControl;
-
 @synthesize URL;
 @synthesize httpResponseCode;
 
@@ -187,12 +185,6 @@
 #pragma mark - Change assetTypeField to assetTypePicker when clicked
 - (BOOL)textFieldDidBeginEditing:(UITextField *)textField
 {
-  /*
-  //assetAttribute units
-  UITextField *attribField = [[UITextField alloc] init];
-  attribField = [[attribUnitFields valueForKey:@"unit"] objectAtIndex:0]; // * * *
-   */
-  
   //action sheet definition
   actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                             delegate:nil
@@ -232,17 +224,6 @@
     currentPickerArray = assetTypePickerArray;
     currentTextField = assetTypeField;
     
-    /*
-    currentPickerArray = [[NSArray alloc] initWithObjects: nil];
-    [self defineGenericPicker];
-    [actionSheet addSubview:genericPicker];
-     
-    currentPickerArray = assetTypePickerArray;
-    currentTextField = assetTypeField;
-    assetTypeField.inputView = actionSheet;
-    //selectedAssetTypeId = [assetTypeIdArray objectAtIndex:selectedIndex];
-    */
-     
     //clear subviews (attribute field)
     NSArray *subviews = [[assetAttributeScroller subviews] copy];
     NSLog(@"subviews: %@", subviews);
@@ -253,60 +234,12 @@
     
     return YES;
   }
-  /*
-  else if(attribField.isEditing)
-  {
-    NSLog(@"textFieldDidBeginEditing attribField - function call");
-    [attribField resignFirstResponder];
-    
-    //Action sheet [Done] button functionality for Asset Attribute Units Picker - @selector(selectedUnit)
-    UISegmentedControl *doneButton = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObject:@"Done"]];
-    doneButton.momentary = YES;
-    doneButton.frame = CGRectMake(260, 7.0f, 50.0f, 30.0f);
-    doneButton.segmentedControlStyle = UISegmentedControlStyleBar;
-    doneButton.tintColor = [UIColor blackColor];
-    [doneButton addTarget:self action:@selector(selectedUnit) forControlEvents:UIControlEventValueChanged];
-    
-    [actionSheet addSubview:doneButton];
-    [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
-    [actionSheet setBounds:CGRectMake(0, 0, 320, 485)];
-    
-    
-    attributesPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 40, 0, 0)];
-    attributesPicker.showsSelectionIndicator = YES;
-    attributesPicker.dataSource = self;
-    attributesPicker.delegate = self;
-    
-    [actionSheet addSubview:attributesPicker];
-    
-    attribField.inputView = actionSheet;
-    
-    currentPickerArray = [[NSArray alloc] initWithObjects: nil];
-    currentPickerArray = assetTypePickerArray; //attribute units; >> FOR TEST ONLY!!!
-    currentTextField = assetTypeField;
-    
-    //*
-    currentPickerArray = [[NSArray alloc] initWithObjects: nil];
-    [self defineGenericPicker];
-    [actionSheet addSubview:genericPicker];
-    
-    currentPickerArray = assetTypeAttributes;
-    currentTextField = attribField;
-    assetTypeField.inputView = actionSheet;
-    //selectedAssetTypeId = [assetTypeIdArray objectAtIndex:selectedIndex];
-    //---
-     
-    //[selectedRow ?? >> for asset type picker only]
-    //[selectedUnit];
-
-    return YES;
-  }
-  */
   else
   {
     return NO;
   }
 }
+
 
 #pragma mark - Implementing the Picker View
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -317,13 +250,11 @@
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
   return [assetTypePickerArray count];
-  //return [currentPickerArray count];
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
   return [self.assetTypePickerArray objectAtIndex:row];
-  //return [self.currentPickerArray objectAtIndex:row];
 }
 
 
@@ -333,7 +264,6 @@
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
   
   //Match selected index with corresponding Asset Type Name
-  //selectedIndex = [assetTypePicker selectedRowInComponent:0];
   selectedIndex = [assetTypePicker selectedRowInComponent:0];
   NSString *assetTypeName = [assetTypePickerArray objectAtIndex:selectedIndex];
   NSLog(@"selectedRow - assetTypeName: %@", assetTypeName);
@@ -349,26 +279,6 @@
   [self setAttributesField];
 }
 
-/*
-#pragma mark - Get selected row in Picker
--(void)selectedRow
-{
-  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
-  
-  selectedIndex = [genericPicker selectedRowInComponent:0];
-  NSString *selectedEntity = [currentArray objectAtIndex:selectedIndex];
-  currentTextField.text = selectedEntity;
-}
-*/
-
-/*
-#pragma mark - Get the selected unit in assetAttribUnitsPicker
--(void) selectedUnit
-{
-  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
-}
-*/
-
 
 #pragma mark - Dynamically set the text fields for Asset Attributes based on Asset Type
 -(void) setAttributesField
@@ -379,23 +289,15 @@
   }
   else
   {
-    //TODO: assetTypeAttributes
     NSMutableArray *allAssetAttrib = [[NSMutableArray alloc] init];
     attribTextFields = [[NSMutableDictionary alloc] init];
     attribUnits = [[NSMutableDictionary alloc] init];
-    //attribUnitFields = [[NSMutableDictionary alloc] init];
     
     allAssetAttrib = [assetTypes valueForKey:@"attributes"];
     NSLog(@"allAssetAttrib: %@", allAssetAttrib);
     
     assetTypeAttributes = [allAssetAttrib objectAtIndex:selectedIndex]; //array
     NSLog(@"assetTypeAttributes: %@", assetTypeAttributes);
-    
-    /*
-    NSMutableDictionary *unitsPerAttrib = [[NSMutableDictionary alloc] init];
-    unitsPerAttrib = [assetTypeAttributes valueForKey:@"units"];
-    NSLog(@"unitsPerAttrib: %@", unitsPerAttrib);
-    */
     
     NSMutableArray *unitNames = [[NSMutableArray alloc] init];
     NSMutableArray *unitIds = [[NSMutableArray alloc] init];
@@ -410,8 +312,6 @@
     int yOrigin = 0;
     
     UITextField *attribField = [[UITextField alloc] init];
-    //UITextField *unitField = [[UITextField alloc] init];
-    
     for(int i = 0; i < [assetTypeAttributes count]; i++)
     {
       NSString *textFieldLabel = [[NSString alloc] initWithString:[[assetTypeAttributes objectAtIndex:i] valueForKey:@"keyName"]];
@@ -458,52 +358,21 @@
                                 action:nil//@selector(saveAttribUnit:)
                  forControlEvents:UIControlEventValueChanged];
       
-      /*
-      //attributeUnits Field
-      unitField = [[UITextField alloc] initWithFrame:CGRectMake(0, (i * unitTextfieldHeight + 10), unitTextfieldWidth, unitTextfieldHeight)];
-      unitField.borderStyle = UITextBorderStyleRoundedRect;
-      unitField.placeholder = @"Pick unit";
-      
-      CGRect attribUnitTextFieldFrame = unitField.frame;
-      attribUnitTextFieldFrame.origin.x = 40;
-      attribUnitTextFieldFrame.origin.y += (yOrigin += 40);
-      unitField.frame = attribUnitTextFieldFrame;
-       */
-
       //Add fields in scroller
       [assetAttributeScroller addSubview:attribField];
       [assetAttributeScroller addSubview:unitsSegmentedControl];
-      //[assetAttributeScroller addSubview:unitField];
       
       //Store attribute field-label in dictionary
       [attribTextFields setObject:attribField forKey:textFieldLabel];
-      //NSLog(@"attribTextFields: %@", attribTextFields);
       
       //Store units
       [attribUnits setObject:[unitsSegmentedControl titleForSegmentAtIndex:unitsSegmentedControl.selectedSegmentIndex] forKey:[unitIdsPerAttrib objectAtIndex:(unitsSegmentedControl.selectedSegmentIndex)]];
-      NSLog(@"attribUnits - selected segmented control button: %@", attribUnits);
-      
       attribField = [[UITextField alloc] init];
-      //unitsSegmentedControl = [[UISegmentedControl alloc] init];
-      //unitField = [[UITextField alloc] init];
     }
   }
-  
   NSLog(@"attribTextFields: %@", attribTextFields);
   NSLog(@"attribUnits - selected segmented control button: %@", attribUnits);
 }
-
-
-/*
-#pragma mark - Get the selected asset attribute - unit of measurement
--(void) saveAttribUnit:(UISegmentedControl *)segmentedControl
-{
-  //Store units
-  [attribUnits setObject:[segmentedControl titleForSegmentAtIndex:segmentedControl.selectedSegmentIndex] forKey:@"units"];
-  //segmentedControl = [[UISegmentedControl alloc] init];
-  NSLog(@"saveAttribUnit - selected segmented control button: %@", attribUnits);
-}
-*/
 
 
 #pragma mark - [Cancel] button implementation
@@ -547,6 +416,7 @@
         ]
      }"
      */
+    
     //Asset
     NSMutableDictionary *mainDictionary = [[NSMutableDictionary alloc] init];
     [mainDictionary setObject:assetNameField.text forKey:@"name"];
@@ -617,7 +487,6 @@
     NSLog(@"jsonString Request: %@", jsonString);
     
     //Set URL for Add Asset
-    //URL = @"http://192.168.2.113:8080/vertex-api/asset/addAsset";
     URL = @"http://192.168.2.113/vertex-api/asset/addAsset";
     
     NSMutableURLRequest *postRequest = [NSMutableURLRequest
@@ -742,25 +611,7 @@
     [updateAssetValidateAlert show];
     return false;
   }
-  /*
-  else
-  {
-    for(NSString *key in [attribTextFields allKeys])
-    {
-      UITextField *tempField = [[UITextField alloc] init];
-      tempField = [attribTextFields objectForKey:key];
-      if(tempField.hasText)
-      {
-        return true;
-      }
-      else
-      {
-        [updateAssetValidateAlert show];
-        return false;
-      }
-    }
-  }
-  */
+  
   return true;
 }
 
@@ -787,19 +638,8 @@
   //Iterate over the asset attribute fields and resignFirstResponder each
   for(NSString *key in [attribTextFields allKeys])
   {
-    //NSLog(@"dismissKeyboard - assetAttrib");
     [[attribTextFields objectForKey:key] resignFirstResponder];
-    //[[attribUnitFields objectForKey:@"unit"] resignFirstResponder];
   }
-  
-  /*
-  //Iterate over attribute unit fields and resignFirstResponder each
-  for(NSString *key in [attribUnitFields allKeys])
-  {
-    NSLog(@"dismissKeyboard - unitField");
-    [[attribUnitFields objectForKey:@"unit"] resignFirstResponder];
-  }
-  */
 }
 
 

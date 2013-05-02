@@ -30,9 +30,15 @@
 @synthesize attribTextFields;
 
 @synthesize assetTypes;
-@synthesize URL;
 @synthesize selectedAssetTypeId;
+
 @synthesize httpResponseCode;
+@synthesize URL;
+
+@synthesize attribUnits;
+
+@synthesize assetTypeUnitsJson;
+@synthesize assetTypeUnits;
 
 @synthesize managedAssetId;
 @synthesize selectedAssetId;
@@ -59,7 +65,7 @@
   [self.view addGestureRecognizer:tap];
   
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelAddAsset)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelUpdateAsset)];
   
   //[Update] navigation button - Update Asset
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Update" style:UIBarButtonItemStylePlain target:self action:@selector(updateAsset)];
@@ -118,7 +124,7 @@
                                      requestWithURL:[NSURL URLWithString:urlParams]];
   
   //GET - Read
-  [getRequest setValue:@"application/json" forHTTPHeaderField:@"userId=20130101005100000"]; //Update userId
+  [getRequest setValue:@"application/json" forHTTPHeaderField:@"userId=20130101005100000"]; //TODO Update userId
   [getRequest setHTTPMethod:@"GET"];
   NSLog(@"%@", getRequest);
   
@@ -173,12 +179,19 @@
     }
     else
     {
+      //Retrieved JSON - asset info for the chosen asset for update
       assetAttribs = [assetInfo valueForKey:@"attributes"]; //dictionary keyName-value
       NSLog(@"initial-assetAttrib: %@", assetAttribs);
       
       int textfieldHeight;
       int textfieldWidth;
-      //NSString *textFieldLabel = [[NSString alloc] initWithString:[[assetTypeAttributes objectAtIndex:i] description]];
+      
+      int attribTextfieldHeight = 30;
+      int attribTextfieldWidth = 240;
+      int unitTextfieldHeight = 30;
+      int unitTextfieldWidth = 90;
+      int yOrigin = 0;
+      
       NSMutableArray *attribKeys = [[NSMutableArray alloc] init];
       NSMutableArray *attribValues = [[NSMutableArray alloc] init];
       
@@ -189,28 +202,66 @@
       for(int i = 0; i < [assetAttribs count]; i++)
       {
         UITextField *attribField = [[UITextField alloc] init];
-        textfieldHeight = 30;
-        textfieldWidth = 280;
+        NSMutableArray *unitsPerAttrib = [[NSMutableArray alloc] init];
+        NSMutableArray *unitIdsPerAttrib = [[NSMutableArray alloc] init];
         
         NSLog(@"initial-attribKeys atIndex: %@", [attribKeys objectAtIndex:i]);
         NSLog(@"initial-attribValues atIndex: %@", [attribValues objectAtIndex:i]);
         
-        attribField = [[UITextField alloc] initWithFrame:CGRectMake(0, (i * textfieldHeight + 10), textfieldWidth, textfieldHeight)];
+        attribField = [[UITextField alloc] initWithFrame:CGRectMake(0, (i * attribTextfieldHeight + 10), attribTextfieldWidth, attribTextfieldHeight)];
         attribField.borderStyle = UITextBorderStyleRoundedRect;
         attribField.placeholder = [attribKeys objectAtIndex:i];
         attribField.text = [attribValues objectAtIndex:i];
-        attribField.tag = i;
         
-        CGRect textFieldFrame = attribField.frame;
-        textFieldFrame.origin.x = 20;
-        textFieldFrame.origin.y += (170 + (15 * i));
-        attribField.frame = textFieldFrame;
+        CGRect attribTextFieldFrame = attribField.frame;
+        attribTextFieldFrame.origin.x = 20;
+        attribTextFieldFrame.origin.y += (yOrigin += 15);
+        attribField.frame = attribTextFieldFrame;
+        
+        //Get asset attribute units of measurement
+        [self setAttributeUnits];
+        //assetTypeUnits
+        
+        [unitsPerAttrib addObject:[[assetTypeUnits valueForKey:@"name"] objectAtIndex:i]];
+        
+        //---
+        //Initialize choices for the units segmented control per asset attribute
+        NSArray *unitChoices = [NSArray arrayWithArray:unitsPerAttrib];
+        UISegmentedControl *unitsSegmentedControl = [[UISegmentedControl alloc] initWithItems:unitChoices];
+        CGRect attribUnitTextFieldFrame;
+        
+        //Set segmented control frame length and position
+        if([unitChoices count] > 1)
+        {
+          attribUnitTextFieldFrame = CGRectMake(0, (i * unitTextfieldHeight + 10), 380, 30);
+        }
+        else
+        {
+          attribUnitTextFieldFrame = CGRectMake(0, (i * unitTextfieldHeight + 10), 120, 30);
+        }
+        
+        attribUnitTextFieldFrame.origin.x = 20;
+        attribUnitTextFieldFrame.origin.y += (yOrigin += 40);
+        unitsSegmentedControl.frame = attribUnitTextFieldFrame;
+        
+        //Method when button is selected TODO !!!
+        unitsSegmentedControl.selectedSegmentIndex = 0;
+        [unitsSegmentedControl addTarget:self
+                                  action:nil//@selector(saveAttribUnit:)
+                        forControlEvents:UIControlEventValueChanged];
+        //---
+        
         
         [updateAssetPageScroller addSubview:attribField];
+        [updateAssetPageScroller addSubview:unitsSegmentedControl];
         
         //Store attribute field-label in array
         [attribTextFields setObject:attribField forKey:[attribKeys objectAtIndex:i]];
         NSLog(@"initial-attribTextFields: %@", attribTextFields);
+        
+        //Store units
+        [attribUnits setObject:[unitsSegmentedControl titleForSegmentAtIndex:unitsSegmentedControl.selectedSegmentIndex] forKey:[unitIdsPerAttrib objectAtIndex:(unitsSegmentedControl.selectedSegmentIndex)]];
+        
         
         attribField = [[UITextField alloc] init];
       }
@@ -219,7 +270,65 @@
 }
 
 
-#pragma mark - Get AssetTypes
+#pragma mark - Get specific asset type of the selected asset and set attributes unit of measurement fields
+-(void) setAttributeUnits
+{
+  //Set URL for retrieving asset type and associated asset attribute - unit of measurement
+  URL = @"http://192.168.2.113/vertex-api/asset/getAssetType/";
+  
+  //Pass assetType id as parameter
+  NSMutableString *urlParams = [NSMutableString
+                                stringWithFormat:@"http://192.168.2.113/vertex-api/asset/getAssetType/%@"
+                                , [[assetInfo valueForKey:@"assetType"] valueForKey:@"id" ]];
+  
+  NSMutableURLRequest *getRequest = [NSMutableURLRequest
+                                     requestWithURL:[NSURL URLWithString:urlParams]];
+  
+  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+  [getRequest setHTTPMethod:@"GET"];
+  NSLog(@"%@", getRequest);
+  
+  NSURLConnection *connection = [[NSURLConnection alloc]
+                                 initWithRequest:getRequest
+                                 delegate:self];
+  [connection start];
+  
+  NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+  NSError *error = [[NSError alloc] init];
+  
+  //GET
+  NSData *responseData = [NSURLConnection
+                          sendSynchronousRequest:getRequest
+                          returningResponse:&urlResponse
+                          error:&error];
+  
+  if (responseData == nil)
+  {
+    //Show an alert if connection is not available
+    UIAlertView *connectionAlert = [[UIAlertView alloc]
+                                    initWithTitle:@"Warning"
+                                    message:@"No network connection detected. Displaying data from phone cache."
+                                    delegate:nil
+                                    cancelButtonTitle:@"OK"
+                                    otherButtonTitles:nil];
+    [connectionAlert show];
+    
+  }
+  else
+  {
+    assetTypeUnitsJson = [NSJSONSerialization
+                  JSONObjectWithData:responseData
+                  options:kNilOptions
+                  error:&error];
+    NSLog(@"assetTypeUnits JSON Result: %@", assetTypeUnits);
+    
+    [[assetTypeUnits valueForKey:@"attributes"] valueForKey:@"units"];
+    NSLog(@"assetTypeUnits: %@", assetTypeUnits);
+  }
+}
+
+
+#pragma mark - Get AssetTypes for Asset Type picker
 - (void) getAssetTypes
 {
   //Set URL for retrieving AssetTypes
@@ -320,6 +429,7 @@
   }
 }
 
+
 #pragma mark - Implementing the Picker View
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
@@ -349,7 +459,6 @@
   NSMutableArray *assetTypeIdArray = [[NSMutableArray alloc] init];
   assetTypeIdArray = [assetTypes valueForKey:@"id"];
   selectedAssetTypeId = [assetTypeIdArray objectAtIndex:selectedIndex];
-  //selectedAssetTypeId = @111000; //TEST only
   
   [self setAttributesField];
 }
@@ -364,59 +473,105 @@
 #pragma mark - Dynamically set the text fields for Asset Attributes based on Asset Type
 -(void) setAttributesField
 {
-   //TODO: retrieveAssetType
-   NSMutableArray *allAssetAttrib = [[NSMutableArray alloc] init];
-   attribTextFields = [[NSMutableDictionary alloc] init];
-   
-   if(selectedAssetTypeId == nil)
-   {
-     NSLog(@"Nil assetTypeId");
-   }
-   else
-   {
-     allAssetAttrib = [assetTypes valueForKey:@"attributes"];
-     NSLog(@"allAssetAttrib: %@", allAssetAttrib);
-   
-     assetTypeAttributes = [allAssetAttrib objectAtIndex:selectedIndex]; //array
-     NSLog(@"assetTypeAttributes: %@", assetTypeAttributes);
-     
-     int textfieldHeight;
-     int textfieldWidth;
-   
-     for(int i = 0; i < [assetTypeAttributes count]; i++)
-     {
-       NSLog(@"attribute atIndex: %@", [[assetTypeAttributes objectAtIndex:i] description]);
-   
-       NSString *textFieldLabel = [[NSString alloc] initWithString:[[assetTypeAttributes objectAtIndex:i] description]];
-       UITextField *attribField = [[UITextField alloc] init];
-       textfieldHeight = 30;
-       textfieldWidth = 280;
-   
-       attribField = [[UITextField alloc] initWithFrame:CGRectMake(0, (i * textfieldHeight + 10), textfieldWidth, textfieldHeight)];
-   
-       attribField.borderStyle = UITextBorderStyleRoundedRect;
-       attribField.placeholder = textFieldLabel;
-       attribField.tag = i;
-   
-       CGRect textFieldFrame = attribField.frame;
-       textFieldFrame.origin.x = 20;
-       textFieldFrame.origin.y += (170 + (15 * i));
-       attribField.frame = textFieldFrame;
-   
-       [updateAssetPageScroller addSubview:attribField];
-   
-       //Store attribute field-label in array
-       [attribTextFields setObject:attribField forKey:textFieldLabel];
-       NSLog(@"attribTextFields: %@", attribTextFields);
-   
-       attribField = [[UITextField alloc] init];
-     }
-   }
+  //TODO: retrieveAssetType
+  //NSMutableArray *allAssetAttrib = [[NSMutableArray alloc] init];
+  NSMutableDictionary *assetAttribs = [[NSMutableDictionary alloc] init];
+  attribTextFields = [[NSMutableDictionary alloc] init];
+  
+  if(selectedAssetTypeId == nil)
+  {
+    NSLog(@"Nil assetTypeId");
+  }
+  else
+  {
+    //Retrieved JSON - asset info for the chosen asset for update
+    assetAttribs = [assetInfo valueForKey:@"attributes"]; //dictionary keyName-value
+    NSLog(@"initial-assetAttrib: %@", assetAttribs);
+  
+    int attribTextfieldHeight = 30;
+    int attribTextfieldWidth = 240;
+    int unitTextfieldHeight = 30;
+    int yOrigin = 0;
+    
+    NSMutableArray *attribKeys = [[NSMutableArray alloc] init];
+    NSMutableArray *attribValues = [[NSMutableArray alloc] init];
+    
+    attribKeys = [assetAttribs valueForKey:@"keyName"];
+    attribValues = [assetAttribs valueForKey:@"value"];
+    
+    //for(NSString *key in [assetAttribs allKeys])
+    for(int i = 0; i < [assetAttribs count]; i++)
+    {
+      UITextField *attribField = [[UITextField alloc] init];
+      NSMutableArray *unitsPerAttrib = [[NSMutableArray alloc] init];
+      NSMutableArray *unitIdsPerAttrib = [[NSMutableArray alloc] init];
+      
+      NSLog(@"initial-attribKeys atIndex: %@", [attribKeys objectAtIndex:i]);
+      NSLog(@"initial-attribValues atIndex: %@", [attribValues objectAtIndex:i]);
+      
+      attribField = [[UITextField alloc] initWithFrame:CGRectMake(0, (i * attribTextfieldHeight + 10), attribTextfieldWidth, attribTextfieldHeight)];
+      attribField.borderStyle = UITextBorderStyleRoundedRect;
+      attribField.placeholder = [attribKeys objectAtIndex:i];
+      attribField.text = [attribValues objectAtIndex:i];
+      
+      CGRect attribTextFieldFrame = attribField.frame;
+      attribTextFieldFrame.origin.x = 20;
+      attribTextFieldFrame.origin.y += (yOrigin += 15);
+      attribField.frame = attribTextFieldFrame;
+      
+      //Get asset attribute units of measurement
+      [self setAttributeUnits];
+      //assetTypeUnits
+      
+      [unitsPerAttrib addObject:[[assetTypeUnits valueForKey:@"name"] objectAtIndex:i]];
+      
+      //---
+      //Initialize choices for the units segmented control per asset attribute
+      NSArray *unitChoices = [NSArray arrayWithArray:unitsPerAttrib];
+      UISegmentedControl *unitsSegmentedControl = [[UISegmentedControl alloc] initWithItems:unitChoices];
+      CGRect attribUnitTextFieldFrame;
+      
+      //Set segmented control frame length and position
+      if([unitChoices count] > 1)
+      {
+        attribUnitTextFieldFrame = CGRectMake(0, (i * unitTextfieldHeight + 10), 380, 30);
+      }
+      else
+      {
+        attribUnitTextFieldFrame = CGRectMake(0, (i * unitTextfieldHeight + 10), 120, 30);
+      }
+      
+      attribUnitTextFieldFrame.origin.x = 20;
+      attribUnitTextFieldFrame.origin.y += (yOrigin += 40);
+      unitsSegmentedControl.frame = attribUnitTextFieldFrame;
+      
+      //Method when button is selected TODO !!!
+      unitsSegmentedControl.selectedSegmentIndex = 0;
+      [unitsSegmentedControl addTarget:self
+                                action:nil//@selector(saveAttribUnit:)
+                      forControlEvents:UIControlEventValueChanged];
+      //---
+      
+      
+      [updateAssetPageScroller addSubview:attribField];
+      [updateAssetPageScroller addSubview:unitsSegmentedControl];
+      
+      //Store attribute field-label in array
+      [attribTextFields setObject:attribField forKey:[attribKeys objectAtIndex:i]];
+      NSLog(@"initial-attribTextFields: %@", attribTextFields);
+      
+      //Store units
+      [attribUnits setObject:[unitsSegmentedControl titleForSegmentAtIndex:unitsSegmentedControl.selectedSegmentIndex] forKey:[unitIdsPerAttrib objectAtIndex:(unitsSegmentedControl.selectedSegmentIndex)]];
+      
+      
+      attribField = [[UITextField alloc] init];
+    }
+  }
 }
 
 
 #pragma mark - [Cancel] button implementation
--(void) cancelAddAsset
+-(void) cancelUpdateAsset
 {
   [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Cancel Update Asset");
@@ -450,24 +605,23 @@
      ]
      }"
      */
+    
     //Asset
     NSMutableDictionary *mainDictionary = [[NSMutableDictionary alloc] init];
     [mainDictionary setObject:assetNameField.text forKey:@"name"];
-    [mainDictionary setObject:selectedAssetId forKey:@"id"];
-    NSLog(@"updateAsset-selectedAssetId: %@", selectedAssetId);
     
     //AssetType Object
     NSMutableDictionary *assetTypeDict = [[NSMutableDictionary alloc] init];
     [assetTypeDict setObject:selectedAssetTypeId forKey:@"id"];
     NSLog(@"selectedAssetTypeId: %@", selectedAssetTypeId);
     
-    //AssetAttributes Array of Objects - Store key and name in array first before consolidating in a dictionary
-    //Use Core Data Model Objects
     //Getting and setting Asset Attributes
     NSMutableArray *assetAttribKeyArray = [[NSMutableArray alloc] init];
     NSMutableArray *assetAttribValueArray = [[NSMutableArray alloc] init];
+    NSMutableArray *assetAttribUnitIdArray = [[NSMutableArray alloc] init];
     UITextField *fieldContent = [[UITextField alloc] init];
     
+    //Store keysName and value pair
     for(NSString *key in [attribTextFields allKeys])
     {
       [assetAttribKeyArray addObject:key];
@@ -475,11 +629,20 @@
       
       fieldContent = [attribTextFields valueForKey:key];
       [assetAttribValueArray addObject:fieldContent.text];
+      
       fieldContent = [[UITextField alloc] init];
       NSLog(@"assetAttribValueArray: %@", assetAttribValueArray);
     }
     
+    //Store all attribute unit Ids in array
+    for(NSString *key in [attribUnits allKeys])
+    {
+      [assetAttribUnitIdArray addObject:key];
+      NSLog(@"assetAttribUnitIdArray: %@", assetAttribUnitIdArray);
+    }
+    
     NSMutableDictionary *assetAttributesDict = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *attribUnitsDict = [[NSMutableDictionary alloc] init];
     NSMutableArray *innerAssetAttribArray = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < [assetAttribKeyArray count]; i++) //attribute number
@@ -487,6 +650,12 @@
       [assetAttributesDict setObject:[assetAttribKeyArray objectAtIndex:i] forKey:@"keyName"];
       [assetAttributesDict setObject:[assetAttribValueArray objectAtIndex:i] forKey:@"value"];
       
+      //Pair the unit of measure id with "id" key
+      [attribUnitsDict setObject:[assetAttribUnitIdArray objectAtIndex:i] forKey:@"id"];
+      //Add the pair inside asset attributes dictionary
+      [assetAttributesDict setObject:attribUnitsDict forKey:@"unit"];
+      
+      //Add the consolidated single asset attribute info to the array of asset attributes
       [innerAssetAttribArray insertObject:assetAttributesDict atIndex:i];
       assetAttributesDict = [[NSMutableDictionary alloc] init];
     }
@@ -507,7 +676,6 @@
     NSLog(@"jsonString Request: %@", jsonString);
     
     //Set URL for Update Asset
-    //URL = @"http://192.168.2.13:8080/vertex-api/asset/updateAsset";
     URL = @"http://192.168.2.13/vertex-api/asset/updateAsset";
     
     NSMutableURLRequest *putRequest = [NSMutableURLRequest
@@ -620,6 +788,8 @@
       }
     }
   }
+  
+  return true;
 }
 
 

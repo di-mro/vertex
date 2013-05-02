@@ -38,7 +38,6 @@
 @property (nonatomic, strong) NSMutableDictionary *assetTypes;
 
 @property (nonatomic, strong) NSMutableArray *assetTypeAttributes;
-//@property (nonatomic, strong) NSMutableDictionary *assetTypeAttributes;
 @property (nonatomic, strong) NSNumber *selectedAssetTypeId;
 @property int selectedIndex;
 
@@ -46,8 +45,6 @@
 @property (nonatomic, strong) NSMutableDictionary *attribUnits;
 @property (strong, nonatomic) UIPickerView *attributesPicker;
 @property (strong, nonatomic) NSMutableArray *selectedUnitIds;
-
-//@property (strong, nonatomic) UISegmentedControl *unitsSegmentedControl;
 
 @property (strong, nonatomic) NSString *URL;
 @property int httpResponseCode;

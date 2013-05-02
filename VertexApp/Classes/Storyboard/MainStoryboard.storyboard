@@ -2881,76 +2881,12 @@
                     </view>
                     <navigationItem key="navigationItem" title="Asset List" id="t2X-yw-SgW"/>
                     <connections>
-                        <segue destination="qMR-In-l8h" kind="push" identifier="updateAssetListToUpdateAssetPage" id="OYT-bQ-xlD"/>
+                        <segue destination="zae-Ap-Scj" kind="push" identifier="updateAssetListToUpdateAssetPage" id="tF8-WA-f3R"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ycl-Yj-eZu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1448" y="-4665"/>
-        </scene>
-        <!--Update Asset Page View Controller - Update Asset-->
-        <scene sceneID="75t-dE-1XP">
-            <objects>
-                <viewController storyboardIdentifier="" id="qMR-In-l8h" customClass="UpdateAssetPageViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="P1M-ab-rYx">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="IrL-6R-XzK" customClass="TPKeyboardAvoidingScrollView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Asset Name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dNz-qv-405">
-                                        <rect key="frame" x="20" y="78" width="122" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="MyAircon" minimumFontSize="17" id="zLz-tA-Hta">
-                                        <rect key="frame" x="20" y="107" width="280" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Asset Type:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yMM-TZ-kcS">
-                                        <rect key="frame" x="20" y="11" width="122" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Air Conditioner" minimumFontSize="17" id="IP2-Lw-7tr">
-                                        <rect key="frame" x="20" y="40" width="280" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Asset Attributes:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="I1U-Yh-vtc">
-                                        <rect key="frame" x="20" y="145" width="280" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </scrollView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Update Asset" id="hqa-87-moK"/>
-                    <connections>
-                        <outlet property="assetAttributesLabel" destination="I1U-Yh-vtc" id="6Rr-Iv-3yC"/>
-                        <outlet property="assetNameField" destination="zLz-tA-Hta" id="r90-Ba-vMt"/>
-                        <outlet property="assetNameLabel" destination="dNz-qv-405" id="b3C-fe-6DD"/>
-                        <outlet property="assetTypeField" destination="IP2-Lw-7tr" id="2jM-ed-a2m"/>
-                        <outlet property="assetTypeLabel" destination="yMM-TZ-kcS" id="RqU-vb-Cp8"/>
-                        <outlet property="updateAssetPageScroller" destination="IrL-6R-XzK" id="trN-UT-fta"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hVo-GX-SzJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1913" y="-4649"/>
         </scene>
         <!--User Group Configuration Page View Controller - User Group-->
         <scene sceneID="QSh-JM-pEr">
@@ -3377,6 +3313,75 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RVd-tu-yKV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2512" y="13816"/>
+        </scene>
+        <!--Update Asset Page View Controller - Update Asset-->
+        <scene sceneID="Jlj-ks-JZs">
+            <objects>
+                <viewController id="zae-Ap-Scj" customClass="UpdateAssetPageViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uz3-3D-lOv">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="lCt-RI-9F6" customClass="TPKeyboardAvoidingScrollView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Asset Name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qxc-0v-Fia">
+                                        <rect key="frame" x="20" y="78" width="122" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="MyAircon" minimumFontSize="17" id="iUV-Rc-O5q">
+                                        <rect key="frame" x="20" y="107" width="280" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Asset Type:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WbO-uF-d74">
+                                        <rect key="frame" x="20" y="11" width="122" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Air Conditioner" minimumFontSize="17" id="Mrc-sW-AGT">
+                                        <rect key="frame" x="20" y="40" width="280" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="oUF-j9-CzH" customClass="TPKeyboardAvoidingScrollView">
+                                        <rect key="frame" x="0.0" y="216" width="320" height="200"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                    </scrollView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Asset Attributes:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fMo-Zw-TeR">
+                                        <rect key="frame" x="20" y="145" width="280" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Update Asset" id="NJf-mJ-o5r"/>
+                    <connections>
+                        <outlet property="assetAttributesLabel" destination="fMo-Zw-TeR" id="qy8-Yj-xct"/>
+                        <outlet property="assetNameField" destination="iUV-Rc-O5q" id="oQ6-G7-1le"/>
+                        <outlet property="assetNameLabel" destination="qxc-0v-Fia" id="YVA-OV-jIS"/>
+                        <outlet property="assetTypeField" destination="Mrc-sW-AGT" id="i1U-Pf-eCl"/>
+                        <outlet property="assetTypeLabel" destination="WbO-uF-d74" id="Wta-45-qeD"/>
+                        <outlet property="updateAssetPageScroller" destination="lCt-RI-9F6" id="UaY-x7-6Kd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EiE-Hs-2Iv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1860" y="-4665"/>
         </scene>
     </scenes>
     <classes>

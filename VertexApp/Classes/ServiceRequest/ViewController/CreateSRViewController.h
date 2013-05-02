@@ -43,10 +43,10 @@
 @property int httpResponseCode;
 
 /***/
-@property (strong, nonatomic) NSMutableDictionary *lifecycles;
 @property (strong, nonatomic) NSMutableDictionary *assetTypes;
+@property (strong, nonatomic) NSMutableDictionary *lifecycles;
 @property (strong, nonatomic) NSMutableDictionary *services;
-@property (strong, nonatomic) NSMutableDictionary *priority;
+@property (strong, nonatomic) NSMutableDictionary *priorities;
 
 @property int selectedIndex;
 
@@ -54,6 +54,9 @@
 @property (strong, nonatomic) NSMutableArray *assetTypeIdArray;
 @property (strong, nonatomic) NSMutableArray *servicesIdArray;
 @property (strong, nonatomic) NSMutableArray *priorityIdArray;
+
+@property (strong, nonatomic) NSMutableArray *servicesCostArray;
+@property (strong, nonatomic) NSNumber *serviceCost;
 
 @property (strong, nonatomic) NSNumber *selectedLifecycleId;
 @property (strong, nonatomic) NSNumber *selectedAssetTypeId;

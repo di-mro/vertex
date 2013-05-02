@@ -21,6 +21,23 @@
 @property (strong, nonatomic) IBOutlet UILabel *serviceLabel;
 @property (strong, nonatomic) IBOutlet UITextField *serviceField;
 
+@property (strong, nonatomic) NSMutableArray *assetPickerArray;
+@property (strong, nonatomic) NSMutableArray *assetTypeIdArray;
+@property (strong, nonatomic) NSMutableArray *lifecyclePickerArray;
+@property (strong, nonatomic) NSMutableArray *lifecycleIdArray;
+
+@property (strong, nonatomic) NSMutableDictionary *assetTypes;
+@property (strong, nonatomic) NSMutableDictionary *lifecycles;
+
+@property (strong, nonatomic) UIPickerView *srGenericPicker;
+@property (strong, nonatomic) NSArray *currentArray;
+@property (strong, nonatomic) UITextField *currentTextField;
+@property (strong, nonatomic) UIActionSheet *actionSheet;
+
+@property int selectedIndex;
+@property (strong, nonatomic) NSNumber *selectedAssetTypeId;
+@property (strong, nonatomic) NSNumber *selectedLifecycleId;
+
 @property (strong, nonatomic) NSString *URL;
 @property int httpResponseCode;
 
