@@ -56,8 +56,8 @@
   //[self performSegueWithIdentifier: @"loginToHome" sender: self];
   
   //Set URL for Login
-  //URL = @"http://192.168.2.113:8080/vertex-api/user/login";
-  URL = @"http://192.168.2.113/vertex-api/user/login";
+  //URL = @"http://192.168.2.113/vertex-api/user/login";
+  URL = @"http://192.168.2.107/vertex-api/user/login";
 
   if([self validateLoginFields])
   {

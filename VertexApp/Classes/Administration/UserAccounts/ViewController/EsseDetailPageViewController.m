@@ -61,6 +61,7 @@
   //TODO : WS Endpoint for getEsseInfo
   URL = @"";
   //@"http://192.168.2.113/vertex-api/user/esse/getEsseInfo/%@
+  //@"http://192.168.2.107/vertex-api/user/esse/getEsseInfo/%@
   
   //! TEST
   NSMutableString *urlParams = [NSMutableString

@@ -87,12 +87,12 @@
 -(void) getAssetTypeInfo
 {
   //URL for retrieving particular asset type info
-  //URL = @"http://192.168.2.113:8080/vertex-api/asset/getAssetType/";
-  URL = @"http://192.168.2.113/vertex-api/asset/getAssetType/";
+  //URL = @"http://192.168.2.113/vertex-api/asset/getAssetType/";
+  URL = @"http://192.168.2.107/vertex-api/asset/getAssetType/";
   
   //! TEST
   NSMutableString *urlParams = [NSMutableString
-                                stringWithFormat:@"http://192.168.2.113/vertex-api/asset/getAssetType/%@"
+                                stringWithFormat:@"http://192.168.2.107/vertex-api/asset/getAssetType/%@"
                                 , assetTypeId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest

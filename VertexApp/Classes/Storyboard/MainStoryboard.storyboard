@@ -517,7 +517,7 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Aircon" minimumFontSize="17" id="u8c-b3-BFF">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Air conditioner" minimumFontSize="17" id="u8c-b3-BFF">
                                         <rect key="frame" x="16" y="39" width="287" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -543,7 +543,7 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Fix broken wire" minimumFontSize="17" id="EnQ-zG-iUT">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Clean aircon filter" minimumFontSize="17" id="EnQ-zG-iUT">
                                         <rect key="frame" x="17" y="175" width="287" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -556,7 +556,7 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Urgent" minimumFontSize="17" id="V2g-iC-FWQ">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="High" minimumFontSize="17" id="V2g-iC-FWQ">
                                         <rect key="frame" x="16" y="297" width="287" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -601,11 +601,11 @@
                         <outlet property="chooseLifecycleLabel" destination="JdF-HM-VZ5" id="r6e-Gm-Lpk"/>
                         <outlet property="chooseServicePicker" destination="n6F-W1-CuW" id="3zQ-RJ-43c"/>
                         <outlet property="createSRScroller" destination="AjM-Zv-YvX" id="AjJ-os-Etz"/>
-                        <outlet property="detailsLabel" destination="PAr-Kv-je8" id="RO3-VO-gFP"/>
-                        <outlet property="detailsTextArea" destination="VX8-bB-x5m" id="ddw-rg-dwK"/>
                         <outlet property="estimatedCostField" destination="naL-fk-1xx" id="Rmq-2g-w6V"/>
                         <outlet property="estimatedCostLabel" destination="bN6-4o-TfX" id="kKU-0R-D8Q"/>
                         <outlet property="lifecycleField" destination="X1C-oe-X6H" id="F4n-qc-Sir"/>
+                        <outlet property="notesLabel" destination="PAr-Kv-je8" id="1rB-ID-hEC"/>
+                        <outlet property="notesTextArea" destination="VX8-bB-x5m" id="Twq-6V-f0G"/>
                         <outlet property="priorityField" destination="V2g-iC-FWQ" id="iwl-2j-QIv"/>
                         <outlet property="priorityLabel" destination="axc-C0-ISA" id="GaV-hs-CRt"/>
                         <outlet property="serviceField" destination="EnQ-zG-iUT" id="dU8-wG-U4g"/>
@@ -1401,7 +1401,7 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Aircon" minimumFontSize="17" id="hvA-NC-YU1">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Air conditioner" minimumFontSize="17" id="hvA-NC-YU1">
                                         <rect key="frame" x="18" y="36" width="282" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1420,15 +1420,28 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Service Name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xiB-uj-d50">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Service Description:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xiB-uj-d50">
                                         <rect key="frame" x="19" y="143" width="280" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Service name" minimumFontSize="17" id="Gwe-mG-z0g">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Clean aircon filter" minimumFontSize="17" id="Gwe-mG-z0g">
                                         <rect key="frame" x="18" y="172" width="282" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Service Cost:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gua-0F-WhG">
+                                        <rect key="frame" x="18" y="210" width="280" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Php 500.00" minimumFontSize="17" id="eIY-nx-RKr">
+                                        <rect key="frame" x="18" y="239" width="282" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -1445,6 +1458,8 @@
                         <outlet property="assetTypeLabel" destination="8QT-6k-pEk" id="gRA-1o-sAT"/>
                         <outlet property="lifecycleField" destination="eV8-5i-pRg" id="vBQ-4l-Cd9"/>
                         <outlet property="lifecycleLabel" destination="Vhc-aj-ivX" id="9D4-O3-pJk"/>
+                        <outlet property="serviceCostField" destination="eIY-nx-RKr" id="hU2-R4-qLf"/>
+                        <outlet property="serviceCostLabel" destination="gua-0F-WhG" id="EHv-fE-0RL"/>
                         <outlet property="serviceField" destination="Gwe-mG-z0g" id="ExV-ea-yDt"/>
                         <outlet property="serviceLabel" destination="xiB-uj-d50" id="ef4-qW-rPE"/>
                     </connections>
@@ -3451,6 +3466,8 @@
                 <relationship kind="outlet" name="assetTypeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="lifecycleField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="lifecycleLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="serviceCostField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="serviceCostLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="serviceField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="serviceLabel" candidateClass="UILabel"/>
             </relationships>
@@ -3507,17 +3524,14 @@
                 <relationship kind="outlet" name="chooseLifecycleLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="chooseServicePicker" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="createSRScroller" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="currentArray" candidateClass="NSArray"/>
-                <relationship kind="outlet" name="currentTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="detailsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="detailsTextArea" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="estimatedCostField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="estimatedCostLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="lifecycleField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="notesLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="notesTextArea" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="priorityField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="priorityLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="serviceField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="srGenericPicker" candidateClass="UIPickerView"/>
             </relationships>
         </class>
         <class className="DeleteAssetPageViewController" superclassName="UIViewController">

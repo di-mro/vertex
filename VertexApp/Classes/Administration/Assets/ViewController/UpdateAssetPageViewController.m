@@ -112,12 +112,12 @@
 #pragma mark - Call WS endpoint to get details for the selected asset
 -(void) getAssetInfo
 {
-  //URL = @"http://192.168.2.113:8080/vertex-api/asset/getAsset/";
   URL = @"http://192.168.2.113/vertex-api/asset/getAsset/";
+  URL = @"http://192.168.2.107/vertex-api/asset/getAsset/";
   
   //! TEST
   NSMutableString *urlParams = [NSMutableString
-                                stringWithFormat:@"http://192.168.2.13/vertex-api/asset/getAsset/%@"
+                                stringWithFormat:@"http://192.168.2.107/vertex-api/asset/getAsset/%@"
                                 , selectedAssetId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
@@ -183,13 +183,9 @@
       assetAttribs = [assetInfo valueForKey:@"attributes"]; //dictionary keyName-value
       NSLog(@"initial-assetAttrib: %@", assetAttribs);
       
-      int textfieldHeight;
-      int textfieldWidth;
-      
       int attribTextfieldHeight = 30;
       int attribTextfieldWidth = 240;
       int unitTextfieldHeight = 30;
-      int unitTextfieldWidth = 90;
       int yOrigin = 0;
       
       NSMutableArray *attribKeys = [[NSMutableArray alloc] init];
@@ -274,11 +270,12 @@
 -(void) setAttributeUnits
 {
   //Set URL for retrieving asset type and associated asset attribute - unit of measurement
-  URL = @"http://192.168.2.113/vertex-api/asset/getAssetType/";
+  //URL = @"http://192.168.2.113/vertex-api/asset/getAssetType/";
+  URL = @"http://192.168.2.107/vertex-api/asset/getAssetType/";
   
   //Pass assetType id as parameter
   NSMutableString *urlParams = [NSMutableString
-                                stringWithFormat:@"http://192.168.2.113/vertex-api/asset/getAssetType/%@"
+                                stringWithFormat:@"http://192.168.2.107/vertex-api/asset/getAssetType/%@"
                                 , [[assetInfo valueForKey:@"assetType"] valueForKey:@"id" ]];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
@@ -332,8 +329,8 @@
 - (void) getAssetTypes
 {
   //Set URL for retrieving AssetTypes
-  //URL = @"http://192.168.2.13:8080/vertex-api/asset/getAssetTypes";
-  URL = @"http://192.168.2.13/vertex-api/asset/getAssetTypes";
+  //URL = @"http://192.168.2.113/vertex-api/asset/getAssetTypes";
+  URL = @"http://192.168.2.107/vertex-api/asset/getAssetTypes";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:URL]];
@@ -676,7 +673,8 @@
     NSLog(@"jsonString Request: %@", jsonString);
     
     //Set URL for Update Asset
-    URL = @"http://192.168.2.13/vertex-api/asset/updateAsset";
+    //URL = @"http://192.168.2.113/vertex-api/asset/updateAsset";
+    URL = @"http://192.168.2.107/vertex-api/asset/updateAsset";
     
     NSMutableURLRequest *putRequest = [NSMutableURLRequest
                                         requestWithURL:[NSURL URLWithString:URL]];

@@ -97,12 +97,12 @@
 #pragma mark - Get chosen lifecycle info
 -(void) getLifecycleInfo
 {
-  //URL = @"http://192.168.2.113:8080/vertex-api/lifecycle/getLifecycle/";
-  URL = @"http://192.168.2.113/vertex-api/lifecycle/getLifecycle/";
+  //URL = @"http://192.168.2.113/vertex-api/lifecycle/getLifecycle/";
+  URL = @"http://192.168.2.107/vertex-api/lifecycle/getLifecycle/";
   
   //! TEST
   NSMutableString *urlParams = [NSMutableString
-                                stringWithFormat:@"http://192.168.2.113/vertex-api/lifecycle/getLifecycle/%@"
+                                stringWithFormat:@"http://192.168.2.107/vertex-api/lifecycle/getLifecycle/%@"
                                 , lifecycleId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
@@ -184,7 +184,9 @@
     NSLog(@"jsonString Request: %@", jsonString);
     
     //Set URL for Update Lifecycle
-    URL = @"http://192.168.2.113:8080/vertex-api/lifecycle/updateLifecycle";
+    //URL = @"http://192.168.2.113/vertex-api/lifecycle/updateLifecycle";
+    URL = @"http://192.168.2.107/vertex-api/lifecycle/updateLifecycle";
+    
     NSMutableURLRequest *putRequest = [NSMutableURLRequest
                                         requestWithURL:[NSURL URLWithString:URL]];
     

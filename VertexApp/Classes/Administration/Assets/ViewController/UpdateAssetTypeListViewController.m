@@ -56,8 +56,8 @@
 {
   updateAssetTypePageEntries = [[NSMutableArray alloc] init];
   //Get Asset Types
-  //URL = @"http://192.168.2.113:8080/vertex-api/asset/getAssetTypes";
-  URL = @"http://192.168.2.113/vertex-api/asset/getAssetTypes";
+  //URL = @"http://192.168.2.113/vertex-api/asset/getAssetTypes";
+  URL = @"http://192.168.2.107/vertex-api/asset/getAssetTypes";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:URL]];

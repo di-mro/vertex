@@ -61,14 +61,14 @@
 - (void) displayUpdateAssetsPageEntries
 {
   updateAssetsPageEntries = [[NSMutableArray alloc] init];
-  //URL = @"http://192.168.2.113:8080/vertex-api/asset/getOwnership/";
-  URL = @"http://192.168.2.113/vertex-api/asset/getOwnership/";
+  //URL = @"http://192.168.2.113/vertex-api/asset/getOwnership/";
+  URL = @"http://192.168.2.107/vertex-api/asset/getOwnership/";
   
   //TEST
   //Update userId >> Where to get userId
   NSString *userId = @"20130101500000001";
   NSMutableString *urlParams = [NSMutableString
-                                stringWithFormat:@"http://192.168.2.113/vertex-api/asset/getOwnership/%@"
+                                stringWithFormat:@"http://192.168.2.107/vertex-api/asset/getOwnership/%@"
                                 , userId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest

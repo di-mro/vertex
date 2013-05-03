@@ -66,11 +66,11 @@
 -(void) getAssetInfo
 {
   //URL for getAsset
-  //URL = @"http://192.168.2.113:8080/vertex-api/asset/getAsset/";
-  URL = @"http://192.168.2.113/vertex-api/asset/getAsset/";
+  //URL = @"http://192.168.2.113/vertex-api/asset/getAsset/";
+  URL = @"http://192.168.2.107/vertex-api/asset/getAsset/";
   
   NSMutableString *urlParams = [NSMutableString
-                                stringWithFormat:@"http://192.168.2.113/vertex-api/asset/getAsset/%@"
+                                stringWithFormat:@"http://192.168.2.107/vertex-api/asset/getAsset/%@"
                                 , assetOwnedId];
 
   NSMutableURLRequest *getRequest = [NSMutableURLRequest

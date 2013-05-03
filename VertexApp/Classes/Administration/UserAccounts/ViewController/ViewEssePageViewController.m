@@ -55,6 +55,7 @@
   viewEssePageEntries = [[NSMutableArray alloc] init];
   
   //URL = @"http://192.168.2.113/vertex-api/esse/getEsseList";
+  //URL = @"http://192.168.2.107/vertex-api/esse/getEsseList";
   URL = @"";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest

@@ -100,8 +100,8 @@
     NSLog(@"jsonString Request: %@", jsonString);
     
     //Set URL for Add Lifecycle
-    //URL = @"http://192.168.2.113:8080/vertex-api/lifecycle/addLifecycle";
-    URL = @"http://192.168.2.113/vertex-api/lifecycle/addLifecycle";
+    //URL = @"http://192.168.2.113/vertex-api/lifecycle/addLifecycle";
+    URL = @"http://192.168.2.107/vertex-api/lifecycle/addLifecycle";
     
     NSMutableURLRequest *postRequest = [NSMutableURLRequest
                                         requestWithURL:[NSURL URLWithString:URL]];

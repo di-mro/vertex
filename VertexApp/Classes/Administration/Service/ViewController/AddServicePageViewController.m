@@ -24,6 +24,8 @@
 @synthesize lifecycleField;
 @synthesize serviceLabel;
 @synthesize serviceField;
+@synthesize serviceCostLabel;
+@synthesize serviceCostField;
 
 @synthesize assetPickerArray;
 @synthesize assetTypeIdArray;
@@ -71,6 +73,14 @@
   //[Add] navigation button - Add Lifecycle
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addService)];
   
+  //For populating the values in the Picker fields
+  [self getAssetType];
+  [self getLifecycles];
+  
+  //Set delegates for the Picker fields
+  [assetTypeField setDelegate:self];
+  [lifecycleField setDelegate:self];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -86,8 +96,8 @@
 - (void) getAssetType
 {
   //Set URL for retrieving AssetTypes
-  //URL = @"http://192.168.2.113:8080/vertex-api/asset/getAssetTypes";
-  URL = @"http://192.168.2.113/vertex-api/asset/getAssetTypes";
+  //URL = @"http://192.168.2.113/vertex-api/asset/getAssetTypes";
+  URL = @"http://192.168.2.107/vertex-api/asset/getAssetTypes";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:URL]];
@@ -123,7 +133,7 @@
     
     //TODO: Connect to CoreData for local data
     //!- FOR TESTING ONLY -!
-    assetPickerArray = [[NSArray alloc] initWithObjects:@"Demo - Aircon",@"Demo - Door", @"Demo - Exhaust Fan", @"Demo - Faucet", @"Demo - Toilet", @"Demo - Kitchen Sink", @"Demo - Lighting Fixtures", nil];
+    assetPickerArray = [[NSMutableArray alloc] initWithObjects:@"Demo - Aircon",@"Demo - Door", @"Demo - Exhaust Fan", @"Demo - Faucet", @"Demo - Toilet", @"Demo - Kitchen Sink", @"Demo - Lighting Fixtures", nil];
     assetTypeIdArray = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00004", @"Demo - 00005", nil];
   }
   else
@@ -145,8 +155,8 @@
 -(void) getLifecycles
 {
   //endpoint for getLifecycles
-  //URL = @"http://192.168.2.113:8080/vertex-api/lifecycle/getLifecycles";
-  URL = @"http://192.168.2.113/vertex-api/lifecycle/getLifecycles";
+  //URL = @"http://192.168.2.113/vertex-api/lifecycle/getLifecycles";
+  URL = @"http://192.168.2.107/vertex-api/lifecycle/getLifecycles";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:URL]];
@@ -180,7 +190,7 @@
     
     //Connect to CoreData for local data
     //!- FOR TESTING ONLY -!
-    lifecyclePickerArray = [[NSArray alloc] initWithObjects: @"Demo - Canvas", @"Demo - Requisition", @"Demo - Purchase", @"Demo - Installation", @"Demo - Repair", @"Demo - Decommission", nil];
+    lifecyclePickerArray = [[NSMutableArray alloc] initWithObjects: @"Demo - Canvas", @"Demo - Requisition", @"Demo - Purchase", @"Demo - Installation", @"Demo - Repair", @"Demo - Decommission", nil];
     lifecycleIdArray = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00004", @"Demo - 00005", nil];
   }
   else
@@ -225,7 +235,7 @@
   doneButton.frame = CGRectMake(260, 7.0f, 50.0f, 30.0f);
   doneButton.segmentedControlStyle = UISegmentedControlStyleBar;
   doneButton.tintColor = [UIColor blackColor];
-  [doneButton addTarget:self action:@selector(selectedRow) forControlEvents:UIControlEventValueChanged];
+  //[doneButton addTarget:self action:@selector(selectedRow) forControlEvents:UIControlEventValueChanged];
   
   [actionSheet addSubview:doneButton];
   [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
@@ -244,8 +254,7 @@
     currentTextField = assetTypeField;
     assetTypeField.inputView = actionSheet;
     
-    selectedAssetTypeId = [assetTypeIdArray objectAtIndex:selectedIndex];
-    
+    [doneButton addTarget:self action:@selector(getAssetTypeIndex) forControlEvents:UIControlEventValueChanged];
     return YES;
   }
   else if(lifecycleField.isEditing)
@@ -261,8 +270,7 @@
     currentTextField = lifecycleField;
     lifecycleField.inputView = actionSheet;
     
-    selectedLifecycleId = [lifecycleIdArray objectAtIndex:selectedIndex];
-    
+    [doneButton addTarget:self action:@selector(getLifecycleIndex) forControlEvents:UIControlEventValueChanged];
     return YES;
   }
   else
@@ -272,6 +280,33 @@
 }
 
 
+-(void) getAssetTypeIndex
+{
+  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
+  
+  int assetTypeIndex = [srGenericPicker selectedRowInComponent:0];
+  NSLog(@"assetTypeIndex: %d", assetTypeIndex);
+  selectedAssetTypeId = [assetTypeIdArray objectAtIndex:assetTypeIndex]; //selectedIndex
+  NSLog(@"selectedAssetTypeId: %@", selectedAssetTypeId);
+  
+  NSString *selectedEntity = [currentArray objectAtIndex:assetTypeIndex];
+  currentTextField.text = selectedEntity;
+}
+
+-(void) getLifecycleIndex
+{
+  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
+  
+  int lifecycleIndex = [srGenericPicker selectedRowInComponent:0];
+  NSLog(@"lifecycleIndex: %d", lifecycleIndex);
+  selectedLifecycleId = [lifecycleIdArray objectAtIndex:lifecycleIndex]; //selectedIndex
+  NSLog(@"selectedLifecycleId: %@", selectedLifecycleId);
+  
+  NSString *selectedEntity = [currentArray objectAtIndex:lifecycleIndex];
+  currentTextField.text = selectedEntity;
+}
+
+/*
 #pragma mark - Get selected row in Picker and set the text field to the selected entity
 -(void)selectedRow
 {
@@ -281,7 +316,7 @@
   NSString *selectedEntity = [currentArray objectAtIndex:selectedIndex];
   currentTextField.text = selectedEntity;
 }
-
+*/
 
 #pragma mark - Dismissing onscreen keyboard
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -326,10 +361,32 @@
   if([self validateAddServiceFields])
   {
     //Set JSON Request
+    /*
+     "{
+        "assetTypeId" : long,
+        "lifecycleId" : long,
+        "services" :
+        [
+          {
+            "name" : string,
+            "cost" : number
+          },
+          {
+            ..
+          }
+        ]
+     }"
+     */
     NSMutableDictionary *addServiceJson = [[NSMutableDictionary alloc] init];
-    [addServiceJson setObject:assetTypeField.text forKey:@""];
-    [addServiceJson setObject:lifecycleField.text forKey:@""];
-    [addServiceJson setObject:serviceField.text forKey:@""];
+    [addServiceJson setObject:selectedAssetTypeId forKey:@"assetTypeId"];
+    [addServiceJson setObject:selectedLifecycleId forKey:@"lifecycleId"];
+    
+    NSMutableDictionary *servicesDictionary = [[NSMutableDictionary alloc] init];
+    [servicesDictionary setObject:serviceField.text forKey:@"name"];
+    [servicesDictionary setObject:serviceCostField.text forKey:@"cost"];
+    [addServiceJson setObject:servicesDictionary forKey:@"services"];
+    
+    NSLog(@"addService JSON: %@", addServiceJson);
     
     NSError *error = [[NSError alloc] init];
     NSData *jsonData = [NSJSONSerialization
@@ -344,8 +401,8 @@
     NSLog(@"jsonString Request: %@", jsonString);
     
     //Set URL for Add Service
-    //URL = @"http://192.168.2.113:8080/vertex-api/service/addServices";
     URL = @"http://192.168.2.113/vertex-api/service/addServices";
+    //URL = @"http://192.168.2.107/vertex-api/service/addServices";
     
     NSMutableURLRequest *postRequest = [NSMutableURLRequest
                                         requestWithURL:[NSURL URLWithString:URL]];
@@ -363,7 +420,29 @@
     [connection start];
     
     NSLog(@"addService - httpResponseCode: %d", httpResponseCode);
-    //***
+    if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
+    {
+      UIAlertView *addServiceAlert = [[UIAlertView alloc]
+                                      initWithTitle:@"Add Service"
+                                      message:@"Service Added."
+                                      delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+      [addServiceAlert show];
+    }
+    else //(httpResponseCode >= 400)
+    {
+      UIAlertView *addServiceAlert = [[UIAlertView alloc]
+                                      initWithTitle:@"Add Service Failed"
+                                      message:@"Service not added. Please try again later"
+                                      delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+      [addServiceAlert show];
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    NSLog(@"Add Service");
   }
   else
   {
@@ -386,30 +465,6 @@
   httpResponse = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
-  
-  if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
-  {
-    UIAlertView *addServiceAlert = [[UIAlertView alloc]
-                                      initWithTitle:@"Add Service"
-                                      message:@"Service Added."
-                                      delegate:self
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles:nil];
-    [addServiceAlert show];
-  }
-  else //(httpResponseCode >= 400)
-  {
-    UIAlertView *addServiceAlert = [[UIAlertView alloc]
-                                          initWithTitle:@"Add Service Failed"
-                                          message:@"Service not added. Please try again later"
-                                          delegate:self
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [addServiceAlert show];
-  }
-  
-  [self dismissViewControllerAnimated:YES completion:nil];
-  NSLog(@"Add Service");
 }
 
 
@@ -437,7 +492,8 @@
   
   if([assetTypeField.text isEqualToString:(@"")]
      || [lifecycleField.text isEqualToString:(@"")]
-     || [serviceField.text isEqualToString:(@"")])
+     || [serviceField.text isEqualToString:(@"")]
+     || [serviceCostField.text isEqualToString:(@"")])
   {
     [addServiceValidateAlert show];
     return false;
@@ -462,6 +518,7 @@
   [assetTypeField resignFirstResponder];
   [lifecycleField resignFirstResponder];
   [serviceField resignFirstResponder];
+  [serviceCostField resignFirstResponder];
 }
 
 @end

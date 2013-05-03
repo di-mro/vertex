@@ -118,8 +118,8 @@
 - (void) getAssetTypes
 {
   //Set URL for retrieving AssetTypes
-  //URL = @"http://192.168.2.113:8080/vertex-api/asset/getAssetTypes";
-  URL = @"http://192.168.2.113/vertex-api/asset/getAssetTypes";
+  //URL = @"http://192.168.2.113/vertex-api/asset/getAssetTypes";
+  URL = @"http://192.168.2.107/vertex-api/asset/getAssetTypes";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                       requestWithURL:[NSURL URLWithString:URL]];
@@ -308,7 +308,7 @@
     int attribTextfieldHeight = 30;
     int attribTextfieldWidth = 240;
     int unitTextfieldHeight = 30;
-    int unitTextfieldWidth = 90;
+    //int unitTextfieldWidth = 90;
     int yOrigin = 0;
     
     UITextField *attribField = [[UITextField alloc] init];
@@ -487,7 +487,8 @@
     NSLog(@"jsonString Request: %@", jsonString);
     
     //Set URL for Add Asset
-    URL = @"http://192.168.2.113/vertex-api/asset/addAsset";
+    //URL = @"http://192.168.2.113/vertex-api/asset/addAsset";
+    URL = @"http://192.168.2.107/vertex-api/asset/addAsset";
     
     NSMutableURLRequest *postRequest = [NSMutableURLRequest
                                        requestWithURL:[NSURL URLWithString:URL]];

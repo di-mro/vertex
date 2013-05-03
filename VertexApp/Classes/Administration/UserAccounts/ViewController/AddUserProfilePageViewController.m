@@ -96,8 +96,8 @@
 - (void) getUsers
 {
   //Set URL for retrieving AssetTypes
-  //URL = @"http://192.168.2.13:8080/vertex-api/user/getUsers"; //113
-  URL = @"http://192.168.2.113/vertex-api/user/getUsers";
+  //URL = @"http://192.168.2.113/vertex-api/user/getUsers";
+  URL = @"http://192.168.2.107/vertex-api/user/getUsers";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:URL]];

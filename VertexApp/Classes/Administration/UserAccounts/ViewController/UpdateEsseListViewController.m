@@ -58,6 +58,7 @@
   
   //TODO : WS Endpoint for Esse
   //URL = @"http://192.168.2.113/vertex-api/user/esse/getEsseList";
+  //URL = @"http://192.168.2.107/vertex-api/user/esse/getEsseList";
   URL = @"";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest

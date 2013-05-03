@@ -121,7 +121,9 @@
     
     //Set URL for Add Asset Type
     //TODO : WS Endpoint for add asset type
-    URL = @"";
+    //URL = @"http://192.168.2.113/vertex-api/asset/assetType/addAssetType";
+    URL = @"http://192.168.2.107/vertex-api/asset/assetType/addAssetType";
+    
     NSMutableURLRequest *postRequest = [NSMutableURLRequest
                                         requestWithURL:[NSURL URLWithString:URL]];
     

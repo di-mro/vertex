@@ -30,7 +30,7 @@
 @synthesize estimatedCostField;
 @synthesize priorityField;
 @synthesize srGenericPicker;
-@synthesize detailsTextArea;
+@synthesize notesTextArea;
 
 @synthesize currentArray;
 @synthesize currentTextField;
@@ -106,7 +106,7 @@
   servicesCostArray = [[NSMutableArray alloc] init];
   serviceCost = 0;
   estimatedCostField.enabled = NO;
-  [self getServices];
+  //[self getServices];
   
   //getPriorities
   self.priorityPickerArray = [[NSArray alloc] init];
@@ -134,8 +134,8 @@
 - (void) getAssetType
 {
   //Set URL for retrieving AssetTypes
-  //URL = @"http://192.168.2.113:8080/vertex-api/asset/getAssetTypes";
-  URL = @"http://192.168.2.113/vertex-api/asset/getAssetTypes";
+  //URL = @"http://192.168.2.113/vertex-api/asset/getAssetTypes";
+  URL = @"http://192.168.2.107/vertex-api/asset/getAssetTypes";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:URL]];
@@ -193,8 +193,8 @@
 -(void) getLifecycles
 {
   //endpoint for getLifecycles
-  //URL = @"http://192.168.2.113:8080/vertex-api/lifecycle/getLifecycles";
-  URL = @"http://192.168.2.113/vertex-api/lifecycle/getLifecycles";
+  //URL = @"http://192.168.2.113/vertex-api/lifecycle/getLifecycles";
+  URL = @"http://192.168.2.107/vertex-api/lifecycle/getLifecycles";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                       requestWithURL:[NSURL URLWithString:URL]];
@@ -252,12 +252,14 @@
   //endpoint for getServices
   //URL = @"http://192.168.2.113/vertex-api/service/getServices/{assetTypeId}/{lifecycleId}";
   //URL = @"http://192.168.2.113/vertex-api/service/getServices";
+  //URL = @"http://192.168.2.107/vertex-api/service/getServices/{assetTypeId}/{lifecycleId}";
+  //URL = @"http://192.168.2.107/vertex-api/service/getServices";
   
   NSLog(@"selectedAssetTypeId: %@", selectedAssetTypeId);
   NSLog(@"selectedLifecycleId: %@", selectedLifecycleId);
   
   //TODO - get selected assetTypeId & lifecycleId, construct URL
-  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.113/vertex-api/service/getServices/%@/%@", selectedAssetTypeId, selectedLifecycleId];
+  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.107/vertex-api/service/getServices/%@/%@", selectedAssetTypeId, selectedLifecycleId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:urlParams]]; //URL
@@ -315,7 +317,8 @@
 -(void) getPriorities
 {
   //endpoint for getPriorities
-  URL = @"http://192.168.2.113/vertex-api/service-request/getPriorities";
+  //URL = @"http://192.168.2.113/vertex-api/service-request/getPriorities";
+  URL = @"http://192.168.2.107/vertex-api/service-request/getPriorities";
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:URL]];
@@ -420,7 +423,7 @@
   doneButton.frame = CGRectMake(260, 7.0f, 50.0f, 30.0f);
   doneButton.segmentedControlStyle = UISegmentedControlStyleBar;
   doneButton.tintColor = [UIColor blackColor];
-  [doneButton addTarget:self action:@selector(selectedRow) forControlEvents:UIControlEventValueChanged];
+  //[doneButton addTarget:self action:@selector(selectedRow) forControlEvents:UIControlEventValueChanged];
   
   [actionSheet addSubview:doneButton];
   [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
@@ -439,8 +442,7 @@
     currentTextField = assetField;
     assetField.inputView = actionSheet;
     
-    selectedAssetTypeId = [assetTypeIdArray objectAtIndex:selectedIndex];
-
+    [doneButton addTarget:self action:@selector(getAssetTypeIndex) forControlEvents:UIControlEventValueChanged];
     return YES;
   }
   else if(lifecycleField.isEditing)
@@ -456,14 +458,17 @@
     currentTextField = lifecycleField;
     lifecycleField.inputView = actionSheet;
     
-    selectedLifecycleId = [lifecycleIdArray objectAtIndex:selectedIndex];
-    
+    //[Done] button functionality changes depending on what field/picker is being edited
+    [doneButton addTarget:self action:@selector(getLifecycleIndex) forControlEvents:UIControlEventValueChanged];
     return YES;
   }
   else if(serviceField.isEditing)
   {
     NSLog(@"textFieldDidBeginEditing - serviceField");
     [textField resignFirstResponder];
+    
+    //Connect to endpoint with the selected asset type and lifecycle ids as parameters
+    [self getServices];
     
     currentArray = [[NSArray alloc] initWithObjects: nil];
     [self defineGenericPicker];
@@ -473,11 +478,7 @@
     currentTextField = serviceField;
     serviceField.inputView = actionSheet;
     
-    selectedServicesId = [servicesIdArray objectAtIndex:selectedIndex];
-    serviceCost = [servicesCostArray objectAtIndex:selectedIndex];
-    NSLog(@"selectedServicesId: %@", selectedServicesId);
-    NSLog(@"serviceCost: %@", serviceCost);
-    
+    [doneButton addTarget:self action:@selector(getServiceIndex) forControlEvents:UIControlEventValueChanged];
     return YES;
   }
   else if(priorityField.isEditing)
@@ -493,8 +494,7 @@
     currentTextField = priorityField;
     priorityField.inputView = actionSheet;
     
-    selectedPriorityId = [priorityIdArray objectAtIndex:selectedIndex];
-    
+    [doneButton addTarget:self action:@selector(getPriorityIndex) forControlEvents:UIControlEventValueChanged];
     return YES;
   }
   else
@@ -503,13 +503,73 @@
   }
 }
 
+//****
+-(void) getAssetTypeIndex
+{
+  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
+  
+  int assetTypeIndex = [srGenericPicker selectedRowInComponent:0];
+  NSLog(@"assetTypeIndex: %d", assetTypeIndex);
+  selectedAssetTypeId = [assetTypeIdArray objectAtIndex:assetTypeIndex]; //selectedIndex
+  NSLog(@"selectedAssetTypeId: %@", selectedAssetTypeId);
+  
+  NSString *selectedEntity = [currentArray objectAtIndex:assetTypeIndex];
+  currentTextField.text = selectedEntity;
+}
 
-#pragma mark - Get selected row in Picker
+-(void) getLifecycleIndex
+{
+  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
+  
+  int lifecycleIndex = [srGenericPicker selectedRowInComponent:0];
+  NSLog(@"lifecycleIndex: %d", lifecycleIndex);
+  selectedLifecycleId = [lifecycleIdArray objectAtIndex:lifecycleIndex]; //selectedIndex
+  NSLog(@"selectedLifecycleId: %@", selectedLifecycleId);
+  
+  NSString *selectedEntity = [currentArray objectAtIndex:lifecycleIndex];
+  currentTextField.text = selectedEntity;
+}
+
+-(void) getServiceIndex
+{
+  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
+  
+  int serviceIndex = [srGenericPicker selectedRowInComponent:0];
+  NSLog(@"serviceIndex: %d", serviceIndex);
+  selectedServicesId = [servicesIdArray objectAtIndex:serviceIndex]; //selectedIndex
+  NSLog(@"selectedServicesId: %@", selectedServicesId);
+  
+  serviceCost = [servicesCostArray objectAtIndex:serviceIndex];
+  estimatedCostField.text = serviceCost;
+  NSLog(@"serviceCost: %@", serviceCost);
+  
+  NSString *selectedEntity = [currentArray objectAtIndex:serviceIndex];
+  currentTextField.text = selectedEntity;
+}
+
+-(void) getPriorityIndex
+{
+  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
+  
+  int priorityIndex = [srGenericPicker selectedRowInComponent:0];
+  NSLog(@"priorityIndex: %d", priorityIndex);
+  selectedPriorityId = [priorityIdArray objectAtIndex:priorityIndex]; //selectedIndex
+  NSLog(@"selectedPriorityId: %@", selectedPriorityId);
+  
+  NSString *selectedEntity = [currentArray objectAtIndex:priorityIndex];
+  currentTextField.text = selectedEntity;
+}
+//****
+
+
+#pragma mark - Get selected row name in picker field and display it in the text field
 -(void)selectedRow
 {
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
   
+  selectedIndex = 0;
   selectedIndex = [srGenericPicker selectedRowInComponent:0];
+  NSLog(@"selectedIndex: %d", selectedIndex);
   NSString *selectedEntity = [currentArray objectAtIndex:selectedIndex];
   currentTextField.text = selectedEntity;
   
@@ -532,7 +592,7 @@
 
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-  NSLog(@"Current Array - numberOfRowsInComponent: %@", currentArray);
+  //NSLog(@"Current Array - numberOfRowsInComponent: %@", currentArray);
   return [currentArray count];
 }
 
@@ -661,30 +721,54 @@
     
     //requestor
     NSMutableDictionary *requestorJson = [[NSMutableDictionary alloc] init];
-    [requestorJson setObject:@2000000000 forKey:@"id"]; //TEST ONLY!!!
+    [requestorJson setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY!!!
     [createSRJson setObject:requestorJson forKey:@"requestor"];
     
     //admin
     NSMutableDictionary *adminJson = [[NSMutableDictionary alloc] init];
-    [adminJson setObject:@1000000000 forKey:@"id"]; //TEST ONLY !!!
+    [adminJson setObject:@20130101800000001 forKey:@"id"]; //TEST ONLY !!!
     [createSRJson setObject:adminJson forKey:@"admin"];
     
     //cost
     [createSRJson setObject:serviceCost forKey:@"cost"];
     
+    
     //TODO - schedules !!!
     NSMutableDictionary *scheduleDictionary = [[NSMutableDictionary alloc] init];
-    //TODO - set structure for schedule JSON
-    [createSRJson setObject:@"nil" forKey:@"schedule"];
     
-    /*
-     NSDate *fromDate = [NSDate alloc] init];
-     */
+    //schedule - status
+    NSMutableDictionary *scheduleStatusDictionary = [[NSMutableDictionary alloc] init];
+    [scheduleStatusDictionary setObject:@1234567890 forKey:@"id"];
+    [scheduleDictionary setObject:scheduleStatusDictionary forKey:@"status"];
+    
+    //schedule - author
+    NSMutableDictionary *scheduleAuthor = [[NSMutableDictionary alloc] init];
+    [scheduleAuthor setObject:@1234567890 forKey:@"id"];
+    [scheduleDictionary setObject:scheduleAuthor forKey:@"author"];
+    
+    //schedule - periods
+    //NSDate *date
+    NSMutableDictionary *schedulePeriodDictionary = [[NSMutableDictionary alloc] init];
+    [schedulePeriodDictionary setObject:@"2013-05-05" forKey:@"fromDate"];
+    [schedulePeriodDictionary setObject:@"12:12:12" forKey:@"fromTime"];
+    [schedulePeriodDictionary setObject:@"GMT+8" forKey:@"fromTimezone"];
+    [schedulePeriodDictionary setObject:@"2013-05-06" forKey:@"toDate"];
+    [schedulePeriodDictionary setObject:@"11:11:11" forKey:@"toTime"];
+    [schedulePeriodDictionary setObject:@"GMT+8" forKey:@"toTimezone"];
+    
+    [scheduleDictionary setObject:schedulePeriodDictionary forKey:@"periods"];
+    NSNumber *boolActive = [[NSNumber alloc] initWithBool:YES];
+    [scheduleDictionary setObject:boolActive forKey:@"active"]; //active:boolean
+    [createSRJson setObject:scheduleDictionary forKey:@"schedule"];
+    
     
     //TODO - notes !!!
     NSMutableDictionary *notesDictionary = [[NSMutableDictionary alloc] init];
-    //TODO - set structure for notes JSON
-    [createSRJson setObject:@"nil" forKey:@"notes"];
+    NSMutableDictionary *notesSenderJson = [[NSMutableDictionary alloc] init];
+    [notesSenderJson setObject:@1234567890 forKey:@"id"];
+    [notesDictionary setObject:notesSenderJson forKey:@"sender"];
+    [notesDictionary setObject:notesTextArea.text forKey:@"message"];
+    [createSRJson setObject:notesDictionary forKey:@"notes"];
     
     //***
   
@@ -703,7 +787,9 @@
     NSLog(@"jsonString Request: %@", jsonString);
     
     //Set URL for Add Service Request
-    URL = @"http://192.168.2.113/vertex-api/service-request/addServiceRequest";
+    //URL = @"http://192.168.2.113/vertex-api/service-request/addServiceRequest";
+    URL = @"http://192.168.2.107/vertex-api/service-request/addServiceRequest";
+    
     NSMutableURLRequest *postRequest = [NSMutableURLRequest
                                         requestWithURL:[NSURL URLWithString:URL]];
     
@@ -819,7 +905,7 @@
   [serviceField resignFirstResponder];
   [estimatedCostField resignFirstResponder];
   [priorityField resignFirstResponder];
-  [detailsTextArea resignFirstResponder];
+  [notesTextArea resignFirstResponder];
 }
 
 
