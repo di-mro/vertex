@@ -127,6 +127,12 @@
 		ED63134B16E5BD2800987E2D /* ReachabilityAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ED63134A16E5BCFD00987E2D /* ReachabilityAppDelegate.m */; };
 		ED63134C16E5BD2F00987E2D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = ED63134516E5BCEB00987E2D /* Reachability.m */; };
 		ED63134F16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ED63134D16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodeld */; };
+		ED634A1B173794E8003540A4 /* AcknowledgeSRListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED634A1A173794E8003540A4 /* AcknowledgeSRListViewController.m */; };
+		ED634A211737950A003540A4 /* AcknowledgeSRPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED634A201737950A003540A4 /* AcknowledgeSRPageViewController.m */; };
+		ED634A231737BAC3003540A4 /* vertex_launch_image.png in Resources */ = {isa = PBXBuildFile; fileRef = ED634A221737BAC3003540A4 /* vertex_launch_image.png */; };
+		ED634A271737BB23003540A4 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ED634A261737BB23003540A4 /* Default-568h@2x.png */; };
+		ED634A2D1737BCD4003540A4 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ED634A2C1737BCD4003540A4 /* Default@2x.png */; };
+		ED634A371737BD81003540A4 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = ED634A361737BD81003540A4 /* Default.png */; };
 		ED68A0C217150E8A0090DF1E /* TasksObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED68A0C117150E8A0090DF1E /* TasksObject.m */; };
 		ED68A0C817150F0B0090DF1E /* UserAccountsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED68A0C717150F0B0090DF1E /* UserAccountsObject.m */; };
 		ED68A0CB17150F9C0090DF1E /* UserAccountOwnershipObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED68A0CA17150F9C0090DF1E /* UserAccountOwnershipObject.m */; };
@@ -166,9 +172,9 @@
 		EDE0E8B316CB744700B9D0E7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE0E8B216CB744700B9D0E7 /* CoreGraphics.framework */; };
 		EDE0E8B916CB744800B9D0E7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EDE0E8B716CB744800B9D0E7 /* InfoPlist.strings */; };
 		EDE0E8BB16CB744800B9D0E7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE0E8BA16CB744800B9D0E7 /* main.m */; };
-		EDE0E8C116CB744800B9D0E7 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = EDE0E8C016CB744800B9D0E7 /* Default.png */; };
-		EDE0E8C316CB744800B9D0E7 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EDE0E8C216CB744800B9D0E7 /* Default@2x.png */; };
-		EDE0E8C516CB744800B9D0E7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EDE0E8C416CB744800B9D0E7 /* Default-568h@2x.png */; };
+		EDE0E8C116CB744800B9D0E7 /* Default-1.png in Resources */ = {isa = PBXBuildFile; fileRef = EDE0E8C016CB744800B9D0E7 /* Default-1.png */; };
+		EDE0E8C316CB744800B9D0E7 /* Default@2x-1.png in Resources */ = {isa = PBXBuildFile; fileRef = EDE0E8C216CB744800B9D0E7 /* Default@2x-1.png */; };
+		EDE0E8C516CB744800B9D0E7 /* Default-568h@2x-1.png in Resources */ = {isa = PBXBuildFile; fileRef = EDE0E8C416CB744800B9D0E7 /* Default-568h@2x-1.png */; };
 		EDEFE7BA16DF3C51002C35D6 /* AddAssetPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE76716DF3C51002C35D6 /* AddAssetPageViewController.m */; };
 		EDEFE7BB16DF3C51002C35D6 /* AssetPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE76916DF3C51002C35D6 /* AssetPageViewController.m */; };
 		EDEFE7BD16DF3C51002C35D6 /* ViewAssetsPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEFE76D16DF3C51002C35D6 /* ViewAssetsPageViewController.m */; };
@@ -482,6 +488,14 @@
 		ED63134916E5BCFD00987E2D /* ReachabilityAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReachabilityAppDelegate.h; sourceTree = "<group>"; };
 		ED63134A16E5BCFD00987E2D /* ReachabilityAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReachabilityAppDelegate.m; sourceTree = "<group>"; };
 		ED63134E16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VertexCoreDataModel.xcdatamodel; sourceTree = "<group>"; };
+		ED634A19173794E8003540A4 /* AcknowledgeSRListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AcknowledgeSRListViewController.h; sourceTree = "<group>"; };
+		ED634A1A173794E8003540A4 /* AcknowledgeSRListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AcknowledgeSRListViewController.m; sourceTree = "<group>"; };
+		ED634A1F1737950A003540A4 /* AcknowledgeSRPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AcknowledgeSRPageViewController.h; sourceTree = "<group>"; };
+		ED634A201737950A003540A4 /* AcknowledgeSRPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AcknowledgeSRPageViewController.m; sourceTree = "<group>"; };
+		ED634A221737BAC3003540A4 /* vertex_launch_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vertex_launch_image.png; sourceTree = "<group>"; };
+		ED634A261737BB23003540A4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		ED634A2C1737BCD4003540A4 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		ED634A361737BD81003540A4 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		ED68A0C017150E8A0090DF1E /* TasksObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksObject.h; sourceTree = "<group>"; };
 		ED68A0C117150E8A0090DF1E /* TasksObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksObject.m; sourceTree = "<group>"; };
 		ED68A0C617150F0A0090DF1E /* UserAccountsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAccountsObject.h; sourceTree = "<group>"; };
@@ -544,9 +558,9 @@
 		EDE0E8B816CB744800B9D0E7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EDE0E8BA16CB744800B9D0E7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EDE0E8BC16CB744800B9D0E7 /* VertexApp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VertexApp-Prefix.pch"; sourceTree = "<group>"; };
-		EDE0E8C016CB744800B9D0E7 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		EDE0E8C216CB744800B9D0E7 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		EDE0E8C416CB744800B9D0E7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		EDE0E8C016CB744800B9D0E7 /* Default-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-1.png"; sourceTree = "<group>"; };
+		EDE0E8C216CB744800B9D0E7 /* Default@2x-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x-1.png"; sourceTree = "<group>"; };
+		EDE0E8C416CB744800B9D0E7 /* Default-568h@2x-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x-1.png"; sourceTree = "<group>"; };
 		EDEFE76616DF3C51002C35D6 /* AddAssetPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddAssetPageViewController.h; sourceTree = "<group>"; };
 		EDEFE76716DF3C51002C35D6 /* AddAssetPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddAssetPageViewController.m; sourceTree = "<group>"; };
 		EDEFE76816DF3C51002C35D6 /* AssetPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetPageViewController.h; sourceTree = "<group>"; };
@@ -848,9 +862,9 @@
 				EDE0E8B716CB744800B9D0E7 /* InfoPlist.strings */,
 				EDE0E8BA16CB744800B9D0E7 /* main.m */,
 				EDE0E8BC16CB744800B9D0E7 /* VertexApp-Prefix.pch */,
-				EDE0E8C016CB744800B9D0E7 /* Default.png */,
-				EDE0E8C216CB744800B9D0E7 /* Default@2x.png */,
-				EDE0E8C416CB744800B9D0E7 /* Default-568h@2x.png */,
+				EDE0E8C016CB744800B9D0E7 /* Default-1.png */,
+				EDE0E8C216CB744800B9D0E7 /* Default@2x-1.png */,
+				EDE0E8C416CB744800B9D0E7 /* Default-568h@2x-1.png */,
 			);
 			name = SupportingFiles;
 			sourceTree = "<group>";
@@ -1252,6 +1266,10 @@
 		EDEFE7A916DF3C51002C35D6 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				ED634A19173794E8003540A4 /* AcknowledgeSRListViewController.h */,
+				ED634A1A173794E8003540A4 /* AcknowledgeSRListViewController.m */,
+				ED634A1F1737950A003540A4 /* AcknowledgeSRPageViewController.h */,
+				ED634A201737950A003540A4 /* AcknowledgeSRPageViewController.m */,
 				EDEFE7AA16DF3C51002C35D6 /* CreateSRViewController.h */,
 				EDEFE7AB16DF3C51002C35D6 /* CreateSRViewController.m */,
 				EDEFE7AC16DF3C51002C35D6 /* DisplaySRViewController.h */,
@@ -1333,12 +1351,16 @@
 				ED68A0E71715D0F30090DF1E /* clipboard.png */,
 				ED68A0EA1715D0F30090DF1E /* clock.png */,
 				ED68A0EB1715D0F30090DF1E /* cog.png */,
+				ED634A361737BD81003540A4 /* Default.png */,
+				ED634A2C1737BCD4003540A4 /* Default@2x.png */,
+				ED634A261737BB23003540A4 /* Default-568h@2x.png */,
 				ED68A0F91715D10E0090DF1E /* eye.png */,
 				ED68A0F51715D10E0090DF1E /* grid_view.png */,
 				ED68A0F61715D10E0090DF1E /* home.png */,
 				ED68A0E61715D0F30090DF1E /* list.png */,
 				ED68A0F81715D10E0090DF1E /* remove.png */,
 				ED68A0F71715D10E0090DF1E /* star.png */,
+				ED634A221737BAC3003540A4 /* vertex_launch_image.png */,
 				ED34D05D173578D700BCAC2D /* vertex_logo_bw.png */,
 				ED34D058173578C800BCAC2D /* vertex_logo.png */,
 				ED68A0F41715D10E0090DF1E /* wrench.png */,
@@ -1443,9 +1465,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDE0E8B916CB744800B9D0E7 /* InfoPlist.strings in Resources */,
-				EDE0E8C116CB744800B9D0E7 /* Default.png in Resources */,
-				EDE0E8C316CB744800B9D0E7 /* Default@2x.png in Resources */,
-				EDE0E8C516CB744800B9D0E7 /* Default-568h@2x.png in Resources */,
+				EDE0E8C116CB744800B9D0E7 /* Default-1.png in Resources */,
+				EDE0E8C316CB744800B9D0E7 /* Default@2x-1.png in Resources */,
+				EDE0E8C516CB744800B9D0E7 /* Default-568h@2x-1.png in Resources */,
 				EDEFE7D816DF3C51002C35D6 /* MainStoryboard.storyboard in Resources */,
 				ED68A0EC1715D0F30090DF1E /* alarm.png in Resources */,
 				ED68A0ED1715D0F30090DF1E /* cabinet.png in Resources */,
@@ -1463,6 +1485,10 @@
 				ED68A0FF1715D10E0090DF1E /* eye.png in Resources */,
 				ED34D059173578C800BCAC2D /* vertex_logo.png in Resources */,
 				ED34D05E173578D700BCAC2D /* vertex_logo_bw.png in Resources */,
+				ED634A231737BAC3003540A4 /* vertex_launch_image.png in Resources */,
+				ED634A271737BB23003540A4 /* Default-568h@2x.png in Resources */,
+				ED634A2D1737BCD4003540A4 /* Default@2x.png in Resources */,
+				ED634A371737BD81003540A4 /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1646,6 +1672,8 @@
 				ED36A48C1717BD1000693797 /* ViewEssePageViewController.m in Sources */,
 				ED36A48F1717BED300693797 /* EsseDetailPageViewController.m in Sources */,
 				ED36A4921717C63B00693797 /* RemoveEssePageViewController.m in Sources */,
+				ED634A1B173794E8003540A4 /* AcknowledgeSRListViewController.m in Sources */,
+				ED634A211737950A003540A4 /* AcknowledgeSRPageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

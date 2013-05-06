@@ -100,19 +100,19 @@
     //Create
     case 0: [self performSegueWithIdentifier:@"srToCreateSR" sender:self];
       break;
-    //View
+    //~ View
     case 1: [self performSegueWithIdentifier:@"srToViewSR" sender:self];
       break;
     //Acknowledge
-    case 2: [self performSegueWithIdentifier:@"srToViewSR" sender:self];
+    case 2: [self performSegueWithIdentifier:@"srToAcknowledgeSR" sender:self];
       break;
-    //Approve
+    //~ Approve
     case 3: [self performSegueWithIdentifier:@"srToViewSR" sender:self];
       break;
-    //Provision
+    //~ Provision
     case 4: [self performSegueWithIdentifier:@"srToViewSR" sender:self];
       break;
-    //Feedback
+    //~ Feedback
     case 5: [self performSegueWithIdentifier:@"srToSRFeedbackList" sender:self];
       break;
     default: break;

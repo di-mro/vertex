@@ -492,11 +492,68 @@
                         <segue destination="Ahv-eh-O5p" kind="push" identifier="srToCreateSR" id="jQ4-Ow-xxP"/>
                         <segue destination="5bU-hc-DM3" kind="push" identifier="srToViewSR" id="26m-Ob-yJW"/>
                         <segue destination="DfL-2s-Ewy" kind="push" identifier="srToSRFeedbackList" id="4mZ-sQ-TTK"/>
+                        <segue destination="d39-75-xDB" kind="push" identifier="srToAcknowledgeSR" id="nTB-V2-6zk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wDa-Wc-o40" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="950" y="-3156"/>
+        </scene>
+        <!--AcknowledgeSR List View Controller-->
+        <scene sceneID="VEX-Bd-lyS">
+            <objects>
+                <viewController id="d39-75-xDB" customClass="AcknowledgeSRListViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5oD-pQ-Gg7">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="JnY-eA-q8m">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="acknowledgeSRCell" textLabel="qoZ-S8-S9x" detailTextLabel="k0d-E9-ybU" style="IBUITableViewCellStyleSubtitle" id="26A-fB-5nm">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qoZ-S8-S9x">
+                                                    <rect key="frame" x="10" y="2" width="38" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="k0d-E9-ybU">
+                                                    <rect key="frame" x="10" y="24" width="47" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="d39-75-xDB" id="EPb-K2-ORx"/>
+                                    <outlet property="delegate" destination="d39-75-xDB" id="C38-no-WJi"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="ENc-0f-U7h"/>
+                    <connections>
+                        <segue destination="Hnu-Av-l8b" kind="push" identifier="srAcknowledgeListToAcknowledgePage" id="bht-5D-9pr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jIr-hJ-E9F" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1448" y="-3440"/>
         </scene>
         <!--CreateSR View Controller - Request-->
         <scene sceneID="gGc-4v-f07">
@@ -550,27 +607,40 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Priority:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="axc-C0-ISA">
-                                        <rect key="frame" x="16" y="268" width="288" height="21"/>
+                                        <rect key="frame" x="16" y="339" width="288" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Date Requested:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CPU-dB-5jw">
+                                        <rect key="frame" x="17" y="272" width="288" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="High" minimumFontSize="17" id="V2g-iC-FWQ">
-                                        <rect key="frame" x="16" y="297" width="287" height="30"/>
+                                        <rect key="frame" x="16" y="363" width="287" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="2013 / 05 / 05" minimumFontSize="17" id="0vA-6Y-faI">
+                                        <rect key="frame" x="16" y="301" width="287" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Notes:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PAr-Kv-je8">
-                                        <rect key="frame" x="17" y="335" width="287" height="21"/>
+                                        <rect key="frame" x="17" y="397" width="287" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="VX8-bB-x5m">
-                                        <rect key="frame" x="16" y="364" width="284" height="120"/>
+                                        <rect key="frame" x="16" y="422" width="284" height="120"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -583,7 +653,7 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Php 100.00" minimumFontSize="17" id="naL-fk-1xx">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Php 100.00" minimumFontSize="17" id="naL-fk-1xx">
                                         <rect key="frame" x="17" y="237" width="287" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -601,6 +671,8 @@
                         <outlet property="chooseLifecycleLabel" destination="JdF-HM-VZ5" id="r6e-Gm-Lpk"/>
                         <outlet property="chooseServicePicker" destination="n6F-W1-CuW" id="3zQ-RJ-43c"/>
                         <outlet property="createSRScroller" destination="AjM-Zv-YvX" id="AjJ-os-Etz"/>
+                        <outlet property="dateRequestedField" destination="0vA-6Y-faI" id="iKS-7b-kMm"/>
+                        <outlet property="dateRequestedLabel" destination="CPU-dB-5jw" id="5tN-4y-0vU"/>
                         <outlet property="estimatedCostField" destination="naL-fk-1xx" id="Rmq-2g-w6V"/>
                         <outlet property="estimatedCostLabel" destination="bN6-4o-TfX" id="kKU-0R-D8Q"/>
                         <outlet property="lifecycleField" destination="X1C-oe-X6H" id="F4n-qc-Sir"/>
@@ -613,7 +685,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vvh-P2-1jn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1448" y="-3961"/>
+            <point key="canvasLocation" x="1448" y="-4061"/>
         </scene>
         <!--DisplaySR View Controller - Request Summary-->
         <scene sceneID="cOU-vZ-1pj">
@@ -730,7 +802,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QBr-Fx-Qc4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1919" y="-3328"/>
+            <point key="canvasLocation" x="1860" y="-2732"/>
         </scene>
         <!--Reports Page View Controller - Reports & Statistics-->
         <scene sceneID="0wz-q6-TYF">
@@ -874,7 +946,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aez-eD-Mtj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="974" y="-1048"/>
+            <point key="canvasLocation" x="978" y="-808"/>
         </scene>
         <!--Admin Tasks View Controller - Admin-->
         <scene sceneID="53w-8x-b70">
@@ -1834,7 +1906,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="piN-CD-cDR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="956" y="-1744"/>
+            <point key="canvasLocation" x="968" y="-1472"/>
         </scene>
         <!--Create Notice Page View Controller - Create Notice-->
         <scene sceneID="awS-rk-DXN">
@@ -1922,7 +1994,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kss-54-5uS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1464" y="-1768"/>
+            <point key="canvasLocation" x="1432" y="-1472"/>
         </scene>
         <!--ViewSR View Controller-->
         <scene sceneID="sFG-nc-dYz">
@@ -1978,7 +2050,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XmT-9W-yvt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1448" y="-3328"/>
+            <point key="canvasLocation" x="1432" y="-2732"/>
         </scene>
         <!--Asset Page View Controller - Assets-->
         <scene sceneID="S75-1i-gWo">
@@ -2299,7 +2371,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZhI-dM-v7c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1464" y="-2688"/>
+            <point key="canvasLocation" x="1432" y="-2144"/>
         </scene>
         <!--Asset Configuration Page View Controller - Asset-->
         <scene sceneID="OH6-EB-viy">
@@ -2852,7 +2924,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ry-t9-fVF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1941" y="-2696"/>
+            <point key="canvasLocation" x="1865" y="-2144"/>
         </scene>
         <!--Update Asset List View Controller - Asset List-->
         <scene sceneID="GOe-ch-WaQ">
@@ -3398,419 +3470,139 @@
             </objects>
             <point key="canvasLocation" x="1860" y="-4665"/>
         </scene>
+        <!--AcknowledgeSR Page View Controller-->
+        <scene sceneID="Xlk-uu-08H">
+            <objects>
+                <viewController id="Hnu-Av-l8b" customClass="AcknowledgeSRPageViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="j2z-AN-p1b">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="8RV-c6-6Kr" customClass="TPKeyboardAvoidingScrollView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Asset:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zcx-Wf-Xp2">
+                                        <rect key="frame" x="16" y="10" width="286" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Air conditioner" minimumFontSize="17" id="Mlk-tV-XdE">
+                                        <rect key="frame" x="16" y="39" width="287" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Lifecycle:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="k9y-5t-Yuk">
+                                        <rect key="frame" x="16" y="77" width="286" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Repair" minimumFontSize="17" id="SfC-P5-Wjy">
+                                        <rect key="frame" x="16" y="106" width="287" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Service:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="482-lp-muX">
+                                        <rect key="frame" x="16" y="146" width="287" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Clean aircon filter" minimumFontSize="17" id="DPz-oF-duw">
+                                        <rect key="frame" x="17" y="175" width="287" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Priority:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yv8-GI-QvS">
+                                        <rect key="frame" x="16" y="339" width="288" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Date Requested:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9Ca-Bi-RQ8">
+                                        <rect key="frame" x="17" y="272" width="288" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="High" minimumFontSize="17" id="tnJ-Fy-LbF">
+                                        <rect key="frame" x="16" y="363" width="287" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="2013 / 05 / 05" minimumFontSize="17" id="PGh-Os-0Zz">
+                                        <rect key="frame" x="16" y="301" width="287" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Notes:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Phu-WE-ETt">
+                                        <rect key="frame" x="17" y="397" width="287" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="S1v-4l-YJI">
+                                        <rect key="frame" x="16" y="422" width="284" height="120"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Estimated Cost:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ehU-Re-P5t">
+                                        <rect key="frame" x="16" y="208" width="288" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Php 100.00" minimumFontSize="17" id="uTY-pF-f8v">
+                                        <rect key="frame" x="17" y="237" width="287" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="NKY-rS-DbA"/>
+                    <connections>
+                        <outlet property="acknowledgeSRScroller" destination="8RV-c6-6Kr" id="3ih-TH-Bd0"/>
+                        <outlet property="assetField" destination="Mlk-tV-XdE" id="Eh8-1M-uRz"/>
+                        <outlet property="assetLabel" destination="zcx-Wf-Xp2" id="XOr-aN-chN"/>
+                        <outlet property="dateRequestedField" destination="PGh-Os-0Zz" id="j6t-Hr-WkX"/>
+                        <outlet property="dateRequestedLabel" destination="9Ca-Bi-RQ8" id="zxA-Tg-V0L"/>
+                        <outlet property="estimatedCostField" destination="uTY-pF-f8v" id="wlj-Ef-g19"/>
+                        <outlet property="estimatedCostLabel" destination="ehU-Re-P5t" id="SUU-Qt-ZHc"/>
+                        <outlet property="lifecycleField" destination="SfC-P5-Wjy" id="Clr-Qv-Af7"/>
+                        <outlet property="lifecycleLabel" destination="k9y-5t-Yuk" id="jp5-uR-Pyj"/>
+                        <outlet property="notesLabel" destination="Phu-WE-ETt" id="AtQ-4x-n7W"/>
+                        <outlet property="notesTextArea" destination="S1v-4l-YJI" id="h1w-FG-mKr"/>
+                        <outlet property="priorityField" destination="tnJ-Fy-LbF" id="y74-2Y-KyP"/>
+                        <outlet property="priorityLabel" destination="yv8-GI-QvS" id="cbl-w7-kAl"/>
+                        <outlet property="serviceField" destination="DPz-oF-duw" id="0rD-ec-tU5"/>
+                        <outlet property="serviceLabel" destination="482-lp-muX" id="QNk-Y1-KPM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EUw-l3-InM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1850" y="-3435"/>
+        </scene>
     </scenes>
-    <classes>
-        <class className="AddAssetPageViewController" superclassName="ViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddAssetPageViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="addAssetScroller" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="addAssetView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="assetAttributeScroller" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="assetAttributesMainLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="assetNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="assetNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="assetTypeField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="assetTypeLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="AddAssetTypePageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddAssetTypePageViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="addAssetAttributes:"/>
-                <relationship kind="outlet" name="addAssetAttributesField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="addAssetAttributesLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="addAssetAttributesTable" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="addAssetTypeScroller" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="assetTypeNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="assetTypeNameLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="AddEssePageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddEssePageViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="addEsseScroller" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="addressField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="addressLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="contactInformationLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="emailAddressField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="emailAddressLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="firstNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="firstNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="lastNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="lastNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="middleNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="middleNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="wirelessField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="wirelessLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="wirelineField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="wirelineLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="AddLifecyclePageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddLifecyclePageViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="addLifecycleScroller" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="lifecycleDescriptionField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="lifecycleDescriptionLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="lifecycleNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="lifecycleNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="lifecyclePreviousField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="lifecyclePreviousLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="AddServicePageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddServicePageViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="addServiceScroller" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="assetTypeField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="assetTypeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="lifecycleField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="lifecycleLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="serviceCostField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="serviceCostLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="serviceField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="serviceLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="AddUserProfilePageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddUserProfilePageViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="addUserAccount:"/>
-                <relationship kind="outlet" name="addUserAccountsField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="addUserAccountsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="addUserProfileScroller" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="userAccountsTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="userProfileNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="userProfileNameLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="AdminTasksViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AdminTasksViewController.h"/>
-        </class>
-        <class className="AssetConfigurationPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AssetConfigurationPageViewController.h"/>
-        </class>
-        <class className="AssetPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AssetPageViewController.h"/>
-        </class>
-        <class className="AssetTypeDetailPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AssetTypeDetailPageViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="assetTypeDetailTextArea" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="BillingTasksViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BillingTasksViewController.h"/>
-        </class>
-        <class className="CreateNoticePageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CreateNoticePageViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="createNoticeScroller" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="messageLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="messageTextArea" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="priorityLevelField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="priorityLevelLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="userGroupNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="userGroupNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="validityField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="validityLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="CreateSRViewController" superclassName="ViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CreateSRViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="assetField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="chooseAssetLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="chooseLifecycleLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="chooseServicePicker" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="createSRScroller" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="estimatedCostField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="estimatedCostLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="lifecycleField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="notesLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="notesTextArea" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="priorityField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="priorityLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="serviceField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="DeleteAssetPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DeleteAssetPageViewController.h"/>
-        </class>
-        <class className="DeleteAssetTypePageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DeleteAssetTypePageViewController.h"/>
-        </class>
-        <class className="DeleteLifecyclePageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DeleteLifecyclePageViewController.h"/>
-        </class>
-        <class className="DeleteServicePageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DeleteServicePageViewController.h"/>
-        </class>
-        <class className="DisplaySRViewController" superclassName="ViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DisplaySRViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="assetField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="assetLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="displaySRScroller" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="lifecycleField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="lifecycleLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="priorityField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="priorityLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="serviceField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="serviceLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="srDateField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="srDateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="srDetailsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="srDetailsTextArea" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="EditUserAccountDetailsPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EditUserAccountDetailsPageViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="addressField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="addressLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="contactInformationLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="editUserAccountDetailsScroller" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="emailAddressField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="emailAddressLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="usernameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="usernameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="wirelessField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="wirelessLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="wirelineField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="wirelineLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="EditUserProfilePageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EditUserProfilePageViewController.h"/>
-        </class>
-        <class className="EsseDetailPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EsseDetailPageViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="esseDetailTextArea" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="EsseInfoConfigurationPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EsseInfoConfigurationPageViewController.h"/>
-        </class>
-        <class className="HomePageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HomePageViewController.h"/>
-        </class>
-        <class className="LifecycleConfigurationPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LifecycleConfigurationPageViewController.h"/>
-        </class>
-        <class className="LifecycleDetailPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LifecycleDetailPageViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="lifecycleDetailTextArea" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="LoginViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="login:"/>
-                <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="passwordLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="userNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="userNameLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="NavigationController" superclassName="UINavigationController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NavigationController.h"/>
-        </class>
-        <class className="NoticesViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NoticesViewController.h"/>
-        </class>
-        <class className="RemoveEssePageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RemoveEssePageViewController.h"/>
-        </class>
-        <class className="RemoveUserProfilePageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RemoveUserProfilePageViewController.h"/>
-        </class>
-        <class className="ReportsPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReportsPageViewController.h"/>
-        </class>
-        <class className="SRFeedbackListViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SRFeedbackListViewController.h"/>
-        </class>
-        <class className="SRFeedbackPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SRFeedbackPageViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="srCommentsTextArea" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="srFeedbackScroller" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-        <class className="SchedulePageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SchedulePageViewController.h"/>
-        </class>
-        <class className="ServiceConfigurationPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ServiceConfigurationPageViewController.h"/>
-        </class>
-        <class className="ServiceRequestViewController" superclassName="ViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ServiceRequestViewController.h"/>
-        </class>
-        <class className="SettingsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
-        </class>
-        <class className="SingleAssetViewController" superclassName="ViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SingleAssetViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="assetDetailsTextArea" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="singleAssetViewScroller" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-        <class className="SystemFunctionConfigurationPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SystemFunctionConfigurationPageViewController.h"/>
-        </class>
-        <class className="TPKeyboardAvoidingScrollView" superclassName="UIScrollView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TPKeyboardAvoidingScrollView.h"/>
-        </class>
-        <class className="UpdateAssetAccountabilityPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UpdateAssetAccountabilityPageViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="assetNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="assetNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="updateAssetAccountabilityScroller" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="userAccountField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="userAccountLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="UpdateAssetListViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UpdateAssetListViewController.h"/>
-        </class>
-        <class className="UpdateAssetOwnershipPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UpdateAssetOwnershipPageViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="assetNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="assetNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="esseInfoField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="esseInfoLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="updateAssetOwnershipScroller" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-        <class className="UpdateAssetPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UpdateAssetPageViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="assetAttributesLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="assetNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="assetNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="assetTypeField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="assetTypeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="updateAssetPageScroller" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-        <class className="UpdateAssetTypeListViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UpdateAssetTypeListViewController.h"/>
-        </class>
-        <class className="UpdateAssetTypePageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UpdateAssetTypePageViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="assetTypeNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="assetTypeNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="updateAssetTypeScroller" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-        <class className="UpdateEsseListViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UpdateEsseListViewController.h"/>
-        </class>
-        <class className="UpdateEssePageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UpdateEssePageViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="addressField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="addressLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="contactInformationLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="emailAddressField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="emailAddressLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="firstNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="firstNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="lastNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="lastNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="middleNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="middleNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="updateEsseScroller" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="wirelessField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="wirelessLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="wirelineField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="wirelineLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="UpdateLifecyclePageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UpdateLifecyclePageViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="lifecycleDescriptionField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="lifecycleDescriptionLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="lifecycleNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="lifecycleNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="lifecyclePreviousField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="lifecyclePreviousLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="updateLifecycleScroller" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-        <class className="UpdateLifecyleListViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UpdateLifecyleListViewController.h"/>
-        </class>
-        <class className="UpdateServicePageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UpdateServicePageViewController.h"/>
-        </class>
-        <class className="UserAccountActivationPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserAccountActivationPageViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="esseNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="esseNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="userAccountActivationScroller" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="userGroupNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="userGroupNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="usernameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="usernameLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="UserAccountConfigurationPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserAccountConfigurationPageViewController.h"/>
-        </class>
-        <class className="UserGroupConfigurationPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserGroupConfigurationPageViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="addUserAccounts:"/>
-                <relationship kind="outlet" name="addUserAccountsField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="addUserAccountsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="addUserAccountsTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="userGroupConfigScroller" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="userGroupNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="userGroupNameLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="ViewAssetTypePageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewAssetTypePageViewController.h"/>
-        </class>
-        <class className="ViewAssetsPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewAssetsPageViewController.h"/>
-        </class>
-        <class className="ViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
-        </class>
-        <class className="ViewEssePageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewEssePageViewController.h"/>
-        </class>
-        <class className="ViewLifecyclesPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewLifecyclesPageViewController.h"/>
-        </class>
-        <class className="ViewSRViewController" superclassName="ViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewSRViewController.h"/>
-        </class>
-        <class className="ViewServicesPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewServicesPageViewController.h"/>
-        </class>
-        <class className="ViewUserProfilePageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewUserProfilePageViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="userProfileNameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="userProfileNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="userProfileUserAccountsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="userProfileUserAccountsTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="viewUserProfileScroller" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
