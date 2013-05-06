@@ -37,30 +37,41 @@
 
 @synthesize URL;
 @synthesize httpResponseCode;
+@synthesize userId;
 
 //***
+@synthesize managedAssetsArray;
+@synthesize ownedAssetsArray;
+@synthesize managedAssetsIdArray;
+@synthesize ownedAssetsIdArray;
+@synthesize managedAssetTypeIdArray;
+@synthesize ownedAssetTypeIdArray;
+
+@synthesize ownedAssets;
+@synthesize managedAssets;
 @synthesize lifecycles;
-@synthesize assetTypes;
 @synthesize services;
 @synthesize priorities;
 
 @synthesize selectedIndex;
 
-@synthesize lifecycleIdArray;
+@synthesize assetIdArray;
 @synthesize assetTypeIdArray;
+@synthesize lifecycleIdArray;
 @synthesize servicesIdArray;
 @synthesize priorityIdArray;
 
 @synthesize servicesCostArray;
 @synthesize serviceCost;
 
-@synthesize selectedLifecycleId;
+@synthesize selectedAssetId;
 @synthesize selectedAssetTypeId;
+@synthesize selectedLifecycleId;
 @synthesize selectedServicesId;
 @synthesize selectedPriorityId;
 //***
 
-@synthesize createSRJson;
+@synthesize serviceRequestJson;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -92,8 +103,8 @@
   
   //getAssetTypes
   self.assetPickerArray = [[NSArray alloc] init];
-  assetTypeIdArray = [[NSMutableArray alloc] init];
-  [self getAssetType];
+  assetIdArray = [[NSMutableArray alloc] init];
+  [self getUserAssets];
   
   //getLifecycle
   self.lifecyclePickerArray = [[NSArray alloc] init];
@@ -130,13 +141,68 @@
 }
 
 
-#pragma mark - getAssetType
-- (void) getAssetType
+#pragma mark - Get user owned assets
+-(void) getAssetOwnership
 {
-  //Set URL for retrieving AssetTypes
-  //URL = @"http://192.168.2.113/vertex-api/asset/getAssetTypes";
-  URL = @"http://192.168.2.107/vertex-api/asset/getAssetTypes";
+  userId = @20130101500000001;
+  NSString *urlParams = [NSString stringWithFormat:@"http://192.168.2.107/vertex-api/asset/getOwnership/%@", userId];
+  NSMutableURLRequest *getRequest = [NSMutableURLRequest
+                                     requestWithURL:[NSURL URLWithString:urlParams]];
   
+  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+  [getRequest setHTTPMethod:@"GET"];
+  NSLog(@"%@", getRequest);
+  
+  NSURLConnection *connection = [[NSURLConnection alloc]
+                                 initWithRequest:getRequest
+                                 delegate:self];
+  [connection start];
+  
+  NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+  NSError *error = [[NSError alloc] init];
+  
+  //GET
+  NSData *responseData = [NSURLConnection
+                          sendSynchronousRequest:getRequest
+                          returningResponse:&urlResponse
+                          error:&error];
+  
+  if (responseData == nil)
+  {
+    //Show an alert if connection is not available
+    UIAlertView *connectionAlert = [[UIAlertView alloc]
+                                    initWithTitle:@"Warning"
+                                    message:@"No network connection detected. Displaying data from phone cache."
+                                    delegate:nil
+                                    cancelButtonTitle:@"OK"
+                                    otherButtonTitles:nil];
+    [connectionAlert show];
+    
+    //TODO: Connect to CoreData for local data
+    //!- FOR TESTING ONLY -!
+    ownedAssetsArray = [[NSArray alloc] initWithObjects:@"Demo - Aircon",@"Demo - Door", @"Demo - Exhaust Fan", @"Demo - Faucet", @"Demo - Toilet", @"Demo - Kitchen Sink", @"Demo - Lighting Fixtures", nil];
+    ownedAssetsIdArray = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00004", @"Demo - 00005", nil];
+  }
+  else
+  {
+    ownedAssets = [NSJSONSerialization
+                  JSONObjectWithData:responseData
+                  options:kNilOptions
+                  error:&error];
+    NSLog(@"ownedAssets JSON Result: %@", ownedAssets);
+    
+    ownedAssetsArray = [ownedAssets valueForKey:@"name"];
+    ownedAssetsIdArray = [ownedAssets valueForKey:@"id"];
+    ownedAssetTypeIdArray = [[ownedAssets valueForKey:@"assetType"] valueForKey:@"id"];
+    NSLog(@"ownedAssetsArray: %@", ownedAssetsArray);
+  }
+}
+
+
+#pragma mark - Get managed assets - assets belonging to the building
+-(void) getManagedAssets
+{
+  URL = @"http://192.168.2.107/vertex-api/asset/getManagedAssets";
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:URL]];
   
@@ -171,21 +237,45 @@
     
     //TODO: Connect to CoreData for local data
     //!- FOR TESTING ONLY -!
-    assetPickerArray = [[NSArray alloc] initWithObjects:@"Demo - Aircon",@"Demo - Door", @"Demo - Exhaust Fan", @"Demo - Faucet", @"Demo - Toilet", @"Demo - Kitchen Sink", @"Demo - Lighting Fixtures", nil];
-    assetTypeIdArray = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00004", @"Demo - 00005", nil];
+    managedAssetsArray = [[NSArray alloc] initWithObjects:@"Demo - Elevator", @"Demo - Pool", @"Demo - Parking lot", @"Demo - Lobby", nil];
+    managedAssetsIdArray = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00004", nil];
   }
   else
   {
-    assetTypes = [NSJSONSerialization
-                  JSONObjectWithData:responseData
-                  options:kNilOptions
-                  error:&error];
-    NSLog(@"getAssetTypes JSON Result: %@", assetTypes);
+    managedAssets = [NSJSONSerialization
+                   JSONObjectWithData:responseData
+                   options:kNilOptions
+                   error:&error];
+    NSLog(@"managedAssets JSON Result: %@", managedAssets);
     
-    assetPickerArray = [assetTypes valueForKey:@"name"]; //store assetType names only in PickerArray
-    assetTypeIdArray = [assetTypes valueForKey:@"id"];
-    NSLog(@"assetPickerArray: %@", assetPickerArray);
+    managedAssetsArray = [managedAssets valueForKey:@"name"];
+    managedAssetsIdArray = [managedAssets valueForKey:@"id"];
+    managedAssetTypeIdArray = [[managedAssets valueForKey:@"assetType"] valueForKey:@"id"];
+    NSLog(@"managedAssetsArray: %@", managedAssetsArray);
   }
+}
+
+
+#pragma mark - Get the assets belonging to a certain user plus the managed assets of the building
+- (void) getUserAssets
+{
+  [self getAssetOwnership];
+  [self getManagedAssets];
+  
+  assetPickerArray = [[NSMutableArray alloc] init];
+  [assetPickerArray addObjectsFromArray:ownedAssetsArray];
+  [assetPickerArray addObjectsFromArray:managedAssetsArray];
+  NSLog(@"assetPickerArray: %@", assetPickerArray);
+  
+  assetIdArray = [[NSMutableArray alloc] init];
+  [assetIdArray addObjectsFromArray:ownedAssetsIdArray];
+  [assetIdArray addObjectsFromArray:managedAssetsIdArray];
+  NSLog(@"assetIdArray: %@", assetIdArray);
+  
+  assetTypeIdArray = [[NSMutableArray alloc] init];
+  [assetTypeIdArray addObjectsFromArray:ownedAssetTypeIdArray];
+  [assetTypeIdArray addObjectsFromArray:managedAssetTypeIdArray];
+  NSLog(@"assetTypeIdArray: %@", assetTypeIdArray);
 }
 
 
@@ -503,13 +593,15 @@
   }
 }
 
-//****
+
+#pragma mark - Get the selected asset type id of the selected asset in Asset Picker
 -(void) getAssetTypeIndex
 {
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
   
   int assetTypeIndex = [srGenericPicker selectedRowInComponent:0];
   NSLog(@"assetTypeIndex: %d", assetTypeIndex);
+  selectedAssetId = [assetIdArray objectAtIndex:assetTypeIndex];
   selectedAssetTypeId = [assetTypeIdArray objectAtIndex:assetTypeIndex]; //selectedIndex
   NSLog(@"selectedAssetTypeId: %@", selectedAssetTypeId);
   
@@ -517,6 +609,8 @@
   currentTextField.text = selectedEntity;
 }
 
+
+#pragma mark - Get the id of the selected lifecycle in Lifecycle Picker
 -(void) getLifecycleIndex
 {
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
@@ -530,6 +624,8 @@
   currentTextField.text = selectedEntity;
 }
 
+
+#pragma mark - Get the id of the selected service in Services Picker
 -(void) getServiceIndex
 {
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
@@ -547,6 +643,8 @@
   currentTextField.text = selectedEntity;
 }
 
+
+#pragma mark - Get the id of the selected priority in Priority Picker
 -(void) getPriorityIndex
 {
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
@@ -692,91 +790,97 @@
      */
     
     //TODO : Construct JSON request body from user inputs in UI
-    createSRJson = [[NSMutableDictionary alloc] init];
+    serviceRequestJson = [[NSMutableDictionary alloc] init];
     
     //asset
     NSMutableDictionary *assetJson = [[NSMutableDictionary alloc] init];
-    [assetJson setObject:selectedAssetTypeId forKey:@"id"];
-    [createSRJson setObject:assetJson forKey:@"asset"];
+    [assetJson setObject:selectedAssetId forKey:@"id"];
+    [serviceRequestJson setObject:assetJson forKey:@"asset"];
     
     //lifecycle
     NSMutableDictionary *lifecycleJson = [[NSMutableDictionary alloc] init];
     [lifecycleJson setObject:selectedLifecycleId forKey:@"id"];
-    [createSRJson setObject:lifecycleJson forKey:@"lifecycle"];
+    [serviceRequestJson setObject:lifecycleJson forKey:@"lifecycle"];
     
     //service
     NSMutableDictionary *serviceJson = [[NSMutableDictionary alloc] init];
-    [serviceJson setObject:selectedServicesId forKey:@"id"]; //TEST ONLY !!!
-    [createSRJson setObject:serviceJson forKey:@"service"];
+    [serviceJson setObject:selectedServicesId forKey:@"id"];
+    [serviceRequestJson setObject:serviceJson forKey:@"service"];
     
     //priority
     NSMutableDictionary *priorityJson = [[NSMutableDictionary alloc] init];
     [priorityJson setObject:selectedPriorityId forKey:@"id"];
-    [createSRJson setObject:priorityJson forKey:@"priority"];
+    [serviceRequestJson setObject:priorityJson forKey:@"priority"];
     
     //status
     NSMutableDictionary *statusJson = [[NSMutableDictionary alloc] init];
-    [statusJson setObject:@"Demo - StatusID0001" forKey:@"id"];
-    [createSRJson setObject:statusJson forKey:@"status"];
+    [statusJson setObject:@20130101420000001 forKey:@"id"]; //Service Request Creation Status Id - 20130101420000001
+    [serviceRequestJson setObject:statusJson forKey:@"status"];
     
     //requestor
     NSMutableDictionary *requestorJson = [[NSMutableDictionary alloc] init];
     [requestorJson setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY!!!
-    [createSRJson setObject:requestorJson forKey:@"requestor"];
+    [serviceRequestJson setObject:requestorJson forKey:@"requestor"];
     
     //admin
     NSMutableDictionary *adminJson = [[NSMutableDictionary alloc] init];
-    [adminJson setObject:@20130101800000001 forKey:@"id"]; //TEST ONLY !!!
-    [createSRJson setObject:adminJson forKey:@"admin"];
+    [adminJson setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY !!!
+    [serviceRequestJson setObject:adminJson forKey:@"admin"];
     
     //cost
-    [createSRJson setObject:serviceCost forKey:@"cost"];
-    
+    [serviceRequestJson setObject:serviceCost forKey:@"cost"];
     
     //TODO - schedules !!!
     NSMutableDictionary *scheduleDictionary = [[NSMutableDictionary alloc] init];
-    
     //schedule - status
     NSMutableDictionary *scheduleStatusDictionary = [[NSMutableDictionary alloc] init];
-    [scheduleStatusDictionary setObject:@1234567890 forKey:@"id"];
+    [scheduleStatusDictionary setObject:@20130101420000001 forKey:@"id"]; //Service Request Creation Status Id - 20130101420000001
     [scheduleDictionary setObject:scheduleStatusDictionary forKey:@"status"];
     
     //schedule - author
     NSMutableDictionary *scheduleAuthor = [[NSMutableDictionary alloc] init];
-    [scheduleAuthor setObject:@1234567890 forKey:@"id"];
+    [scheduleAuthor setObject:@1234567890 forKey:@"id"]; //TEST ONLY !!!
     [scheduleDictionary setObject:scheduleAuthor forKey:@"author"];
     
     //schedule - periods
-    //NSDate *date
+    NSDate *date = [NSDate date];
+    //date formatter
+    NSLog(@"date: %@", date.description);
     NSMutableDictionary *schedulePeriodDictionary = [[NSMutableDictionary alloc] init];
-    [schedulePeriodDictionary setObject:@"2013-05-05" forKey:@"fromDate"];
+    [schedulePeriodDictionary setObject:date.description forKey:@"fromDate"]; //@"2013-05-05"
     [schedulePeriodDictionary setObject:@"12:12:12" forKey:@"fromTime"];
     [schedulePeriodDictionary setObject:@"GMT+8" forKey:@"fromTimezone"];
     [schedulePeriodDictionary setObject:@"2013-05-06" forKey:@"toDate"];
     [schedulePeriodDictionary setObject:@"11:11:11" forKey:@"toTime"];
     [schedulePeriodDictionary setObject:@"GMT+8" forKey:@"toTimezone"];
     
-    [scheduleDictionary setObject:schedulePeriodDictionary forKey:@"periods"];
+    NSMutableArray *schedulePeriodArray = [[NSMutableArray alloc] init];
+    [schedulePeriodArray addObject:schedulePeriodDictionary];
+    [scheduleDictionary setObject:schedulePeriodArray forKey:@"periods"];
+    //[scheduleDictionary setObject:schedulePeriodDictionary forKey:@"periods"];
     NSNumber *boolActive = [[NSNumber alloc] initWithBool:YES];
     [scheduleDictionary setObject:boolActive forKey:@"active"]; //active:boolean
-    [createSRJson setObject:scheduleDictionary forKey:@"schedule"];
+    NSMutableArray *scheduleArray = [[NSMutableArray alloc] init];
+    [scheduleArray addObject:scheduleDictionary];
+    [serviceRequestJson setObject:scheduleArray forKey:@"schedule"];
+    //[createSRJson setObject:scheduleDictionary forKey:@"schedule"];
     
     
     //TODO - notes !!!
     NSMutableDictionary *notesDictionary = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *notesSenderJson = [[NSMutableDictionary alloc] init];
-    [notesSenderJson setObject:@1234567890 forKey:@"id"];
+    [notesSenderJson setObject:@20130101500000001 forKey:@"id"];
     [notesDictionary setObject:notesSenderJson forKey:@"sender"];
     [notesDictionary setObject:notesTextArea.text forKey:@"message"];
-    [createSRJson setObject:notesDictionary forKey:@"notes"];
+    NSMutableArray *notesArray = [[NSMutableArray alloc] init];
+    [notesArray addObject:notesDictionary];
+    [serviceRequestJson setObject:notesArray forKey:@"notes"];
+    //[createSRJson setObject:notesDictionary forKey:@"notes"];
     
-    //***
-  
-    NSLog(@"Create Service Request JSON: %@", createSRJson);
-    
+    NSLog(@"Create Service Request JSON: %@", serviceRequestJson);
     NSError *error = [[NSError alloc] init];
     NSData *jsonData = [NSJSONSerialization
-                        dataWithJSONObject:createSRJson
+                        dataWithJSONObject:serviceRequestJson
                         options:NSJSONWritingPrettyPrinted
                         error:&error];
     NSString *jsonString = [[NSString alloc]

@@ -75,6 +75,8 @@
 		ED300D7216F9B9AD00F3063E /* UpdateAssetPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED300D7116F9B9AD00F3063E /* UpdateAssetPageViewController.m */; };
 		ED324C471710143B00DED66B /* EditUserAccountDetailsPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED324C461710143B00DED66B /* EditUserAccountDetailsPageViewController.m */; };
 		ED324C4D1710146000DED66B /* AddUserProfilePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED324C4C1710146000DED66B /* AddUserProfilePageViewController.m */; };
+		ED34D059173578C800BCAC2D /* vertex_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = ED34D058173578C800BCAC2D /* vertex_logo.png */; };
+		ED34D05E173578D700BCAC2D /* vertex_logo_bw.png in Resources */ = {isa = PBXBuildFile; fileRef = ED34D05D173578D700BCAC2D /* vertex_logo_bw.png */; };
 		ED36A45C171667F300693797 /* PollResults.m in Sources */ = {isa = PBXBuildFile; fileRef = ED36A45B171667F300693797 /* PollResults.m */; };
 		ED36A462171667F400693797 /* Tasks.m in Sources */ = {isa = PBXBuildFile; fileRef = ED36A461171667F400693797 /* Tasks.m */; };
 		ED36A465171667F400693797 /* AssetAccountables.m in Sources */ = {isa = PBXBuildFile; fileRef = ED36A464171667F400693797 /* AssetAccountables.m */; };
@@ -150,8 +152,6 @@
 		ED68A0FD1715D10E0090DF1E /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = ED68A0F71715D10E0090DF1E /* star.png */; };
 		ED68A0FE1715D10E0090DF1E /* remove.png in Resources */ = {isa = PBXBuildFile; fileRef = ED68A0F81715D10E0090DF1E /* remove.png */; };
 		ED68A0FF1715D10E0090DF1E /* eye.png in Resources */ = {isa = PBXBuildFile; fileRef = ED68A0F91715D10E0090DF1E /* eye.png */; };
-		ED68A1011715D6000090DF1E /* vertex_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = ED68A1001715D5EF0090DF1E /* vertex_logo.png */; };
-		ED68A1031715D6AA0090DF1E /* vertex_logo_bw.png in Resources */ = {isa = PBXBuildFile; fileRef = ED68A1021715D6A20090DF1E /* vertex_logo_bw.png */; };
 		ED8A7C7D16E4A34200F06AF1 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8A7C7716E4941200F06AF1 /* TPKeyboardAvoidingScrollView.m */; };
 		ED8A7C7E16E4A34D00F06AF1 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8A7C7916E4941200F06AF1 /* TPKeyboardAvoidingTableView.m */; };
 		EDA8E70916F05C2D00B9C57E /* UserAccounts.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA8E70816F05C2000B9C57E /* UserAccounts.m */; };
@@ -389,6 +389,8 @@
 		ED324C461710143B00DED66B /* EditUserAccountDetailsPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditUserAccountDetailsPageViewController.m; sourceTree = "<group>"; };
 		ED324C4B1710146000DED66B /* AddUserProfilePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddUserProfilePageViewController.h; sourceTree = "<group>"; };
 		ED324C4C1710146000DED66B /* AddUserProfilePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddUserProfilePageViewController.m; sourceTree = "<group>"; };
+		ED34D058173578C800BCAC2D /* vertex_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vertex_logo.png; sourceTree = "<group>"; };
+		ED34D05D173578D700BCAC2D /* vertex_logo_bw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vertex_logo_bw.png; sourceTree = "<group>"; };
 		ED36A45A171667F300693797 /* PollResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollResults.h; sourceTree = "<group>"; };
 		ED36A45B171667F300693797 /* PollResults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollResults.m; sourceTree = "<group>"; };
 		ED36A460171667F400693797 /* Tasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tasks.h; sourceTree = "<group>"; };
@@ -516,8 +518,6 @@
 		ED68A0F71715D10E0090DF1E /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		ED68A0F81715D10E0090DF1E /* remove.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = remove.png; sourceTree = "<group>"; };
 		ED68A0F91715D10E0090DF1E /* eye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye.png; sourceTree = "<group>"; };
-		ED68A1001715D5EF0090DF1E /* vertex_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = vertex_logo.png; path = ../../../vertex_logo.png; sourceTree = "<group>"; };
-		ED68A1021715D6A20090DF1E /* vertex_logo_bw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = vertex_logo_bw.png; path = ../../../vertex_logo_bw.png; sourceTree = "<group>"; };
 		ED8A7C7616E4941200F06AF1 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
 		ED8A7C7716E4941200F06AF1 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
 		ED8A7C7816E4941200F06AF1 /* TPKeyboardAvoidingTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingTableView.h; sourceTree = "<group>"; };
@@ -1339,8 +1339,8 @@
 				ED68A0E61715D0F30090DF1E /* list.png */,
 				ED68A0F81715D10E0090DF1E /* remove.png */,
 				ED68A0F71715D10E0090DF1E /* star.png */,
-				ED68A1021715D6A20090DF1E /* vertex_logo_bw.png */,
-				ED68A1001715D5EF0090DF1E /* vertex_logo.png */,
+				ED34D05D173578D700BCAC2D /* vertex_logo_bw.png */,
+				ED34D058173578C800BCAC2D /* vertex_logo.png */,
 				ED68A0F41715D10E0090DF1E /* wrench.png */,
 			);
 			path = Images;
@@ -1461,8 +1461,8 @@
 				ED68A0FD1715D10E0090DF1E /* star.png in Resources */,
 				ED68A0FE1715D10E0090DF1E /* remove.png in Resources */,
 				ED68A0FF1715D10E0090DF1E /* eye.png in Resources */,
-				ED68A1011715D6000090DF1E /* vertex_logo.png in Resources */,
-				ED68A1031715D6AA0090DF1E /* vertex_logo_bw.png in Resources */,
+				ED34D059173578C800BCAC2D /* vertex_logo.png in Resources */,
+				ED34D05E173578D700BCAC2D /* vertex_logo_bw.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

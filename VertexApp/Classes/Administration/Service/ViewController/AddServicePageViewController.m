@@ -384,7 +384,10 @@
     NSMutableDictionary *servicesDictionary = [[NSMutableDictionary alloc] init];
     [servicesDictionary setObject:serviceField.text forKey:@"name"];
     [servicesDictionary setObject:serviceCostField.text forKey:@"cost"];
-    [addServiceJson setObject:servicesDictionary forKey:@"services"];
+    NSMutableArray *servicesArray = [[NSMutableArray alloc] init];
+    [servicesArray addObject:servicesDictionary];
+    [addServiceJson setObject:servicesArray forKey:@"services"];
+    //[addServiceJson setObject:servicesDictionary forKey:@"services"];
     
     NSLog(@"addService JSON: %@", addServiceJson);
     
@@ -401,8 +404,8 @@
     NSLog(@"jsonString Request: %@", jsonString);
     
     //Set URL for Add Service
-    URL = @"http://192.168.2.113/vertex-api/service/addServices";
-    //URL = @"http://192.168.2.107/vertex-api/service/addServices";
+    //URL = @"http://192.168.2.113/vertex-api/service/addServices";
+    URL = @"http://192.168.2.107/vertex-api/service/addServices";
     
     NSMutableURLRequest *postRequest = [NSMutableURLRequest
                                         requestWithURL:[NSURL URLWithString:URL]];
@@ -473,9 +476,15 @@
 {
   if (buttonIndex == 0)
   {
+    HomePageViewController *controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+    
+    [self.navigationController pushViewController:controller animated:YES];
+    
+    /*
     ServiceConfigurationPageViewController *controller = (ServiceConfigurationPageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"ServiceConfigPage"];
     
     [self.navigationController pushViewController:controller animated:YES];
+     */
   }
 }
 
