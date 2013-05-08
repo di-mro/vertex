@@ -7,6 +7,7 @@
 //
 
 #import "AcknowledgeSRPageViewController.h"
+#import "AcknowledgeSRListViewController.h"
 #import "HomePageViewController.h"
 
 @interface AcknowledgeSRPageViewController ()
@@ -19,64 +20,37 @@
 
 @synthesize assetLabel;
 @synthesize assetField;
+
 @synthesize lifecycleLabel;
 @synthesize lifecycleField;
+
 @synthesize serviceLabel;
 @synthesize serviceField;
+
 @synthesize estimatedCostLabel;
 @synthesize estimatedCostField;
+
 @synthesize dateRequestedLabel;
 @synthesize dateRequestedField;
+
 @synthesize priorityLabel;
 @synthesize priorityField;
+
 @synthesize notesLabel;
 @synthesize notesTextArea;
-
-@synthesize srGenericPicker;
-@synthesize currentArray;
-@synthesize currentTextField;
-@synthesize actionSheet;
-
-@synthesize assetPickerArray;
-@synthesize lifecyclePickerArray;
-@synthesize servicePickerArray;
-@synthesize priorityPickerArray;
-
-@synthesize ownedAssetsArray;
-@synthesize ownedAssetsIdArray;
-@synthesize ownedAssetTypeIdArray;
-
-@synthesize managedAssetsArray;
-@synthesize managedAssetsIdArray;
-@synthesize managedAssetTypeIdArray;
-
-@synthesize ownedAssets;
-@synthesize managedAssets;
-@synthesize lifecycles;
-@synthesize services;
-@synthesize priorities;
-
-@synthesize assetIdArray;
-@synthesize assetTypeIdArray;
-@synthesize lifecycleIdArray;
-@synthesize servicesIdArray;
-@synthesize priorityIdArray;
-
-@synthesize servicesCostArray;
-@synthesize serviceCost;
-
-@synthesize selectedAssetId;
-@synthesize selectedAssetTypeId;
-@synthesize selectedLifecycleId;
-@synthesize selectedServicesId;
-@synthesize selectedPriorityId;
-
-@synthesize serviceRequestJson;
 
 @synthesize userId;
 @synthesize serviceRequestId;
 @synthesize serviceRequestInfo;
+
 @synthesize statusId;
+@synthesize notesTextAreaArray;
+//@synthesize notesDictionary;
+//@synthesize notesArray;
+
+@synthesize addNotesButton;
+
+@synthesize  serviceRequestJson;
 
 @synthesize URL;
 @synthesize httpResponseCode;
@@ -114,45 +88,28 @@
                                    initWithTitle:@"Accept"
                                    style:UIBarButtonItemStylePlain
                                    target:self
-                                   action:@selector(acceptSR)];
+                                   action:@selector(acknowledgeSR)];
   
   //Initialize bar button items
   self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:rejectButton, acceptButton, nil];
   
   //Scroller size
-  self.acknowledgeSRScroller.contentSize = CGSizeMake(320.0, 900.0);
+  self.acknowledgeSRScroller.contentSize = CGSizeMake(320.0, 2000.0);
+  
+  //Disable fields - for viewing only
+  assetField.enabled = NO;
+  lifecycleField.enabled = NO;
+  serviceField.enabled = NO;
+  estimatedCostField.enabled = NO;
+  dateRequestedField.enabled = NO;
+  priorityField.enabled = NO;
   
   //Populate fields based on previously selected Service Request for Acknowledgement
   [self getServiceRequest];
   
-  //getAssetTypes
-  self.assetPickerArray = [[NSMutableArray alloc] init];
-  assetIdArray = [[NSMutableArray alloc] init];
-  [self getUserAssets];
-  
-  //getLifecycle
-  self.lifecyclePickerArray = [[NSArray alloc] init];
-  lifecycleIdArray = [[NSMutableArray alloc] init];
-  [self getLifecycles];
-  
-  //getServices
-  self.servicePickerArray = [[NSArray alloc] init];
-  servicesIdArray = [[NSMutableArray alloc] init];
-  servicesCostArray = [[NSMutableArray alloc] init];
-  serviceCost = 0;
-  estimatedCostField.enabled = NO;
-  //[self getServices];
-  
-  //getPriorities
-  self.priorityPickerArray = [[NSArray alloc] init];
-  priorityIdArray = [[NSMutableArray alloc] init];
-  [self getPriorities];
-  
-  //Set delegates for the picker fields
-  [assetField setDelegate:self];
-  [lifecycleField setDelegate:self];
-  [serviceField setDelegate:self];
-  [priorityField setDelegate:self];
+  //Add Notes utilities
+  notesTextAreaArray = [[NSMutableArray alloc] init];
+  [notesTextAreaArray addObject:notesTextArea];
   
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -179,26 +136,15 @@
   [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Cancel Acknowledge Service Request");
   
-  //Go back to Home
+  /*
+  //Go back to Acknowledgement List Page
+  AcknowledgeSRListViewController* controller = (AcknowledgeSRListViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"AcknowledgeSRListPage"];
+  */
+  
+  //Go back to Home Page
   HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
   
   [self.navigationController pushViewController:controller animated:YES];
-}
-
-
-#pragma mark - [Reject] button implementation
--(void) rejectSR
-{
-  NSLog(@"Reject Service Request");
-  
-}
-
-
-#pragma mark - [Accept] button implementation
--(void) acceptSR
-{
-  NSLog(@"Accept Service Request");
-  
 }
 
 
@@ -257,756 +203,290 @@
                                       error:&error];
     NSLog(@"getServiceRequest JSON Result: %@", serviceRequestInfo);
     
+    NSLog(@"%@", [[serviceRequestInfo valueForKey:@"asset"] valueForKey:@"name"]);
+    NSLog(@"%@", [[serviceRequestInfo valueForKey:@"lifecycle"] valueForKey:@"name"]);
+    NSLog(@"%@", [[serviceRequestInfo valueForKey:@"service"] valueForKey:@"name"]);
+    NSLog(@"%@", [serviceRequestInfo valueForKey:@"cost"]);
+    NSLog(@"%@", [serviceRequestInfo valueForKey:@"createdDate"]);
+    NSLog(@"%@", [[serviceRequestInfo valueForKey:@"priority"] valueForKey:@"name"]);
+    //NSLog(@"%@", [[serviceRequestInfo valueForKey:@"notes"] valueForKey:@"message"]);
+    
     assetField.text         = [[serviceRequestInfo valueForKey:@"asset"] valueForKey:@"name"];
     lifecycleField.text     = [[serviceRequestInfo valueForKey:@"lifecycle"] valueForKey:@"name"];
     serviceField.text       = [[serviceRequestInfo valueForKey:@"service"] valueForKey:@"name"];
     estimatedCostField.text = [serviceRequestInfo valueForKey:@"cost"];
     dateRequestedField.text = [serviceRequestInfo valueForKey:@"createdDate"];
     priorityField.text      = [[serviceRequestInfo valueForKey:@"priority"] valueForKey:@"name"];
-    notesTextArea.text      = [[serviceRequestInfo valueForKey:@"notes"] valueForKey:@"message"];
-  }
-}
-
-
-#pragma mark - Get user owned assets
--(void) getAssetOwnership
-{
-  userId = @20130101500000001;
-  NSString *urlParams = [NSString stringWithFormat:@"http://192.168.2.107/vertex-api/asset/getOwnership/%@", userId];
-  NSMutableURLRequest *getRequest = [NSMutableURLRequest
-                                     requestWithURL:[NSURL URLWithString:urlParams]];
-  
-  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-  [getRequest setHTTPMethod:@"GET"];
-  NSLog(@"%@", getRequest);
-  
-  NSURLConnection *connection = [[NSURLConnection alloc]
-                                 initWithRequest:getRequest
-                                 delegate:self];
-  [connection start];
-  
-  NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
-  NSError *error = [[NSError alloc] init];
-  
-  //GET
-  NSData *responseData = [NSURLConnection
-                          sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
-  
-  if (responseData == nil)
-  {
-    //Show an alert if connection is not available
-    UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:nil
-                                    cancelButtonTitle:@"OK"
-                                    otherButtonTitles:nil];
-    [connectionAlert show];
+    //notesTextArea.text      = @"Blah blah";
     
-    //TODO: Connect to CoreData for local data
-    //!- FOR TESTING ONLY -!
-    ownedAssetsArray = [[NSArray alloc] initWithObjects:@"Demo - Aircon",@"Demo - Door", @"Demo - Exhaust Fan", @"Demo - Faucet", @"Demo - Toilet", @"Demo - Kitchen Sink", @"Demo - Lighting Fixtures", nil];
-    ownedAssetsIdArray = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00004", @"Demo - 00005", nil];
-  }
-  else
-  {
-    ownedAssets = [NSJSONSerialization
-                   JSONObjectWithData:responseData
-                   options:kNilOptions
-                   error:&error];
-    NSLog(@"ownedAssets JSON Result: %@", ownedAssets);
-    
-    ownedAssetsArray = [ownedAssets valueForKey:@"name"];
-    ownedAssetsIdArray = [ownedAssets valueForKey:@"id"];
-    ownedAssetTypeIdArray = [[ownedAssets valueForKey:@"assetType"] valueForKey:@"id"];
-    NSLog(@"ownedAssetsArray: %@", ownedAssetsArray);
-  }
-}
-
-
-#pragma mark - Get managed assets - assets belonging to the building
--(void) getManagedAssets
-{
-  URL = @"http://192.168.2.107/vertex-api/asset/getManagedAssets";
-  NSMutableURLRequest *getRequest = [NSMutableURLRequest
-                                     requestWithURL:[NSURL URLWithString:URL]];
-  
-  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-  [getRequest setHTTPMethod:@"GET"];
-  NSLog(@"%@", getRequest);
-  
-  NSURLConnection *connection = [[NSURLConnection alloc]
-                                 initWithRequest:getRequest
-                                 delegate:self];
-  [connection start];
-  
-  NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
-  NSError *error = [[NSError alloc] init];
-  
-  //GET
-  NSData *responseData = [NSURLConnection
-                          sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
-  
-  if (responseData == nil)
-  {
-    //Show an alert if connection is not available
-    UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:nil
-                                    cancelButtonTitle:@"OK"
-                                    otherButtonTitles:nil];
-    [connectionAlert show];
-    
-    //TODO: Connect to CoreData for local data
-    //!- FOR TESTING ONLY -!
-    managedAssetsArray = [[NSArray alloc] initWithObjects:@"Demo - Elevator", @"Demo - Pool", @"Demo - Parking lot", @"Demo - Lobby", nil];
-    managedAssetsIdArray = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00004", nil];
-  }
-  else
-  {
-    managedAssets = [NSJSONSerialization
-                     JSONObjectWithData:responseData
-                     options:kNilOptions
-                     error:&error];
-    NSLog(@"managedAssets JSON Result: %@", managedAssets);
-    
-    managedAssetsArray = [managedAssets valueForKey:@"name"];
-    managedAssetsIdArray = [managedAssets valueForKey:@"id"];
-    managedAssetTypeIdArray = [[managedAssets valueForKey:@"assetType"] valueForKey:@"id"];
-    NSLog(@"managedAssetsArray: %@", managedAssetsArray);
-  }
-}
-
-
-#pragma mark - Get the assets belonging to a certain user plus the managed assets of the building
-- (void) getUserAssets
-{
-  [self getAssetOwnership];
-  [self getManagedAssets];
-  
-  assetPickerArray = [[NSMutableArray alloc] init];
-  [assetPickerArray addObjectsFromArray:ownedAssetsArray];
-  [assetPickerArray addObjectsFromArray:managedAssetsArray];
-  NSLog(@"assetPickerArray: %@", assetPickerArray);
-  
-  assetIdArray = [[NSMutableArray alloc] init];
-  [assetIdArray addObjectsFromArray:ownedAssetsIdArray];
-  [assetIdArray addObjectsFromArray:managedAssetsIdArray];
-  NSLog(@"assetIdArray: %@", assetIdArray);
-  
-  assetTypeIdArray = [[NSMutableArray alloc] init];
-  [assetTypeIdArray addObjectsFromArray:ownedAssetTypeIdArray];
-  [assetTypeIdArray addObjectsFromArray:managedAssetTypeIdArray];
-  NSLog(@"assetTypeIdArray: %@", assetTypeIdArray);
-}
-
-
-#pragma mark - getLifecycle
--(void) getLifecycles
-{
-  //endpoint for getLifecycles
-  //URL = @"http://192.168.2.113/vertex-api/lifecycle/getLifecycles";
-  URL = @"http://192.168.2.107/vertex-api/lifecycle/getLifecycles";
-  
-  NSMutableURLRequest *getRequest = [NSMutableURLRequest
-                                     requestWithURL:[NSURL URLWithString:URL]];
-  
-  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-  [getRequest setHTTPMethod:@"GET"];
-  
-  NSURLConnection *connection = [[NSURLConnection alloc]
-                                 initWithRequest:getRequest
-                                 delegate:self];
-  [connection start];
-  
-  NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
-  NSError *error = [[NSError alloc] init];
-  
-  NSData *responseData = [NSURLConnection
-                          sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
-  
-  if(responseData == nil)
-  {
-    //Show an alert if connection is not available
-    UIAlertView *lifecycleAlert = [[UIAlertView alloc]
-                                   initWithTitle:@"Warning"
-                                   message:@"No network connection detected. Displaying data from phone cache."
-                                   delegate:nil
-                                   cancelButtonTitle:@"OK"
-                                   otherButtonTitles:nil];
-    [lifecycleAlert show];
-    
-    //Connect to CoreData for local data
-    //!- FOR TESTING ONLY -!
-    lifecyclePickerArray = [[NSArray alloc] initWithObjects: @"Demo - Canvas", @"Demo - Requisition", @"Demo - Purchase", @"Demo - Installation", @"Demo - Repair", @"Demo - Decommission", nil];
-    lifecycleIdArray = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00004", @"Demo - 00005", nil];
-  }
-  else
-  {
-    lifecycles = [NSJSONSerialization
-                  JSONObjectWithData:responseData
-                  options:kNilOptions
-                  error:&error];
-    NSLog(@"lifecycles JSON Result: %@", lifecycles);
-    
-    lifecyclePickerArray = [lifecycles valueForKey:@"name"]; //store lifecycles names only in PickerArray
-    lifecycleIdArray = [lifecycles valueForKey:@"id"];
-    NSLog(@"lifecyclePickerArray: %@", lifecyclePickerArray);
-  }
-}
-
-
-#pragma mark - getServices
--(void) getServices
-{
-  //endpoint for getServices
-  //URL = @"http://192.168.2.113/vertex-api/service/getServices/{assetTypeId}/{lifecycleId}";
-  //URL = @"http://192.168.2.113/vertex-api/service/getServices";
-  //URL = @"http://192.168.2.107/vertex-api/service/getServices/{assetTypeId}/{lifecycleId}";
-  //URL = @"http://192.168.2.107/vertex-api/service/getServices";
-  
-  NSLog(@"selectedAssetTypeId: %@", selectedAssetTypeId);
-  NSLog(@"selectedLifecycleId: %@", selectedLifecycleId);
-  
-  //TODO - get selected assetTypeId & lifecycleId, construct URL
-  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.107/vertex-api/service/getServices/%@/%@", selectedAssetTypeId, selectedLifecycleId];
-  
-  NSMutableURLRequest *getRequest = [NSMutableURLRequest
-                                     requestWithURL:[NSURL URLWithString:urlParams]]; //URL
-  
-  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-  [getRequest setHTTPMethod:@"GET"];
-  
-  NSURLConnection *connection = [[NSURLConnection alloc]
-                                 initWithRequest:getRequest
-                                 delegate:self];
-  [connection start];
-  
-  NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
-  NSError *error = [[NSError alloc] init];
-  
-  NSData *responseData = [NSURLConnection
-                          sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
-  
-  if(responseData == nil)
-  {
-    //Show an alert if connection is not available
-    UIAlertView *servicesAlert = [[UIAlertView alloc]
-                                  initWithTitle:@"Warning"
-                                  message:@"No network connection detected. Displaying data from phone cache."
-                                  delegate:nil
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-    [servicesAlert show];
-    
-    //Connect to CoreData for local data
-    //!- FOR TESTING ONLY -!
-    servicePickerArray = [[NSArray alloc] initWithObjects: @"Demo - Fix broken pipe", @"Demo - Replace wiring", @"Demo - Repaint unit", @"Demo - Fix cooling unit", nil];
-    servicesIdArray = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00003", @"Demo - 00004", nil];
-    servicesCostArray = [[NSMutableArray alloc] initWithObjects:@"Demo - 100.00", @"Demo - 200.00", @"Demo - 300.00", @"Demo - 400.00", nil];
-  }
-  else
-  {
-    services = [NSJSONSerialization
-                JSONObjectWithData:responseData
-                options:kNilOptions
-                error:&error];
-    NSLog(@"services JSON Result: %@", services);
-    
-    servicePickerArray = [services valueForKey:@"name"]; //store lifecycles names only in PickerArray
-    servicesIdArray = [services valueForKey:@"id"];
-    servicesCostArray = [services valueForKey:@"cost"];
-    NSLog(@"servicePickerArray: %@", servicePickerArray);
-  }
-}
-
-
-#pragma mark - getPriorities
--(void) getPriorities
-{
-  //endpoint for getPriorities
-  //URL = @"http://192.168.2.113/vertex-api/service-request/getPriorities";
-  URL = @"http://192.168.2.107/vertex-api/service-request/getPriorities";
-  
-  NSMutableURLRequest *getRequest = [NSMutableURLRequest
-                                     requestWithURL:[NSURL URLWithString:URL]];
-  
-  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-  [getRequest setHTTPMethod:@"GET"];
-  
-  NSURLConnection *connection = [[NSURLConnection alloc]
-                                 initWithRequest:getRequest
-                                 delegate:self];
-  [connection start];
-  
-  NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
-  NSError *error = [[NSError alloc] init];
-  
-  NSData *responseData = [NSURLConnection
-                          sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
-  
-  if(responseData == nil)
-  {
-    //Show an alert if connection is not available
-    UIAlertView *prioritiesAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:nil
-                                    cancelButtonTitle:@"OK"
-                                    otherButtonTitles:nil];
-    [prioritiesAlert show];
-    
-    //Connect to CoreData for local data
-    //!- FOR TESTING ONLY -!
-    self.priorityPickerArray = [[NSArray alloc] initWithObjects:@"Demo - High", @"Demo - Medium", @"Demo - Low", nil];
-    priorityIdArray = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00003", nil];
-  }
-  else
-  {
-    priorities = [NSJSONSerialization
-                  JSONObjectWithData:responseData
-                  options:kNilOptions
-                  error:&error];
-    NSLog(@"priorities JSON Result: %@", priorities);
-    
-    priorityPickerArray = [priorities valueForKey:@"name"]; //store priority names only in PickerArray
-    priorityIdArray = [priorities valueForKey:@"id"];
-    NSLog(@"priorityPickerArray: %@", priorityPickerArray);
-  }
-}
-
-
-#pragma mark - Generic Picker definitions
--(void) defineGenericPicker
-{
-  //Generic Picker definition
-  srGenericPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 40, 0, 0)];
-  srGenericPicker.showsSelectionIndicator = YES;
-  srGenericPicker.dataSource = self;
-  srGenericPicker.delegate = self;
-}
-
-
-#pragma mark - Set fields to pickers
-- (BOOL)textFieldDidBeginEditing:(UITextField *)textField
-{
-  NSLog(@"textFieldDidBeginEditing");
-  
-  //Action Sheet definition
-  actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                            delegate:nil
-                                   cancelButtonTitle:nil
-                              destructiveButtonTitle:nil
-                                   otherButtonTitles:nil];
-  [actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
-  
-  UISegmentedControl *doneButton = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObject:@"Done"]];
-  doneButton.momentary = YES;
-  doneButton.frame = CGRectMake(260, 7.0f, 50.0f, 30.0f);
-  doneButton.segmentedControlStyle = UISegmentedControlStyleBar;
-  doneButton.tintColor = [UIColor blackColor];
-  //[doneButton addTarget:self action:@selector(selectedRow) forControlEvents:UIControlEventValueChanged];
-  
-  [actionSheet addSubview:doneButton];
-  [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
-  [actionSheet setBounds :CGRectMake(0, 0, 320, 485)];
-  
-  if(assetField.isEditing)
-  {
-    NSLog(@"textFieldDidBeginEditing - assetField");
-    [textField resignFirstResponder];
-    
-    currentArray = [[NSArray alloc] initWithObjects: nil];
-    [self defineGenericPicker];
-    [actionSheet addSubview:srGenericPicker];
-    
-    currentArray = assetPickerArray;
-    currentTextField = assetField;
-    assetField.inputView = actionSheet;
-    
-    [doneButton addTarget:self action:@selector(getAssetTypeIndex) forControlEvents:UIControlEventValueChanged];
-    return YES;
-  }
-  else if(lifecycleField.isEditing)
-  {
-    NSLog(@"textFieldDidBeginEditing - lifecycleField");
-    [textField resignFirstResponder];
-    
-    currentArray = [[NSArray alloc] initWithObjects: nil];
-    [self defineGenericPicker];
-    [actionSheet addSubview:srGenericPicker];
-    
-    currentArray = lifecyclePickerArray;
-    currentTextField = lifecycleField;
-    lifecycleField.inputView = actionSheet;
-    
-    //[Done] button functionality changes depending on what field/picker is being edited
-    [doneButton addTarget:self action:@selector(getLifecycleIndex) forControlEvents:UIControlEventValueChanged];
-    return YES;
-  }
-  else if(serviceField.isEditing)
-  {
-    NSLog(@"textFieldDidBeginEditing - serviceField");
-    [textField resignFirstResponder];
-    
-    //Connect to endpoint with the selected asset type and lifecycle ids as parameters
-    [self getServices];
-    
-    currentArray = [[NSArray alloc] initWithObjects: nil];
-    [self defineGenericPicker];
-    [actionSheet addSubview:srGenericPicker];
-    
-    currentArray = servicePickerArray;
-    currentTextField = serviceField;
-    serviceField.inputView = actionSheet;
-    
-    [doneButton addTarget:self action:@selector(getServiceIndex) forControlEvents:UIControlEventValueChanged];
-    return YES;
-  }
-  else if(priorityField.isEditing)
-  {
-    NSLog(@"textFieldDidBeginEditing - priorityField");
-    [textField resignFirstResponder];
-    
-    currentArray = [[NSArray alloc] initWithObjects: nil];
-    [self defineGenericPicker];
-    [actionSheet addSubview:srGenericPicker];
-    
-    currentArray = priorityPickerArray;
-    currentTextField = priorityField;
-    priorityField.inputView = actionSheet;
-    
-    [doneButton addTarget:self action:@selector(getPriorityIndex) forControlEvents:UIControlEventValueChanged];
-    return YES;
-  }
-  else
-  {
-    return NO;
-  }
-}
-
-
-#pragma mark - Get the selected asset type id of the selected asset in Asset Picker
--(void) getAssetTypeIndex
-{
-  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
-  
-  int assetTypeIndex = [srGenericPicker selectedRowInComponent:0];
-  NSLog(@"assetTypeIndex: %d", assetTypeIndex);
-  selectedAssetId = [assetIdArray objectAtIndex:assetTypeIndex];
-  selectedAssetTypeId = [assetTypeIdArray objectAtIndex:assetTypeIndex]; //selectedIndex
-  NSLog(@"selectedAssetTypeId: %@", selectedAssetTypeId);
-  
-  NSString *selectedEntity = [currentArray objectAtIndex:assetTypeIndex];
-  currentTextField.text = selectedEntity;
-}
-
-
-#pragma mark - Get the id of the selected lifecycle in Lifecycle Picker
--(void) getLifecycleIndex
-{
-  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
-  
-  int lifecycleIndex = [srGenericPicker selectedRowInComponent:0];
-  NSLog(@"lifecycleIndex: %d", lifecycleIndex);
-  selectedLifecycleId = [lifecycleIdArray objectAtIndex:lifecycleIndex]; //selectedIndex
-  NSLog(@"selectedLifecycleId: %@", selectedLifecycleId);
-  
-  NSString *selectedEntity = [currentArray objectAtIndex:lifecycleIndex];
-  currentTextField.text = selectedEntity;
-}
-
-
-#pragma mark - Get the id of the selected service in Services Picker
--(void) getServiceIndex
-{
-  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
-  
-  int serviceIndex = [srGenericPicker selectedRowInComponent:0];
-  NSLog(@"serviceIndex: %d", serviceIndex);
-  selectedServicesId = [servicesIdArray objectAtIndex:serviceIndex]; //selectedIndex
-  NSLog(@"selectedServicesId: %@", selectedServicesId);
-  
-  serviceCost = [servicesCostArray objectAtIndex:serviceIndex];
-  estimatedCostField.text = serviceCost;
-  NSLog(@"serviceCost: %@", serviceCost);
-  
-  NSString *selectedEntity = [currentArray objectAtIndex:serviceIndex];
-  currentTextField.text = selectedEntity;
-}
-
-
-#pragma mark - Get the id of the selected priority in Priority Picker
--(void) getPriorityIndex
-{
-  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
-  
-  int priorityIndex = [srGenericPicker selectedRowInComponent:0];
-  NSLog(@"priorityIndex: %d", priorityIndex);
-  selectedPriorityId = [priorityIdArray objectAtIndex:priorityIndex]; //selectedIndex
-  NSLog(@"selectedPriorityId: %@", selectedPriorityId);
-  
-  NSString *selectedEntity = [currentArray objectAtIndex:priorityIndex];
-  currentTextField.text = selectedEntity;
-}
-
-
-#pragma mark - Dismissing onscreen keyboard
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-  [self.view endEditing:YES];
-}
-
-#pragma mark - Picker view functionalities
--(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-  return 1;
-}
-
--(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-  //NSLog(@"Current Array - numberOfRowsInComponent: %@", currentArray);
-  return [currentArray count];
-}
-
--(NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-  return [currentArray objectAtIndex:row];
-}
-
-//****
-#pragma mark - [Create] button implementation
--(void) createSR
-{
-  if ([self validateAcknowledgeSRFields])
-  {
     /*
-     "{
-     "asset" :
+     notes: [
      {
-     "id" : long
-     },
-     "lifecycle" :
-     {
-     "id" : long
-     },
-     "service" :
-     {
-     "id" : long
-     },
-     "priority" :
-     {
-     "id" : long
-     },
-     "status" :
-     {
-     "id" : long
-     },
-     "requestor" :
-     {
-     "id" : long
-     },
-     "admin" :
-     {
-     "id" : long
-     },
-     "cost" : double,
-     "schedules": # schedules can be null
-     [
-     {
-     "status":
-     {
-     "id": long
-     },
-     "author":
-     {
-     "id": long
-     },
-     "periods":
-     [
-     {
-     "fromDate"    : string,
-     "fromTime"    : string,
-     "fromTimezone": string,
-     "toDate"      : string,
-     "toTime"      : string,
-     "toTimezone"  : string
+      id: "20130506026000026",
+      sender: 
+      {
+        id: "20130101500000001",
+        info: 
+        {
+          lastName: "dela Cruz",
+          firstName: "Juan",
+          middleName: "Pedro",
+          suffix: "Sr"
+        }
+      },
+      creationDate: "20130506",
+      creationTime: "1519",
+      creationTimezone: "PHT",
+      message: "Aircon in living room"
      }
-     , ...
-     ],
-     "active": boolean
-     }
-     ],
-     "notes": # notes can be null
-     [
-     {
-     "sender":
-     {
-     "id": long
-     },
-     "message": string
-     }
-     , ...
      ]
-     }"
      */
     
-    //TODO : Construct JSON request body from user inputs in UI
-    serviceRequestJson = [[NSMutableDictionary alloc] init];
+    //Retrieving notes for display
+    NSMutableArray *retrievedNotesArray = [[NSMutableArray alloc] init];
+    retrievedNotesArray = [serviceRequestInfo valueForKey:@"notes"];
+    NSLog(@"retrievedNotesArray: %@", retrievedNotesArray);
+    NSMutableString *notesDisplay = [[NSMutableString alloc] init];
     
-    //asset
-    NSMutableDictionary *assetJson = [[NSMutableDictionary alloc] init];
-    [assetJson setObject:selectedAssetId forKey:@"id"];
-    [serviceRequestJson setObject:assetJson forKey:@"asset"];
-    
-    //lifecycle
-    NSMutableDictionary *lifecycleJson = [[NSMutableDictionary alloc] init];
-    [lifecycleJson setObject:selectedLifecycleId forKey:@"id"];
-    [serviceRequestJson setObject:lifecycleJson forKey:@"lifecycle"];
-    
-    //service
-    NSMutableDictionary *serviceJson = [[NSMutableDictionary alloc] init];
-    [serviceJson setObject:selectedServicesId forKey:@"id"];
-    [serviceRequestJson setObject:serviceJson forKey:@"service"];
-    
-    //priority
-    NSMutableDictionary *priorityJson = [[NSMutableDictionary alloc] init];
-    [priorityJson setObject:selectedPriorityId forKey:@"id"];
-    [serviceRequestJson setObject:priorityJson forKey:@"priority"];
-    
-    //status
-    NSMutableDictionary *statusJson = [[NSMutableDictionary alloc] init];
-    [statusJson setObject:@20130101420000001 forKey:@"id"]; //Service Request Creation Status Id - 20130101420000001
-    [serviceRequestJson setObject:statusJson forKey:@"status"];
-    
-    //requestor
-    NSMutableDictionary *requestorJson = [[NSMutableDictionary alloc] init];
-    [requestorJson setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY!!!
-    [serviceRequestJson setObject:requestorJson forKey:@"requestor"];
-    
-    //admin
-    NSMutableDictionary *adminJson = [[NSMutableDictionary alloc] init];
-    [adminJson setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY !!!
-    [serviceRequestJson setObject:adminJson forKey:@"admin"];
-    
-    //cost
-    [serviceRequestJson setObject:serviceCost forKey:@"cost"];
-    
-    //TODO - schedules !!!
-    NSMutableDictionary *scheduleDictionary = [[NSMutableDictionary alloc] init];
-    //schedule - status
-    NSMutableDictionary *scheduleStatusDictionary = [[NSMutableDictionary alloc] init];
-    [scheduleStatusDictionary setObject:@20130101420000001 forKey:@"id"]; //Service Request Creation Status Id - 20130101420000001
-    [scheduleDictionary setObject:scheduleStatusDictionary forKey:@"status"];
-    
-    //schedule - author
-    NSMutableDictionary *scheduleAuthor = [[NSMutableDictionary alloc] init];
-    [scheduleAuthor setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY !!!
-    [scheduleDictionary setObject:scheduleAuthor forKey:@"author"];
-    
-    //schedule - periods
-    //date formatter
-    NSMutableDictionary *schedulePeriodDictionary = [[NSMutableDictionary alloc] init];
-    [schedulePeriodDictionary setObject:@"2013-05-05" forKey:@"fromDate"]; //@"2013-05-05"
-    [schedulePeriodDictionary setObject:@"12:12:12" forKey:@"fromTime"];
-    [schedulePeriodDictionary setObject:@"GMT+8" forKey:@"fromTimezone"];
-    [schedulePeriodDictionary setObject:@"2013-05-06" forKey:@"toDate"];
-    [schedulePeriodDictionary setObject:@"11:11:11" forKey:@"toTime"];
-    [schedulePeriodDictionary setObject:@"GMT+8" forKey:@"toTimezone"];
-    
-    NSMutableArray *schedulePeriodArray = [[NSMutableArray alloc] init];
-    [schedulePeriodArray addObject:schedulePeriodDictionary];
-    [scheduleDictionary setObject:schedulePeriodArray forKey:@"periods"];
-    NSNumber *boolActive = [[NSNumber alloc] initWithBool:YES];
-    [scheduleDictionary setObject:boolActive forKey:@"active"]; //active:boolean
-    NSMutableArray *scheduleArray = [[NSMutableArray alloc] init];
-    [scheduleArray addObject:scheduleDictionary];
-    [serviceRequestJson setObject:scheduleArray forKey:@"schedules"];
-    
-    //TODO - notes !!!
-    NSMutableDictionary *notesDictionary = [[NSMutableDictionary alloc] init];
-    NSMutableDictionary *notesSenderJson = [[NSMutableDictionary alloc] init];
-    [notesSenderJson setObject:@20130101500000001 forKey:@"id"];
-    [notesDictionary setObject:notesSenderJson forKey:@"sender"];
-    [notesDictionary setObject:notesTextArea.text forKey:@"message"];
-    NSMutableArray *notesArray = [[NSMutableArray alloc] init];
-    [notesArray addObject:notesDictionary];
-    [serviceRequestJson setObject:notesArray forKey:@"notes"];
-    
-    NSLog(@"Create Service Request JSON: %@", serviceRequestJson);
-    NSError *error = [[NSError alloc] init];
-    NSData *jsonData = [NSJSONSerialization
-                        dataWithJSONObject:serviceRequestJson
-                        options:NSJSONWritingPrettyPrinted
-                        error:&error];
-    NSString *jsonString = [[NSString alloc]
-                            initWithData:jsonData
-                            encoding:NSUTF8StringEncoding];
-    
-    NSLog(@"jsonData Request: %@", jsonData);
-    NSLog(@"jsonString Request: %@", jsonString);
-    
-    //Set URL for Add Service Request
-    URL = @"http://192.168.2.113/vertex-api/service-request/addServiceRequest";
-    //URL = @"http://192.168.2.107/vertex-api/service-request/addServiceRequest";
-    
-    NSMutableURLRequest *postRequest = [NSMutableURLRequest
-                                        requestWithURL:[NSURL URLWithString:URL]];
-    
-    //POST method - Create
-    [postRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [postRequest setHTTPMethod:@"POST"];
-    [postRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String] length:[jsonString length]]];
-    NSLog(@"%@", postRequest);
-    
-    NSURLConnection *connection = [[NSURLConnection alloc]
-                                   initWithRequest:postRequest
-                                   delegate:self];
-    
-    [connection start];
-    
-    NSLog(@"addServiceRequest - httpResponseCode: %d", httpResponseCode);
-    if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
+    for (int i = 0; i < retrievedNotesArray.count; i++)
     {
-      UIAlertView *createSRAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Service Request"
-                                    message:@"Service Request Created."
-                                    delegate:self
-                                    cancelButtonTitle:@"OK"
-                                    otherButtonTitles:nil];
-      [createSRAlert show];
-    }
-    else //(httpResponseCode >= 400)
-    {
-      UIAlertView *createSRFailAlert = [[UIAlertView alloc]
-                                        initWithTitle:@"Create Service Request Failed"
-                                        message:@"Service Request not created. Please try again later"
-                                        delegate:self
-                                        cancelButtonTitle:@"OK"
-                                        otherButtonTitles:nil];
-      [createSRFailAlert show];
+      NSMutableDictionary *retrievedNotesDictionary = [[NSMutableDictionary alloc] init];
+      [retrievedNotesDictionary setObject:[retrievedNotesArray objectAtIndex:i] forKey:@"notes"];
+      NSLog(@"retrievedNotesDictionary: %@", retrievedNotesDictionary);
+      
+      NSMutableString *notesAuthor = [NSMutableString stringWithFormat:@"%@ %@ %@ %@"
+                                      , [[[[retrievedNotesDictionary valueForKey:@"notes"] valueForKey:@"sender"] valueForKey:@"info"] valueForKey:@"firstName"]
+                                      , [[[[retrievedNotesDictionary valueForKey:@"notes"] valueForKey:@"sender"] valueForKey:@"info"] valueForKey:@"middleName"]
+                                      , [[[[retrievedNotesDictionary valueForKey:@"notes"] valueForKey:@"sender"] valueForKey:@"info"] valueForKey:@"lastName"]
+                                      , [[[[retrievedNotesDictionary valueForKey:@"notes"] valueForKey:@"sender"] valueForKey:@"info"] valueForKey:@"suffix"]];
+      
+      NSMutableString *noteMessage = [[retrievedNotesDictionary valueForKey:@"notes"] valueForKey:@"message"];
+      NSMutableString *noteDate = [[retrievedNotesDictionary valueForKey:@"notes"] valueForKey:@"creationDate"];
+      
+      notesDisplay = [NSMutableString stringWithFormat:@"Sender: %@\nDate: %@\n\n%@", notesAuthor, noteDate, noteMessage];
+      NSLog(@"notesDisplay: %@", notesDisplay);
+      
     }
     
-    [self dismissViewControllerAnimated:YES completion:nil];
-    NSLog(@"Service Request Created");
-  }
-  else
-  {
-    NSLog(@"Unable to create Service Request");
+    notesTextArea.text = notesDisplay;
   }
 }
-//******
+
+
+#pragma mark - [Add Notes] functionality
+- (IBAction)addNotes:(id)sender
+{
+  NSLog(@"addNotes");
+  
+  //Initialize Notes text area frame size
+  int height = 120;
+  int width = 284;
+  
+  UITextView *newNoteTextArea = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+  newNoteTextArea.backgroundColor = notesTextArea.backgroundColor;
+  [newNoteTextArea setFont:[UIFont systemFontOfSize:17]];
+  
+  //Get the location of prev Notes text area and adjust new Notes area location based on that
+  UITextView *prevNoteTextView = [[UITextView alloc] init];
+  prevNoteTextView = [notesTextAreaArray lastObject];
+  CGRect noteFrame = newNoteTextArea.frame;
+  noteFrame.origin.x = 17;
+  noteFrame.origin.y = (prevNoteTextView.frame.origin.y + 130);
+  newNoteTextArea.frame = noteFrame;
+  
+  //Add Notes text area in view
+  [acknowledgeSRScroller addSubview:newNoteTextArea];
+  
+  //Store added Notes text area in array
+  [notesTextAreaArray addObject:newNoteTextArea];
+  NSLog(@"notesTextAreaArray: %@", notesTextAreaArray);
+  
+  //Adjust position of [Add Notes] button when new text area is added
+  CGRect addNotesButtonFrame = addNotesButton.frame;
+  addNotesButtonFrame.origin.x = 20;
+  addNotesButtonFrame.origin.y = (newNoteTextArea.frame.origin.y + 150);
+  addNotesButton.frame = addNotesButtonFrame;
+}
+
+
+#pragma mark - [Reject] button implementation
+-(void) rejectSR
+{
+  NSLog(@"Reject Service Request");
+  
+  statusId = @20130101420000002;
+  [self updateServiceRequestStatus];
+}
+
+
+#pragma mark - [Accept] button implementation
+-(void) acknowledgeSR
+{
+  NSLog(@"Acknowledge Service Request");
+  
+  statusId = @20130101420000003;
+  [self updateServiceRequestStatus];
+}
+
+
+#pragma mark - Update Service Request status to 'Acknowledged'
+-(void) updateServiceRequestStatus
+{
+  NSLog(@"updateServiceRequestStatus");
+  /*
+   "{
+      "id" : long,
+      "status" :
+      {
+        "id" : long
+      },
+      "admin" :
+      {
+        "id" : long
+      },
+      "cost" : double,
+      "schedules": # schedules can be null
+      [
+        {
+          "status":
+          {
+            "id": long
+          },
+          "author":
+          {
+            "id": long
+          },
+          "periods":
+          [
+            {
+              "fromDate": string,
+              "fromTime": string,
+              "fromTimezone": string,
+              "toDate": string,
+              "toTime": string,
+              "toTimezone": string
+            }
+            , ...
+          ],
+          "active": boolean
+        }
+      ],
+      "notes": # notes can be null
+      [
+        {
+          "sender":
+          {
+            "id": long
+          },
+          "message": string
+        }
+        , ...
+      ]
+   }"
+   */
+  serviceRequestJson = [[NSMutableDictionary alloc] init];
+  
+  //id
+  [serviceRequestJson setObject:[serviceRequestInfo valueForKey:@"id"] forKey:@"id"];
+  
+  //status
+  NSMutableDictionary *statusJson = [[NSMutableDictionary alloc] init];
+  [statusJson setObject:statusId forKey:@"id"]; //Acknowledge or Reject
+  [serviceRequestJson setObject:statusJson forKey:@"status"];
+  
+  //admin
+  NSMutableDictionary *adminJson = [[NSMutableDictionary alloc] init];
+  [adminJson setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY !!!
+  [serviceRequestJson setObject:adminJson forKey:@"admin"];
+  
+  //cost
+  [serviceRequestJson setObject:[serviceRequestInfo valueForKey:@"cost"] forKey:@"cost"];
+  
+  //schedules
+  NSMutableDictionary *scheduleDictionary = [[NSMutableDictionary alloc] init];
+  [scheduleDictionary setObject:[serviceRequestInfo valueForKey:@"schedules"] forKey:@"schedules"]; //>> change schedule status to 'Acknowledged'
+  
+  //notes
+  NSMutableDictionary *notesDictionary = [[NSMutableDictionary alloc] init];
+  NSMutableDictionary *notesSenderJson = [[NSMutableDictionary alloc] init];
+  NSMutableArray *notesArray = [[NSMutableArray alloc] init];
+  
+  for(int i = 1; i < notesTextAreaArray.count; i++) //begin at the second text area
+  {
+    //sender
+    [notesSenderJson setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY - Remove hardcoded value
+    [notesDictionary setObject:notesSenderJson forKey:@"sender"];
+    
+    //message
+    UITextView *tempTextView = [[UITextView alloc] init];
+    tempTextView = [notesTextAreaArray objectAtIndex:i];
+    [notesDictionary setObject:tempTextView.text forKey:@"message"];
+    
+    //save the sender-message node in an array
+    [notesArray insertObject:notesDictionary atIndex:(i-1)];
+  }
+  
+  [serviceRequestJson setObject:notesArray forKey:@"notes"];
+  
+  
+  NSLog(@"Acknowledge Service Request JSON: %@", serviceRequestJson);
+  NSError *error = [[NSError alloc] init];
+  NSData *jsonData = [NSJSONSerialization
+                      dataWithJSONObject:serviceRequestJson
+                      options:NSJSONWritingPrettyPrinted
+                      error:&error];
+  NSString *jsonString = [[NSString alloc]
+                          initWithData:jsonData
+                          encoding:NSUTF8StringEncoding];
+  
+  NSLog(@"jsonData Request: %@", jsonData);
+  NSLog(@"jsonString Request: %@", jsonString);
+  
+  //Set URL for Add Service Request
+  URL = @"http://192.168.2.113/vertex-api/service-request/updateServiceRequest";
+  //URL = @"http://192.168.2.107/vertex-api/service-request/updateServiceRequest";
+  
+  NSMutableURLRequest *putRequest = [NSMutableURLRequest
+                                      requestWithURL:[NSURL URLWithString:URL]];
+  
+  //PUT method - Update
+  [putRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+  [putRequest setHTTPMethod:@"PUT"];
+  [putRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String] length:[jsonString length]]];
+  NSLog(@"%@", putRequest);
+  
+  NSURLConnection *connection = [[NSURLConnection alloc]
+                                 initWithRequest:putRequest
+                                 delegate:self];
+  
+  [connection start];
+  
+  NSLog(@"addServiceRequest - httpResponseCode: %d", httpResponseCode);
+  if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
+  {
+    UIAlertView *updateSRAlert = [[UIAlertView alloc]
+                                  initWithTitle:@"Service Request"
+                                  message:@"Service Request Acknowledged."
+                                  delegate:self
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+    [updateSRAlert show];
+  }
+  else //(httpResponseCode >= 400)
+  {
+    UIAlertView *updateSRFailAlert = [[UIAlertView alloc]
+                                      initWithTitle:@"Acknowledge Service Request Failed"
+                                      message:@"Service Request not acknowledged. Please try again later"
+                                      delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+    [updateSRFailAlert show];
+  }
+  
+  [self dismissViewControllerAnimated:YES completion:nil];
+  NSLog(@"Service Request Acknowledged");
+}
+
 
 #pragma mark - Connection didFailWithError
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
@@ -1038,37 +518,6 @@
 }
 
 
-#pragma mark - Dismiss Picker action sheet
--(void)dismissActionSheet:(id) sender
-{
-  [sender dismissWithClickedButtonIndex:0 animated:YES];
-}
-
-#pragma mark - 'Create Service Request' validation of fields
--(BOOL) validateAcknowledgeSRFields
-{
-  UIAlertView *createSRValidateAlert = [[UIAlertView alloc]
-                                        initWithTitle:@"Incomplete Information"
-                                        message:@"Please fill out the necessary fields."
-                                        delegate:nil
-                                        cancelButtonTitle:@"OK"
-                                        otherButtonTitles:nil];
-  
-  if([assetField.text isEqualToString:(@"")]
-     || [lifecycleField.text isEqualToString:(@"")]
-     || [serviceField.text isEqualToString:(@"")]
-     || [priorityField.text isEqualToString:(@"")])
-  {
-    [createSRValidateAlert show];
-    return false;
-  }
-  else
-  {
-    return true;
-  }
-}
-
-
 #pragma mark - Dismiss onscreen keyboard
 -(void)dismissKeyboard
 {
@@ -1079,6 +528,12 @@
   [dateRequestedField resignFirstResponder];
   [priorityField resignFirstResponder];
   [notesTextArea resignFirstResponder];
+  
+  for(int i = 0; i < notesTextAreaArray.count; i++)
+  {
+    [[notesTextAreaArray objectAtIndex:i] resignFirstResponder];
+  }
 }
+
 
 @end

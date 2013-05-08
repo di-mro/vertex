@@ -797,7 +797,8 @@
      }"
      */
     
-    //TODO : Construct JSON request body from user inputs in UI
+    //Construct JSON request body from user inputs in UI
+    //TODO: Remove hardcoded userIds
     serviceRequestJson = [[NSMutableDictionary alloc] init];
     
     //asset
@@ -1002,6 +1003,7 @@
     return true;
   }
 }
+
 
 #pragma mark - Dismiss onscreen keyboard
 -(void)dismissKeyboard

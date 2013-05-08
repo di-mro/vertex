@@ -8,6 +8,7 @@
 
 #import "AcknowledgeSRListViewController.h"
 #import "AcknowledgeSRPageViewController.h"
+#import "ServiceRequestViewController.h"
 
 @interface AcknowledgeSRListViewController ()
 
@@ -43,6 +44,10 @@
 - (void)viewDidLoad
 {
   /*
+  //[Back] navigation button
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backToSRPage)];
+  */
+  /*
    //[Back] button
    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:nil];
    
@@ -65,6 +70,18 @@
 }
 
 
+#pragma mark - Segue to SR Page
+-(void) backToSRPage
+{
+  //Go back to Service Request Page
+  ServiceRequestViewController* controller = (ServiceRequestViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"SRPage"];
+  
+  [self.navigationController pushViewController:controller animated:YES];
+  
+}
+
+
+#pragma mark - Retrieve Service Request with 'Service Request Creation' Status ID - for Acknowledgement
 -(void) getServiceRequestByStatus
 {
   //endpoint for getServiceRequestByStatus
@@ -128,7 +145,8 @@
   {
     NSMutableString *displayString = [NSMutableString stringWithFormat:@"%@ - %@", [srForAcknowledgementAsset objectAtIndex:i], [srForAcknowledgementService objectAtIndex:i]];
     
-    [srForAcknowledgementEntries addObject:displayString];
+    [srForAcknowledgementEntries insertObject:displayString atIndex:i];
+    displayString = [[NSMutableString alloc] init];
   }
   
   NSLog(@"srForAcknowledgementEntries: %@", srForAcknowledgementEntries);
@@ -175,10 +193,10 @@
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  [self performSegueWithIdentifier:@"srAcknowledgeListToAcknowledgePage" sender:self];
-  
   selectedSRId = [srForAcknowledgementSRIds objectAtIndex:indexPath.row];
   NSLog(@"selectedSRId: %@", selectedSRId);
+  
+  [self performSegueWithIdentifier:@"srAcknowledgeListToAcknowledgePage" sender:self];
 }
 
 
@@ -190,6 +208,9 @@
     [segue.destinationViewController setServiceRequestId:selectedSRId];
   }
 }
+
+
+
 
 
 @end
