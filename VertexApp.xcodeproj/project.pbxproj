@@ -167,6 +167,8 @@
 		EDB1A0CA16E9F71900BCD1F4 /* BillingTasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB1A0C916E9F71900BCD1F4 /* BillingTasksViewController.m */; };
 		EDC372CB170EA61D007FB975 /* UserAccountActivationPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDC372CA170EA61D007FB975 /* UserAccountActivationPageViewController.m */; };
 		EDC372D1170EC8A1007FB975 /* UserGroupConfigurationPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDC372D0170EC8A1007FB975 /* UserGroupConfigurationPageViewController.m */; };
+		EDDA2D3D173A178200FCF15F /* InspectSRListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDDA2D3C173A178200FCF15F /* InspectSRListViewController.m */; };
+		EDDA2D43173A284100FCF15F /* InspectSRPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDDA2D42173A284100FCF15F /* InspectSRPageViewController.m */; };
 		EDE0E8AF16CB744700B9D0E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE0E8AE16CB744700B9D0E7 /* UIKit.framework */; };
 		EDE0E8B116CB744700B9D0E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE0E8B016CB744700B9D0E7 /* Foundation.framework */; };
 		EDE0E8B316CB744700B9D0E7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE0E8B216CB744700B9D0E7 /* CoreGraphics.framework */; };
@@ -550,6 +552,10 @@
 		EDC372CA170EA61D007FB975 /* UserAccountActivationPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAccountActivationPageViewController.m; sourceTree = "<group>"; };
 		EDC372CF170EC8A1007FB975 /* UserGroupConfigurationPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserGroupConfigurationPageViewController.h; sourceTree = "<group>"; };
 		EDC372D0170EC8A1007FB975 /* UserGroupConfigurationPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserGroupConfigurationPageViewController.m; sourceTree = "<group>"; };
+		EDDA2D3B173A178200FCF15F /* InspectSRListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectSRListViewController.h; sourceTree = "<group>"; };
+		EDDA2D3C173A178200FCF15F /* InspectSRListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectSRListViewController.m; sourceTree = "<group>"; };
+		EDDA2D41173A284100FCF15F /* InspectSRPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectSRPageViewController.h; sourceTree = "<group>"; };
+		EDDA2D42173A284100FCF15F /* InspectSRPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectSRPageViewController.m; sourceTree = "<group>"; };
 		EDE0E8AB16CB744700B9D0E7 /* VertexApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VertexApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDE0E8AE16CB744700B9D0E7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		EDE0E8B016CB744700B9D0E7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1274,6 +1280,10 @@
 				EDEFE7AB16DF3C51002C35D6 /* CreateSRViewController.m */,
 				EDEFE7AC16DF3C51002C35D6 /* DisplaySRViewController.h */,
 				EDEFE7AD16DF3C51002C35D6 /* DisplaySRViewController.m */,
+				EDDA2D3B173A178200FCF15F /* InspectSRListViewController.h */,
+				EDDA2D3C173A178200FCF15F /* InspectSRListViewController.m */,
+				EDDA2D41173A284100FCF15F /* InspectSRPageViewController.h */,
+				EDDA2D42173A284100FCF15F /* InspectSRPageViewController.m */,
 				ED3BB34E16E04EA900468E44 /* SRFeedbackListViewController.h */,
 				ED3BB34F16E04EA900468E44 /* SRFeedbackListViewController.m */,
 				ED3BB35416E0524400468E44 /* SRFeedbackPageViewController.h */,
@@ -1674,6 +1684,8 @@
 				ED36A4921717C63B00693797 /* RemoveEssePageViewController.m in Sources */,
 				ED634A1B173794E8003540A4 /* AcknowledgeSRListViewController.m in Sources */,
 				ED634A211737950A003540A4 /* AcknowledgeSRPageViewController.m in Sources */,
+				EDDA2D3D173A178200FCF15F /* InspectSRListViewController.m in Sources */,
+				EDDA2D43173A284100FCF15F /* InspectSRPageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

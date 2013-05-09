@@ -47,11 +47,13 @@
   serviceRequestPageEntries = [[NSMutableArray alloc] init];
   
   NSString *entry1 = @"Create";
-  NSString *entry2 = @"View";
-  NSString *entry3 = @"Acknowledge";
-  NSString *entry4 = @"Approve";
-  NSString *entry5 = @"Provision";
-  NSString *entry6 = @"Create Feedback";
+  NSString *entry2 = @"Acknowledge";
+  NSString *entry3 = @"Inspection";
+  NSString *entry4 = @"Proposal";
+  NSString *entry5 = @"Approval";
+  NSString *entry6 = @"Provisioning";
+  NSString *entry7 = @"Feedback";
+  NSString *entry8 = @"View";
   
   [serviceRequestPageEntries addObject:entry1];
   [serviceRequestPageEntries addObject:entry2];
@@ -59,6 +61,8 @@
   [serviceRequestPageEntries addObject:entry4];
   [serviceRequestPageEntries addObject:entry5];
   [serviceRequestPageEntries addObject:entry6];
+  [serviceRequestPageEntries addObject:entry7];
+  [serviceRequestPageEntries addObject:entry8];
 }
 
 #pragma mark - Table view data source
@@ -100,20 +104,26 @@
     //Create
     case 0: [self performSegueWithIdentifier:@"srToCreateSR" sender:self];
       break;
-    //~ View
-    case 1: [self performSegueWithIdentifier:@"srToViewSR" sender:self];
-      break;
     //Acknowledge
-    case 2: [self performSegueWithIdentifier:@"srToAcknowledgeSR" sender:self];
+    case 1: [self performSegueWithIdentifier:@"srToAcknowledgeSR" sender:self];
       break;
-    //~ Approve
+    //Inspection
+    case 2: [self performSegueWithIdentifier:@"srToInspectSR" sender:self];
+      break;
+    //~ Proposal
     case 3: [self performSegueWithIdentifier:@"srToViewSR" sender:self];
       break;
-    //~ Provision
+    //~ Approval
     case 4: [self performSegueWithIdentifier:@"srToViewSR" sender:self];
       break;
-    //~ Feedback
-    case 5: [self performSegueWithIdentifier:@"srToSRFeedbackList" sender:self];
+    //~ Provisioning
+    case 5: [self performSegueWithIdentifier:@"srToViewSR" sender:self];
+      break;
+    //Feedback
+    case 6: [self performSegueWithIdentifier:@"srToSRFeedbackList" sender:self];
+      break;
+    //~ View
+    case 7: [self performSegueWithIdentifier:@"srToViewSR" sender:self];
       break;
     default: break;
   }

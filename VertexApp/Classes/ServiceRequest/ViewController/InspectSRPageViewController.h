@@ -1,15 +1,16 @@
 //
-//  AcknowledgeSRPageViewController.h
+//  InspectSRPageViewController.h
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 5/6/13.
+//  Created by Mary Rose Oh on 5/8/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface AcknowledgeSRPageViewController : UIViewController
+@interface InspectSRPageViewController : UIViewController
 
+/*
 @property (strong, nonatomic) IBOutlet UIScrollView *acknowledgeSRScroller;
 
 @property (strong, nonatomic) IBOutlet UILabel *assetLabel;
@@ -30,11 +31,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *priorityLabel;
 @property (strong, nonatomic) IBOutlet UITextField *priorityField;
 
-@property (strong, nonatomic) IBOutlet UILabel *requestorLabel;
-@property (strong, nonatomic) IBOutlet UITextField *requestorField;
-
 @property (strong, nonatomic) IBOutlet UILabel *notesLabel;
 @property (strong, nonatomic) IBOutlet UITextView *notesTextArea;
+*/
 
 @property (strong, nonatomic) NSNumber *userId;
 @property (strong, nonatomic) NSNumber *serviceRequestId;
@@ -43,12 +42,16 @@
 @property (strong, nonatomic) NSNumber *statusId;
 @property (strong, nonatomic) NSMutableArray *notesTextAreaArray;
 
+//@property (strong, nonatomic)
+
 @property (strong, nonatomic) NSMutableDictionary *serviceRequestJson;
 
 @property (strong, nonatomic) NSString *URL;
 @property int httpResponseCode;
 
+/*
 @property (strong, nonatomic) IBOutlet UIButton *addNotesButton;
 - (IBAction)addNotes:(id)sender;
+*/
 
 @end

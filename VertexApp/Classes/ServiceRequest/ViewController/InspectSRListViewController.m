@@ -1,32 +1,30 @@
 //
-//  AcknowledgeSRListViewController.m
+//  InspectSRListViewController.m
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 5/6/13.
+//  Created by Mary Rose Oh on 5/8/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
-#import "AcknowledgeSRListViewController.h"
-#import "AcknowledgeSRPageViewController.h"
-#import "ServiceRequestViewController.h"
+#import "InspectSRListViewController.h"
 
-@interface AcknowledgeSRListViewController ()
+@interface InspectSRListViewController ()
 
 @end
 
-@implementation AcknowledgeSRListViewController
+@implementation InspectSRListViewController
 
-@synthesize srForAcknowledgementAsset;
-@synthesize srForAcknowledgementService;
-@synthesize srForAcknowledgementSRIds;
+@synthesize srForInspectionAsset;
+@synthesize srForInspectionService;
+@synthesize srForInspectionSRIds;
 
-@synthesize srForAcknowledgementEntries;
-@synthesize srForAcknowledgementDate;
+@synthesize srForInspectionEntries;
+@synthesize srForInspectionDate;
 
 @synthesize URL;
 @synthesize httpResponseCode;
 
-@synthesize srForAcknowledgementDictionary;
+@synthesize srForInspectionDictionary;
 
 @synthesize selectedSRId;
 @synthesize statusId;
@@ -43,21 +41,7 @@
 
 - (void)viewDidLoad
 {
-  /*
-  //[Back] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backToSRPage)];
-  */
-  /*
-   //[Back] button
-   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:nil];
-   
-   [[UIBarButtonItem alloc]
-   initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
-   target:self
-   action:@selector(searchItem:)];
-   */
-
-  //Connect to endpoint - getServiceRequestByStatus - Created status
+  //Connect to endpoint - getServiceRequestByStatus - For Inspection status
   [self getServiceRequestByStatus];
   
   [super viewDidLoad];
@@ -71,22 +55,11 @@
 }
 
 
-#pragma mark - Segue to SR Page
--(void) backToSRPage
-{
-  //Go back to Service Request Page
-  ServiceRequestViewController* controller = (ServiceRequestViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"SRPage"];
-  
-  [self.navigationController pushViewController:controller animated:YES];
-  
-}
-
-
-#pragma mark - Retrieve Service Request with 'Service Request Creation' Status ID - for Acknowledgement
+#pragma mark - Retrieve Service Request with 'For Inspection' Status ID - for Inspection
 -(void) getServiceRequestByStatus
 {
   //endpoint for getServiceRequestByStatus
-  statusId = @20130101420000001; //Service Request Creation Status Id
+  statusId = @20130101420000004; //Service Request For Inspection Status Id
   NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.113/vertex-api/service-request/getServiceRequestByStatus/%@", statusId]; //107
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
@@ -121,36 +94,36 @@
     
     //Connect to CoreData for local data
     //!- FOR TESTING ONLY -!
-    srForAcknowledgementAsset = [[NSMutableArray alloc] initWithObjects:@"Demo - Aircon", @"Demo - Door", @"Demo - Window", nil];
-    srForAcknowledgementService = [[NSMutableArray alloc] initWithObjects:@"- Fix filter", @"- Repair hinge", @"- Repair handle", nil];
-    srForAcknowledgementSRIds = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00003", nil];
-    srForAcknowledgementDate = [[NSMutableArray alloc] initWithObjects:@"2013-05-05", @"2013-05-06", @"2013-05-07", nil];
+    srForInspectionAsset = [[NSMutableArray alloc] initWithObjects:@"Demo - Aircon", @"Demo - Door", @"Demo - Window", nil];
+    srForInspectionService = [[NSMutableArray alloc] initWithObjects:@"- Fix filter", @"- Repair hinge", @"- Repair handle", nil];
+    srForInspectionSRIds = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00003", nil];
+    srForInspectionDate = [[NSMutableArray alloc] initWithObjects:@"2013-05-05", @"2013-05-06", @"2013-05-07", nil];
   }
   else
   {
-    srForAcknowledgementDictionary = [NSJSONSerialization
-                  JSONObjectWithData:responseData
-                  options:kNilOptions
-                  error:&error];
-    NSLog(@"srForAcknowledgementDictionary JSON Result: %@", srForAcknowledgementDictionary);
+    srForInspectionDictionary = [NSJSONSerialization
+                                      JSONObjectWithData:responseData
+                                      options:kNilOptions
+                                      error:&error];
+    NSLog(@"srForInspectionDictionary JSON Result: %@", srForInspectionDictionary);
     
-    srForAcknowledgementAsset = [[srForAcknowledgementDictionary valueForKey:@"asset"] valueForKey:@"name"];
-    srForAcknowledgementService = [[srForAcknowledgementDictionary valueForKey:@"service"] valueForKey:@"name"];
-    srForAcknowledgementSRIds = [srForAcknowledgementDictionary valueForKey:@"id"];
-    srForAcknowledgementDate = [srForAcknowledgementDictionary valueForKey:@"createdDate"];
+    srForInspectionAsset = [[srForInspectionDictionary valueForKey:@"asset"] valueForKey:@"name"];
+    srForInspectionService = [[srForInspectionDictionary valueForKey:@"service"] valueForKey:@"name"];
+    srForInspectionSRIds = [srForInspectionDictionary valueForKey:@"id"];
+    srForInspectionDate = [srForInspectionDictionary valueForKey:@"createdDate"];
   }
-
+  
   //Concatenate asset name and service name of service request for display in table view
-  srForAcknowledgementEntries = [[NSMutableArray alloc] init];
-  for(int i = 0; i < srForAcknowledgementAsset.count; i++)
+  srForInspectionEntries = [[NSMutableArray alloc] init];
+  for(int i = 0; i < srForInspectionAsset.count; i++)
   {
-    NSMutableString *displayString = [NSMutableString stringWithFormat:@"%@ - %@", [srForAcknowledgementAsset objectAtIndex:i], [srForAcknowledgementService objectAtIndex:i]];
+    NSMutableString *displayString = [NSMutableString stringWithFormat:@"%@ - %@", [srForInspectionAsset objectAtIndex:i], [srForInspectionService objectAtIndex:i]];
     
-    [srForAcknowledgementEntries insertObject:displayString atIndex:i];
+    [srForInspectionEntries insertObject:displayString atIndex:i];
     displayString = [[NSMutableString alloc] init];
   }
   
-  NSLog(@"srForAcknowledgementEntries: %@", srForAcknowledgementEntries);
+  NSLog(@"srForInspectionEntries: %@", srForInspectionEntries);
 }
 
 
@@ -163,24 +136,24 @@
 
 - (NSString *) tableView:(UITableView *) tableView titleForHeaderInSection:(NSInteger)section
 {
-  NSString *myTitle = [[NSString alloc] initWithFormat:@"For Acknowledgement List"];
+  NSString *myTitle = [[NSString alloc] initWithFormat:@"For Inspection List"];
   return myTitle;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
   //Return the number of rows in the section
-  return [srForAcknowledgementEntries count];
+  return [srForInspectionEntries count];
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  static NSString *CellIdentifier = @"acknowledgeSRCell";
+  static NSString *CellIdentifier = @"inspectSRCell";
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //Configure the cell title & subtitle
-  cell.textLabel.text = [srForAcknowledgementEntries objectAtIndex:indexPath.row];
-  cell.detailTextLabel.text = [srForAcknowledgementDate objectAtIndex:indexPath.row];
+  cell.textLabel.text = [srForInspectionEntries objectAtIndex:indexPath.row];
+  cell.detailTextLabel.text = [srForInspectionDate objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
   return cell;
 }
@@ -194,13 +167,13 @@
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  selectedSRId = [srForAcknowledgementSRIds objectAtIndex:indexPath.row];
+  selectedSRId = [srForInspectionSRIds objectAtIndex:indexPath.row];
   NSLog(@"selectedSRId: %@", selectedSRId);
   
-  [self performSegueWithIdentifier:@"srAcknowledgeListToAcknowledgePage" sender:self];
+  [self performSegueWithIdentifier:@"srInspectionListToInspectionPage" sender:self];
 }
 
-
+/*
 #pragma mark - prepare for segue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -209,9 +182,6 @@
     [segue.destinationViewController setServiceRequestId:selectedSRId];
   }
 }
-
-
-
-
+*/
 
 @end

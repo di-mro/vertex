@@ -36,6 +36,9 @@
 @synthesize priorityLabel;
 @synthesize priorityField;
 
+@synthesize requestorLabel;
+@synthesize requestorField;
+
 @synthesize notesLabel;
 @synthesize notesTextArea;
 
@@ -97,17 +100,18 @@
   self.acknowledgeSRScroller.contentSize = CGSizeMake(320.0, 2000.0);
   
   //Disable fields - for viewing only
-  assetField.enabled = NO;
-  lifecycleField.enabled = NO;
-  serviceField.enabled = NO;
+  assetField.enabled         = NO;
+  lifecycleField.enabled     = NO;
+  serviceField.enabled       = NO;
   estimatedCostField.enabled = NO;
   dateRequestedField.enabled = NO;
-  priorityField.enabled = NO;
+  priorityField.enabled      = NO;
+  requestorField.enabled     = NO;
   
   //Populate fields based on previously selected Service Request for Acknowledgement
   [self getServiceRequest];
   
-  //Add Notes utilities
+  //Add Notes utilities - Store the first note and its coordinates so that when we add notes, it will align properly
   notesTextAreaArray = [[NSMutableArray alloc] init];
   [notesTextAreaArray addObject:notesTextArea];
   
@@ -192,6 +196,7 @@
     estimatedCostField.text = @"Demo = Php 500.00";
     dateRequestedField.text = @"2013-05-05";
     priorityField.text      = @"High";
+    requestorField.text     = @"Steve Jobs";
     notesTextArea.text      = @"Filter is dirty";
 
   }
@@ -203,21 +208,19 @@
                                       error:&error];
     NSLog(@"getServiceRequest JSON Result: %@", serviceRequestInfo);
     
-    NSLog(@"%@", [[serviceRequestInfo valueForKey:@"asset"] valueForKey:@"name"]);
-    NSLog(@"%@", [[serviceRequestInfo valueForKey:@"lifecycle"] valueForKey:@"name"]);
-    NSLog(@"%@", [[serviceRequestInfo valueForKey:@"service"] valueForKey:@"name"]);
-    NSLog(@"%@", [serviceRequestInfo valueForKey:@"cost"]);
-    NSLog(@"%@", [serviceRequestInfo valueForKey:@"createdDate"]);
-    NSLog(@"%@", [[serviceRequestInfo valueForKey:@"priority"] valueForKey:@"name"]);
-    //NSLog(@"%@", [[serviceRequestInfo valueForKey:@"notes"] valueForKey:@"message"]);
-    
     assetField.text         = [[serviceRequestInfo valueForKey:@"asset"] valueForKey:@"name"];
     lifecycleField.text     = [[serviceRequestInfo valueForKey:@"lifecycle"] valueForKey:@"name"];
     serviceField.text       = [[serviceRequestInfo valueForKey:@"service"] valueForKey:@"name"];
     estimatedCostField.text = [serviceRequestInfo valueForKey:@"cost"];
     dateRequestedField.text = [serviceRequestInfo valueForKey:@"createdDate"];
     priorityField.text      = [[serviceRequestInfo valueForKey:@"priority"] valueForKey:@"name"];
-    //notesTextArea.text      = @"Blah blah";
+    
+    NSMutableString *requestorName = [NSMutableString stringWithFormat:@"%@ %@ %@ %@"
+                                      , [[[serviceRequestInfo valueForKey:@"requestor"] valueForKey:@"info"] valueForKey:@"firstName"]
+                                      , [[[serviceRequestInfo valueForKey:@"requestor"] valueForKey:@"info"] valueForKey:@"middleName"]
+                                      , [[[serviceRequestInfo valueForKey:@"requestor"] valueForKey:@"info"] valueForKey:@"lastName"]
+                                      , [[[serviceRequestInfo valueForKey:@"requestor"] valueForKey:@"info"] valueForKey:@"suffix"]];
+    requestorField.text = requestorName;
     
     /*
      notes: [
@@ -284,7 +287,7 @@
   
   UITextView *newNoteTextArea = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
   newNoteTextArea.backgroundColor = notesTextArea.backgroundColor;
-  [newNoteTextArea setFont:[UIFont systemFontOfSize:17]];
+  [newNoteTextArea setFont:[UIFont systemFontOfSize:14]];
   
   //Get the location of prev Notes text area and adjust new Notes area location based on that
   UITextView *prevNoteTextView = [[UITextView alloc] init];
@@ -403,8 +406,29 @@
   [serviceRequestJson setObject:[serviceRequestInfo valueForKey:@"cost"] forKey:@"cost"];
   
   //schedules
+  //TODO - schedules !!!
   NSMutableDictionary *scheduleDictionary = [[NSMutableDictionary alloc] init];
-  [scheduleDictionary setObject:[serviceRequestInfo valueForKey:@"schedules"] forKey:@"schedules"]; //>> change schedule status to 'Acknowledged'
+  //schedule - status
+  NSMutableDictionary *scheduleStatusDictionary = [[NSMutableDictionary alloc] init];
+  [scheduleStatusDictionary setObject:statusId forKey:@"id"]; //Acknowledge or Reject
+  [scheduleDictionary setObject:scheduleStatusDictionary forKey:@"status"];
+  
+  //schedule - author
+  NSMutableDictionary *scheduleAuthor = [[NSMutableDictionary alloc] init];
+  [scheduleAuthor setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY !!! - Update
+  [scheduleDictionary setObject:scheduleAuthor forKey:@"author"];
+  
+  //schedule - periods
+  //Only one or no schedule is set in SR Acknowledgement phase
+  [scheduleDictionary setObject:[[[serviceRequestInfo valueForKey:@"schedules"] valueForKey:@"periods"] objectAtIndex:0] forKey:@"periods"]; 
+  
+  NSNumber *boolActive = [[NSNumber alloc] initWithBool:YES];
+  [scheduleDictionary setObject:boolActive forKey:@"active"]; //TODO: active:boolean
+  
+  //Store dictionary in array first before passing to serviceRequestJson
+  NSMutableArray *scheduleArray = [[NSMutableArray alloc] init];
+  [scheduleArray addObject:scheduleDictionary];
+  [serviceRequestJson setObject:scheduleArray forKey:@"schedules"];
   
   //notes
   NSMutableDictionary *notesDictionary = [[NSMutableDictionary alloc] init];
@@ -419,7 +443,7 @@
     
     //message
     UITextView *tempTextView = [[UITextView alloc] init];
-    tempTextView = [notesTextAreaArray objectAtIndex:i];
+    tempTextView = [notesTextAreaArray objectAtIndex:i]; //Begin at second element
     [notesDictionary setObject:tempTextView.text forKey:@"message"];
     
     //save the sender-message node in an array
@@ -461,7 +485,7 @@
   
   [connection start];
   
-  NSLog(@"addServiceRequest - httpResponseCode: %d", httpResponseCode);
+  NSLog(@"updateServiceRequest - httpResponseCode: %d", httpResponseCode);
   if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
   {
     UIAlertView *updateSRAlert = [[UIAlertView alloc]
@@ -527,6 +551,7 @@
   [estimatedCostField resignFirstResponder];
   [dateRequestedField resignFirstResponder];
   [priorityField resignFirstResponder];
+  [requestorField resignFirstResponder];
   [notesTextArea resignFirstResponder];
   
   for(int i = 0; i < notesTextAreaArray.count; i++)

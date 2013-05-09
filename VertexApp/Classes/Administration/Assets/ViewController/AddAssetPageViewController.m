@@ -487,8 +487,8 @@
     NSLog(@"jsonString Request: %@", jsonString);
     
     //Set URL for Add Asset
-    //URL = @"http://192.168.2.113/vertex-api/asset/addAsset";
-    URL = @"http://192.168.2.107/vertex-api/asset/addAsset";
+    URL = @"http://192.168.2.113/vertex-api/asset/addAsset";
+    //URL = @"http://192.168.2.107/vertex-api/asset/addAsset";
     
     NSMutableURLRequest *postRequest = [NSMutableURLRequest
                                        requestWithURL:[NSURL URLWithString:URL]];
