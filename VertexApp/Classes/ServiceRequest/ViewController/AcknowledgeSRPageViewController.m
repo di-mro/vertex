@@ -48,8 +48,6 @@
 
 @synthesize statusId;
 @synthesize notesTextAreaArray;
-//@synthesize notesDictionary;
-//@synthesize notesArray;
 
 @synthesize addNotesButton;
 
@@ -156,7 +154,7 @@
 -(void) getServiceRequest
 {
   //endpoint for getServiceRequest/{serviceRequestId}
-  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.113/vertex-api/service-request/getServiceRequest/%@", serviceRequestId]; //107
+  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.107/vertex-api/service-request/getServiceRequest/%@", serviceRequestId]; //107
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:urlParams]];
@@ -318,7 +316,7 @@
   NSLog(@"Reject Service Request");
   
   statusId = @20130101420000002;
-  [self updateServiceRequestStatus];
+  [self updateServiceRequestStatus:@"REJECT"];
 }
 
 
@@ -328,12 +326,12 @@
   NSLog(@"Acknowledge Service Request");
   
   statusId = @20130101420000003;
-  [self updateServiceRequestStatus];
+  [self updateServiceRequestStatus:@"ACKNOWLEDGE"];
 }
 
 
 #pragma mark - Update Service Request status to 'Acknowledged'
--(void) updateServiceRequestStatus
+-(void) updateServiceRequestStatus: (NSString *) operationFlag
 {
   NSLog(@"updateServiceRequestStatus");
   /*
@@ -393,6 +391,7 @@
   [serviceRequestJson setObject:[serviceRequestInfo valueForKey:@"id"] forKey:@"id"];
   
   //status
+  NSLog(@"statusId: %@", statusId);
   NSMutableDictionary *statusJson = [[NSMutableDictionary alloc] init];
   [statusJson setObject:statusId forKey:@"id"]; //Acknowledge or Reject
   [serviceRequestJson setObject:statusJson forKey:@"status"];
@@ -401,53 +400,79 @@
   NSMutableDictionary *adminJson = [[NSMutableDictionary alloc] init];
   [adminJson setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY !!!
   [serviceRequestJson setObject:adminJson forKey:@"admin"];
+  NSLog(@"adminJson: %@", adminJson);
   
   //cost
   [serviceRequestJson setObject:[serviceRequestInfo valueForKey:@"cost"] forKey:@"cost"];
+  
   
   //schedules
   //TODO - schedules !!!
   NSMutableDictionary *scheduleDictionary = [[NSMutableDictionary alloc] init];
   //schedule - status
   NSMutableDictionary *scheduleStatusDictionary = [[NSMutableDictionary alloc] init];
-  [scheduleStatusDictionary setObject:statusId forKey:@"id"]; //Acknowledge or Reject
-  [scheduleDictionary setObject:scheduleStatusDictionary forKey:@"status"];
-  
-  //schedule - author
-  NSMutableDictionary *scheduleAuthor = [[NSMutableDictionary alloc] init];
-  [scheduleAuthor setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY !!! - Update
-  [scheduleDictionary setObject:scheduleAuthor forKey:@"author"];
-  
-  //schedule - periods
-  //Only one or no schedule is set in SR Acknowledgement phase
-  [scheduleDictionary setObject:[[[serviceRequestInfo valueForKey:@"schedules"] valueForKey:@"periods"] objectAtIndex:0] forKey:@"periods"]; 
-  
-  NSNumber *boolActive = [[NSNumber alloc] initWithBool:YES];
-  [scheduleDictionary setObject:boolActive forKey:@"active"]; //TODO: active:boolean
-  
-  //Store dictionary in array first before passing to serviceRequestJson
   NSMutableArray *scheduleArray = [[NSMutableArray alloc] init];
-  [scheduleArray addObject:scheduleDictionary];
+  
+  //Check if schedules node is null before updating
+  //if([serviceRequestInfo valueForKey:@"schedules"] == nil)
+  //([[photo objectForKey:@"tags"] count] == 0)
+  //if([[[serviceRequestInfo valueForKey:@"schedules"] valueForKey:@"id"] isEqual:nil]) //== [NSNull null] || == nil
+  if([[serviceRequestInfo objectForKey:@"schedules"] count] == 0)
+  {
+    NSLog(@"No record for Service Request Schedules");
+  }
+  else
+  {
+    NSLog(@"service request schedules JSON assembly");
+    [scheduleStatusDictionary setObject:statusId forKey:@"id"]; //Acknowledge or Reject
+    [scheduleDictionary setObject:scheduleStatusDictionary forKey:@"status"];
+    
+    //schedule - author
+    NSMutableDictionary *scheduleAuthor = [[NSMutableDictionary alloc] init];
+    [scheduleAuthor setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY !!! - Update
+    [scheduleDictionary setObject:scheduleAuthor forKey:@"author"];
+    
+    //schedule - periods
+    //Only one or no schedule is set in SR Acknowledgement phase
+    [scheduleDictionary setObject:[[[serviceRequestInfo valueForKey:@"schedules"] valueForKey:@"periods"] objectAtIndex:0] forKey:@"periods"];
+    NSLog(@"scheduleDictionary - periods: %@", [scheduleDictionary valueForKey:@"periods"]);
+    
+    NSNumber *boolActive = [[NSNumber alloc] initWithBool:YES];
+    [scheduleDictionary setObject:boolActive forKey:@"active"]; //TODO: active:boolean
+    
+    //Store dictionary in array first before passing to serviceRequestJson
+    [scheduleArray addObject:scheduleDictionary];
+  }
+  
   [serviceRequestJson setObject:scheduleArray forKey:@"schedules"];
+
   
   //notes
   NSMutableDictionary *notesDictionary = [[NSMutableDictionary alloc] init];
   NSMutableDictionary *notesSenderJson = [[NSMutableDictionary alloc] init];
   NSMutableArray *notesArray = [[NSMutableArray alloc] init];
-  
-  for(int i = 1; i < notesTextAreaArray.count; i++) //begin at the second text area
+
+  //Check if notes node is null before updating
+  if ([[serviceRequestInfo objectForKey:@"notes"] count] == 0)
   {
-    //sender
-    [notesSenderJson setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY - Remove hardcoded value
-    [notesDictionary setObject:notesSenderJson forKey:@"sender"];
-    
-    //message
-    UITextView *tempTextView = [[UITextView alloc] init];
-    tempTextView = [notesTextAreaArray objectAtIndex:i]; //Begin at second element
-    [notesDictionary setObject:tempTextView.text forKey:@"message"];
-    
-    //save the sender-message node in an array
-    [notesArray insertObject:notesDictionary atIndex:(i-1)];
+    NSLog(@"No record for Service Request Notes");
+  }
+  else
+  {
+    for(int i = 1; i < notesTextAreaArray.count; i++) //begin at the second text area
+    {
+      //sender
+      [notesSenderJson setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY - Remove hardcoded value
+      [notesDictionary setObject:notesSenderJson forKey:@"sender"];
+      
+      //message
+      UITextView *tempTextView = [[UITextView alloc] init];
+      tempTextView = [notesTextAreaArray objectAtIndex:i]; //Begin at second element
+      [notesDictionary setObject:tempTextView.text forKey:@"message"];
+      
+      //save the sender-message node in an array
+      [notesArray insertObject:notesDictionary atIndex:(i-1)];
+    }
   }
   
   [serviceRequestJson setObject:notesArray forKey:@"notes"];
@@ -467,8 +492,8 @@
   NSLog(@"jsonString Request: %@", jsonString);
   
   //Set URL for Add Service Request
-  URL = @"http://192.168.2.113/vertex-api/service-request/updateServiceRequest";
-  //URL = @"http://192.168.2.107/vertex-api/service-request/updateServiceRequest";
+  //URL = @"http://192.168.2.113/vertex-api/service-request/updateServiceRequest";
+  URL = @"http://192.168.2.107/vertex-api/service-request/updateServiceRequest";
   
   NSMutableURLRequest *putRequest = [NSMutableURLRequest
                                       requestWithURL:[NSURL URLWithString:URL]];
@@ -486,11 +511,27 @@
   [connection start];
   
   NSLog(@"updateServiceRequest - httpResponseCode: %d", httpResponseCode);
+  
+  //Set alert message display depending on what operation is performed (Acknowledged || Rejected)
+  NSString *updateAlertMessage = [[NSString alloc] init];
+  NSString *updateFailAlertMessage = [[NSString alloc] init];
+  if([operationFlag isEqual:@"REJECT"])
+  {
+    updateAlertMessage = @"Service Request Rejected.";
+    updateFailAlertMessage = @"Service Request not rejected. Please try again later";
+  }
+  else if([operationFlag isEqual:@"ACKNOWLEDGE"])
+  {
+    updateAlertMessage = @"Service Request Acknowledged.";
+    updateFailAlertMessage = @"Service Request not acknowledged. Please try again later";
+  }
+  
+  NSLog(@"operationFlag: %@", operationFlag);
   if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
   {
     UIAlertView *updateSRAlert = [[UIAlertView alloc]
                                   initWithTitle:@"Service Request"
-                                  message:@"Service Request Acknowledged."
+                                  message:updateAlertMessage
                                   delegate:self
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
@@ -500,7 +541,7 @@
   {
     UIAlertView *updateSRFailAlert = [[UIAlertView alloc]
                                       initWithTitle:@"Acknowledge Service Request Failed"
-                                      message:@"Service Request not acknowledged. Please try again later"
+                                      message:updateFailAlertMessage
                                       delegate:self
                                       cancelButtonTitle:@"OK"
                                       otherButtonTitles:nil];

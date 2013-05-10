@@ -87,7 +87,7 @@
 {
   //endpoint for getServiceRequestByStatus
   statusId = @20130101420000001; //Service Request Creation Status Id
-  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.113/vertex-api/service-request/getServiceRequestByStatus/%@", statusId]; //107
+  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.107/vertex-api/service-request/getServiceRequestByStatus/%@", statusId]; //107
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:urlParams]];

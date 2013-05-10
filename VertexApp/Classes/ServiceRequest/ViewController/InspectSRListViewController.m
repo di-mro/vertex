@@ -7,6 +7,7 @@
 //
 
 #import "InspectSRListViewController.h"
+#import "InspectSRPageViewController.h"
 
 @interface InspectSRListViewController ()
 
@@ -59,8 +60,8 @@
 -(void) getServiceRequestByStatus
 {
   //endpoint for getServiceRequestByStatus
-  statusId = @20130101420000004; //Service Request For Inspection Status Id
-  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.113/vertex-api/service-request/getServiceRequestByStatus/%@", statusId]; //107
+  statusId = @20130101420000003; //Service Request 'Acknowledged' Status Id - this will be updated to 'Inspected'
+  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.107/vertex-api/service-request/getServiceRequestByStatus/%@", statusId]; //107
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:urlParams]];
@@ -173,15 +174,16 @@
   [self performSegueWithIdentifier:@"srInspectionListToInspectionPage" sender:self];
 }
 
-/*
+
 #pragma mark - prepare for segue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-  if ([segue.identifier isEqualToString:@"srAcknowledgeListToAcknowledgePage"])
+  if ([segue.identifier isEqualToString:@"srInspectionListToInspectionPage"])
   {
     [segue.destinationViewController setServiceRequestId:selectedSRId];
   }
 }
-*/
+
+
 
 @end

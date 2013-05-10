@@ -10,8 +10,8 @@
 
 @interface InspectSRPageViewController : UIViewController
 
-/*
-@property (strong, nonatomic) IBOutlet UIScrollView *acknowledgeSRScroller;
+
+@property (strong, nonatomic) IBOutlet UIScrollView *inspectSRScroller;
 
 @property (strong, nonatomic) IBOutlet UILabel *assetLabel;
 @property (strong, nonatomic) IBOutlet UITextField *assetField;
@@ -31,9 +31,22 @@
 @property (strong, nonatomic) IBOutlet UILabel *priorityLabel;
 @property (strong, nonatomic) IBOutlet UITextField *priorityField;
 
+@property (strong, nonatomic) IBOutlet UILabel *requestorLabel;
+@property (strong, nonatomic) IBOutlet UITextField *requestorField;
+
+@property (strong, nonatomic) IBOutlet UILabel *adminLabel;
+@property (strong, nonatomic) IBOutlet UITextField *adminField;
+
 @property (strong, nonatomic) IBOutlet UILabel *notesLabel;
 @property (strong, nonatomic) IBOutlet UITextView *notesTextArea;
-*/
+
+@property (strong, nonatomic) IBOutlet UILabel *schedulesLabel;
+@property (strong, nonatomic) IBOutlet UILabel *statusLabel;
+@property (strong, nonatomic) IBOutlet UITextField *statusField;
+
+@property (strong, nonatomic) IBOutlet UILabel *authorLabel;
+@property (strong, nonatomic) IBOutlet UITextField *authorField;
+
 
 @property (strong, nonatomic) NSNumber *userId;
 @property (strong, nonatomic) NSNumber *serviceRequestId;
@@ -41,17 +54,19 @@
 
 @property (strong, nonatomic) NSNumber *statusId;
 @property (strong, nonatomic) NSMutableArray *notesTextAreaArray;
-
-//@property (strong, nonatomic)
+@property (strong, nonatomic) NSMutableArray *schedulesStatusArray;
+@property (strong, nonatomic) NSMutableArray *schedulesAuthorArray;
 
 @property (strong, nonatomic) NSMutableDictionary *serviceRequestJson;
 
 @property (strong, nonatomic) NSString *URL;
 @property int httpResponseCode;
 
-/*
+
 @property (strong, nonatomic) IBOutlet UIButton *addNotesButton;
 - (IBAction)addNotes:(id)sender;
-*/
+
+@property (strong, nonatomic) IBOutlet UIButton *addSchedulesButton;
+- (IBAction)addSchedules:(id)sender;
 
 @end
