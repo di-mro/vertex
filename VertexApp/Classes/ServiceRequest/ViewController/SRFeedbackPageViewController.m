@@ -108,6 +108,12 @@
   
   NSArray *choices = [NSArray arrayWithObjects:@"Yes", @"No", nil];
   UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:choices];
+  
+  CGRect segmentedControlFrame = segmentedControl.frame;
+  segmentedControlFrame.size.width = 100;
+  segmentedControlFrame.size.height = 40;
+  segmentedControl.frame = segmentedControlFrame;
+  
   //segmentedControl.frame = CGRectMake(35, 200, 250, 50);
   //segmentedControl.segmentedControlStyle = UISegmentedControlStylePlain;
   segmentedControl.selectedSegmentIndex = 1;
@@ -119,6 +125,14 @@
   
   return cell;
 }
+
+
+//Change the Height of the Cell [Default is 45]:
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
+{
+  return 75;
+}
+
 
 //Action method executes when user touches the button
 - (void) rate:(id)sender{

@@ -70,7 +70,14 @@
   [homePageEntries addObject:entry8];
   
   
-  homePageIcons = [[NSMutableArray alloc] initWithObjects:@"alarm.png", @"list.png", @"cabinet.png", @"grid_view.png", @"clipboard.png", @"admin.png", @"calendar.png", @"cog.png" ,nil];
+  homePageIcons = [[NSMutableArray alloc] initWithObjects:@"notification_icon.png"
+                                                         , @"service_request_icon.png"
+                                                         , @"asset_icon.png"
+                                                         , @"billing_icon.png"
+                                                         , @"reports_icon.png"
+                                                         , @"administration_icon.png"
+                                                         , @"schedule_icon.png"
+                                                         , @"settings_icon.png" ,nil];
 }
 
 

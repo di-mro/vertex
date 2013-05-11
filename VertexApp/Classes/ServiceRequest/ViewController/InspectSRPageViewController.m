@@ -94,13 +94,13 @@
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Inspect" style:UIBarButtonItemStylePlain target:self action:@selector(inspectSR)];
   
   //Scroller size
-  self.inspectSRScroller.contentSize = CGSizeMake(320.0, 2500);
+  self.inspectSRScroller.contentSize = CGSizeMake(320.0, 3000);
   
   //Disable fields - for viewing only
   assetField.enabled         = NO;
   lifecycleField.enabled     = NO;
   serviceField.enabled       = NO;
-  estimatedCostField.enabled = NO;
+  //estimatedCostField.enabled = NO;
   dateRequestedField.enabled = NO;
   priorityField.enabled      = NO;
   requestorField.enabled     = NO;
@@ -112,8 +112,8 @@
   [self getServiceRequest];
   
   //Add Notes utilities - Store the first note and its coordinates so that when we add notes, it will align properly
-  notesTextAreaArray = [[NSMutableArray alloc] init];
-  [notesTextAreaArray addObject:notesTextArea];
+  //notesTextAreaArray = [[NSMutableArray alloc] init];
+  //[notesTextAreaArray addObject:notesTextArea];
   
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -250,39 +250,71 @@
       NSMutableString *noteMessage = [[retrievedNotesDictionary valueForKey:@"notes"] valueForKey:@"message"];
       NSMutableString *noteDate = [[retrievedNotesDictionary valueForKey:@"notes"] valueForKey:@"creationDate"];
       
+      //Combined information for display in the Notes area
       notesDisplay = [NSMutableString stringWithFormat:@"Sender: %@\nDate: %@\n\n%@", notesAuthor, noteDate, noteMessage];
       NSLog(@"notesDisplay: %@", notesDisplay);
       
-      //Create new notes text area depending on number of notes saved
+      if (i == 0)
+      {
+        //Store first Note entry in the defined notesTextArea
+        notesTextArea.text = notesDisplay;
+        notesTextAreaArray = [[NSMutableArray alloc] init];
+        [notesTextAreaArray addObject:notesTextArea];
+      }
+      else
+      {
+        [self displayNotesEntries:notesDisplay];
+      }
     }
-    notesTextArea.text = notesDisplay;
     
-    statusField.text = [[serviceRequestInfo valueForKey:@"status"] valueForKey:@"name"];
-    
-    //Retrieving schedules for display - Schedules can be more than one
-    NSMutableArray *retrievedSchedulesArray = [[NSMutableArray alloc] init];
-    retrievedSchedulesArray = [serviceRequestInfo valueForKey:@"schedules"];
-    NSLog(@"retrievedSchedulesArray: %@", retrievedSchedulesArray);
-    NSMutableString *schedulesDisplay = [[NSMutableString alloc] init];
-    
-    for (int i = 0; i < retrievedSchedulesArray.count; i++)
-    {
-      NSMutableDictionary *retrievedSchedulesDictionary = [[NSMutableDictionary alloc] init];
-      [retrievedSchedulesDictionary setObject:[retrievedSchedulesArray objectAtIndex:i] forKey:@"schedules"];
-      NSLog(@"retrievedSchedulesDictionary: %@", retrievedSchedulesDictionary);
-      
-      NSMutableString *schedulesAuthor = [NSMutableString stringWithFormat:@"%@ %@ %@ %@"
-                                          , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"firstName"]
-                                          , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"middleName"]
-                                          , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"lastName"]
-                                          , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"suffix"]];
-      
-      NSMutableString *scheduleStatus = [[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"status"] valueForKey:@"name"];
-      
-    }
-   
-    
+    //For Inspection Schedules
+    //!!! TODO - Remove hardcoded data
+    statusField.text = @"For Inspection"; //For Inspection statusId = 20130101420000004
+    authorField.text = @"Tim Cook"; //logged userId
   }
+}
+
+
+#pragma mark - Display multiple 'Notes' entries
+- (void) displayNotesEntries: (NSString *) noteText
+{
+  NSLog(@"Display multiple note entries");
+  NSLog(@"notesTextAreaArray: %@", notesTextAreaArray);
+  
+  //Initialize Notes text area frame size
+  int height = 120;
+  int width = 284;
+  
+  UITextView *newNoteTextArea = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+  newNoteTextArea.backgroundColor = notesTextArea.backgroundColor;
+  [newNoteTextArea setFont:[UIFont systemFontOfSize:14]];
+  
+  //Set the text of Notes area
+  newNoteTextArea.text = noteText;
+  
+  //Get the location of prev Notes text area and adjust new Notes area location based on that
+  UITextView *prevNoteTextView = [[UITextView alloc] init];
+  prevNoteTextView = [notesTextAreaArray lastObject];
+  CGRect noteFrame = newNoteTextArea.frame;
+  noteFrame.origin.x = 17;
+  noteFrame.origin.y = (prevNoteTextView.frame.origin.y + 130);
+  newNoteTextArea.frame = noteFrame;
+  
+  //Add Notes text area in view
+  [inspectSRScroller addSubview:newNoteTextArea];
+  
+  //Store added Notes text area in array
+  [notesTextAreaArray addObject:newNoteTextArea];
+  NSLog(@"notesTextAreaArray: %@", notesTextAreaArray);
+  
+  //Adjust position of [Add Notes] button when new text area is added
+  CGRect addNotesButtonFrame = addNotesButton.frame;
+  addNotesButtonFrame.origin.x = 20;
+  addNotesButtonFrame.origin.y = (newNoteTextArea.frame.origin.y + 130);
+  addNotesButton.frame = addNotesButtonFrame;
+  
+  //Move all element below the added notesTextArea
+  [self adjustFieldAfterNotes];
 }
 
 
@@ -317,16 +349,160 @@
   //Adjust position of [Add Notes] button when new text area is added
   CGRect addNotesButtonFrame = addNotesButton.frame;
   addNotesButtonFrame.origin.x = 20;
-  addNotesButtonFrame.origin.y = (newNoteTextArea.frame.origin.y + 150);
+  addNotesButtonFrame.origin.y = (newNoteTextArea.frame.origin.y + 130);
   addNotesButton.frame = addNotesButtonFrame;
+  
+  //Move all element below the added notesTextArea
+  [self adjustFieldAfterNotes];
 }
 
 
-
-
-- (IBAction)addSchedules:(id)sender
+#pragma mark - Adjust aligment and placement of elements after the added Note / multiple Note entries
+- (void) adjustFieldAfterNotes
 {
+  NSLog(@"adjustFieldAfterNotes");
+  
+  //Move the Y coordinate of the elements, X remains constant
+  //Get [Add Notes] button location
+  CGRect addNotesButtonFrame = addNotesButton.frame;
+  float addNotesButtonY = addNotesButtonFrame.origin.y;
+  
+  //Schedules Label
+  CGRect schedulesLabelFrame = schedulesLabel.frame;
+  schedulesLabelFrame.origin.y = (addNotesButtonY + 70);
+  schedulesLabel.frame = schedulesLabelFrame;
+  
+  //Status Label
+  CGRect scheduleStatusLabelFrame = statusLabel.frame;
+  scheduleStatusLabelFrame.origin.y = (schedulesLabelFrame.origin.y + 30);
+  statusLabel.frame = scheduleStatusLabelFrame;
+  
+  //Status Field
+  CGRect scheduleStatusFieldFrame = statusField.frame;
+  scheduleStatusFieldFrame.origin.y = (scheduleStatusLabelFrame.origin.y + 30);
+  statusField.frame = scheduleStatusFieldFrame;
+  
+  //Author Label
+  CGRect scheduleAuthorLabelFrame = authorLabel.frame;
+  scheduleAuthorLabelFrame.origin.y = (scheduleStatusFieldFrame.origin.y + 35);
+  authorLabel.frame = scheduleAuthorLabelFrame;
+  
+  //Author Field
+  CGRect scheduleAuthorFieldFrame = authorField.frame;
+  scheduleAuthorFieldFrame.origin.y = (scheduleAuthorLabelFrame.origin.y + 30);
+  authorField.frame = scheduleAuthorFieldFrame;
+  
+  //Add Schedules Button
+  CGRect addScheduleButtonFrame = addSchedulesButton.frame;
+  addScheduleButtonFrame.origin.y = (scheduleAuthorFieldFrame.origin.y + 45);
+  addSchedulesButton.frame = addScheduleButtonFrame;
 }
+
+
+#pragma mark - [Add Schedules] button implementation
+- (IBAction)addInspectionSchedules:(id)sender
+{
+  NSLog(@"Add Inspection Schedules");
+  
+  //Add at least one schedule for inspection
+  //Initialize fields and labels
+  UILabel *fromDateLabel = [[UILabel alloc] init];
+  UILabel *fromTimeLabel = [[UILabel alloc] init];
+  UILabel *toDateLabel = [[UILabel alloc] init];
+  UILabel *toTimeLabel = [[UILabel alloc] init];
+  
+  UITextField *fromDateField = [[UITextField alloc] init];
+  UITextField *fromTimeField = [[UITextField alloc] init];
+  UITextField *toDateField = [[UITextField alloc] init];
+  UITextField *toTimeField = [[UITextField alloc] init];
+  
+  //Set label style
+  fromDateLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  fromTimeLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  toDateLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  toTimeLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  
+  //Set field style
+  fromDateField.borderStyle = UITextBorderStyleRoundedRect;
+  fromTimeField.borderStyle = UITextBorderStyleRoundedRect;
+  toDateField.borderStyle = UITextBorderStyleRoundedRect;
+  toTimeField.borderStyle = UITextBorderStyleRoundedRect;
+  
+  //Set label size dimensions
+  CGRect labelSize;
+  labelSize.size.width = 116;
+  labelSize.size.height = 21;
+  
+  CGRect fromDateLabelSize = fromDateLabel.frame;
+  fromDateLabelSize = labelSize;
+  fromDateLabel.frame = fromDateLabelSize;
+  
+  CGRect fromTimeLabelSize = fromTimeLabel.frame;
+  fromTimeLabelSize = labelSize;
+  fromTimeLabel.frame = fromTimeLabelSize;
+  
+  CGRect toDateLabelSize = toDateLabel.frame;
+  toDateLabelSize = labelSize;
+  toDateLabel.frame = toDateLabelSize;
+  
+  CGRect toTimeLabelSize = toTimeLabel.frame;
+  toTimeLabelSize = labelSize;
+  toTimeLabel.frame = toTimeLabelSize;
+  
+  //Set field size dimensions
+  CGRect fieldSize;
+  fieldSize.size.width = 141;
+  fieldSize.size.height = 30;
+  
+  CGRect fromDateFieldSize = fromDateField.frame;
+  fromDateFieldSize = fieldSize;
+  fromDateField.frame = fromDateFieldSize;
+  
+  CGRect fromTimeFieldSize = fromTimeField.frame;
+  fromTimeFieldSize = fieldSize;
+  fromTimeField.frame = fromTimeFieldSize;
+  
+  CGRect toDateFieldSize = toDateField.frame;
+  toDateFieldSize = fieldSize;
+  toDateField.frame = toDateFieldSize;
+  
+  CGRect toTimeFieldSize = toTimeField.frame;
+  toTimeFieldSize = fieldSize;
+  toTimeField.frame = toTimeFieldSize;
+  
+  //Set frame location
+  CGRect frame;
+  
+  frame = fromDateLabel.frame;
+  frame.origin.x = 16;
+  frame.origin.y = 915;
+  fromDateLabel.frame = frame;
+  
+  frame = fromDateField.frame;
+  frame.origin.x = 16;
+  frame.origin.y = 945;
+  fromDateField.frame = frame;
+  
+  /*
+  [inspectSRScroller addSubview:fromDateLabel];
+  [inspectSRScroller addSubview:fromDateField];
+  
+  //move add schedules button
+  //Add Schedules Button
+  CGRect addScheduleButtonFrame = addSchedulesButton.frame;
+  addScheduleButtonFrame.origin.y = (frame.origin.y + 45);
+  addSchedulesButton.frame = addScheduleButtonFrame;
+   */
+}
+
+
+
+#pragma mark - [Inspect] button implementation
+- (void) inspectSR
+{
+  NSLog(@"Inspect Service Request");
+}
+
 
 
 #pragma mark - Connection didFailWithError

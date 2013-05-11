@@ -10,6 +10,7 @@
 #import "ManagedAssets.h"
 #import "Reachability.h"
 #import "SingleAssetViewController.h"
+#import "HomePageViewController.h"
 
 @interface ViewAssetsPageViewController ()
 
@@ -24,7 +25,6 @@
 @synthesize assetOwned;
 
 @synthesize assetIdNameArray;
-//@synthesize assetIdNameDict;
 @synthesize selectedAssetId;
 @synthesize assetNameArray;
 @synthesize assetIdArray;
@@ -43,6 +43,9 @@
 {
   NSLog(@"View Assets Page View");
   
+  //[Home] navigation button
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:self action:@selector(backToHome)];
+  
   [self displayViewAssetsPageEntries];
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -52,6 +55,19 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - [Home] button implementation
+-(void) backToHome
+{
+  [self dismissViewControllerAnimated:YES completion:nil];
+  NSLog(@"Cancel Add Asset");
+  
+  //Go back to Home Page
+  HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+  
+  [self.navigationController pushViewController:controller animated:YES];
 }
 
 
@@ -66,7 +82,7 @@
   //Where to get userId
   NSString *userId = @"20130101500000001";
   NSMutableString *urlParams = [NSMutableString
-                               stringWithFormat:@"http://192.168.2.107:8080/vertex-api/asset/getOwnership/%@"
+                               stringWithFormat:@"http://192.168.2.107/vertex-api/asset/getOwnership/%@"
                                , userId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest

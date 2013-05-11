@@ -67,6 +67,6 @@
 - (IBAction)addNotes:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UIButton *addSchedulesButton;
-- (IBAction)addSchedules:(id)sender;
+- (IBAction)addInspectionSchedules:(id)sender;
 
 @end
