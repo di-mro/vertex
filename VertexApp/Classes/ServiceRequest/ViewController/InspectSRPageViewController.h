@@ -47,6 +47,25 @@
 @property (strong, nonatomic) IBOutlet UILabel *authorLabel;
 @property (strong, nonatomic) IBOutlet UITextField *authorField;
 
+@property CGRect addNotesButtonFrame;
+@property CGRect schedulesLabelFrame;
+@property CGRect scheduleStatusLabelFrame;
+@property CGRect scheduleStatusFieldFrame;
+@property CGRect scheduleAuthorLabelFrame;
+@property CGRect scheduleAuthorFieldFrame;
+@property CGRect addScheduleButtonFrame;
+
+@property CGRect fromDateLabelFrame;
+@property CGRect fromDateFieldFrame;
+@property CGRect fromTimeLabelFrame;
+@property CGRect fromTimeFieldFrame;
+@property CGRect toDateLabelFrame;
+@property CGRect toDateFieldFrame;
+@property CGRect toTimeLabelFrame;
+@property CGRect toTimeFieldFrame;
+
+@property (strong, nonatomic) NSMutableDictionary *scheduleFromDateDictionary;
+@property (strong, nonatomic) NSMutableDictionary *scheduleToDateDictionary;
 
 @property (strong, nonatomic) NSNumber *userId;
 @property (strong, nonatomic) NSNumber *serviceRequestId;
@@ -67,6 +86,6 @@
 - (IBAction)addNotes:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UIButton *addSchedulesButton;
-- (IBAction)addInspectionSchedules:(id)sender;
+- (IBAction)addInspectionScheduleFields:(id)sender;
 
 @end

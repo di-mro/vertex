@@ -54,6 +54,26 @@
 @synthesize authorLabel;
 @synthesize authorField;
 
+@synthesize addNotesButtonFrame;
+@synthesize schedulesLabelFrame;
+@synthesize scheduleStatusLabelFrame;
+@synthesize scheduleStatusFieldFrame;
+@synthesize scheduleAuthorLabelFrame;
+@synthesize scheduleAuthorFieldFrame;
+@synthesize addScheduleButtonFrame;
+
+@synthesize fromDateLabelFrame;
+@synthesize fromDateFieldFrame;
+@synthesize fromTimeLabelFrame;
+@synthesize fromTimeFieldFrame;
+@synthesize toDateLabelFrame;
+@synthesize toDateFieldFrame;
+@synthesize toTimeLabelFrame;
+@synthesize toTimeFieldFrame;
+
+@synthesize scheduleFromDateDictionary;
+@synthesize scheduleToDateDictionary;
+
 @synthesize userId;
 @synthesize serviceRequestId;
 @synthesize serviceRequestInfo;
@@ -108,6 +128,10 @@
   statusField.enabled        = NO;
   authorField.enabled        = NO;
   
+  //EstimatedCostField delegate - for the changing of color when editing
+  estimatedCostField.textColor = [UIColor blueColor];
+  [estimatedCostField setDelegate:self];
+  
   //Populate fields based on previously selected Service Request for Inspection
   [self getServiceRequest];
   
@@ -115,7 +139,11 @@
   //notesTextAreaArray = [[NSMutableArray alloc] init];
   //[notesTextAreaArray addObject:notesTextArea];
   
-    [super viewDidLoad];
+  //Initialize dictionaries for inspection schedules
+  scheduleFromDateDictionary = [[NSMutableDictionary alloc] init];
+  scheduleToDateDictionary = [[NSMutableDictionary alloc] init];
+  
+  [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
 
@@ -308,7 +336,7 @@
   NSLog(@"notesTextAreaArray: %@", notesTextAreaArray);
   
   //Adjust position of [Add Notes] button when new text area is added
-  CGRect addNotesButtonFrame = addNotesButton.frame;
+  addNotesButtonFrame = addNotesButton.frame;
   addNotesButtonFrame.origin.x = 20;
   addNotesButtonFrame.origin.y = (newNoteTextArea.frame.origin.y + 130);
   addNotesButton.frame = addNotesButtonFrame;
@@ -347,7 +375,7 @@
   NSLog(@"notesTextAreaArray: %@", notesTextAreaArray);
   
   //Adjust position of [Add Notes] button when new text area is added
-  CGRect addNotesButtonFrame = addNotesButton.frame;
+  addNotesButtonFrame = addNotesButton.frame;
   addNotesButtonFrame.origin.x = 20;
   addNotesButtonFrame.origin.y = (newNoteTextArea.frame.origin.y + 130);
   addNotesButton.frame = addNotesButtonFrame;
@@ -364,43 +392,43 @@
   
   //Move the Y coordinate of the elements, X remains constant
   //Get [Add Notes] button location
-  CGRect addNotesButtonFrame = addNotesButton.frame;
+  addNotesButtonFrame = addNotesButton.frame;
   float addNotesButtonY = addNotesButtonFrame.origin.y;
   
   //Schedules Label
-  CGRect schedulesLabelFrame = schedulesLabel.frame;
+  schedulesLabelFrame = schedulesLabel.frame;
   schedulesLabelFrame.origin.y = (addNotesButtonY + 70);
   schedulesLabel.frame = schedulesLabelFrame;
   
   //Status Label
-  CGRect scheduleStatusLabelFrame = statusLabel.frame;
+  scheduleStatusLabelFrame = statusLabel.frame;
   scheduleStatusLabelFrame.origin.y = (schedulesLabelFrame.origin.y + 30);
   statusLabel.frame = scheduleStatusLabelFrame;
   
   //Status Field
-  CGRect scheduleStatusFieldFrame = statusField.frame;
+  scheduleStatusFieldFrame = statusField.frame;
   scheduleStatusFieldFrame.origin.y = (scheduleStatusLabelFrame.origin.y + 30);
   statusField.frame = scheduleStatusFieldFrame;
   
   //Author Label
-  CGRect scheduleAuthorLabelFrame = authorLabel.frame;
+  scheduleAuthorLabelFrame = authorLabel.frame;
   scheduleAuthorLabelFrame.origin.y = (scheduleStatusFieldFrame.origin.y + 35);
   authorLabel.frame = scheduleAuthorLabelFrame;
   
   //Author Field
-  CGRect scheduleAuthorFieldFrame = authorField.frame;
+  scheduleAuthorFieldFrame = authorField.frame;
   scheduleAuthorFieldFrame.origin.y = (scheduleAuthorLabelFrame.origin.y + 30);
   authorField.frame = scheduleAuthorFieldFrame;
   
   //Add Schedules Button
-  CGRect addScheduleButtonFrame = addSchedulesButton.frame;
+  addScheduleButtonFrame = addSchedulesButton.frame;
   addScheduleButtonFrame.origin.y = (scheduleAuthorFieldFrame.origin.y + 45);
   addSchedulesButton.frame = addScheduleButtonFrame;
 }
 
 
 #pragma mark - [Add Schedules] button implementation
-- (IBAction)addInspectionSchedules:(id)sender
+- (IBAction)addInspectionScheduleFields:(id)sender
 {
   NSLog(@"Add Inspection Schedules");
   
@@ -415,6 +443,12 @@
   UITextField *fromTimeField = [[UITextField alloc] init];
   UITextField *toDateField = [[UITextField alloc] init];
   UITextField *toTimeField = [[UITextField alloc] init];
+  
+  //Set label texts
+  fromDateLabel.text = @"From Date: ";
+  fromTimeLabel.text = @"From Time: ";
+  toDateLabel.text = @"To Date: ";
+  toTimeLabel.text = @"To Time: ";
   
   //Set label style
   fromDateLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
@@ -470,38 +504,422 @@
   toTimeFieldSize = fieldSize;
   toTimeField.frame = toTimeFieldSize;
   
-  //Set frame location
-  CGRect frame;
   
-  frame = fromDateLabel.frame;
-  frame.origin.x = 16;
-  frame.origin.y = 915;
-  fromDateLabel.frame = frame;
   
-  frame = fromDateField.frame;
-  frame.origin.x = 16;
-  frame.origin.y = 945;
-  fromDateField.frame = frame;
+  CGRect startingCoordinates;
+  /* If schedule date dictionary is empty - this is the first entry for schedules.
+     Begin after schedule author field.
+   */
+  if (([scheduleFromDateDictionary count] == 0) || ([scheduleToDateDictionary count] == 0))
+  {
+    startingCoordinates.origin.y = (scheduleAuthorFieldFrame.origin.y + 45);
+  }
+  /* If schedule date dictionary is not empy - there are fields already set.
+     Begin after the last 'To Date' field.
+   */
+  else
+  {
+    startingCoordinates.origin.y = (toDateFieldFrame.origin.y + 50);
+  }
   
-  /*
-  [inspectSRScroller addSubview:fromDateLabel];
-  [inspectSRScroller addSubview:fromDateField];
+  UIView * separator = [[UIView alloc] initWithFrame:CGRectMake(0, (startingCoordinates.origin.y), 320, 1)];
+  separator.backgroundColor = [UIColor colorWithWhite:0.7 alpha:1];
+  [inspectSRScroller addSubview:separator];
+  
+  //Set frame locations - From Date Label and Field
+  fromDateLabelFrame = fromDateLabel.frame;
+  fromDateLabelFrame.origin.x = 16;
+  fromDateLabelFrame.origin.y = (startingCoordinates.origin.y + 10);
+  fromDateLabel.frame = fromDateLabelFrame;
+  
+  fromDateFieldFrame = fromDateField.frame;
+  fromDateFieldFrame.origin.x = 16;
+  fromDateFieldFrame.origin.y = (fromDateLabelFrame.origin.y + 30);
+  fromDateField.frame = fromDateFieldFrame;
+  
+  fromTimeLabelFrame = fromTimeLabel.frame;
+  fromTimeLabelFrame.origin.x = (fromDateLabel.frame.origin.x + 150);
+  fromTimeLabelFrame.origin.y = (startingCoordinates.origin.y + 10);
+  fromTimeLabel.frame = fromTimeLabelFrame;
+  
+  fromTimeFieldFrame = fromTimeField.frame;
+  fromTimeFieldFrame.origin.x = (fromDateFieldFrame.origin.x + 150);
+  fromTimeFieldFrame.origin.y = (fromTimeLabel.frame.origin.y + 30);
+  fromTimeField.frame = fromTimeFieldFrame;
+  
+  
+  //Set frame locations - To Date Label and Field
+  toDateLabelFrame = toDateLabel.frame;
+  toDateLabelFrame.origin.x = 16;
+  toDateLabelFrame.origin.y = (fromDateField.frame.origin.y + 40);
+  toDateLabel.frame = toDateLabelFrame;
+  
+  toDateFieldFrame = toDateField.frame;
+  toDateFieldFrame.origin.x = 16;
+  toDateFieldFrame.origin.y = (toDateLabelFrame.origin.y + 30);
+  toDateField.frame = toDateFieldFrame;
+  
+  toTimeLabelFrame = toTimeLabel.frame;
+  toTimeLabelFrame.origin.x = (toDateLabel.frame.origin.x + 150);
+  toTimeLabelFrame.origin.y = (fromTimeField.frame.origin.y + 40);
+  toTimeLabel.frame = toTimeLabelFrame;
+  
+  toTimeFieldFrame = toTimeField.frame;
+  toTimeFieldFrame.origin.x = (toDateFieldFrame.origin.x + 150);
+  toTimeFieldFrame.origin.y = (toTimeLabel.frame.origin.y + 30);
+  toTimeField.frame = toTimeFieldFrame;
   
   //move add schedules button
   //Add Schedules Button
-  CGRect addScheduleButtonFrame = addSchedulesButton.frame;
-  addScheduleButtonFrame.origin.y = (frame.origin.y + 45);
+  addScheduleButtonFrame = addSchedulesButton.frame;
+  addScheduleButtonFrame.origin.y = (toDateField.frame.origin.y + 60);
   addSchedulesButton.frame = addScheduleButtonFrame;
-   */
+  
+  //Add the fields in scroller
+  [inspectSRScroller addSubview:fromDateLabel];
+  [inspectSRScroller addSubview:fromDateField];
+  
+  [inspectSRScroller addSubview:fromTimeLabel];
+  [inspectSRScroller addSubview:fromTimeField];
+  
+  [inspectSRScroller addSubview:toDateLabel];
+  [inspectSRScroller addSubview:toDateField];
+  
+  [inspectSRScroller addSubview:toTimeLabel];
+  [inspectSRScroller addSubview:toTimeField];
+  
+  //Store the fields in a dictionary
+  [scheduleFromDateDictionary setObject:fromDateField forKey:fromTimeField];
+  [scheduleToDateDictionary setObject:toDateField forKey:toTimeField];
+  
+  //NSLog(@"scheduleFromDateDictionary: %@", scheduleFromDateDictionary);
+  //NSLog(@"scheduleToDateDictionary: %@", scheduleToDateDictionary);
 }
 
+
+
+#pragma mark - Updating the color of entry in estimatedCostField depending whether changed or same with original
+- (BOOL)textFieldDidBeginEditing:(UITextField *)textField
+{
+  if(estimatedCostField.isEditing)
+  {
+    estimatedCostField.textColor = [UIColor redColor];
+    return YES;
+  }
+  //else if ([scheduleFromDateDictionary a])
+  else
+  {
+    //estimatedCostField.textColor = [UIColor blueColor];
+    return YES;
+  }
+}
+
+
+#pragma mark - Updating the color of entry in estimatedCostField depending whether changed or same with original
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+  NSString *originalEstimatedCost = [[NSString alloc] init];
+  originalEstimatedCost = [serviceRequestInfo valueForKey:@"cost"];
+  
+  //!!! TODO - Handling decimal digits
+  NSMutableString *enteredCost = [NSMutableString stringWithFormat:@"%@.0", estimatedCostField.text];
+  
+  if([originalEstimatedCost isEqualToString:enteredCost])
+  {
+    //Not changed - Blue
+    estimatedCostField.textColor = [UIColor blueColor];
+  }
+  else
+  {
+    //Changed - Red
+    estimatedCostField.textColor = [UIColor redColor];
+  }
+}
 
 
 #pragma mark - [Inspect] button implementation
 - (void) inspectSR
 {
   NSLog(@"Inspect Service Request");
+  
+  statusId = @20130101420000004;
+  [self updateServiceRequestStatus:@"FOR INSPECTION"];
 }
+
+
+#pragma mark - Update Service Request status to 'Acknowledged'
+-(void) updateServiceRequestStatus: (NSString *) operationFlag
+{
+  NSLog(@"updateServiceRequestStatus");
+  /*
+   "{
+      "id" : long,
+      "status" :
+      {
+        "id" : long
+      },
+      "admin" :
+      {
+        "id" : long
+      },
+      "cost" : double,
+      "schedules": # schedules can be null
+      [
+        {
+          "status":
+          {
+            "id": long
+          },
+          "author":
+          {
+            "id": long
+          },
+          "periods":
+          [
+            {
+              "fromDate": string,
+              "fromTime": string,
+              "fromTimezone": string,
+              "toDate": string,
+              "toTime": string,
+              "toTimezone": string
+            }
+            , ...
+          ],
+          "active": boolean
+        }
+      ],
+      "notes": # notes can be null
+      [
+        {
+          "sender":
+          {
+            "id": long
+          },
+          "message": string
+        }
+        , ...
+      ]
+    }"
+   */
+  
+  serviceRequestJson = [[NSMutableDictionary alloc] init];
+  
+  //id
+  [serviceRequestJson setObject:[serviceRequestInfo valueForKey:@"id"] forKey:@"id"];
+  
+  //status
+  NSLog(@"statusId: %@", statusId);
+  NSMutableDictionary *statusJson = [[NSMutableDictionary alloc] init];
+  [statusJson setObject:statusId forKey:@"id"]; //For Inspection
+  [serviceRequestJson setObject:statusJson forKey:@"status"];
+  
+  //admin
+  NSMutableDictionary *adminJson = [[NSMutableDictionary alloc] init];
+  [adminJson setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY !!!
+  [serviceRequestJson setObject:adminJson forKey:@"admin"];
+  NSLog(@"adminJson: %@", adminJson);
+  
+  //cost - updated based on user input
+  [serviceRequestJson setObject:estimatedCostField.text forKey:@"cost"];
+  
+  
+  //notes
+  NSMutableDictionary *notesDictionary = [[NSMutableDictionary alloc] init];
+  NSMutableDictionary *notesSenderJson = [[NSMutableDictionary alloc] init];
+  NSMutableArray *notesArray = [[NSMutableArray alloc] init];
+  
+  //Check if notes node is null before updating
+  if ([[serviceRequestInfo objectForKey:@"notes"] count] == 0)
+  {
+    NSLog(@"No record for Service Request Notes");
+  }
+  else
+  {
+    for(int i = 1; i < notesTextAreaArray.count; i++) //begin at the second text area
+    {
+      //sender
+      [notesSenderJson setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY - Remove hardcoded value
+      [notesDictionary setObject:notesSenderJson forKey:@"sender"];
+      
+      //message
+      UITextView *tempTextView = [[UITextView alloc] init];
+      tempTextView = [notesTextAreaArray objectAtIndex:i]; //Begin at second element
+      [notesDictionary setObject:tempTextView.text forKey:@"message"];
+      
+      //save the sender-message node in an array
+      [notesArray insertObject:notesDictionary atIndex:(i-1)];
+    }
+  }
+  [serviceRequestJson setObject:notesArray forKey:@"notes"];
+
+  
+  //schedules
+  //TODO - schedules !!!
+  NSMutableDictionary *scheduleDictionary = [[NSMutableDictionary alloc] init];
+  //schedule - status
+  NSMutableDictionary *scheduleStatusDictionary = [[NSMutableDictionary alloc] init];
+  NSMutableArray *scheduleArray = [[NSMutableArray alloc] init];
+  
+  //Check if schedules node is null before updating
+  if([[serviceRequestInfo objectForKey:@"schedules"] count] == 0)
+  {
+    NSLog(@"No record for Service Request Schedules");
+  }
+  else
+  {
+    NSLog(@"service request schedules JSON assembly");
+    [scheduleStatusDictionary setObject:statusId forKey:@"id"]; //For Inspection
+    [scheduleDictionary setObject:scheduleStatusDictionary forKey:@"status"];
+    
+    //schedule - author
+    NSMutableDictionary *scheduleAuthor = [[NSMutableDictionary alloc] init];
+    [scheduleAuthor setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY !!! - Update
+    [scheduleDictionary setObject:scheduleAuthor forKey:@"author"];
+    
+    NSArray *fromDates = [[NSArray alloc] init];
+    NSArray *fromTimes = [[NSArray alloc] init];
+    NSArray *toDates = [[NSArray alloc] init];
+    NSArray *toTimes = [[NSArray alloc] init];
+    
+    fromDates = [scheduleFromDateDictionary allKeys];
+    fromTimes = [scheduleFromDateDictionary allValues];
+    toDates = [scheduleToDateDictionary allKeys];
+    toTimes = [scheduleToDateDictionary allValues];
+    
+    NSLog(@"fromDates: %@", fromDates);
+    NSLog(@"fromTimes: %@", fromTimes);
+    NSLog(@"toDates: %@", toDates);
+    NSLog(@"toTimes: %@", toTimes);
+    
+    //schedule - periods
+    NSMutableDictionary *scheduleDictionary = [[NSMutableDictionary alloc] init];
+    NSMutableArray *schedulePeriodArray = [[NSMutableArray alloc] init];
+    NSMutableArray *scheduleArray = [[NSMutableArray alloc] init];
+
+    for(int i = 0; i < [scheduleFromDateDictionary count]; i++)
+    {
+      NSMutableDictionary *schedulePeriodDictionary = [[NSMutableDictionary alloc] init];
+      UITextField *tempField = [[UITextField alloc] init];
+      
+      tempField = [fromDates objectAtIndex:i];
+      NSLog(@"tempField: %@", tempField);
+      [schedulePeriodDictionary setObject:tempField.text forKey:@"fromDate"];
+      
+      tempField = [fromTimes objectAtIndex:i];
+      NSLog(@"tempField: %@", tempField);
+      [schedulePeriodDictionary setObject:tempField.text forKey:@"fromTime"];
+      
+      [schedulePeriodDictionary setObject:[NSTimeZone systemTimeZone] forKey:@"fromTimezone"];
+      
+      tempField = [toDates objectAtIndex:i];
+      NSLog(@"tempField: %@", tempField);
+      [schedulePeriodDictionary setObject:tempField.text forKey:@"toDate"];
+      
+      tempField = [toTimes objectAtIndex:i];
+      NSLog(@"tempField: %@", tempField);
+      [schedulePeriodDictionary setObject:tempField.text forKey:@"toTime"];
+      
+      [schedulePeriodDictionary setObject:[NSTimeZone systemTimeZone] forKey:@"toTimezone"];
+      
+      /*
+      [schedulePeriodDictionary setObject:[fromDates objectAtIndex:i] forKey:@"fromDate"];
+      [schedulePeriodDictionary setObject:[fromTimes objectAtIndex:i] forKey:@"fromTime"];
+      [schedulePeriodDictionary setObject:[NSTimeZone systemTimeZone] forKey:@"fromTimezone"];
+      [schedulePeriodDictionary setObject:[toDates objectAtIndex:i] forKey:@"toDate"];
+      [schedulePeriodDictionary setObject:[toTimes objectAtIndex:i] forKey:@"toTime"];
+      [schedulePeriodDictionary setObject:[NSTimeZone systemTimeZone] forKey:@"toTimezone"];
+      */
+      
+      [schedulePeriodArray addObject:schedulePeriodDictionary];
+      [scheduleDictionary setObject:schedulePeriodArray forKey:@"periods"];
+    }
+    
+    [scheduleArray addObject:scheduleDictionary];
+    [serviceRequestJson setObject:scheduleArray forKey:@"schedules"];
+    
+    NSNumber *boolActive = [[NSNumber alloc] initWithBool:YES];
+    [scheduleDictionary setObject:boolActive forKey:@"active"]; //TODO: active:boolean
+    
+    //Store dictionary in array first before passing to serviceRequestJson
+    [scheduleArray addObject:scheduleDictionary];
+  }
+  
+  [serviceRequestJson setObject:scheduleArray forKey:@"schedules"];
+  
+  [self validateSchedulePeriods:[serviceRequestJson valueForKey:@"schedules"]];
+  
+  NSLog(@"For Inspection Service Request JSON: %@", serviceRequestJson);
+  NSError *error = [[NSError alloc] init];
+  NSData *jsonData = [NSJSONSerialization
+                      dataWithJSONObject:serviceRequestJson
+                      options:NSJSONWritingPrettyPrinted
+                      error:&error];
+  NSString *jsonString = [[NSString alloc]
+                          initWithData:jsonData
+                          encoding:NSUTF8StringEncoding];
+  
+  NSLog(@"jsonData Request: %@", jsonData);
+  NSLog(@"jsonString Request: %@", jsonString);
+  
+  //Set URL for Update Service Request
+  //URL = @"http://192.168.2.113/vertex-api/service-request/updateServiceRequest";
+  //URL = @"http://192.168.2.107/vertex-api/service-request/updateServiceRequest";
+  URL = @"http://"; //TEST
+  
+  NSMutableURLRequest *putRequest = [NSMutableURLRequest
+                                     requestWithURL:[NSURL URLWithString:URL]];
+  
+  //PUT method - Update
+  [putRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+  [putRequest setHTTPMethod:@"PUT"];
+  [putRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String] length:[jsonString length]]];
+  NSLog(@"%@", putRequest);
+  
+  NSURLConnection *connection = [[NSURLConnection alloc]
+                                 initWithRequest:putRequest
+                                 delegate:self];
+  
+  [connection start];
+  
+  NSLog(@"updateServiceRequest - httpResponseCode: %d", httpResponseCode);
+  
+  //Set alert message display depending on what operation is performed in this case (FOR INSPECTION)
+  NSString *updateAlertMessage = [[NSString alloc] init];
+  NSString *updateFailAlertMessage = [[NSString alloc] init];
+  if([operationFlag isEqual:@"FOR INSPECTION"])
+  {
+    updateAlertMessage = @"Service Request Inspected.";
+    updateFailAlertMessage = @"Service Request not inspected. Please try again later";
+  }
+  
+  NSLog(@"operationFlag: %@", operationFlag);
+  if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
+  {
+    UIAlertView *updateSRAlert = [[UIAlertView alloc]
+                                  initWithTitle:@"Service Request"
+                                  message:updateAlertMessage
+                                  delegate:self
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+    [updateSRAlert show];
+  }
+  else //(httpResponseCode >= 400)
+  {
+    UIAlertView *updateSRFailAlert = [[UIAlertView alloc]
+                                      initWithTitle:@"Inspect Service Request Failed"
+                                      message:updateFailAlertMessage
+                                      delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+    [updateSRFailAlert show];
+  }
+  
+  [self dismissViewControllerAnimated:YES completion:nil];
+  NSLog(@"Service Request Inspected");
+}
+
+
 
 
 
@@ -535,9 +953,33 @@
 }
 
 
+#pragma mark - Validation if there are Schedule Periods entered
+-(BOOL) validateSchedulePeriods: (NSMutableDictionary *) scheduleDictionary
+{
+  //!!! TODO
+  if ([scheduleDictionary count] == 0)
+  {
+    UIAlertView *emptyScheduleAlert = [[UIAlertView alloc]
+                                      initWithTitle:@"Incomplete Information"
+                                      message:@"No schedule entered."
+                                      delegate:nil
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+    [emptyScheduleAlert show];
+    
+    return FALSE;
+  }
+  else
+  {
+    return TRUE;
+  }
+}
+
+
 #pragma mark - Dismiss onscreen keyboard
 -(void)dismissKeyboard
 {
+  /*
   [assetField resignFirstResponder];
   [lifecycleField resignFirstResponder];
   [serviceField resignFirstResponder];
@@ -554,6 +996,12 @@
   {
     [[notesTextAreaArray objectAtIndex:i] resignFirstResponder];
   }
+  */
+  
+  for (int i = 0; i < [inspectSRScroller.subviews count]; i++)
+  {
+    [[[inspectSRScroller subviews] objectAtIndex:i] resignFirstResponder];
+  }  
 }
 
 

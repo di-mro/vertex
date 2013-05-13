@@ -74,8 +74,17 @@
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
+  /*
   //[Cancel] navigation button
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelAcknowledgeSR)];
+  */
+  
+  //[Back] (Cancel) navigation button
+  UIBarButtonItem *backButton = [[UIBarButtonItem alloc]
+                                   initWithTitle:@"Back"
+                                   style:UIBarButtonItemStylePlain
+                                   target:self
+                                   action:@selector(cancelAcknowledgeSR)];
   
   //[Reject] navigation button
   UIBarButtonItem *rejectButton = [[UIBarButtonItem alloc]
@@ -83,6 +92,9 @@
                                    style:UIBarButtonItemStylePlain
                                    target:self
                                    action:@selector(rejectSR)];
+  
+  self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:backButton, rejectButton, nil];
+  
   
   //[Accept] navigation button
   UIBarButtonItem *acceptButton = [[UIBarButtonItem alloc]
@@ -92,7 +104,7 @@
                                    action:@selector(acknowledgeSR)];
   
   //Initialize bar button items
-  self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:rejectButton, acceptButton, nil];
+  self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects: acceptButton, nil];
   
   //Scroller size
   self.acknowledgeSRScroller.contentSize = CGSizeMake(320.0, 2000.0);
@@ -414,9 +426,6 @@
   NSMutableArray *scheduleArray = [[NSMutableArray alloc] init];
   
   //Check if schedules node is null before updating
-  //if([serviceRequestInfo valueForKey:@"schedules"] == nil)
-  //([[photo objectForKey:@"tags"] count] == 0)
-  //if([[[serviceRequestInfo valueForKey:@"schedules"] valueForKey:@"id"] isEqual:nil]) //== [NSNull null] || == nil
   if([[serviceRequestInfo objectForKey:@"schedules"] count] == 0)
   {
     NSLog(@"No record for Service Request Schedules");
@@ -491,7 +500,7 @@
   NSLog(@"jsonData Request: %@", jsonData);
   NSLog(@"jsonString Request: %@", jsonString);
   
-  //Set URL for Add Service Request
+  //Set URL for Update Service Request
   //URL = @"http://192.168.2.113/vertex-api/service-request/updateServiceRequest";
   URL = @"http://192.168.2.107/vertex-api/service-request/updateServiceRequest";
   
@@ -551,6 +560,7 @@
   [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Service Request Acknowledged");
 }
+
 
 
 #pragma mark - Connection didFailWithError
