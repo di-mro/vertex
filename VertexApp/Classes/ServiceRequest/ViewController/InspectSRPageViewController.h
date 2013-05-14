@@ -64,6 +64,11 @@
 @property CGRect toTimeLabelFrame;
 @property CGRect toTimeFieldFrame;
 
+@property (strong, nonatomic) NSMutableArray *fromDatesArray;
+@property (strong, nonatomic) NSMutableArray *fromTimesArray;
+@property (strong, nonatomic) NSMutableArray *toDatesArray;
+@property (strong, nonatomic) NSMutableArray *toTimesArray;
+
 @property (strong, nonatomic) NSMutableDictionary *scheduleFromDateDictionary;
 @property (strong, nonatomic) NSMutableDictionary *scheduleToDateDictionary;
 
@@ -73,6 +78,7 @@
 
 @property (strong, nonatomic) NSNumber *statusId;
 @property (strong, nonatomic) NSMutableArray *notesTextAreaArray;
+@property (strong, nonatomic) NSMutableArray *inspectionNotesArray;
 @property (strong, nonatomic) NSMutableArray *schedulesStatusArray;
 @property (strong, nonatomic) NSMutableArray *schedulesAuthorArray;
 
@@ -80,6 +86,9 @@
 
 @property (strong, nonatomic) NSString *URL;
 @property int httpResponseCode;
+
+@property (strong, nonatomic) UIDatePicker *datePicker;
+@property (strong, nonatomic) NSDate *fromDate;
 
 
 @property (strong, nonatomic) IBOutlet UIButton *addNotesButton;
