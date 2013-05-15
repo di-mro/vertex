@@ -46,10 +46,10 @@
 {
   esseInfoConfigPageEntries = [[NSMutableArray alloc] init];
   
-  NSString *entry1 = @"Add Esse";
-  NSString *entry2 = @"View Esse";
-  NSString *entry3 = @"Update Esse";
-  NSString *entry4 = @"Remove Esse";
+  NSString *entry1 = @"Add";
+  NSString *entry2 = @"View";
+  NSString *entry3 = @"Update";
+  NSString *entry4 = @"Remove";
   
   [esseInfoConfigPageEntries addObject:entry1];
   [esseInfoConfigPageEntries addObject:entry2];

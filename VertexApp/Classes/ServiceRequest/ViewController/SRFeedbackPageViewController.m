@@ -135,8 +135,8 @@
 
 
 //Action method executes when user touches the button
-- (void) rate:(id)sender{
-	
+- (void) rate:(id)sender
+{
   UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
   //label.text = [segmentedControl titleForSegmentAtIndex: [segmentedControl selectedSegmentIndex]];
   
@@ -163,53 +163,78 @@
   [self.navigationController pushViewController:controller animated:YES];
 }
 
+
 #pragma mark - [Submit] button implementation
 -(void) submitSRFeedback
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Submit Service Request Feedback");
-  int finalRating = 0;
+  
+  float finalRating = 0;
   NSString *comments = [[NSString alloc] init];
   
+  //Compute value for rating
   finalRating = (srRatings / 100) * 10;
-  NSLog(@"srRating: %d", srRatings);
-  NSLog(@"finalRating: %i", finalRating);
+  NSLog(@"finalRating: %f", finalRating);
   
   comments = srCommentsTextArea.text;
   NSLog(@"Comments: %@", comments);
   
   /*
-  // !- DO A POST -!
-  RKObjectMapping* feedbackMapping = [RKObjectMapping requestMapping ];
-  [feedbackMapping addAttributeMappingsFromArray:@[@"rating", @"comments"]];
-  NSLog(@"feedbackMapping: %@", feedbackMapping);
+  NSError *error = [[NSError alloc] init];
+  NSData *jsonData = [NSJSONSerialization
+                      dataWithJSONObject:serviceRequestJson
+                      options:NSJSONWritingPrettyPrinted
+                      error:&error];
+  NSString *jsonString = [[NSString alloc]
+                          initWithData:jsonData
+                          encoding:NSUTF8StringEncoding];
   
-  // Now configure the request descriptor
-  RKRequestDescriptor *requestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:feedbackMapping objectClass:[Feedback class] rootKeyPath:@"user"];
-  NSLog(@"requestDescriptor: %@", requestDescriptor);
+  NSLog(@"jsonData Request: %@", jsonData);
+  NSLog(@"jsonString Request: %@", jsonString);
   
-  // Create a new Feedback object and POST it to the server
-  Feedback *feedbackObject = [[Feedback alloc] init];
-  feedbackObject.rating = *(&finalRating);
-  feedbackObject.comments = comments;
+  //Set URL for Add Service Request
+  URL = @"";
   
-  NSLog(@"feedbackObject - rating: %i", feedbackObject.rating);
-  NSLog(@"feedbackObject - comments: %@", feedbackObject.comments);
-  NSLog(@"feedbackObject: %@", feedbackObject);
+  NSMutableURLRequest *postRequest = [NSMutableURLRequest
+                                      requestWithURL:[NSURL URLWithString:URL]];
   
-  [[RKObjectManager sharedManager] postObject:feedbackObject path:@"http://192.168.2.103:8080/vertex/user/login" parameters:nil success:nil failure:nil];
+  //POST method - Create
+  [postRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+  [postRequest setHTTPMethod:@"POST"];
+  [postRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String] length:[jsonString length]]];
+  NSLog(@"%@", postRequest);
+  
+  NSURLConnection *connection = [[NSURLConnection alloc]
+                                 initWithRequest:postRequest
+                                 delegate:self];
+  
+  [connection start];
+  
+  NSLog(@"addServiceRequest - httpResponseCode: %d", httpResponseCode);
+  if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
+  {
+   //Inform user Service Request is saved
+   UIAlertView *srFeedbackAlert = [[UIAlertView alloc]
+                                    initWithTitle:@"Service Request Feedback"
+                                    message:@"Feedback submitted."
+                                    delegate:self
+                                    cancelButtonTitle:@"OK"
+                                    otherButtonTitles:nil];
+   [srFeedbackAlert show];
+  }
+  else //(httpResponseCode >= 400)
+  {
+    UIAlertView *srFeedbackFailAlert = [[UIAlertView alloc]
+                                      initWithTitle:@"Service Request Feedback Failed"
+                                      message:@"Feedback not submitted. Please try again later"
+                                      delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+    [srFeedbackFailAlert show];
+  }
+  
+  [self dismissViewControllerAnimated:YES completion:nil];
   */
-  
-  /* !- TODO -! */
-  //Inform user Service Request is saved
-  UIAlertView *srFeedbackAlert = [[UIAlertView alloc]
-                                initWithTitle:@"Service Request Feedback"
-                                      message:@"Feedback submitted."
-                                     delegate:self
-                            cancelButtonTitle:@"OK"
-                            otherButtonTitles:nil];
-  [srFeedbackAlert show];
-  //Transition to Service Request Page - alertView clickedButtonAtIndex
 }
 
 

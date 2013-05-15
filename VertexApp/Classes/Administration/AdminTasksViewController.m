@@ -47,12 +47,12 @@
   adminTaskPageEntries = [[NSMutableArray alloc] init];
   
   /* !- For demo only, remove hard coded values. Must retrieve listing in DB -! */
-  NSString *entry1 = @"Asset Configuration";
-  NSString *entry2 = @"Lifecycle Configuration";
-  NSString *entry3 = @"Service Configuration";
-  NSString *entry4 = @"User Account Configuration";
-  NSString *entry5 = @"System Function Configuration";
-  NSString *entry6 = @"Esse Info Configuration";
+  NSString *entry1 = @"Asset";
+  NSString *entry2 = @"Lifecycle";
+  NSString *entry3 = @"Service";
+  NSString *entry4 = @"User Account";
+  NSString *entry5 = @"System Function";
+  NSString *entry6 = @"Esse Info";
   
   [adminTaskPageEntries addObject:entry1];
   [adminTaskPageEntries addObject:entry2];

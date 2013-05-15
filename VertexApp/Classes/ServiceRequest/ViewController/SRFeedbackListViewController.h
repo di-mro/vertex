@@ -10,9 +10,26 @@
 
 @interface SRFeedbackListViewController : UIViewController
 
+@property (nonatomic, retain) NSMutableArray *srForFeedbackAsset;
+@property (nonatomic, retain) NSMutableArray *srForFeedbackService;
+@property (nonatomic, retain) NSMutableArray *srForFeedbackSRIds;
+
+@property (nonatomic, retain) NSMutableArray *srForFeedbackEntries;
+@property (nonatomic, retain) NSMutableArray *srForFeedbackDate;
+
+@property (strong, nonatomic) NSString *URL;
+@property int httpResponseCode;
+
+@property (strong, nonatomic) NSMutableDictionary *srForFeedbackDictionary;
+
+@property (strong, nonatomic) NSNumber *selectedSRId;
+@property (strong, nonatomic) NSNumber *statusId;
+
+/*
 - (void) displaySRFeedbackListPageEntries;
 
 @property (nonatomic, retain) NSMutableArray *displaySRFeedbackListEntries;
 @property (nonatomic, retain) NSMutableArray *displaySRFeedbackSubtitles;
+*/
 
 @end

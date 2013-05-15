@@ -110,6 +110,8 @@
 		ED4BF18B170AE875009CAEE4 /* DeleteServicePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED4BF18A170AE874009CAEE4 /* DeleteServicePageViewController.m */; };
 		ED4BF18E170B0F69009CAEE4 /* UpdateSRListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED4BF18D170B0F69009CAEE4 /* UpdateSRListViewController.m */; };
 		ED4BF191170B1153009CAEE4 /* UpdateSRPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED4BF190170B1152009CAEE4 /* UpdateSRPageViewController.m */; };
+		ED569ADD1741F5F90002D6E4 /* ProposalSRListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED569ADC1741F5F90002D6E4 /* ProposalSRListViewController.m */; };
+		ED569AE31741FA9B0002D6E4 /* ProposalSRPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED569AE21741FA9B0002D6E4 /* ProposalSRPageViewController.m */; };
 		ED59637F170BE69500FCD141 /* CreateNoticePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED59637E170BE69500FCD141 /* CreateNoticePageViewController.m */; };
 		ED596385170C0FB400FCD141 /* UpdateAssetAccountabilityPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED596384170C0FB400FCD141 /* UpdateAssetAccountabilityPageViewController.m */; };
 		ED596388170C18A600FCD141 /* UpdateAssetOwnershipPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED596387170C18A600FCD141 /* UpdateAssetOwnershipPageViewController.m */; };
@@ -465,6 +467,10 @@
 		ED4BF18D170B0F69009CAEE4 /* UpdateSRListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateSRListViewController.m; sourceTree = "<group>"; };
 		ED4BF18F170B1152009CAEE4 /* UpdateSRPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateSRPageViewController.h; sourceTree = "<group>"; };
 		ED4BF190170B1152009CAEE4 /* UpdateSRPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateSRPageViewController.m; sourceTree = "<group>"; };
+		ED569ADB1741F5F90002D6E4 /* ProposalSRListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProposalSRListViewController.h; sourceTree = "<group>"; };
+		ED569ADC1741F5F90002D6E4 /* ProposalSRListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProposalSRListViewController.m; sourceTree = "<group>"; };
+		ED569AE11741FA9A0002D6E4 /* ProposalSRPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProposalSRPageViewController.h; sourceTree = "<group>"; };
+		ED569AE21741FA9B0002D6E4 /* ProposalSRPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProposalSRPageViewController.m; sourceTree = "<group>"; };
 		ED59637D170BE69500FCD141 /* CreateNoticePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateNoticePageViewController.h; sourceTree = "<group>"; };
 		ED59637E170BE69500FCD141 /* CreateNoticePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateNoticePageViewController.m; sourceTree = "<group>"; };
 		ED596383170C0FB400FCD141 /* UpdateAssetAccountabilityPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateAssetAccountabilityPageViewController.h; sourceTree = "<group>"; };
@@ -1284,6 +1290,10 @@
 				EDDA2D3C173A178200FCF15F /* InspectSRListViewController.m */,
 				EDDA2D41173A284100FCF15F /* InspectSRPageViewController.h */,
 				EDDA2D42173A284100FCF15F /* InspectSRPageViewController.m */,
+				ED569ADB1741F5F90002D6E4 /* ProposalSRListViewController.h */,
+				ED569ADC1741F5F90002D6E4 /* ProposalSRListViewController.m */,
+				ED569AE11741FA9A0002D6E4 /* ProposalSRPageViewController.h */,
+				ED569AE21741FA9B0002D6E4 /* ProposalSRPageViewController.m */,
 				ED3BB34E16E04EA900468E44 /* SRFeedbackListViewController.h */,
 				ED3BB34F16E04EA900468E44 /* SRFeedbackListViewController.m */,
 				ED3BB35416E0524400468E44 /* SRFeedbackPageViewController.h */,
@@ -1686,6 +1696,8 @@
 				ED634A211737950A003540A4 /* AcknowledgeSRPageViewController.m in Sources */,
 				EDDA2D3D173A178200FCF15F /* InspectSRListViewController.m in Sources */,
 				EDDA2D43173A284100FCF15F /* InspectSRPageViewController.m in Sources */,
+				ED569ADD1741F5F90002D6E4 /* ProposalSRListViewController.m in Sources */,
+				ED569AE31741FA9B0002D6E4 /* ProposalSRPageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -110,8 +110,8 @@
     //Inspection
     case 2: [self performSegueWithIdentifier:@"srToInspectSR" sender:self];
       break;
-    //~ Proposal
-    case 3: [self performSegueWithIdentifier:@"srToViewSR" sender:self];
+    //Proposal
+    case 3: [self performSegueWithIdentifier:@"srToProposalSR" sender:self];
       break;
     //~ Approval
     case 4: [self performSegueWithIdentifier:@"srToViewSR" sender:self];

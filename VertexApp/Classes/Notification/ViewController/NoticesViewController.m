@@ -64,7 +64,7 @@
 
 - (NSString *) tableView:(UITableView *) tableView titleForHeaderInSection:(NSInteger)section
 {
-  NSString *myTitle = [[NSString alloc] initWithFormat:@""];
+  NSString *myTitle = [[NSString alloc] initWithFormat:@"Notification Tasks"];
   return myTitle;
 }
 

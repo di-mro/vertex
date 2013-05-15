@@ -1,21 +1,21 @@
 //
-//  InspectSRPageViewController.m
+//  ProposalSRPageViewController.m
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 5/8/13.
+//  Created by Mary Rose Oh on 5/14/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
-#import "InspectSRPageViewController.h"
+#import "ProposalSRPageViewController.h"
 #import "HomePageViewController.h"
 
-@interface InspectSRPageViewController ()
+@interface ProposalSRPageViewController ()
 
 @end
 
-@implementation InspectSRPageViewController
+@implementation ProposalSRPageViewController
 
-@synthesize inspectSRScroller;
+@synthesize proposalSRPageScroller;
 
 @synthesize assetLabel;
 @synthesize assetField;
@@ -44,15 +44,18 @@
 @synthesize notesLabel;
 @synthesize notesTextArea;
 
-@synthesize schedulesStatusArray;
-@synthesize schedulesAuthorArray;
+@synthesize addNotesButton;
 
 @synthesize schedulesLabel;
+/*
 @synthesize statusLabel;
 @synthesize statusField;
 
 @synthesize authorLabel;
 @synthesize authorField;
+*/
+
+@synthesize addSchedulesButton;
 
 @synthesize addNotesButtonFrame;
 @synthesize schedulesLabelFrame;
@@ -85,18 +88,14 @@
 
 @synthesize statusId;
 @synthesize notesTextAreaArray;
-@synthesize inspectionNotesArray;
+@synthesize proposalNotesArray;
+@synthesize schedulesStatusArray;
+@synthesize schedulesAuthorArray;
 
 @synthesize serviceRequestJson;
 
 @synthesize URL;
 @synthesize httpResponseCode;
-
-@synthesize datePicker;
-@synthesize fromDate;
-
-@synthesize addNotesButton;
-@synthesize addSchedulesButton;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -110,54 +109,73 @@
 
 - (void)viewDidLoad
 {
-  NSLog(@"Inspect Service Request Page");
+  NSLog(@"Proposal Service Request Page");
   
   //Keyboard dismissal
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
-  //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelInspectSR)];
+  //[Back] (Cancel) navigation button
+  UIBarButtonItem *backButton = [[UIBarButtonItem alloc]
+                                 initWithTitle:@"Back"
+                                 style:UIBarButtonItemStylePlain
+                                 target:self
+                                 action:@selector(cancelProposalSR)];
   
-  //[Inspect] navigation button
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Inspect" style:UIBarButtonItemStylePlain target:self action:@selector(inspectSR)];
+  self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:backButton, nil];
+  
+  //[Propose] navigation button
+  UIBarButtonItem *proposeButton = [[UIBarButtonItem alloc]
+                                   initWithTitle:@"Propose"
+                                   style:UIBarButtonItemStylePlain
+                                   target:self
+                                   action:@selector(proposeSR)];
+
+  //[Accept] navigation button
+  UIBarButtonItem *acceptButton = [[UIBarButtonItem alloc]
+                                   initWithTitle:@"Accept"
+                                   style:UIBarButtonItemStylePlain
+                                   target:self
+                                   action:@selector(acceptSR)];
+  
+  //Initialize bar button items
+  self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects: proposeButton, acceptButton, nil];
   
   //Scroller size
-  self.inspectSRScroller.contentSize = CGSizeMake(320.0, 3000);
+  self.proposalSRPageScroller.contentSize = CGSizeMake(320.0, 3000);
   
   //Disable fields - for viewing only
   assetField.enabled         = NO;
   lifecycleField.enabled     = NO;
   serviceField.enabled       = NO;
-  //estimatedCostField.enabled = NO;
   dateRequestedField.enabled = NO;
   priorityField.enabled      = NO;
   requestorField.enabled     = NO;
   adminField.enabled         = NO;
-  statusField.enabled        = NO;
-  authorField.enabled        = NO;
+  //statusField.enabled        = NO;
+  //authorField.enabled        = NO;
   
   //EstimatedCostField delegate - for the changing of color when editing
   estimatedCostField.textColor = [UIColor blueColor];
   [estimatedCostField setDelegate:self];
   
-  //Populate fields based on previously selected Service Request for Inspection
+  //Populate fields based on previously selected Service Request for Proposal Stage
   [self getServiceRequest];
   
   //Add Notes utilities - Store the first note and its coordinates so that when we add notes, it will align properly
   //notesTextAreaArray = [[NSMutableArray alloc] init];
   //[notesTextAreaArray addObject:notesTextArea];
   
-  //Initialize array for inspection notes
-  inspectionNotesArray = [[NSMutableArray alloc] init];
+  //Initialize array for proposal notes
+  proposalNotesArray = [[NSMutableArray alloc] init];
   
-  //Initialize arrays for inspection schedule periods
+  //Initialize arrays for proposal schedule periods
   fromDatesArray = [[NSMutableArray alloc] init];
   fromTimesArray = [[NSMutableArray alloc] init];
   toDatesArray = [[NSMutableArray alloc] init];
   toTimesArray = [[NSMutableArray alloc] init];
   
-  //Initialize dictionaries for inspection schedules
+  //Initialize dictionaries for proposal schedules
   scheduleFromDateDictionary = [[NSMutableDictionary alloc] init];
   scheduleToDateDictionary = [[NSMutableDictionary alloc] init];
   
@@ -176,15 +194,15 @@
 - (void) setServiceRequestId:(NSNumber *) srIdFromPrev
 {
   serviceRequestId = srIdFromPrev;
-  NSLog(@"InspectSrPage - serviceRequestId: %@", serviceRequestId);
+  NSLog(@"ProposalSRPage - serviceRequestId: %@", serviceRequestId);
 }
 
 
 #pragma mark - [Cancel] button implementation
--(void) cancelInspectSR
+-(void) cancelProposalSR
 {
   [self dismissViewControllerAnimated:YES completion:nil];
-  NSLog(@"Cancel Inspect Service Request");
+  NSLog(@"Cancel Proposal Service Request");
   
   //Go back to Home Page
   HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
@@ -197,7 +215,7 @@
 -(void) getServiceRequest
 {
   //endpoint for getServiceRequest/{serviceRequestId}
-  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.107/vertex-api/service-request/getServiceRequest/%@", serviceRequestId]; //107
+  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.107/vertex-api/service-request/getServiceRequest/%@", serviceRequestId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:urlParams]];
@@ -239,8 +257,8 @@
     priorityField.text      = @"High";
     requestorField.text     = @"Steve Jobs";
     adminField.text         = @"Admin - Tim Cook";
-    statusField.text        = @"Acknowledged";
-    authorField.text        = @"Admin - Tim Cook";
+    //statusField.text        = @"Acknowledged";
+    //authorField.text        = @"Admin - Tim Cook";
     notesTextArea.text      = @"Filter is dirty";
     
   }
@@ -269,12 +287,12 @@
     
     //Set admin name
     NSMutableString *adminName = [NSMutableString stringWithFormat:@"%@ %@ %@ %@"
-                                      , [[[serviceRequestInfo valueForKey:@"admin"] valueForKey:@"info"] valueForKey:@"firstName"]
-                                      , [[[serviceRequestInfo valueForKey:@"admin"] valueForKey:@"info"] valueForKey:@"middleName"]
-                                      , [[[serviceRequestInfo valueForKey:@"admin"] valueForKey:@"info"] valueForKey:@"lastName"]
-                                      , [[[serviceRequestInfo valueForKey:@"admin"] valueForKey:@"info"] valueForKey:@"suffix"]];
+                                  , [[[serviceRequestInfo valueForKey:@"admin"] valueForKey:@"info"] valueForKey:@"firstName"]
+                                  , [[[serviceRequestInfo valueForKey:@"admin"] valueForKey:@"info"] valueForKey:@"middleName"]
+                                  , [[[serviceRequestInfo valueForKey:@"admin"] valueForKey:@"info"] valueForKey:@"lastName"]
+                                  , [[[serviceRequestInfo valueForKey:@"admin"] valueForKey:@"info"] valueForKey:@"suffix"]];
     adminField.text = adminName;
-
+    
     //Retrieving notes for display - Notes can be more than one
     NSMutableArray *retrievedNotesArray = [[NSMutableArray alloc] init];
     retrievedNotesArray = [serviceRequestInfo valueForKey:@"notes"];
@@ -313,19 +331,66 @@
       }
     }
     
-    //For Inspection Schedules
+    //!!! TODO - Retrieve values for Schedules
+    NSMutableArray *retrievedSchedulesArray = [[NSMutableArray alloc] init];
+    retrievedSchedulesArray = [serviceRequestInfo valueForKey:@"schedules"];
+    NSLog(@"retrievedSchedulesArray: %@", retrievedSchedulesArray);
+    
+    for(int i = 0; i < retrievedSchedulesArray.count; i++)
+    {
+      NSMutableDictionary *retrievedSchedulesDictionary = [[NSMutableDictionary alloc] init];
+      [retrievedSchedulesDictionary setObject:[retrievedSchedulesArray objectAtIndex:i] forKey:@"schedules"];
+      NSLog(@"retrievedSchedulesDictionary: %@", retrievedSchedulesDictionary);
+      
+      //Status
+      NSMutableString *scheduleStatus = [[NSMutableString alloc] init];
+      scheduleStatus = [[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"status"] valueForKey:@"name"];
+      NSLog(@"scheduleStatus: %@", scheduleStatus);
+      
+      //Author
+      NSMutableString *scheduleAuthor = [NSMutableString stringWithFormat:@"%@ %@ %@ %@"
+                                      , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"firstName"]
+                                      , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"middleName"]
+                                      , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"lastName"]
+                                      , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"suffix"]];
+      NSLog(@"scheduleAuthor: %@", scheduleAuthor);
+      
+      [self displayScheduleEntries :scheduleStatus
+                                   :scheduleAuthor
+                                   :[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"periods"]];
+      
+      //[self displayScheduleEntries];
+      /*
+      if(i == 0)
+      {
+        //Store first Schedule entry in the defined schedule fields
+        //statusField.text = scheduleStatus;
+        //authorField.text = scheduleAuthor;
+        
+        //schedules fields array
+      }
+      else
+      {
+        //!!! TODO - Display values dynamically - status field, author field, from date, from time, to date, to time
+      }
+       */
+    }
+    
+    
+    //For Proposal Schedules
     //!!! TODO - Remove hardcoded data
-    statusField.text = @"For Inspection"; //For Inspection statusId = 20130101420000004
-    authorField.text = @"Tim Cook"; //logged userId
+    //statusField.text = @"For Proposal"; //For Proposal statusId = 20130101420000005
+    //authorField.text = @"Tim Cook"; //logged userId
+    
+    //!!! TODO - Status and Author fields must be dynamic too
   }
 }
 
 
-#pragma mark - Display multiple 'Notes' entries
+#pragma mark - Display multiple 'Notes' entries from response JSON
 - (void) displayNotesEntries: (NSString *) noteText
 {
   NSLog(@"Display multiple note entries");
-  NSLog(@"notesTextAreaArray: %@", notesTextAreaArray);
   
   //Initialize Notes text area frame size
   int height = 120;
@@ -347,7 +412,7 @@
   newNoteTextArea.frame = noteFrame;
   
   //Add Notes text area in view
-  [inspectSRScroller addSubview:newNoteTextArea];
+  [proposalSRPageScroller addSubview:newNoteTextArea];
   
   //Store added Notes text area in array
   [notesTextAreaArray addObject:newNoteTextArea];
@@ -364,7 +429,7 @@
 }
 
 
-#pragma mark - [Add Notes] functionality
+#pragma mark - [Add Notes] button functionality
 - (IBAction)addNotes:(id)sender
 {
   NSLog(@"addNotes");
@@ -386,10 +451,10 @@
   newNoteTextArea.frame = noteFrame;
   
   //Add Notes text area in view
-  [inspectSRScroller addSubview:newNoteTextArea];
+  [proposalSRPageScroller addSubview:newNoteTextArea];
   
-  //Store added Notes text area in array for service request inspection notes
-  [inspectionNotesArray addObject:newNoteTextArea];
+  //Store added Notes text area in array for service request proposal notes
+  [proposalNotesArray addObject:newNoteTextArea];
   
   //Adjust position of [Add Notes] button when new text area is added
   addNotesButtonFrame = addNotesButton.frame;
@@ -417,6 +482,7 @@
   schedulesLabelFrame.origin.y = (addNotesButtonY + 70);
   schedulesLabel.frame = schedulesLabelFrame;
   
+  /*
   //Status Label
   scheduleStatusLabelFrame = statusLabel.frame;
   scheduleStatusLabelFrame.origin.y = (schedulesLabelFrame.origin.y + 30);
@@ -441,15 +507,230 @@
   addScheduleButtonFrame = addSchedulesButton.frame;
   addScheduleButtonFrame.origin.y = (scheduleAuthorFieldFrame.origin.y + 45);
   addSchedulesButton.frame = addScheduleButtonFrame;
+  */
+}
+
+
+#pragma mark - Display multiple 'Schedule' entries based on response JSON one at a time
+-(void) displayScheduleEntries :(NSString *) scheduleStatus
+                               :(NSString *) scheduleAuthor
+                               :(NSMutableArray *) schedulePeriodArray
+{
+  NSLog(@"Display schedule entries from response JSON");
+  
+  //Initialization and definition of dynamic fields for 'Schedule' entries display
+  //Initialize labels
+  UILabel *statusLabel   = [[UILabel alloc] init];
+  UILabel *authorLabel   = [[UILabel alloc] init];
+  UILabel *fromDateLabel = [[UILabel alloc] init];
+  UILabel *fromTimeLabel = [[UILabel alloc] init];
+  UILabel *toDateLabel   = [[UILabel alloc] init];
+  UILabel *toTimeLabel   = [[UILabel alloc] init];
+  
+  //Initialize fields
+  UITextField *statusField   = [[UITextField alloc] init];
+  UITextField *authorField   = [[UITextField alloc] init];
+  UITextField *fromDateField = [[UITextField alloc] init];
+  UITextField *fromTimeField = [[UITextField alloc] init];
+  UITextField *toDateField   = [[UITextField alloc] init];
+  UITextField *toTimeField   = [[UITextField alloc] init];
+  
+  //Set label texts
+  statusLabel.text   = @"Status: ";
+  authorLabel.text   = @"Author: ";
+  fromDateLabel.text = @"From Date: ";
+  fromTimeLabel.text = @"From Time: ";
+  toDateLabel.text   = @"To Date: ";
+  toTimeLabel.text   = @"To Time: ";
+  
+  //Set label style
+  statusLabel.font   = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  authorLabel.font   = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  fromDateLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  fromTimeLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  toDateLabel.font   = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  toTimeLabel.font   = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  
+  //Set field style
+  statusField.borderStyle   = UITextBorderStyleRoundedRect;
+  authorField.borderStyle   = UITextBorderStyleRoundedRect;
+  fromDateField.borderStyle = UITextBorderStyleRoundedRect;
+  fromTimeField.borderStyle = UITextBorderStyleRoundedRect;
+  toDateField.borderStyle   = UITextBorderStyleRoundedRect;
+  toTimeField.borderStyle   = UITextBorderStyleRoundedRect;
+  
+  //Set label size dimensions
+  CGRect labelSize;
+  labelSize.size.width = 116;
+  labelSize.size.height = 21;
+  
+  CGRect statusLabelSize = statusLabel.frame;
+  statusLabelSize = labelSize;
+  statusLabel.frame = statusLabelSize;
+  
+  CGRect authorLabelSize = authorLabel.frame;
+  authorLabelSize = labelSize;
+  authorLabel.frame = authorLabelSize;
+  
+  CGRect fromDateLabelSize = fromDateLabel.frame;
+  fromDateLabelSize = labelSize;
+  fromDateLabel.frame = fromDateLabelSize;
+  
+  CGRect fromTimeLabelSize = fromTimeLabel.frame;
+  fromTimeLabelSize = labelSize;
+  fromTimeLabel.frame = fromTimeLabelSize;
+  
+  CGRect toDateLabelSize = toDateLabel.frame;
+  toDateLabelSize = labelSize;
+  toDateLabel.frame = toDateLabelSize;
+  
+  CGRect toTimeLabelSize = toTimeLabel.frame;
+  toTimeLabelSize = labelSize;
+  toTimeLabel.frame = toTimeLabelSize;
+  
+  //Set field size dimensions
+  CGRect fieldSize;
+  fieldSize.size.width = 141;
+  fieldSize.size.height = 30;
+  
+  CGRect statusFieldSize = statusField.frame;
+  statusFieldSize = fieldSize;
+  statusField.frame = statusFieldSize;
+  
+  CGRect authorFieldSize = authorField.frame;
+  authorFieldSize = fieldSize;
+  authorField.frame = authorFieldSize;
+  
+  CGRect fromDateFieldSize = fromDateField.frame;
+  fromDateFieldSize = fieldSize;
+  fromDateField.frame = fromDateFieldSize;
+  
+  CGRect fromTimeFieldSize = fromTimeField.frame;
+  fromTimeFieldSize = fieldSize;
+  fromTimeField.frame = fromTimeFieldSize;
+  
+  CGRect toDateFieldSize = toDateField.frame;
+  toDateFieldSize = fieldSize;
+  toDateField.frame = toDateFieldSize;
+  
+  CGRect toTimeFieldSize = toTimeField.frame;
+  toTimeFieldSize = fieldSize;
+  toTimeField.frame = toTimeFieldSize;
+
+  //Display the entries in the view
+  //Define the starting coordinates for the fields - in this case the 'Schedules' label is the starting point for the displays
+  CGRect startingCoordinates;
+  startingCoordinates.origin.x = 16;
+  startingCoordinates.origin.y = (schedulesLabel.frame.origin.y + 40);
+  
+  //Set frame locations and contents - Status label and field
+  scheduleStatusLabelFrame = statusLabel.frame;
+  scheduleStatusLabelFrame.origin.x = 16;
+  scheduleStatusLabelFrame.origin.y = (startingCoordinates.origin.y + 10);
+  statusLabel.frame = scheduleStatusLabelFrame;
+  [proposalSRPageScroller addSubview:statusLabel];
+  
+  scheduleStatusFieldFrame = statusField.frame;
+  scheduleStatusFieldFrame.origin.x = 16;
+  scheduleStatusFieldFrame.origin.y = (scheduleStatusLabelFrame.origin.y + 30);
+  statusField.frame = scheduleStatusFieldFrame;
+  statusField.text = scheduleStatus;
+  [proposalSRPageScroller addSubview:statusField];
+  
+  //Set frame locations and contents - Author label and field
+  scheduleAuthorLabelFrame = authorLabel.frame;
+  scheduleAuthorLabelFrame.origin.x = 16;
+  scheduleAuthorLabelFrame.origin.y = (statusField.frame.origin.y + 30);
+  authorLabel.frame = scheduleAuthorLabelFrame;
+  [proposalSRPageScroller addSubview:authorLabel];
+  
+  scheduleAuthorFieldFrame = authorField.frame;
+  scheduleAuthorFieldFrame.origin.x = 16;
+  scheduleAuthorFieldFrame.origin.y = (authorLabel.frame.origin.y + 30);
+  authorField.frame = scheduleAuthorFieldFrame;
+  authorField.text = scheduleAuthor;
+  [proposalSRPageScroller addSubview:authorField];
+  
+  for (int i = 0; i < schedulePeriodArray.count; i++)
+  {
+    //Set frame locations - From Date label and field
+    fromDateLabelFrame = fromDateLabel.frame;
+    fromDateLabelFrame.origin.x = 16;
+    fromDateLabelFrame.origin.y = (authorField.frame.origin.y + 30);
+    fromDateLabel.frame = fromDateLabelFrame;
+    [proposalSRPageScroller addSubview:fromDateLabel];
+    
+    fromDateFieldFrame = fromDateField.frame;
+    fromDateFieldFrame.origin.x = 16;
+    fromDateFieldFrame.origin.y = (fromDateLabelFrame.origin.y + 30);
+    fromDateField.frame = fromDateFieldFrame;
+    fromDateField.text = [[schedulePeriodArray objectAtIndex:i] valueForKey:@"fromDate"];
+    [proposalSRPageScroller addSubview:fromDateField];
+    
+    fromTimeLabelFrame = fromTimeLabel.frame;
+    fromTimeLabelFrame.origin.x = (fromDateLabel.frame.origin.x + 150);
+    fromTimeLabelFrame.origin.y = (authorField.frame.origin.y + 10);
+    fromTimeLabel.frame = fromTimeLabelFrame;
+    [proposalSRPageScroller addSubview:fromTimeLabel];
+    
+    fromTimeFieldFrame = fromTimeField.frame;
+    fromTimeFieldFrame.origin.x = (fromDateFieldFrame.origin.x + 150);
+    fromTimeFieldFrame.origin.y = (fromTimeLabel.frame.origin.y + 30);
+    fromTimeField.frame = fromTimeFieldFrame;
+    fromTimeField.text = [[schedulePeriodArray objectAtIndex:i] valueForKey:@"fromTime"];
+    [proposalSRPageScroller addSubview:fromTimeField];
+    
+    
+    //Set frame locations - To Date label and field
+    toDateLabelFrame = toDateLabel.frame;
+    toDateLabelFrame.origin.x = 16;
+    toDateLabelFrame.origin.y = (fromDateField.frame.origin.y + 40);
+    toDateLabel.frame = toDateLabelFrame;
+    [proposalSRPageScroller addSubview:toDateLabel];
+    
+    toDateFieldFrame = toDateField.frame;
+    toDateFieldFrame.origin.x = 16;
+    toDateFieldFrame.origin.y = (toDateLabelFrame.origin.y + 30);
+    toDateField.frame = toDateFieldFrame;
+    toDateField = [[schedulePeriodArray objectAtIndex:i] valueForKey:@"toDate"];
+    [proposalSRPageScroller addSubview:toDateField];
+    
+    toTimeLabelFrame = toTimeLabel.frame;
+    toTimeLabelFrame.origin.x = (toDateLabel.frame.origin.x + 150);
+    toTimeLabelFrame.origin.y = (fromTimeField.frame.origin.y + 40);
+    toTimeLabel.frame = toTimeLabelFrame;
+    [proposalSRPageScroller addSubview:toTimeLabel];
+    
+    toTimeFieldFrame = toTimeField.frame;
+    toTimeFieldFrame.origin.x = (toDateFieldFrame.origin.x + 150);
+    toTimeFieldFrame.origin.y = (toTimeLabel.frame.origin.y + 30);
+    toTimeField.frame = toTimeFieldFrame;
+    toTimeField = [[schedulePeriodArray objectAtIndex:i] valueForKey:@"toTime"];
+    [proposalSRPageScroller addSubview:toTimeField];
+
+    //Define separator for the period entries
+    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, (toTimeField.frame.origin.y + 30), 320, 1)];
+    separator.backgroundColor = [UIColor colorWithWhite:0.7 alpha:1];
+    [proposalSRPageScroller addSubview:separator];
+    
+    //move add schedules button
+    //Add Schedules Button
+    addScheduleButtonFrame = addSchedulesButton.frame;
+    addScheduleButtonFrame.origin.y = (separator.frame.origin.y + 60);
+    addSchedulesButton.frame = addScheduleButtonFrame;
+  }
 }
 
 
 #pragma mark - [Add Schedules] button implementation
-- (IBAction)addInspectionScheduleFields:(id)sender
+- (IBAction)addProposalSchedules:(id)sender
 {
-  NSLog(@"Add Inspection Schedules");
+  NSLog(@"Add Proposal Schedules");
   
-  //Add at least one schedule for inspection
+  //Display status and author fields with default value
+  
+  /*
+  //Add at least one schedule for proposal
   //Initialize fields and labels
   UILabel *fromDateLabel = [[UILabel alloc] init];
   UILabel *fromTimeLabel = [[UILabel alloc] init];
@@ -521,18 +802,16 @@
   toTimeFieldSize = fieldSize;
   toTimeField.frame = toTimeFieldSize;
   
-  
   CGRect startingCoordinates;
-  /* If schedule date dictionary is empty - this is the first entry for schedules.
-     Begin after schedule author field.
-   */
+  //* If schedule date dictionary is empty - this is the first entry for schedules.
+   //Begin after schedule author field.
+
   if (([scheduleFromDateDictionary count] == 0) || ([scheduleToDateDictionary count] == 0))
   {
     startingCoordinates.origin.y = (scheduleAuthorFieldFrame.origin.y + 45);
   }
-  /* If schedule date dictionary is not empy - there are fields already set.
-     Begin after the last 'To Date' field.
-   */
+  //* If schedule date dictionary is not empy - there are fields already set.
+   //Begin after the last 'To Date' field.
   else
   {
     startingCoordinates.origin.y = (toDateFieldFrame.origin.y + 50);
@@ -540,7 +819,7 @@
   
   UIView * separator = [[UIView alloc] initWithFrame:CGRectMake(0, (startingCoordinates.origin.y), 320, 1)];
   separator.backgroundColor = [UIColor colorWithWhite:0.7 alpha:1];
-  [inspectSRScroller addSubview:separator];
+  [proposalSRPageScroller addSubview:separator];
   
   //Set frame locations - From Date Label and Field
   fromDateLabelFrame = fromDateLabel.frame;
@@ -592,17 +871,17 @@
   addSchedulesButton.frame = addScheduleButtonFrame;
   
   //Add the fields in scroller
-  [inspectSRScroller addSubview:fromDateLabel];
-  [inspectSRScroller addSubview:fromDateField];
+  [proposalSRPageScroller addSubview:fromDateLabel];
+  [proposalSRPageScroller addSubview:fromDateField];
   
-  [inspectSRScroller addSubview:fromTimeLabel];
-  [inspectSRScroller addSubview:fromTimeField];
+  [proposalSRPageScroller addSubview:fromTimeLabel];
+  [proposalSRPageScroller addSubview:fromTimeField];
   
-  [inspectSRScroller addSubview:toDateLabel];
-  [inspectSRScroller addSubview:toDateField];
+  [proposalSRPageScroller addSubview:toDateLabel];
+  [proposalSRPageScroller addSubview:toDateField];
   
-  [inspectSRScroller addSubview:toTimeLabel];
-  [inspectSRScroller addSubview:toTimeField];
+  [proposalSRPageScroller addSubview:toTimeLabel];
+  [proposalSRPageScroller addSubview:toTimeField];
   
   //Store fields in arrays
   [fromDatesArray addObject:fromDateField];
@@ -621,53 +900,14 @@
   
   //NSLog(@"scheduleFromDateDictionary: %@", scheduleFromDateDictionary);
   //NSLog(@"scheduleToDateDictionary: %@", scheduleToDateDictionary);
+  */
 }
 
-
-/*
--(void)getDate
-{
-  //[textfield setText:pick.date];
-  fromDate = datePicker.date;
-  NSLog(@"FROM DATE: %@", fromDate);
-}
-*/
 
 #pragma mark - Updating the color of entry in estimatedCostField depending whether changed or same with original
 - (BOOL)textFieldDidBeginEditing:(UITextField *)textField
 {
   NSLog(@"textFieldDidBeginEditing");
-  
-  /*
-  //Action Sheet definition
-  UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                            delegate:nil
-                                   cancelButtonTitle:nil
-                              destructiveButtonTitle:nil
-                                   otherButtonTitles:nil];
-  [actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
-  
-  UISegmentedControl *doneButton = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObject:@"Done"]];
-  doneButton.momentary = YES;
-  doneButton.frame = CGRectMake(260, 7.0f, 50.0f, 30.0f);
-  doneButton.segmentedControlStyle = UISegmentedControlStyleBar;
-  doneButton.tintColor = [UIColor blackColor];
-  [doneButton addTarget:self action:@selector(getDate) forControlEvents:UIControlEventValueChanged];
-  
-  [actionSheet addSubview:doneButton];
-  [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
-  [actionSheet setBounds :CGRectMake(0, 0, 320, 500)];
-  
-  UIDatePicker *datePicker = [[UIDatePicker alloc] init];
-  [datePicker setDatePickerMode:UIDatePickerModeDate];
-  [actionSheet addSubview:datePicker];
-  
-  UITextField *tempField1 = [[UITextField alloc] init];
-  tempField1 = [fromDatesArray objectAtIndex:0];
-  
-  UITextField *tempField2 = [[UITextField alloc] init];
-  tempField2 = [fromTimesArray objectAtIndex:0];
-  */
   
   if(estimatedCostField.isEditing)
   {
@@ -675,21 +915,6 @@
     estimatedCostField.textColor = [UIColor redColor];
     return YES;
   }
-  /*
-  else if (tempField1.isEditing)
-  {
-    NSLog(@"fromDate field");
-    
-    tempField1.delegate = self;
-    tempField1.inputView = actionSheet;
-  }
-  else if (tempField2.isEditing)
-  {
-    NSLog(@"fromTimes field");
-    tempField2.delegate = self;
-    tempField2.inputView = actionSheet;
-  }
-   */
   else
   {
     return YES;
@@ -719,17 +944,27 @@
 }
 
 
-#pragma mark - [Inspect] button implementation
-- (void) inspectSR
+#pragma mark - [Propose] button implementation
+- (void) proposeSR
 {
-  NSLog(@"Inspect Service Request");
+  NSLog(@"Proposal Service Request");
   
-  statusId = @20130101420000004;
-  [self updateServiceRequestStatus:@"FOR INSPECTION"];
+  statusId = @20130101420000005;
+  [self updateServiceRequestStatus:@"PROPOSAL"];
 }
 
 
-#pragma mark - Update Service Request status to 'Acknowledged'
+#pragma mark - [Accept] button implementation
+- (void) acceptSR
+{
+  NSLog(@"Accept Service Request");
+  
+  statusId = @20130101420000006;
+  [self updateServiceRequestStatus:@"ACCEPTED"];
+}
+
+
+#pragma mark - Update Service Request status to 'Acceptance' or 'Proposed Service'
 -(void) updateServiceRequestStatus: (NSString *) operationFlag
 {
   NSLog(@"updateServiceRequestStatus");
@@ -782,7 +1017,7 @@
         }
         , ...
       ]
-    }"
+   }"
    */
   
   serviceRequestJson = [[NSMutableDictionary alloc] init];
@@ -793,7 +1028,7 @@
   //status
   NSLog(@"statusId: %@", statusId);
   NSMutableDictionary *statusJson = [[NSMutableDictionary alloc] init];
-  [statusJson setObject:statusId forKey:@"id"]; //For Inspection
+  [statusJson setObject:statusId forKey:@"id"]; //For Proposal or Accepted
   [serviceRequestJson setObject:statusJson forKey:@"status"];
   
   //admin
@@ -811,7 +1046,7 @@
   NSMutableDictionary *notesSenderJson = [[NSMutableDictionary alloc] init];
   NSMutableArray *notesArray = [[NSMutableArray alloc] init];
   
-  for(int i = 0; i < inspectionNotesArray.count; i++)
+  for(int i = 0; i < proposalNotesArray.count; i++)
   {
     //sender
     [notesSenderJson setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY - Remove hardcoded value
@@ -819,14 +1054,14 @@
     
     //message
     UITextView *tempTextView = [[UITextView alloc] init];
-    tempTextView = [inspectionNotesArray objectAtIndex:i]; //Begin at second element
+    tempTextView = [proposalNotesArray objectAtIndex:i]; //Begin at second element
     [notesDictionary setObject:tempTextView.text forKey:@"message"];
     
     //save the sender-message node in an array
     [notesArray insertObject:notesDictionary atIndex:i];
   }
   [serviceRequestJson setObject:notesArray forKey:@"notes"];
-
+  
   
   //schedules
   //TODO - schedules !!!
@@ -836,7 +1071,7 @@
   NSMutableArray *scheduleArray = [[NSMutableArray alloc] init];
   
   NSLog(@"service request schedules JSON assembly");
-  [scheduleStatusDictionary setObject:statusId forKey:@"id"]; //For Inspection
+  [scheduleStatusDictionary setObject:statusId forKey:@"id"]; //For Proposal or Accepted
   [scheduleDictionary setObject:scheduleStatusDictionary forKey:@"status"];
   
   //schedule - author
@@ -881,8 +1116,8 @@
   [scheduleArray addObject:scheduleDictionary];
   [serviceRequestJson setObject:scheduleArray forKey:@"schedules"];
   
-  //Construct JSON request for Inspection update
-  NSLog(@"For Inspection Service Request JSON: %@", serviceRequestJson);
+  //Construct JSON request for Proposal update
+  NSLog(@"For Proposal Service Request JSON: %@", serviceRequestJson);
   NSError *error = [[NSError alloc] init];
   NSData *jsonData = [NSJSONSerialization
                       dataWithJSONObject:serviceRequestJson
@@ -916,13 +1151,18 @@
   
   NSLog(@"updateServiceRequest - httpResponseCode: %d", httpResponseCode);
   
-  //Set alert message display depending on what operation is performed in this case (FOR INSPECTION)
+  //Set alert message display depending on what operation is performed (ACCEPTED or PROPOSAL)
   NSString *updateAlertMessage = [[NSString alloc] init];
   NSString *updateFailAlertMessage = [[NSString alloc] init];
-  if([operationFlag isEqual:@"FOR INSPECTION"])
+  if([operationFlag isEqual:@"ACCEPTED"])
   {
-    updateAlertMessage = @"Service Request Inspected.";
-    updateFailAlertMessage = @"Service Request not inspected. Please try again later";
+    updateAlertMessage = @"Service Request Accepted.";
+    updateFailAlertMessage = @"Service Request not accepted. Please try again later";
+  }
+  else if([operationFlag isEqual:@"PROPOSAL"])
+  {
+    updateAlertMessage = @"Service Request Under Proposal Stage.";
+    updateFailAlertMessage = @"Service Request not updated to proposal stage. Please try again later";
   }
   
   NSLog(@"operationFlag: %@", operationFlag);
@@ -948,87 +1188,8 @@
   }
   
   [self dismissViewControllerAnimated:YES completion:nil];
-  NSLog(@"Service Request Inspected");
+  NSLog(@"Service Request Proposal");
   
-  /*
-  //Validate if there are entries for Schedule periods
-  if([self validateSchedulePeriods:[[serviceRequestJson valueForKey:@"schedules"] valueForKey:@"periods"]])
-  {
-    
-    NSLog(@"For Inspection Service Request JSON: %@", serviceRequestJson);
-    NSError *error = [[NSError alloc] init];
-    NSData *jsonData = [NSJSONSerialization
-                        dataWithJSONObject:serviceRequestJson
-                        options:NSJSONWritingPrettyPrinted
-                        error:&error];
-    NSString *jsonString = [[NSString alloc]
-                            initWithData:jsonData
-                            encoding:NSUTF8StringEncoding];
-    
-    NSLog(@"jsonData Request: %@", jsonData);
-    NSLog(@"jsonString Request: %@", jsonString);
-    
-    //Set URL for Update Service Request
-    //URL = @"http://192.168.2.113/vertex-api/service-request/updateServiceRequest";
-    //URL = @"http://192.168.2.107/vertex-api/service-request/updateServiceRequest";
-    URL = @"http://"; //TEST
-    
-    NSMutableURLRequest *putRequest = [NSMutableURLRequest
-                                       requestWithURL:[NSURL URLWithString:URL]];
-    
-    //PUT method - Update
-    [putRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [putRequest setHTTPMethod:@"PUT"];
-    [putRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String] length:[jsonString length]]];
-    NSLog(@"%@", putRequest);
-    
-    NSURLConnection *connection = [[NSURLConnection alloc]
-                                   initWithRequest:putRequest
-                                   delegate:self];
-    
-    [connection start];
-    
-    NSLog(@"updateServiceRequest - httpResponseCode: %d", httpResponseCode);
-    
-    //Set alert message display depending on what operation is performed in this case (FOR INSPECTION)
-    NSString *updateAlertMessage = [[NSString alloc] init];
-    NSString *updateFailAlertMessage = [[NSString alloc] init];
-    if([operationFlag isEqual:@"FOR INSPECTION"])
-    {
-      updateAlertMessage = @"Service Request Inspected.";
-      updateFailAlertMessage = @"Service Request not inspected. Please try again later";
-    }
-    
-    NSLog(@"operationFlag: %@", operationFlag);
-    if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
-    {
-      UIAlertView *updateSRAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Service Request"
-                                    message:updateAlertMessage
-                                    delegate:self
-                                    cancelButtonTitle:@"OK"
-                                    otherButtonTitles:nil];
-      [updateSRAlert show];
-    }
-    else //(httpResponseCode >= 400)
-    {
-      UIAlertView *updateSRFailAlert = [[UIAlertView alloc]
-                                        initWithTitle:@"Service Request Failed"
-                                        message:updateFailAlertMessage
-                                        delegate:self
-                                        cancelButtonTitle:@"OK"
-                                        otherButtonTitles:nil];
-      [updateSRFailAlert show];
-    }
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-    NSLog(@"Service Request Inspected");
-  }
-  else
-  {
-    NSLog(@"Service Request Not Inspected. Incomplete information.");
-  }
-  */
 }
 
 
@@ -1063,6 +1224,7 @@
 }
 
 
+/*
 #pragma mark - Validation if there are Schedule Periods entered
 -(BOOL) validateSchedulePeriods: (NSMutableArray *) schedulePeriod
 {
@@ -1072,11 +1234,11 @@
   if ([schedulePeriod count] == 1) //1 element meaning default 'periods' node but empty of contents
   {
     UIAlertView *emptySchedulePeriodAlert = [[UIAlertView alloc]
-                                      initWithTitle:@"Incomplete Information"
-                                      message:@"No schedule period dates entered."
-                                      delegate:nil
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles:nil];
+                                             initWithTitle:@"Incomplete Information"
+                                             message:@"No schedule period dates entered."
+                                             delegate:nil
+                                             cancelButtonTitle:@"OK"
+                                             otherButtonTitles:nil];
     [emptySchedulePeriodAlert show];
     
     return FALSE;
@@ -1086,14 +1248,15 @@
     return TRUE;
   }
 }
+*/
 
 
 #pragma mark - Dismiss onscreen keyboard
 -(void)dismissKeyboard
 {
-  for (int i = 0; i < [inspectSRScroller.subviews count]; i++)
+  for (int i = 0; i < [proposalSRPageScroller.subviews count]; i++)
   {
-    [[[inspectSRScroller subviews] objectAtIndex:i] resignFirstResponder];
+    [[[proposalSRPageScroller subviews] objectAtIndex:i] resignFirstResponder];
   }  
 }
 

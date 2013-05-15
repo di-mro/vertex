@@ -46,10 +46,10 @@
 {
   serviceConfigPageEntries = [[NSMutableArray alloc] init];
   
-  NSString *entry1 = @"Add Service";
-  NSString *entry2 = @"View Service";
-  NSString *entry3 = @"Update Service";
-  NSString *entry4 = @"Remove Service";
+  NSString *entry1 = @"Add";
+  NSString *entry2 = @"View";
+  NSString *entry3 = @"Update";
+  NSString *entry4 = @"Remove";
   
   [serviceConfigPageEntries addObject:entry1];
   [serviceConfigPageEntries addObject:entry2];
@@ -66,7 +66,7 @@
 
 - (NSString *) tableView:(UITableView *) tableView titleForHeaderInSection:(NSInteger)section
 {
-  NSString *myTitle = [[NSString alloc] initWithFormat:@"Service Management"];
+  NSString *myTitle = [[NSString alloc] initWithFormat:@"Service Management Tasks"];
   return myTitle;
 }
 

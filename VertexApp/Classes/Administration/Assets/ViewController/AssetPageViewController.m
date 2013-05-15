@@ -48,9 +48,9 @@
   assetPageEntries = [[NSMutableArray alloc] init];
   
   /* !- For demo only, remove hard coded values. Must retrieve listing in DB -! */
-  NSString *entry1 = @"Add Asset";
-  NSString *entry2 = @"View Assets";
-  NSString *entry3 = @"Update Asset";
+  NSString *entry1 = @"Add";
+  NSString *entry2 = @"View";
+  NSString *entry3 = @"Update";
   //NSString *entry4 = @"Delete Assets";
   
   [assetPageEntries addObject:entry1];
@@ -67,7 +67,7 @@
 
 - (NSString *) tableView:(UITableView *) tableView titleForHeaderInSection:(NSInteger)section
 {
-  NSString *myTitle = [[NSString alloc] initWithFormat:@""];
+  NSString *myTitle = [[NSString alloc] initWithFormat:@"Asset Tasks"];
   return myTitle;
 }
 

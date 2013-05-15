@@ -90,7 +90,7 @@
 
 - (NSString *) tableView:(UITableView *) tableView titleForHeaderInSection:(NSInteger)section
 {
-  NSString *myTitle = [[NSString alloc] initWithFormat:@""];
+  NSString *myTitle = [[NSString alloc] initWithFormat:@"Menu"];
   return myTitle;
 }
 

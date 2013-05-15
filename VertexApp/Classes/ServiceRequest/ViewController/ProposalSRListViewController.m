@@ -1,42 +1,42 @@
 //
-//  SRFeedbackListViewController.m
+//  ProposalSRListViewController.m
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 3/1/13.
+//  Created by Mary Rose Oh on 5/14/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
-#import "SRFeedbackListViewController.h"
+#import "ProposalSRListViewController.h"
+#import "ServiceRequestViewController.h"
+#import "HomePageViewController.h"
+#import "ProposalSRPageViewController.h"
 
-@interface SRFeedbackListViewController ()
+@interface ProposalSRListViewController ()
 
 @end
 
-@implementation SRFeedbackListViewController
+@implementation ProposalSRListViewController
 
-@synthesize srForFeedbackAsset;
-@synthesize srForFeedbackService;
-@synthesize srForFeedbackSRIds;
+@synthesize srForProposalAsset;
+@synthesize srForProposalService;
+@synthesize srForProposalSRIds;
 
-@synthesize srForFeedbackEntries;
-@synthesize srForFeedbackDate;
+@synthesize srForProposalEntries;
+@synthesize srForProposalDate;
 
 @synthesize URL;
 @synthesize httpResponseCode;
 
-@synthesize srForFeedbackDictionary;
+@synthesize srForProposalDictionary;
 
 @synthesize selectedSRId;
 @synthesize statusId;
 
-//@synthesize displaySRFeedbackListEntries;
-//@synthesize displaySRFeedbackSubtitles;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self)
-    {
+    if (self) {
         // Custom initialization
     }
     return self;
@@ -44,9 +44,7 @@
 
 - (void)viewDidLoad
 {
-  //[self displaySRFeedbackListPageEntries];
-  
-  //Connect to endpoint - getServiceRequestByStatus - Fulfilled status
+  //Connect to endpoint - getServiceRequestByStatus - Created status
   [self getServiceRequestByStatus];
   
   [super viewDidLoad];
@@ -59,38 +57,23 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-# pragma mark - Display entries in Service Requests Feedback List Page
-- (void) displaySRFeedbackListPageEntries
+
+#pragma mark - Segue to SR Page
+-(void) backToSRPage
 {
-  // !- TODO For demo only, remove hard coded values-!
-  displaySRFeedbackListEntries = [[NSMutableArray alloc] init];
-  NSString *entry1 = @"Aircon leak fix";
-  NSString *entry2 = @"Faulty electrical wiring";
-  NSString *entry3 = @"Lightbulb replacement";
+  //Go back to Service Request Page
+  ServiceRequestViewController* controller = (ServiceRequestViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"SRPage"];
   
-  [displaySRFeedbackListEntries addObject:entry1];
-  [displaySRFeedbackListEntries addObject:entry2];
-  [displaySRFeedbackListEntries addObject:entry3];
+  [self.navigationController pushViewController:controller animated:YES];
   
-  // !- TODO For the subtitles/details, remove these hard coded values -!
-  displaySRFeedbackSubtitles = [[NSMutableArray alloc] init];
-  NSString *sub1 = @"2013-02-28";
-  NSString *sub2 = @"2013-03-04";
-  NSString *sub3 = @"2013-03-10";
-  
-  [displaySRFeedbackSubtitles addObject:sub1];
-  [displaySRFeedbackSubtitles addObject:sub2];
-  [displaySRFeedbackSubtitles addObject:sub3];
 }
-*/
 
 
 #pragma mark - Retrieve Service Request with 'Service Request Creation' Status ID - for Acknowledgement
 -(void) getServiceRequestByStatus
 {
   //endpoint for getServiceRequestByStatus
-  statusId = @20130101420000001; //9 //Service Request Fulfilled Status Id - Awaiting Feedbacks
+  statusId = @20130101420000004; //Service Request For Inspection Status Id
   NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.107/vertex-api/service-request/getServiceRequestByStatus/%@", statusId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
@@ -125,38 +108,37 @@
     
     //Connect to CoreData for local data
     //!- FOR TESTING ONLY -!
-    srForFeedbackAsset = [[NSMutableArray alloc] initWithObjects:@"Demo - Aircon", @"Demo - Door", @"Demo - Window", nil];
-    srForFeedbackService = [[NSMutableArray alloc] initWithObjects:@"- Fix filter", @"- Repair hinge", @"- Repair handle", nil];
-    srForFeedbackSRIds = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00003", nil];
-    srForFeedbackDate = [[NSMutableArray alloc] initWithObjects:@"2013-05-05", @"2013-05-06", @"2013-05-07", nil];
+    srForProposalAsset = [[NSMutableArray alloc] initWithObjects:@"Demo - Aircon", @"Demo - Door", @"Demo - Window", nil];
+    srForProposalService = [[NSMutableArray alloc] initWithObjects:@"- Fix filter", @"- Repair hinge", @"- Repair handle", nil];
+    srForProposalSRIds = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00003", nil];
+    srForProposalDate = [[NSMutableArray alloc] initWithObjects:@"2013-05-05", @"2013-05-06", @"2013-05-07", nil];
   }
   else
   {
-    srForFeedbackDictionary = [NSJSONSerialization
+    srForProposalDictionary = [NSJSONSerialization
                                       JSONObjectWithData:responseData
                                       options:kNilOptions
                                       error:&error];
-    NSLog(@"srForFeedbackDictionary JSON Result: %@", srForFeedbackDictionary);
+    NSLog(@"srForProposalDictionary JSON Result: %@", srForProposalDictionary);
     
-    srForFeedbackAsset = [[srForFeedbackDictionary valueForKey:@"asset"] valueForKey:@"name"];
-    srForFeedbackService = [[srForFeedbackDictionary valueForKey:@"service"] valueForKey:@"name"];
-    srForFeedbackSRIds = [srForFeedbackDictionary valueForKey:@"id"];
-    srForFeedbackDate = [srForFeedbackDictionary valueForKey:@"createdDate"];
+    srForProposalAsset = [[srForProposalDictionary valueForKey:@"asset"] valueForKey:@"name"];
+    srForProposalService = [[srForProposalDictionary valueForKey:@"service"] valueForKey:@"name"];
+    srForProposalSRIds = [srForProposalDictionary valueForKey:@"id"];
+    srForProposalDate = [srForProposalDictionary valueForKey:@"createdDate"];
   }
   
   //Concatenate asset name and service name of service request for display in table view
-  srForFeedbackEntries = [[NSMutableArray alloc] init];
-  for(int i = 0; i < srForFeedbackAsset.count; i++)
+  srForProposalEntries = [[NSMutableArray alloc] init];
+  for(int i = 0; i < srForProposalAsset.count; i++)
   {
-    NSMutableString *displayString = [NSMutableString stringWithFormat:@"%@ - %@", [srForFeedbackAsset objectAtIndex:i], [srForFeedbackService objectAtIndex:i]];
+    NSMutableString *displayString = [NSMutableString stringWithFormat:@"%@ - %@", [srForProposalAsset objectAtIndex:i], [srForProposalService objectAtIndex:i]];
     
-    [srForFeedbackEntries insertObject:displayString atIndex:i];
+    [srForProposalEntries insertObject:displayString atIndex:i];
     displayString = [[NSMutableString alloc] init];
   }
   
-  NSLog(@"srForFeedbackEntries: %@", srForFeedbackEntries);
+  NSLog(@"srForProposalEntries: %@", srForProposalEntries);
 }
-
 
 
 #pragma mark - Table view data source implementation
@@ -168,24 +150,24 @@
 
 - (NSString *) tableView:(UITableView *) tableView titleForHeaderInSection:(NSInteger)section
 {
-  NSString *myTitle = [[NSString alloc] initWithFormat:@"Service Request Feedback List"];
+  NSString *myTitle = [[NSString alloc] initWithFormat:@"For Proposal List"];
   return myTitle;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
   //Return the number of rows in the section
-  return [srForFeedbackEntries count];
+  return [srForProposalEntries count];
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  static NSString *CellIdentifier = @"srFeedbackListCell";
+  static NSString *CellIdentifier = @"srProposalCell";
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //Configure the cell title & subtitle
-  cell.textLabel.text = [srForFeedbackEntries objectAtIndex:indexPath.row];
-  cell.detailTextLabel.text = [srForFeedbackDate objectAtIndex:indexPath.row];
+  cell.textLabel.text = [srForProposalEntries objectAtIndex:indexPath.row];
+  cell.detailTextLabel.text = [srForProposalDate objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
   return cell;
 }
@@ -196,25 +178,27 @@
   return 70;
 }
 
+
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  selectedSRId = [srForFeedbackSRIds objectAtIndex:indexPath.row];
+  selectedSRId = [srForProposalSRIds objectAtIndex:indexPath.row];
   NSLog(@"selectedSRId: %@", selectedSRId);
   
-  [self performSegueWithIdentifier:@"srFeedbackListToQuestionsPage" sender:self];
+  [self performSegueWithIdentifier:@"srProposalListToProposalPage" sender:self];
 }
 
-/*
+
 #pragma mark - prepare for segue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-  if ([segue.identifier isEqualToString:@"srFeedbackListToQuestionsPage"])
+  if ([segue.identifier isEqualToString:@"srProposalListToProposalPage"])
   {
     [segue.destinationViewController setServiceRequestId:selectedSRId];
   }
 }
-*/
+
+
 
 
 @end

@@ -46,10 +46,10 @@
 {
   lifecycleConfigPageEntries = [[NSMutableArray alloc] init];
   
-  NSString *entry1 = @"Add Lifecycle";
-  NSString *entry2 = @"View Lifecycle";
-  NSString *entry3 = @"Update Lifecycle";
-  NSString *entry4 = @"Remove Lifecycle";
+  NSString *entry1 = @"Add";
+  NSString *entry2 = @"View";
+  NSString *entry3 = @"Update";
+  NSString *entry4 = @"Remove";
     
   [lifecycleConfigPageEntries addObject:entry1];
   [lifecycleConfigPageEntries addObject:entry2];
@@ -66,7 +66,7 @@
 
 - (NSString *) tableView:(UITableView *) tableView titleForHeaderInSection:(NSInteger)section
 {
-  NSString *myTitle = [[NSString alloc] initWithFormat:@"Lifecycle Management"];
+  NSString *myTitle = [[NSString alloc] initWithFormat:@"Lifecycle Management Tasks"];
   return myTitle;
 }
 
