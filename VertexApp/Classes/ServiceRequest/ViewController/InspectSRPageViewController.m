@@ -92,8 +92,16 @@
 @synthesize URL;
 @synthesize httpResponseCode;
 
+@synthesize actionSheet;
 @synthesize datePicker;
+@synthesize timePicker;
+
+@synthesize selectedDate;
+@synthesize selectedTime;
 @synthesize fromDate;
+@synthesize fromTime;
+@synthesize toDate;
+@synthesize toTime;
 
 @synthesize addNotesButton;
 @synthesize addSchedulesButton;
@@ -129,13 +137,13 @@
   assetField.enabled         = NO;
   lifecycleField.enabled     = NO;
   serviceField.enabled       = NO;
-  //estimatedCostField.enabled = NO;
   dateRequestedField.enabled = NO;
   priorityField.enabled      = NO;
   requestorField.enabled     = NO;
   adminField.enabled         = NO;
   statusField.enabled        = NO;
   authorField.enabled        = NO;
+  
   
   //EstimatedCostField delegate - for the changing of color when editing
   estimatedCostField.textColor = [UIColor blueColor];
@@ -624,14 +632,22 @@
 }
 
 
-/*
 -(void)getDate
 {
-  //[textfield setText:pick.date];
-  fromDate = datePicker.date;
-  NSLog(@"FROM DATE: %@", fromDate);
+  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
+  
+  selectedDate = datePicker.date;
+  NSLog(@"selectedDate: %@", selectedDate);
 }
-*/
+
+-(void) getTime
+{
+  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
+  
+  selectedTime = timePicker.date.description;
+  NSLog(@"selectedTime: %@", selectedTime);
+}
+
 
 #pragma mark - Updating the color of entry in estimatedCostField depending whether changed or same with original
 - (BOOL)textFieldDidBeginEditing:(UITextField *)textField
@@ -639,8 +655,12 @@
   NSLog(@"textFieldDidBeginEditing");
   
   /*
+  //Reload views inside the scroller
+  [inspectSRScroller setNeedsDisplay];
+  //[inspectSRScroller reloadInputViews];
+  
   //Action Sheet definition
-  UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+  actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                             delegate:nil
                                    cancelButtonTitle:nil
                               destructiveButtonTitle:nil
@@ -652,15 +672,17 @@
   doneButton.frame = CGRectMake(260, 7.0f, 50.0f, 30.0f);
   doneButton.segmentedControlStyle = UISegmentedControlStyleBar;
   doneButton.tintColor = [UIColor blackColor];
-  [doneButton addTarget:self action:@selector(getDate) forControlEvents:UIControlEventValueChanged];
   
   [actionSheet addSubview:doneButton];
   [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
   [actionSheet setBounds :CGRectMake(0, 0, 320, 500)];
   
-  UIDatePicker *datePicker = [[UIDatePicker alloc] init];
+  datePicker = [[UIDatePicker alloc] init];
   [datePicker setDatePickerMode:UIDatePickerModeDate];
-  [actionSheet addSubview:datePicker];
+  
+  timePicker = [[UIDatePicker alloc] init];
+  [timePicker setDatePickerMode:UIDatePickerModeTime];
+  
   
   UITextField *tempField1 = [[UITextField alloc] init];
   tempField1 = [fromDatesArray objectAtIndex:0];
@@ -668,7 +690,6 @@
   UITextField *tempField2 = [[UITextField alloc] init];
   tempField2 = [fromTimesArray objectAtIndex:0];
   */
-  
   if(estimatedCostField.isEditing)
   {
     NSLog(@"estimatedCost field editing");
@@ -681,12 +702,17 @@
     NSLog(@"fromDate field");
     
     tempField1.delegate = self;
+    [actionSheet addSubview:datePicker];
+    [doneButton addTarget:self action:@selector(getDate) forControlEvents:UIControlEventValueChanged];
     tempField1.inputView = actionSheet;
   }
   else if (tempField2.isEditing)
   {
     NSLog(@"fromTimes field");
+    
     tempField2.delegate = self;
+    [actionSheet addSubview:timePicker];
+    [doneButton addTarget:self action:@selector(getTime) forControlEvents:UIControlEventValueChanged];
     tempField2.inputView = actionSheet;
   }
    */

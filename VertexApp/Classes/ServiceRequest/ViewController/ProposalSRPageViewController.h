@@ -66,6 +66,8 @@
 @property CGRect toTimeLabelFrame;
 @property CGRect toTimeFieldFrame;
 
+@property CGRect separatorFrame;
+
 @property (strong, nonatomic) NSMutableArray *fromDatesArray;
 @property (strong, nonatomic) NSMutableArray *fromTimesArray;
 @property (strong, nonatomic) NSMutableArray *toDatesArray;
@@ -84,6 +86,7 @@
 @property (strong, nonatomic) NSMutableArray *schedulesStatusArray;
 @property (strong, nonatomic) NSMutableArray *schedulesAuthorArray;
 
+
 @property (strong, nonatomic) NSMutableDictionary *serviceRequestJson;
 
 @property (strong, nonatomic) NSString *URL;
@@ -99,6 +102,12 @@
 @property (strong, nonatomic) IBOutlet UIButton *addSchedulesButton;
 - (IBAction)addProposalSchedules:(id)sender;
 
+/*
+-(void) displayScheduleEntries :(NSString *) scheduleStatus
+                               :(NSString *) scheduleAuthor
+                               :(NSMutableArray *) schedulePeriodArray
+                               :(CGRect) startingCoordinates;
+*/
 
 
 @end

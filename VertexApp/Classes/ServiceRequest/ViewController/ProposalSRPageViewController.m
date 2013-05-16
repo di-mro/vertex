@@ -74,6 +74,8 @@
 @synthesize toTimeLabelFrame;
 @synthesize toTimeFieldFrame;
 
+@synthesize separatorFrame;
+
 @synthesize fromDatesArray;
 @synthesize fromTimesArray;
 @synthesize toDatesArray;
@@ -355,34 +357,49 @@
                                       , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"suffix"]];
       NSLog(@"scheduleAuthor: %@", scheduleAuthor);
       
-      [self displayScheduleEntries :scheduleStatus
-                                   :scheduleAuthor
-                                   :[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"periods"]];
-      
-      //[self displayScheduleEntries];
-      /*
+      //First display
+      CGRect startingCoordinates;
+      startingCoordinates.origin.x = 16;
       if(i == 0)
       {
-        //Store first Schedule entry in the defined schedule fields
-        //statusField.text = scheduleStatus;
-        //authorField.text = scheduleAuthor;
-        
-        //schedules fields array
+        startingCoordinates.origin.y = (schedulesLabel.frame.origin.y + 30);
       }
       else
       {
-        //!!! TODO - Display values dynamically - status field, author field, from date, from time, to date, to time
+        startingCoordinates.origin.y = (separatorFrame.origin.y + 30);
       }
-       */
+      
+      //Display retrieved values
+      [self displayScheduleEntries:scheduleStatus
+                                  :scheduleAuthor
+                                  :[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"periods"]
+                                  :startingCoordinates];
+
+      //No need to loop, looping happens inside displayScheduleEntries:
+      /*
+      NSMutableArray *retrievedPeriodsArray = [[NSMutableArray alloc] init];
+      retrievedPeriodsArray = [[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"periods"];
+      NSLog(@"retrievedPeriodsArray: %@", retrievedPeriodsArray);
+      
+      for (int i = 0; i < retrievedPeriodsArray.count; i++)
+      {
+        NSMutableDictionary *retrievedPeriodsDictionary = [[NSMutableDictionary alloc] init];
+        
+        [retrievedPeriodsDictionary setObject:[retrievedPeriodsArray objectAtIndex:i] forKey:@"fromTime"];
+        [retrievedPeriodsDictionary setObject:[retrievedPeriodsArray objectAtIndex:i] forKey:@"fromDate"];
+        [retrievedPeriodsDictionary setObject:[retrievedPeriodsArray objectAtIndex:i] forKey:@"fromTimezone"];
+        
+        [retrievedPeriodsDictionary setObject:[retrievedPeriodsArray objectAtIndex:i] forKey:@"toTime"];
+        [retrievedPeriodsDictionary setObject:[retrievedPeriodsArray objectAtIndex:i] forKey:@"toDate"];
+        [retrievedPeriodsDictionary setObject:[retrievedPeriodsArray objectAtIndex:i] forKey:@"toTimezone"];
+        
+        //Display retrieved values
+        [self displayScheduleEntries :scheduleStatus
+                                     :scheduleAuthor
+                                     :[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"periods"]];
+      }
+      */
     }
-    
-    
-    //For Proposal Schedules
-    //!!! TODO - Remove hardcoded data
-    //statusField.text = @"For Proposal"; //For Proposal statusId = 20130101420000005
-    //authorField.text = @"Tim Cook"; //logged userId
-    
-    //!!! TODO - Status and Author fields must be dynamic too
   }
 }
 
@@ -475,12 +492,27 @@
   //Move the Y coordinate of the elements, X remains constant
   //Get [Add Notes] button location
   addNotesButtonFrame = addNotesButton.frame;
-  float addNotesButtonY = addNotesButtonFrame.origin.y;
+  //float addNotesButtonY = addNotesButtonFrame.origin.y;
   
+  /*
+  //Separator
+  UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, (addNotesButtonFrame.origin.y + 70), 320, 1)];
+  separator.backgroundColor = [UIColor colorWithWhite:0.7 alpha:1];
+  [proposalSRPageScroller addSubview:separator];
+  */
+
   //Schedules Label
   schedulesLabelFrame = schedulesLabel.frame;
-  schedulesLabelFrame.origin.y = (addNotesButtonY + 70);
+  schedulesLabelFrame.origin.y = (addNotesButtonFrame.origin.y + 70);
   schedulesLabel.frame = schedulesLabelFrame;
+  
+  //displayScheduleEntries
+  //adjust fieldsss
+  
+  //Add Schedules Button
+  addScheduleButtonFrame = addSchedulesButton.frame;
+  addScheduleButtonFrame.origin.y = (schedulesLabelFrame.origin.y + 45);
+  addSchedulesButton.frame = addScheduleButtonFrame;
   
   /*
   //Status Label
@@ -502,11 +534,6 @@
   scheduleAuthorFieldFrame = authorField.frame;
   scheduleAuthorFieldFrame.origin.y = (scheduleAuthorLabelFrame.origin.y + 30);
   authorField.frame = scheduleAuthorFieldFrame;
-  
-  //Add Schedules Button
-  addScheduleButtonFrame = addSchedulesButton.frame;
-  addScheduleButtonFrame.origin.y = (scheduleAuthorFieldFrame.origin.y + 45);
-  addSchedulesButton.frame = addScheduleButtonFrame;
   */
 }
 
@@ -515,6 +542,7 @@
 -(void) displayScheduleEntries :(NSString *) scheduleStatus
                                :(NSString *) scheduleAuthor
                                :(NSMutableArray *) schedulePeriodArray
+                               :(CGRect) startingCoordinates
 {
   NSLog(@"Display schedule entries from response JSON");
   
@@ -561,7 +589,7 @@
   
   //Set label size dimensions
   CGRect labelSize;
-  labelSize.size.width = 116;
+  labelSize.size.width  = 116;
   labelSize.size.height = 21;
   
   CGRect statusLabelSize = statusLabel.frame;
@@ -590,15 +618,17 @@
   
   //Set field size dimensions
   CGRect fieldSize;
-  fieldSize.size.width = 141;
+  fieldSize.size.width  = 141;
   fieldSize.size.height = 30;
   
   CGRect statusFieldSize = statusField.frame;
-  statusFieldSize = fieldSize;
+  statusFieldSize.size.width = 287;
+  statusFieldSize.size.height = 30;
   statusField.frame = statusFieldSize;
   
   CGRect authorFieldSize = authorField.frame;
-  authorFieldSize = fieldSize;
+  authorFieldSize.size.width = 287;
+  authorFieldSize.size.height = 30;
   authorField.frame = authorFieldSize;
   
   CGRect fromDateFieldSize = fromDateField.frame;
@@ -618,11 +648,40 @@
   toTimeField.frame = toTimeFieldSize;
 
   //Display the entries in the view
+  /*
   //Define the starting coordinates for the fields - in this case the 'Schedules' label is the starting point for the displays
+  //Last element is the Add Schedules button, get the first before the last element as the starting coordinates for the schedule fields
   CGRect startingCoordinates;
   startingCoordinates.origin.x = 16;
-  startingCoordinates.origin.y = (schedulesLabel.frame.origin.y + 40);
   
+  //Get the y-coordinate of the first before last element (addSchedules buttons) in the scroller subview
+  int lastObjectIndex = ([proposalSRPageScroller.subviews count] - 2);
+  if([[[proposalSRPageScroller subviews]
+       objectAtIndex:lastObjectIndex] isKindOfClass:[UILabel class]])
+  {
+    NSLog(@"check subviews 1");
+    UILabel *tempLabel = [[UILabel alloc] init];
+    tempLabel = [[proposalSRPageScroller subviews] objectAtIndex:lastObjectIndex];
+    startingCoordinates.origin.y = (tempLabel.frame.origin.y + 40);
+  }
+  else if([[[proposalSRPageScroller subviews]
+            objectAtIndex:lastObjectIndex] isKindOfClass:[UITextField class]])
+  {
+    NSLog(@"check subviews 2");
+    UITextField *tempField = [[UITextField alloc] init];
+    tempField = [[proposalSRPageScroller subviews] objectAtIndex:lastObjectIndex];
+    startingCoordinates.origin.y = (tempField.frame.origin.y + 40);
+  }
+  else if([[[proposalSRPageScroller subviews]
+            objectAtIndex:lastObjectIndex] isKindOfClass:[UITextView class]])
+  {
+    NSLog(@"check subviews 3");
+    UITextView *tempTextView = [[UITextView alloc] init];
+    tempTextView = [[proposalSRPageScroller subviews] objectAtIndex:lastObjectIndex];
+    startingCoordinates.origin.y = (tempTextView.frame.origin.y + 40);
+  }
+   */
+
   //Set frame locations and contents - Status label and field
   scheduleStatusLabelFrame = statusLabel.frame;
   scheduleStatusLabelFrame.origin.x = 16;
@@ -640,7 +699,7 @@
   //Set frame locations and contents - Author label and field
   scheduleAuthorLabelFrame = authorLabel.frame;
   scheduleAuthorLabelFrame.origin.x = 16;
-  scheduleAuthorLabelFrame.origin.y = (statusField.frame.origin.y + 30);
+  scheduleAuthorLabelFrame.origin.y = (statusField.frame.origin.y + 40);
   authorLabel.frame = scheduleAuthorLabelFrame;
   [proposalSRPageScroller addSubview:authorLabel];
   
@@ -651,12 +710,15 @@
   authorField.text = scheduleAuthor;
   [proposalSRPageScroller addSubview:authorField];
   
+  UIView *separator;
+  
+  //Displaying one or many schedule period entries
   for (int i = 0; i < schedulePeriodArray.count; i++)
   {
     //Set frame locations - From Date label and field
     fromDateLabelFrame = fromDateLabel.frame;
     fromDateLabelFrame.origin.x = 16;
-    fromDateLabelFrame.origin.y = (authorField.frame.origin.y + 30);
+    fromDateLabelFrame.origin.y = (authorField.frame.origin.y + 40);
     fromDateLabel.frame = fromDateLabelFrame;
     [proposalSRPageScroller addSubview:fromDateLabel];
     
@@ -669,7 +731,7 @@
     
     fromTimeLabelFrame = fromTimeLabel.frame;
     fromTimeLabelFrame.origin.x = (fromDateLabel.frame.origin.x + 150);
-    fromTimeLabelFrame.origin.y = (authorField.frame.origin.y + 10);
+    fromTimeLabelFrame.origin.y = (authorField.frame.origin.y + 40);
     fromTimeLabel.frame = fromTimeLabelFrame;
     [proposalSRPageScroller addSubview:fromTimeLabel];
     
@@ -692,7 +754,7 @@
     toDateFieldFrame.origin.x = 16;
     toDateFieldFrame.origin.y = (toDateLabelFrame.origin.y + 30);
     toDateField.frame = toDateFieldFrame;
-    toDateField = [[schedulePeriodArray objectAtIndex:i] valueForKey:@"toDate"];
+    toDateField.text = [[schedulePeriodArray objectAtIndex:i] valueForKey:@"toDate"];
     [proposalSRPageScroller addSubview:toDateField];
     
     toTimeLabelFrame = toTimeLabel.frame;
@@ -705,21 +767,35 @@
     toTimeFieldFrame.origin.x = (toDateFieldFrame.origin.x + 150);
     toTimeFieldFrame.origin.y = (toTimeLabel.frame.origin.y + 30);
     toTimeField.frame = toTimeFieldFrame;
-    toTimeField = [[schedulePeriodArray objectAtIndex:i] valueForKey:@"toTime"];
+    toTimeField.text = [[schedulePeriodArray objectAtIndex:i] valueForKey:@"toTime"];
     [proposalSRPageScroller addSubview:toTimeField];
 
+    
     //Define separator for the period entries
-    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, (toTimeField.frame.origin.y + 30), 320, 1)];
+    separator = [[UIView alloc] init];
     separator.backgroundColor = [UIColor colorWithWhite:0.7 alpha:1];
+    separatorFrame = separator.frame;
+    separatorFrame.origin.x = 0;
+    separatorFrame.origin.y = (toTimeField.frame.origin.y + 50);
+    separatorFrame.size.height = 1;
+    separatorFrame.size.width = 320;
     [proposalSRPageScroller addSubview:separator];
     
-    //move add schedules button
+    /*
+    //Separator
+    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, (toTimeFieldFrame.origin.y + 40), 320, 1)];
+    separator.backgroundColor = [UIColor colorWithWhite:0.7 alpha:1];
+    [proposalSRPageScroller addSubview:separator];
+    */
+    
+    //Move add schedules button location
     //Add Schedules Button
     addScheduleButtonFrame = addSchedulesButton.frame;
-    addScheduleButtonFrame.origin.y = (separator.frame.origin.y + 60);
+    addScheduleButtonFrame.origin.y = (separatorFrame.origin.y + 30);
     addSchedulesButton.frame = addScheduleButtonFrame;
   }
 }
+
 
 
 #pragma mark - [Add Schedules] button implementation

@@ -4558,8 +4558,6 @@
                 <relationship kind="outlet" name="adminLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="assetField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="assetLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="authorField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="authorLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="dateRequestedField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="dateRequestedLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="estimatedCostField" candidateClass="UITextField"/>
@@ -4576,8 +4574,6 @@
                 <relationship kind="outlet" name="schedulesLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="serviceField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="serviceLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="statusField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="RemoveEssePageViewController" superclassName="UIViewController">
