@@ -366,7 +366,7 @@
       }
       else
       {
-        startingCoordinates.origin.y = (separatorFrame.origin.y + 30);
+        startingCoordinates.origin.y = (separatorFrame.origin.y);
       }
       
       //Display retrieved values
@@ -374,31 +374,6 @@
                                   :scheduleAuthor
                                   :[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"periods"]
                                   :startingCoordinates];
-
-      //No need to loop, looping happens inside displayScheduleEntries:
-      /*
-      NSMutableArray *retrievedPeriodsArray = [[NSMutableArray alloc] init];
-      retrievedPeriodsArray = [[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"periods"];
-      NSLog(@"retrievedPeriodsArray: %@", retrievedPeriodsArray);
-      
-      for (int i = 0; i < retrievedPeriodsArray.count; i++)
-      {
-        NSMutableDictionary *retrievedPeriodsDictionary = [[NSMutableDictionary alloc] init];
-        
-        [retrievedPeriodsDictionary setObject:[retrievedPeriodsArray objectAtIndex:i] forKey:@"fromTime"];
-        [retrievedPeriodsDictionary setObject:[retrievedPeriodsArray objectAtIndex:i] forKey:@"fromDate"];
-        [retrievedPeriodsDictionary setObject:[retrievedPeriodsArray objectAtIndex:i] forKey:@"fromTimezone"];
-        
-        [retrievedPeriodsDictionary setObject:[retrievedPeriodsArray objectAtIndex:i] forKey:@"toTime"];
-        [retrievedPeriodsDictionary setObject:[retrievedPeriodsArray objectAtIndex:i] forKey:@"toDate"];
-        [retrievedPeriodsDictionary setObject:[retrievedPeriodsArray objectAtIndex:i] forKey:@"toTimezone"];
-        
-        //Display retrieved values
-        [self displayScheduleEntries :scheduleStatus
-                                     :scheduleAuthor
-                                     :[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"periods"]];
-      }
-      */
     }
   }
 }
@@ -493,48 +468,62 @@
   //Get [Add Notes] button location
   addNotesButtonFrame = addNotesButton.frame;
   //float addNotesButtonY = addNotesButtonFrame.origin.y;
-  
-  /*
-  //Separator
-  UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, (addNotesButtonFrame.origin.y + 70), 320, 1)];
-  separator.backgroundColor = [UIColor colorWithWhite:0.7 alpha:1];
-  [proposalSRPageScroller addSubview:separator];
-  */
 
   //Schedules Label
   schedulesLabelFrame = schedulesLabel.frame;
   schedulesLabelFrame.origin.y = (addNotesButtonFrame.origin.y + 70);
   schedulesLabel.frame = schedulesLabelFrame;
-  
+
   //displayScheduleEntries
+  //!!! TODO - Retrieve values for Schedules
   //adjust fieldsss
+  NSMutableArray *retrievedSchedulesArray = [[NSMutableArray alloc] init];
+  retrievedSchedulesArray = [serviceRequestInfo valueForKey:@"schedules"];
+  NSLog(@"retrievedSchedulesArray: %@", retrievedSchedulesArray);
   
+  for(int i = 0; i < retrievedSchedulesArray.count; i++)
+  {
+    NSMutableDictionary *retrievedSchedulesDictionary = [[NSMutableDictionary alloc] init];
+    [retrievedSchedulesDictionary setObject:[retrievedSchedulesArray objectAtIndex:i] forKey:@"schedules"];
+    NSLog(@"retrievedSchedulesDictionary: %@", retrievedSchedulesDictionary);
+    
+    //Status
+    NSMutableString *scheduleStatus = [[NSMutableString alloc] init];
+    scheduleStatus = [[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"status"] valueForKey:@"name"];
+    NSLog(@"scheduleStatus: %@", scheduleStatus);
+    
+    //Author
+    NSMutableString *scheduleAuthor = [NSMutableString stringWithFormat:@"%@ %@ %@ %@"
+                                       , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"firstName"]
+                                       , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"middleName"]
+                                       , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"lastName"]
+                                       , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"suffix"]];
+    NSLog(@"scheduleAuthor: %@", scheduleAuthor);
+    
+    //First display
+    CGRect startingCoordinates;
+    startingCoordinates.origin.x = 16;
+    if(i == 0)
+    {
+      startingCoordinates.origin.y = (schedulesLabelFrame.origin.y + 30);
+    }
+    else
+    {
+      startingCoordinates.origin.y = (separatorFrame.origin.y);
+    }
+    
+    //Display retrieved values
+    [self displayScheduleEntries:scheduleStatus
+                                :scheduleAuthor
+                                :[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"periods"]
+                                :startingCoordinates];
+  }
+
   //Add Schedules Button
   addScheduleButtonFrame = addSchedulesButton.frame;
-  addScheduleButtonFrame.origin.y = (schedulesLabelFrame.origin.y + 45);
+  addScheduleButtonFrame.origin.y = (separatorFrame.origin.y + 45);
   addSchedulesButton.frame = addScheduleButtonFrame;
   
-  /*
-  //Status Label
-  scheduleStatusLabelFrame = statusLabel.frame;
-  scheduleStatusLabelFrame.origin.y = (schedulesLabelFrame.origin.y + 30);
-  statusLabel.frame = scheduleStatusLabelFrame;
-  
-  //Status Field
-  scheduleStatusFieldFrame = statusField.frame;
-  scheduleStatusFieldFrame.origin.y = (scheduleStatusLabelFrame.origin.y + 30);
-  statusField.frame = scheduleStatusFieldFrame;
-  
-  //Author Label
-  scheduleAuthorLabelFrame = authorLabel.frame;
-  scheduleAuthorLabelFrame.origin.y = (scheduleStatusFieldFrame.origin.y + 35);
-  authorLabel.frame = scheduleAuthorLabelFrame;
-  
-  //Author Field
-  scheduleAuthorFieldFrame = authorField.frame;
-  scheduleAuthorFieldFrame.origin.y = (scheduleAuthorLabelFrame.origin.y + 30);
-  authorField.frame = scheduleAuthorFieldFrame;
-  */
 }
 
 
@@ -563,6 +552,9 @@
   UITextField *toDateField   = [[UITextField alloc] init];
   UITextField *toTimeField   = [[UITextField alloc] init];
   
+  //Initalize separator
+  UIView *separator = [[UIView alloc] init];
+  
   //Set label texts
   statusLabel.text   = @"Status: ";
   authorLabel.text   = @"Author: ";
@@ -586,6 +578,15 @@
   fromTimeField.borderStyle = UITextBorderStyleRoundedRect;
   toDateField.borderStyle   = UITextBorderStyleRoundedRect;
   toTimeField.borderStyle   = UITextBorderStyleRoundedRect;
+  
+  //Set fields to not editable / enabled - for viewing / displaying only
+  statusField.enabled   = NO;
+  authorField.enabled   = NO;
+  fromDateField.enabled = NO;
+  fromTimeField.enabled = NO;
+  toDateField.enabled   = NO;
+  toTimeField.enabled   = NO;
+  
   
   //Set label size dimensions
   CGRect labelSize;
@@ -647,41 +648,6 @@
   toTimeFieldSize = fieldSize;
   toTimeField.frame = toTimeFieldSize;
 
-  //Display the entries in the view
-  /*
-  //Define the starting coordinates for the fields - in this case the 'Schedules' label is the starting point for the displays
-  //Last element is the Add Schedules button, get the first before the last element as the starting coordinates for the schedule fields
-  CGRect startingCoordinates;
-  startingCoordinates.origin.x = 16;
-  
-  //Get the y-coordinate of the first before last element (addSchedules buttons) in the scroller subview
-  int lastObjectIndex = ([proposalSRPageScroller.subviews count] - 2);
-  if([[[proposalSRPageScroller subviews]
-       objectAtIndex:lastObjectIndex] isKindOfClass:[UILabel class]])
-  {
-    NSLog(@"check subviews 1");
-    UILabel *tempLabel = [[UILabel alloc] init];
-    tempLabel = [[proposalSRPageScroller subviews] objectAtIndex:lastObjectIndex];
-    startingCoordinates.origin.y = (tempLabel.frame.origin.y + 40);
-  }
-  else if([[[proposalSRPageScroller subviews]
-            objectAtIndex:lastObjectIndex] isKindOfClass:[UITextField class]])
-  {
-    NSLog(@"check subviews 2");
-    UITextField *tempField = [[UITextField alloc] init];
-    tempField = [[proposalSRPageScroller subviews] objectAtIndex:lastObjectIndex];
-    startingCoordinates.origin.y = (tempField.frame.origin.y + 40);
-  }
-  else if([[[proposalSRPageScroller subviews]
-            objectAtIndex:lastObjectIndex] isKindOfClass:[UITextView class]])
-  {
-    NSLog(@"check subviews 3");
-    UITextView *tempTextView = [[UITextView alloc] init];
-    tempTextView = [[proposalSRPageScroller subviews] objectAtIndex:lastObjectIndex];
-    startingCoordinates.origin.y = (tempTextView.frame.origin.y + 40);
-  }
-   */
-
   //Set frame locations and contents - Status label and field
   scheduleStatusLabelFrame = statusLabel.frame;
   scheduleStatusLabelFrame.origin.x = 16;
@@ -709,8 +675,6 @@
   authorField.frame = scheduleAuthorFieldFrame;
   authorField.text = scheduleAuthor;
   [proposalSRPageScroller addSubview:authorField];
-  
-  UIView *separator;
   
   //Displaying one or many schedule period entries
   for (int i = 0; i < schedulePeriodArray.count; i++)
@@ -770,24 +734,16 @@
     toTimeField.text = [[schedulePeriodArray objectAtIndex:i] valueForKey:@"toTime"];
     [proposalSRPageScroller addSubview:toTimeField];
 
-    
-    //Define separator for the period entries
-    separator = [[UIView alloc] init];
+    //Define separator line for the period entries
     separator.backgroundColor = [UIColor colorWithWhite:0.7 alpha:1];
     separatorFrame = separator.frame;
     separatorFrame.origin.x = 0;
     separatorFrame.origin.y = (toTimeField.frame.origin.y + 50);
     separatorFrame.size.height = 1;
     separatorFrame.size.width = 320;
+    separator.frame = separatorFrame;
     [proposalSRPageScroller addSubview:separator];
-    
-    /*
-    //Separator
-    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, (toTimeFieldFrame.origin.y + 40), 320, 1)];
-    separator.backgroundColor = [UIColor colorWithWhite:0.7 alpha:1];
-    [proposalSRPageScroller addSubview:separator];
-    */
-    
+
     //Move add schedules button location
     //Add Schedules Button
     addScheduleButtonFrame = addSchedulesButton.frame;

@@ -165,6 +165,13 @@
   toDatesArray = [[NSMutableArray alloc] init];
   toTimesArray = [[NSMutableArray alloc] init];
   
+  //Initialize date time variables
+  fromDate = [[NSString alloc] init];
+  fromTime = [[NSString alloc] init];
+  toDate   = [[NSString alloc] init];
+  toTime   = [[NSString alloc] init];
+  
+  
   //Initialize dictionaries for inspection schedules
   scheduleFromDateDictionary = [[NSMutableDictionary alloc] init];
   scheduleToDateDictionary = [[NSMutableDictionary alloc] init];
@@ -629,37 +636,8 @@
   
   //NSLog(@"scheduleFromDateDictionary: %@", scheduleFromDateDictionary);
   //NSLog(@"scheduleToDateDictionary: %@", scheduleToDateDictionary);
-}
-
-
--(void)getDate
-{
-  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
   
-  selectedDate = datePicker.date;
-  NSLog(@"selectedDate: %@", selectedDate);
-}
-
--(void) getTime
-{
-  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
-  
-  selectedTime = timePicker.date.description;
-  NSLog(@"selectedTime: %@", selectedTime);
-}
-
-
-#pragma mark - Updating the color of entry in estimatedCostField depending whether changed or same with original
-- (BOOL)textFieldDidBeginEditing:(UITextField *)textField
-{
-  NSLog(@"textFieldDidBeginEditing");
-  
-  /*
-  //Reload views inside the scroller
-  [inspectSRScroller setNeedsDisplay];
-  //[inspectSRScroller reloadInputViews];
-  
-  //Action Sheet definition
+  //Schedule Periods Operations
   actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                             delegate:nil
                                    cancelButtonTitle:nil
@@ -673,49 +651,126 @@
   doneButton.segmentedControlStyle = UISegmentedControlStyleBar;
   doneButton.tintColor = [UIColor blackColor];
   
+  //Action Sheet definition - From Date
+  UILabel *actionSheetLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 50.0)];
+  actionSheetLabel.text = @"   Pick From Date and Time: ";
+  actionSheetLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  actionSheetLabel.textColor = [UIColor whiteColor];
+  actionSheetLabel.backgroundColor = [UIColor clearColor];
+  
+  [actionSheet addSubview:actionSheetLabel];
   [actionSheet addSubview:doneButton];
   [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
   [actionSheet setBounds :CGRectMake(0, 0, 320, 500)];
   
-  datePicker = [[UIDatePicker alloc] init];
-  [datePicker setDatePickerMode:UIDatePickerModeDate];
+  datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 40, 0, 0)];
+  [datePicker setTimeZone:[NSTimeZone systemTimeZone]];
+  [datePicker setDatePickerMode:UIDatePickerModeDateAndTime]; //UIDatePickerModeDate
   
-  timePicker = [[UIDatePicker alloc] init];
-  [timePicker setDatePickerMode:UIDatePickerModeTime];
+  [actionSheet addSubview:datePicker];
+  [doneButton addTarget:self action:@selector(getFromDateTime) forControlEvents:UIControlEventValueChanged];
+}
+
+
+#pragma mark - Get From Date and Time from Date Picker and format
+-(void)getFromDateTime
+{
+  NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+  [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+  fromDate = [dateFormatter stringFromDate:datePicker.date];
+  NSLog(@"fromDate: %@", fromDate);
   
+  NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+  [timeFormatter setDateFormat:@"HH:mm"]; //@"h:mm a"
+  fromTime = [timeFormatter stringFromDate:datePicker.date];
+  NSLog(@"fromTime: %@", fromTime);
   
-  UITextField *tempField1 = [[UITextField alloc] init];
-  tempField1 = [fromDatesArray objectAtIndex:0];
+  //Display selected date time in fields
+  UITextField *tempField = [[UITextField alloc] init];
+  tempField = [fromDatesArray lastObject];
+  tempField.text = fromDate;
   
-  UITextField *tempField2 = [[UITextField alloc] init];
-  tempField2 = [fromTimesArray objectAtIndex:0];
-  */
+  tempField = [fromTimesArray lastObject];
+  tempField.text = fromTime;
+
+  [self performSelector:@selector(pickToDateTime) withObject:nil afterDelay:1.0];
+  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
+}
+
+
+#pragma mark - Display the Date Picker for To Date and To Time fields
+-(void) pickToDateTime
+{
+  //Action Sheet definition - To Date
+  actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                            delegate:nil
+                                   cancelButtonTitle:nil
+                              destructiveButtonTitle:nil
+                                   otherButtonTitles:nil];
+  [actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+  
+  UISegmentedControl *doneButton = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObject:@"Done"]];
+  doneButton.momentary = YES;
+  doneButton.frame = CGRectMake(260, 7.0f, 50.0f, 30.0f);
+  doneButton.segmentedControlStyle = UISegmentedControlStyleBar;
+  doneButton.tintColor = [UIColor blackColor];
+  
+  //Action Sheet definition - From Date
+  UILabel *actionSheetLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 50.0)];
+  actionSheetLabel.text = @"   Pick To Date and Time: ";
+  actionSheetLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  actionSheetLabel.textColor = [UIColor whiteColor];
+  actionSheetLabel.backgroundColor = [UIColor clearColor];
+  
+  [actionSheet addSubview:actionSheetLabel];
+  [actionSheet addSubview:doneButton];
+  [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
+  [actionSheet setBounds :CGRectMake(0, 0, 320, 500)];
+  
+  datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 40, 0, 0)];
+  [datePicker setDatePickerMode:UIDatePickerModeDateAndTime]; //UIDatePickerModeDate
+  
+  [actionSheet addSubview:datePicker];
+  [doneButton addTarget:self action:@selector(getToDateTime) forControlEvents:UIControlEventValueChanged];
+}
+
+
+#pragma mark - Get To Date and Time from Date Picker and format
+-(void)getToDateTime
+{
+  NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+  [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+  toDate = [dateFormatter stringFromDate:datePicker.date];
+  NSLog(@"toDate: %@", toDate);
+  
+  NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+  [timeFormatter setDateFormat:@"HH:mm"]; //@"h:mm a"
+  toTime = [timeFormatter stringFromDate:datePicker.date];
+  NSLog(@"toTime: %@", toTime);
+  
+  //Display selected date time in fields
+  UITextField *tempField = [[UITextField alloc] init];
+  tempField = [toDatesArray lastObject];
+  tempField.text = toDate;
+  
+  tempField = [toTimesArray lastObject];
+  tempField.text = toTime;
+  
+  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
+}
+
+
+#pragma mark - Updating the color of entry in estimatedCostField depending whether changed or same with original
+- (BOOL)textFieldDidBeginEditing:(UITextField *)textField
+{
+  NSLog(@"textFieldDidBeginEditing");
+  
   if(estimatedCostField.isEditing)
   {
     NSLog(@"estimatedCost field editing");
     estimatedCostField.textColor = [UIColor redColor];
     return YES;
   }
-  /*
-  else if (tempField1.isEditing)
-  {
-    NSLog(@"fromDate field");
-    
-    tempField1.delegate = self;
-    [actionSheet addSubview:datePicker];
-    [doneButton addTarget:self action:@selector(getDate) forControlEvents:UIControlEventValueChanged];
-    tempField1.inputView = actionSheet;
-  }
-  else if (tempField2.isEditing)
-  {
-    NSLog(@"fromTimes field");
-    
-    tempField2.delegate = self;
-    [actionSheet addSubview:timePicker];
-    [doneButton addTarget:self action:@selector(getTime) forControlEvents:UIControlEventValueChanged];
-    tempField2.inputView = actionSheet;
-  }
-   */
   else
   {
     return YES;

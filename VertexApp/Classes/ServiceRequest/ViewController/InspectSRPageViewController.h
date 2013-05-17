@@ -93,9 +93,9 @@
 
 @property (strong, nonatomic) NSDate *selectedDate;
 @property (strong, nonatomic) NSString *selectedTime;
-@property (strong, nonatomic) NSDate *fromDate;
+@property (strong, nonatomic) NSString *fromDate;
 @property (strong, nonatomic) NSString *fromTime;
-@property (strong, nonatomic) NSDate *toDate;
+@property (strong, nonatomic) NSString *toDate;
 @property (strong, nonatomic) NSString *toTime;
 
 @property (strong, nonatomic) IBOutlet UIButton *addNotesButton;
