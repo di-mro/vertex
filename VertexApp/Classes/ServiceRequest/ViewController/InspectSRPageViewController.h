@@ -88,11 +88,8 @@
 @property int httpResponseCode;
 
 @property (strong, nonatomic) UIDatePicker *datePicker;
-@property (strong, nonatomic) UIDatePicker *timePicker;
 @property (strong, nonatomic) UIActionSheet *actionSheet;
 
-@property (strong, nonatomic) NSDate *selectedDate;
-@property (strong, nonatomic) NSString *selectedTime;
 @property (strong, nonatomic) NSString *fromDate;
 @property (strong, nonatomic) NSString *fromTime;
 @property (strong, nonatomic) NSString *toDate;

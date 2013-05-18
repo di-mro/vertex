@@ -47,13 +47,14 @@
 @synthesize addNotesButton;
 
 @synthesize schedulesLabel;
-/*
-@synthesize statusLabel;
-@synthesize statusField;
 
-@synthesize authorLabel;
-@synthesize authorField;
-*/
+@synthesize actionSheet;
+@synthesize datePicker;
+
+@synthesize fromDate;
+@synthesize fromTime;
+@synthesize toDate;
+@synthesize toTime;
 
 @synthesize addSchedulesButton;
 
@@ -103,7 +104,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -154,8 +156,6 @@
   priorityField.enabled      = NO;
   requestorField.enabled     = NO;
   adminField.enabled         = NO;
-  //statusField.enabled        = NO;
-  //authorField.enabled        = NO;
   
   //EstimatedCostField delegate - for the changing of color when editing
   estimatedCostField.textColor = [UIColor blueColor];
@@ -259,8 +259,6 @@
     priorityField.text      = @"High";
     requestorField.text     = @"Steve Jobs";
     adminField.text         = @"Admin - Tim Cook";
-    //statusField.text        = @"Acknowledged";
-    //authorField.text        = @"Admin - Tim Cook";
     notesTextArea.text      = @"Filter is dirty";
     
   }
@@ -465,64 +463,60 @@
   NSLog(@"adjustFieldAfterNotes");
   
   //Move the Y coordinate of the elements, X remains constant
-  //Get [Add Notes] button location
-  addNotesButtonFrame = addNotesButton.frame;
-  //float addNotesButtonY = addNotesButtonFrame.origin.y;
-
+  //[Add Notes] button location is the starting coordinate
+  [proposalSRPageScroller reloadInputViews];
+  
   //Schedules Label
   schedulesLabelFrame = schedulesLabel.frame;
   schedulesLabelFrame.origin.y = (addNotesButtonFrame.origin.y + 70);
   schedulesLabel.frame = schedulesLabelFrame;
 
-  //displayScheduleEntries
-  //!!! TODO - Retrieve values for Schedules
-  //adjust fieldsss
-  NSMutableArray *retrievedSchedulesArray = [[NSMutableArray alloc] init];
-  retrievedSchedulesArray = [serviceRequestInfo valueForKey:@"schedules"];
-  NSLog(@"retrievedSchedulesArray: %@", retrievedSchedulesArray);
-  
-  for(int i = 0; i < retrievedSchedulesArray.count; i++)
-  {
-    NSMutableDictionary *retrievedSchedulesDictionary = [[NSMutableDictionary alloc] init];
-    [retrievedSchedulesDictionary setObject:[retrievedSchedulesArray objectAtIndex:i] forKey:@"schedules"];
-    NSLog(@"retrievedSchedulesDictionary: %@", retrievedSchedulesDictionary);
-    
-    //Status
-    NSMutableString *scheduleStatus = [[NSMutableString alloc] init];
-    scheduleStatus = [[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"status"] valueForKey:@"name"];
-    NSLog(@"scheduleStatus: %@", scheduleStatus);
-    
-    //Author
-    NSMutableString *scheduleAuthor = [NSMutableString stringWithFormat:@"%@ %@ %@ %@"
-                                       , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"firstName"]
-                                       , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"middleName"]
-                                       , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"lastName"]
-                                       , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"suffix"]];
-    NSLog(@"scheduleAuthor: %@", scheduleAuthor);
-    
-    //First display
-    CGRect startingCoordinates;
-    startingCoordinates.origin.x = 16;
-    if(i == 0)
-    {
-      startingCoordinates.origin.y = (schedulesLabelFrame.origin.y + 30);
-    }
-    else
-    {
-      startingCoordinates.origin.y = (separatorFrame.origin.y);
-    }
-    
-    //Display retrieved values
-    [self displayScheduleEntries:scheduleStatus
-                                :scheduleAuthor
-                                :[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"periods"]
-                                :startingCoordinates];
-  }
-
   //Add Schedules Button
   addScheduleButtonFrame = addSchedulesButton.frame;
   addScheduleButtonFrame.origin.y = (separatorFrame.origin.y + 45);
   addSchedulesButton.frame = addScheduleButtonFrame;
+
+
+  /*
+  //Move the fields and labels after the 'Schedules' label
+  for (int i = 0; i < [proposalSRPageScroller.subviews count]; i++)
+  {
+   if([[[proposalSRPageScroller subviews] objectAtIndex:i] isEqual:schedulesLabel])
+   {
+     for(int j = 0; j < [proposalSRPageScroller.subviews count]; j++)
+     {
+       int y = 1; //Multiplier to move the y coordinates
+       if([[[proposalSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UILabel class]])
+       {
+         CGRect frame;
+         UILabel *tempLabel = [[UILabel alloc] init];
+         tempLabel = [[proposalSRPageScroller subviews] objectAtIndex:j];
+         frame = tempLabel.frame;
+         frame.origin.y = (schedulesLabelFrame.origin.y + (30 * y));
+         tempLabel.frame = frame;
+       }
+       else if([[[proposalSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UITextField class]])
+       {
+         CGRect frame;
+         UITextField *tempField = [[UITextField alloc] init];
+         tempField = [[proposalSRPageScroller subviews] objectAtIndex:j];
+         frame = tempField.frame;
+         frame.origin.y = (schedulesLabelFrame.origin.y + (30 * y));
+         tempField.frame = frame;
+       }
+       else if ([[[proposalSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UIView class]])
+       {
+         UIView *tempView = [[UIView alloc] init];
+         tempView = [[proposalSRPageScroller subviews] objectAtIndex:j];
+         separatorFrame = tempView.frame;
+         separatorFrame.origin.y = (schedulesLabelFrame.origin.y + (30 * y));
+         tempView.frame = separatorFrame;
+       }
+       y++;
+     }
+   }
+  }
+  */
   
 }
 
@@ -759,43 +753,68 @@
 {
   NSLog(@"Add Proposal Schedules");
   
-  //Display status and author fields with default value
-  
-  /*
   //Add at least one schedule for proposal
   //Initialize fields and labels
+  UILabel *statusLabel   = [[UILabel alloc] init];
+  UILabel *authorLabel   = [[UILabel alloc] init];
   UILabel *fromDateLabel = [[UILabel alloc] init];
   UILabel *fromTimeLabel = [[UILabel alloc] init];
-  UILabel *toDateLabel = [[UILabel alloc] init];
-  UILabel *toTimeLabel = [[UILabel alloc] init];
+  UILabel *toDateLabel   = [[UILabel alloc] init];
+  UILabel *toTimeLabel   = [[UILabel alloc] init];
   
+  UITextField *statusField  = [[UITextField alloc] init];
+  UITextField *authorField  = [[UITextField alloc] init];
   UITextField *fromDateField = [[UITextField alloc] init];
   UITextField *fromTimeField = [[UITextField alloc] init];
-  UITextField *toDateField = [[UITextField alloc] init];
-  UITextField *toTimeField = [[UITextField alloc] init];
+  UITextField *toDateField   = [[UITextField alloc] init];
+  UITextField *toTimeField   = [[UITextField alloc] init];
   
   //Set label texts
+  statusLabel.text   = @"Status";
+  authorLabel.text   = @"Author";
   fromDateLabel.text = @"From Date: ";
   fromTimeLabel.text = @"From Time: ";
-  toDateLabel.text = @"To Date: ";
-  toTimeLabel.text = @"To Time: ";
+  toDateLabel.text   = @"To Date: ";
+  toTimeLabel.text   = @"To Time: ";
   
   //Set label style
+  statusLabel.font   = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  authorLabel.font   = [UIFont fontWithName:@"Helvetica-Bold" size:17];
   fromDateLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
   fromTimeLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
-  toDateLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
-  toTimeLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  toDateLabel.font   = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  toTimeLabel.font   = [UIFont fontWithName:@"Helvetica-Bold" size:17];
   
   //Set field style
+  statusField.borderStyle   = UITextBorderStyleRoundedRect;
+  authorField.borderStyle   = UITextBorderStyleRoundedRect;
   fromDateField.borderStyle = UITextBorderStyleRoundedRect;
   fromTimeField.borderStyle = UITextBorderStyleRoundedRect;
-  toDateField.borderStyle = UITextBorderStyleRoundedRect;
-  toTimeField.borderStyle = UITextBorderStyleRoundedRect;
+  toDateField.borderStyle   = UITextBorderStyleRoundedRect;
+  toTimeField.borderStyle   = UITextBorderStyleRoundedRect;
+  
+  //Disable status and author fields
+  statusField.enabled = NO;
+  authorField.enabled = NO;
+  
+  //Set field keyboard type
+  fromDateField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+  fromTimeField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+  toDateField.keyboardType   = UIKeyboardTypeNumbersAndPunctuation;
+  toTimeField.keyboardType   = UIKeyboardTypeNumbersAndPunctuation;
   
   //Set label size dimensions
   CGRect labelSize;
   labelSize.size.width = 116;
   labelSize.size.height = 21;
+  
+  CGRect statusLabelSize = statusLabel.frame;
+  statusLabelSize = labelSize;
+  statusLabel.frame = statusLabelSize;
+  
+  CGRect authorLabelSize = authorLabel.frame;
+  authorLabelSize = labelSize;
+  authorLabel.frame = authorLabelSize;
   
   CGRect fromDateLabelSize = fromDateLabel.frame;
   fromDateLabelSize = labelSize;
@@ -818,6 +837,14 @@
   fieldSize.size.width = 141;
   fieldSize.size.height = 30;
   
+  CGRect statusFieldSize = statusField.frame;
+  statusFieldSize = fieldSize;
+  statusField.frame = statusFieldSize;
+  
+  CGRect authorFieldSize = authorField.frame;
+  authorFieldSize = fieldSize;
+  authorField.frame = authorFieldSize;
+  
   CGRect fromDateFieldSize = fromDateField.frame;
   fromDateFieldSize = fieldSize;
   fromDateField.frame = fromDateFieldSize;
@@ -834,20 +861,9 @@
   toTimeFieldSize = fieldSize;
   toTimeField.frame = toTimeFieldSize;
   
+  
   CGRect startingCoordinates;
-  //* If schedule date dictionary is empty - this is the first entry for schedules.
-   //Begin after schedule author field.
-
-  if (([scheduleFromDateDictionary count] == 0) || ([scheduleToDateDictionary count] == 0))
-  {
-    startingCoordinates.origin.y = (scheduleAuthorFieldFrame.origin.y + 45);
-  }
-  //* If schedule date dictionary is not empy - there are fields already set.
-   //Begin after the last 'To Date' field.
-  else
-  {
-    startingCoordinates.origin.y = (toDateFieldFrame.origin.y + 50);
-  }
+  startingCoordinates.origin.y = (separatorFrame.origin.y + 50);
   
   UIView * separator = [[UIView alloc] initWithFrame:CGRectMake(0, (startingCoordinates.origin.y), 320, 1)];
   separator.backgroundColor = [UIColor colorWithWhite:0.7 alpha:1];
@@ -932,7 +948,127 @@
   
   //NSLog(@"scheduleFromDateDictionary: %@", scheduleFromDateDictionary);
   //NSLog(@"scheduleToDateDictionary: %@", scheduleToDateDictionary);
-  */
+  
+  //Schedule Periods Operations
+  actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                            delegate:nil
+                                   cancelButtonTitle:nil
+                              destructiveButtonTitle:nil
+                                   otherButtonTitles:nil];
+  [actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+  
+  UISegmentedControl *doneButton = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObject:@"Done"]];
+  doneButton.momentary = YES;
+  doneButton.frame = CGRectMake(260, 7.0f, 50.0f, 30.0f);
+  doneButton.segmentedControlStyle = UISegmentedControlStyleBar;
+  doneButton.tintColor = [UIColor blackColor];
+  
+  //Action Sheet definition - From Date
+  UILabel *actionSheetLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 50.0)];
+  actionSheetLabel.text = @"   Pick From Date and Time: ";
+  actionSheetLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  actionSheetLabel.textColor = [UIColor whiteColor];
+  actionSheetLabel.backgroundColor = [UIColor clearColor];
+  
+  [actionSheet addSubview:actionSheetLabel];
+  [actionSheet addSubview:doneButton];
+  [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
+  [actionSheet setBounds :CGRectMake(0, 0, 320, 500)];
+  
+  datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 40, 0, 0)];
+  [datePicker setTimeZone:[NSTimeZone systemTimeZone]];
+  [datePicker setDatePickerMode:UIDatePickerModeDateAndTime]; //UIDatePickerModeDate
+  
+  [actionSheet addSubview:datePicker];
+  [doneButton addTarget:self action:@selector(getFromDateTime) forControlEvents:UIControlEventValueChanged];
+}
+
+
+#pragma mark - Get From Date and Time from Date Picker and format
+-(void)getFromDateTime
+{
+  NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+  [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+  fromDate = [dateFormatter stringFromDate:datePicker.date];
+  NSLog(@"fromDate: %@", fromDate);
+  
+  NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+  [timeFormatter setDateFormat:@"HH:mm"]; //@"h:mm a"
+  fromTime = [timeFormatter stringFromDate:datePicker.date];
+  NSLog(@"fromTime: %@", fromTime);
+  
+  //Display selected date time in fields
+  UITextField *tempField = [[UITextField alloc] init];
+  tempField = [fromDatesArray lastObject];
+  tempField.text = fromDate;
+  
+  tempField = [fromTimesArray lastObject];
+  tempField.text = fromTime;
+  
+  [self performSelector:@selector(pickToDateTime) withObject:nil afterDelay:1.0];
+  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
+}
+
+
+#pragma mark - Display the Date Picker for To Date and To Time fields
+-(void) pickToDateTime
+{
+  //Action Sheet definition - To Date
+  actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                            delegate:nil
+                                   cancelButtonTitle:nil
+                              destructiveButtonTitle:nil
+                                   otherButtonTitles:nil];
+  [actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+  
+  UISegmentedControl *doneButton = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObject:@"Done"]];
+  doneButton.momentary = YES;
+  doneButton.frame = CGRectMake(260, 7.0f, 50.0f, 30.0f);
+  doneButton.segmentedControlStyle = UISegmentedControlStyleBar;
+  doneButton.tintColor = [UIColor blackColor];
+  
+  //Action Sheet definition - From Date
+  UILabel *actionSheetLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 50.0)];
+  actionSheetLabel.text = @"   Pick To Date and Time: ";
+  actionSheetLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  actionSheetLabel.textColor = [UIColor whiteColor];
+  actionSheetLabel.backgroundColor = [UIColor clearColor];
+  
+  [actionSheet addSubview:actionSheetLabel];
+  [actionSheet addSubview:doneButton];
+  [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
+  [actionSheet setBounds :CGRectMake(0, 0, 320, 500)];
+  
+  datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 40, 0, 0)];
+  [datePicker setDatePickerMode:UIDatePickerModeDateAndTime]; //UIDatePickerModeDate
+  
+  [actionSheet addSubview:datePicker];
+  [doneButton addTarget:self action:@selector(getToDateTime) forControlEvents:UIControlEventValueChanged];
+}
+
+
+#pragma mark - Get To Date and Time from Date Picker and format
+-(void)getToDateTime
+{
+  NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+  [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+  toDate = [dateFormatter stringFromDate:datePicker.date];
+  NSLog(@"toDate: %@", toDate);
+  
+  NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+  [timeFormatter setDateFormat:@"HH:mm"]; //@"h:mm a"
+  toTime = [timeFormatter stringFromDate:datePicker.date];
+  NSLog(@"toTime: %@", toTime);
+  
+  //Display selected date time in fields
+  UITextField *tempField = [[UITextField alloc] init];
+  tempField = [toDatesArray lastObject];
+  tempField.text = toDate;
+  
+  tempField = [toTimesArray lastObject];
+  tempField.text = toTime;
+  
+  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
 }
 
 

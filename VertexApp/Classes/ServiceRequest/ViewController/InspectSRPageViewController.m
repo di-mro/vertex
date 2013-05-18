@@ -94,10 +94,7 @@
 
 @synthesize actionSheet;
 @synthesize datePicker;
-@synthesize timePicker;
 
-@synthesize selectedDate;
-@synthesize selectedTime;
 @synthesize fromDate;
 @synthesize fromTime;
 @synthesize toDate;
@@ -493,6 +490,12 @@
   fromTimeField.borderStyle = UITextBorderStyleRoundedRect;
   toDateField.borderStyle = UITextBorderStyleRoundedRect;
   toTimeField.borderStyle = UITextBorderStyleRoundedRect;
+  
+  //Set field keyboard type
+  fromDateField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+  fromTimeField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+  toDateField.keyboardType   = UIKeyboardTypeNumbersAndPunctuation;
+  toTimeField.keyboardType   = UIKeyboardTypeNumbersAndPunctuation;
   
   //Set label size dimensions
   CGRect labelSize;

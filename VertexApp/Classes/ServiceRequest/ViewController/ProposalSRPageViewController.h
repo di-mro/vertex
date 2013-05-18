@@ -86,14 +86,18 @@
 @property (strong, nonatomic) NSMutableArray *schedulesStatusArray;
 @property (strong, nonatomic) NSMutableArray *schedulesAuthorArray;
 
+@property (strong, nonatomic) UIActionSheet *actionSheet;
+@property (strong, nonatomic) UIDatePicker *datePicker;
+
+@property (strong, nonatomic) NSString *fromDate;
+@property (strong, nonatomic) NSString *fromTime;
+@property (strong, nonatomic) NSString *toDate;
+@property (strong, nonatomic) NSString *toTime;
 
 @property (strong, nonatomic) NSMutableDictionary *serviceRequestJson;
 
 @property (strong, nonatomic) NSString *URL;
 @property int httpResponseCode;
-
-//@property (strong, nonatomic) UIDatePicker *datePicker;
-//@property (strong, nonatomic) NSDate *fromDate;
 
 
 @property (strong, nonatomic) IBOutlet UIButton *addNotesButton;
@@ -101,13 +105,6 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *addSchedulesButton;
 - (IBAction)addProposalSchedules:(id)sender;
-
-/*
--(void) displayScheduleEntries :(NSString *) scheduleStatus
-                               :(NSString *) scheduleAuthor
-                               :(NSMutableArray *) schedulePeriodArray
-                               :(CGRect) startingCoordinates;
-*/
 
 
 @end
