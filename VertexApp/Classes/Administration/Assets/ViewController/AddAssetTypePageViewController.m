@@ -44,20 +44,28 @@
 {
   NSLog(@"Add Asset Type Page");
   //Keyboard dismissal
-  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                        action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelAddAssetType)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(cancelAddAssetType)];
   
   //[Add] navigation button - Add Asset Type
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addAssetType)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(addAssetType)];
   
   //Configure Scroller size
   self.addAssetTypeScroller.contentSize = CGSizeMake(320, 720);
   
   //Initialize assetAttributes array
   assetAttributesArray = [[NSMutableArray alloc] init];
+  
   //'Remarks' is default asset attribute
   [assetAttributesArray addObject:@"Remarks"];
   
@@ -79,6 +87,7 @@
   NSLog(@"assetAttributesArray: %@", assetAttributesArray);
   
   [addAssetAttributesTable reloadData];
+  
   addAssetAttributesField.text = @"";
   [addAssetAttributesField resignFirstResponder];
 }
@@ -106,15 +115,16 @@
     NSMutableDictionary *addAssetTypeJson = [[NSMutableDictionary alloc] init];
     //TODO : Construct JSON request body Add Asset Type
     //[addAssetTypeJson setObject:@"" forKey:@"name"];
-    
+  
     NSError *error = [[NSError alloc] init];
     NSData *jsonData = [NSJSONSerialization
                         dataWithJSONObject:addAssetTypeJson
-                        options:NSJSONWritingPrettyPrinted
-                        error:&error];
+                                   options:NSJSONWritingPrettyPrinted
+                                     error:&error];
+    
     NSString *jsonString = [[NSString alloc]
                             initWithData:jsonData
-                            encoding:NSUTF8StringEncoding];
+                                encoding:NSUTF8StringEncoding];
     
     NSLog(@"jsonData Request: %@", jsonData);
     NSLog(@"jsonString Request: %@", jsonString);
@@ -135,7 +145,7 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:postRequest
-                                   delegate:self];
+                                          delegate:self];
     
     [connection start];
     
@@ -160,7 +170,7 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
   

@@ -34,6 +34,7 @@
 - (void)viewDidLoad
 {
   NSLog(@"Asset Type Details Page");
+  
   [self getAssetTypeInfo];
   
   [super viewDidLoad];
@@ -61,7 +62,6 @@
   //URL = @"http://192.168.2.113/vertex-api/asset/getAssetType/";
   URL = @"http://192.168.2.107/vertex-api/asset/getAssetType/";
   
-  //! TEST
   NSMutableString *urlParams = [NSMutableString
                                 stringWithFormat:@"http://192.168.2.107/vertex-api/asset/getAssetType/%@"
                                 , assetTypeId];
@@ -75,7 +75,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -83,22 +83,21 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if (responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:self
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:self
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
     
     //TODO: Retrieve local records from CoreData
-    //TEST DATA ONLY
     NSMutableString *assetTypeDetailDisplay = [[NSMutableString alloc] init];
     
     assetTypeDetailDisplay = [NSMutableString stringWithFormat:@"ASSET TYPE NAME: \n  Demo-Aircon \n\nASSET TYPE DESCRIPTION: \n  Demo-Description \n\nASSET ATTRIBUTES: \n  Power Consumption - Watts"];
@@ -110,18 +109,19 @@
     //JSON
     assetTypeInfo = [NSJSONSerialization
                      JSONObjectWithData:responseData
-                     options:kNilOptions
-                     error:&error];
+                                options:kNilOptions
+                                  error:&error];
+    
     NSLog(@"assetTypeInfo JSON: %@", assetTypeInfo);
     
-    //NSMutableDictionary *assetAttributes = [[NSMutableDictionary alloc] init];
-    //[assetAttributes setDictionary:[assetTypeInfo objectForKey:@"attributes"]];
-  
     //Setting the display for the text area
     NSMutableString *assetTypeDetailDisplay = [[NSMutableString alloc] init];
     
     //Format display string
-    assetTypeDetailDisplay = [NSMutableString stringWithFormat:@"ASSET TYPE NAME: \n  %@ \n\nASSET TYPE DESCRIPTION: \n  %@ \n\nASSET ATTRIBUTES: \n  %@", [assetTypeInfo valueForKey:@"name"], [assetTypeInfo valueForKey:@"description"], [[assetTypeInfo valueForKey:@"attributes"] valueForKey:@"keyName"]];
+    assetTypeDetailDisplay = [NSMutableString stringWithFormat:@"ASSET TYPE NAME: \n  %@ \n\nASSET TYPE DESCRIPTION: \n  %@ \n\nASSET ATTRIBUTES: \n  %@"
+                              , [assetTypeInfo valueForKey:@"name"]
+                              , [assetTypeInfo valueForKey:@"description"]
+                              , [[assetTypeInfo valueForKey:@"attributes"] valueForKey:@"keyName"]];
     
     assetTypeDetailTextArea.text = assetTypeDetailDisplay;
   }//end - else if (responseData == nil)

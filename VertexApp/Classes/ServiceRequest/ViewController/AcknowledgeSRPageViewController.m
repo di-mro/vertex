@@ -9,6 +9,7 @@
 #import "AcknowledgeSRPageViewController.h"
 #import "AcknowledgeSRListViewController.h"
 #import "HomePageViewController.h"
+#import "ServiceRequestViewController.h"
 
 @interface AcknowledgeSRPageViewController ()
 
@@ -56,11 +57,15 @@
 @synthesize URL;
 @synthesize httpResponseCode;
 
+@synthesize cancelSRAcknowledgementConfirmation;
+@synthesize rejectSRAcknowledgementConfirmation;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -74,37 +79,36 @@
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
-  /*
-  //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelAcknowledgeSR)];
-  */
-  
   //[Back] (Cancel) navigation button
   UIBarButtonItem *backButton = [[UIBarButtonItem alloc]
                                    initWithTitle:@"Back"
-                                   style:UIBarButtonItemStylePlain
-                                   target:self
-                                   action:@selector(cancelAcknowledgeSR)];
+                                           style:UIBarButtonItemStylePlain
+                                          target:self
+                                          action:@selector(cancelAcknowledgeSR)];
   
   //[Reject] navigation button
   UIBarButtonItem *rejectButton = [[UIBarButtonItem alloc]
                                    initWithTitle:@"Reject"
-                                   style:UIBarButtonItemStylePlain
-                                   target:self
-                                   action:@selector(rejectSR)];
+                                           style:UIBarButtonItemStylePlain
+                                          target:self
+                                          action:@selector(rejectSR)];
   
-  self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:backButton, rejectButton, nil];
-  
+  self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:
+                                              backButton
+                                            , rejectButton
+                                            , nil];
   
   //[Accept] navigation button
   UIBarButtonItem *acceptButton = [[UIBarButtonItem alloc]
                                    initWithTitle:@"Accept"
-                                   style:UIBarButtonItemStylePlain
-                                   target:self
-                                   action:@selector(acknowledgeSR)];
+                                           style:UIBarButtonItemStylePlain
+                                          target:self
+                                          action:@selector(acknowledgeSR)];
   
-  //Initialize bar button items
-  self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects: acceptButton, nil];
+  //Initialize right bar button items
+  self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:
+                                               acceptButton
+                                             , nil];
   
   //Scroller size
   self.acknowledgeSRScroller.contentSize = CGSizeMake(320.0, 2000.0);
@@ -121,7 +125,7 @@
   //Populate fields based on previously selected Service Request for Acknowledgement
   [self getServiceRequest];
   
-  //Add Notes utilities - Store the first note and its coordinates so that when we add notes, it will align properly
+  //Add Notes utilities - Store the first note and its coordinates so that when we add notes it will align properly
   notesTextAreaArray = [[NSMutableArray alloc] init];
   [notesTextAreaArray addObject:notesTextArea];
   
@@ -147,18 +151,17 @@
 #pragma mark - [Cancel] button implementation
 -(void) cancelAcknowledgeSR
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Cancel Acknowledge Service Request");
   
-  /*
-  //Go back to Acknowledgement List Page
-  AcknowledgeSRListViewController* controller = (AcknowledgeSRListViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"AcknowledgeSRListPage"];
-  */
+  cancelSRAcknowledgementConfirmation = [[UIAlertView alloc]
+                                             initWithTitle:@"Cancel Service Acknowledgement"
+                                                   message:@"Are you sure you want to cancel this service request acknowledgement?"
+                                                  delegate:self
+                                         cancelButtonTitle:@"Yes"
+                                         otherButtonTitles:@"No", nil];
   
-  //Go back to Home Page
-  HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+  [cancelSRAcknowledgementConfirmation show];
   
-  [self.navigationController pushViewController:controller animated:YES];
 }
 
 
@@ -166,7 +169,7 @@
 -(void) getServiceRequest
 {
   //endpoint for getServiceRequest/{serviceRequestId}
-  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.107/vertex-api/service-request/getServiceRequest/%@", serviceRequestId]; //107
+  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.107/vertex-api/service-request/getServiceRequest/%@", serviceRequestId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:urlParams]];
@@ -176,7 +179,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -184,16 +187,16 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if(responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:nil
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:nil
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
@@ -213,9 +216,9 @@
   else
   {
     serviceRequestInfo = [NSJSONSerialization
-                                      JSONObjectWithData:responseData
-                                      options:kNilOptions
-                                      error:&error];
+                          JSONObjectWithData:responseData
+                                     options:kNilOptions
+                                       error:&error];
     NSLog(@"getServiceRequest JSON Result: %@", serviceRequestInfo);
     
     assetField.text         = [[serviceRequestInfo valueForKey:@"asset"] valueForKey:@"name"];
@@ -231,29 +234,6 @@
                                       , [[[serviceRequestInfo valueForKey:@"requestor"] valueForKey:@"info"] valueForKey:@"lastName"]
                                       , [[[serviceRequestInfo valueForKey:@"requestor"] valueForKey:@"info"] valueForKey:@"suffix"]];
     requestorField.text = requestorName;
-    
-    /*
-     notes: [
-     {
-      id: "20130506026000026",
-      sender: 
-      {
-        id: "20130101500000001",
-        info: 
-        {
-          lastName: "dela Cruz",
-          firstName: "Juan",
-          middleName: "Pedro",
-          suffix: "Sr"
-        }
-      },
-      creationDate: "20130506",
-      creationTime: "1519",
-      creationTimezone: "PHT",
-      message: "Aircon in living room"
-     }
-     ]
-     */
     
     //Retrieving notes for display
     NSMutableArray *retrievedNotesArray = [[NSMutableArray alloc] init];
@@ -274,35 +254,37 @@
                                       , [[[[retrievedNotesDictionary valueForKey:@"notes"] valueForKey:@"sender"] valueForKey:@"info"] valueForKey:@"suffix"]];
       
       NSMutableString *noteMessage = [[retrievedNotesDictionary valueForKey:@"notes"] valueForKey:@"message"];
-      NSMutableString *noteDate = [[retrievedNotesDictionary valueForKey:@"notes"] valueForKey:@"creationDate"];
+      NSMutableString *noteDate    = [[retrievedNotesDictionary valueForKey:@"notes"] valueForKey:@"creationDate"];
       
-      notesDisplay = [NSMutableString stringWithFormat:@"Sender: %@\nDate: %@\n\n%@", notesAuthor, noteDate, noteMessage];
+      notesDisplay = [NSMutableString stringWithFormat:@"Sender: %@\nDate: %@\n\n%@"
+                      , notesAuthor
+                      , noteDate
+                      , noteMessage];
+      
       NSLog(@"notesDisplay: %@", notesDisplay);
-      
     }
-    
     notesTextArea.text = notesDisplay;
   }
 }
 
 
-#pragma mark - [Add Notes] functionality
+#pragma mark - [Add Notes] button implementation
 - (IBAction)addNotes:(id)sender
 {
   NSLog(@"addNotes");
   
   //Initialize Notes text area frame size
   int height = 120;
-  int width = 284;
+  int width  = 284;
   
-  UITextView *newNoteTextArea = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+  UITextView *newNoteTextArea     = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
   newNoteTextArea.backgroundColor = notesTextArea.backgroundColor;
   [newNoteTextArea setFont:[UIFont systemFontOfSize:14]];
   
   //Get the location of prev Notes text area and adjust new Notes area location based on that
   UITextView *prevNoteTextView = [[UITextView alloc] init];
-  prevNoteTextView = [notesTextAreaArray lastObject];
-  CGRect noteFrame = newNoteTextArea.frame;
+  prevNoteTextView   = [notesTextAreaArray lastObject];
+  CGRect noteFrame   = newNoteTextArea.frame;
   noteFrame.origin.x = 17;
   noteFrame.origin.y = (prevNoteTextView.frame.origin.y + 130);
   newNoteTextArea.frame = noteFrame;
@@ -312,10 +294,9 @@
   
   //Store added Notes text area in array
   [notesTextAreaArray addObject:newNoteTextArea];
-  NSLog(@"notesTextAreaArray: %@", notesTextAreaArray);
   
   //Adjust position of [Add Notes] button when new text area is added
-  CGRect addNotesButtonFrame = addNotesButton.frame;
+  CGRect addNotesButtonFrame   = addNotesButton.frame;
   addNotesButtonFrame.origin.x = 20;
   addNotesButtonFrame.origin.y = (newNoteTextArea.frame.origin.y + 150);
   addNotesButton.frame = addNotesButtonFrame;
@@ -327,8 +308,53 @@
 {
   NSLog(@"Reject Service Request");
   
-  statusId = @20130101420000002;
-  [self updateServiceRequestStatus:@"REJECT"];
+  rejectSRAcknowledgementConfirmation = [[UIAlertView alloc]
+                                             initWithTitle:@"Reject Service Request"
+                                                   message:@"Are you sure you want to reject this service request?"
+                                                  delegate:self
+                                         cancelButtonTitle:@"Yes"
+                                         otherButtonTitles:@"No", nil];
+  
+  [rejectSRAcknowledgementConfirmation show];
+  
+  //StatusId setting is in alertView delegate method
+}
+
+
+#pragma mark - Transition to a Page depending on what alert box is clicked
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+  if([alertView isEqual:cancelSRAcknowledgementConfirmation])
+  {
+    NSLog(@"Cancel SR Acknowledement");
+    if(buttonIndex == 0) //Yes - Cancel
+    {
+      //Go back to SR Page
+      ServiceRequestViewController* controller = (ServiceRequestViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"SRPage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
+  }
+  else if ([alertView isEqual:rejectSRAcknowledgementConfirmation])
+  {
+    NSLog(@"Reject SR Acknowledgement");
+    
+    if(buttonIndex == 0) //Yes - Reject
+    {
+      statusId = @20130101420000002;
+      [self updateServiceRequestStatus:@"REJECT"];
+    }
+  }
+  else
+  {
+    if (buttonIndex == 0) //OK
+    {
+      //Go back to Home
+      HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
+  }
 }
 
 
@@ -410,9 +436,8 @@
   
   //admin
   NSMutableDictionary *adminJson = [[NSMutableDictionary alloc] init];
-  [adminJson setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY !!!
+  [adminJson setObject:@20130101500000001 forKey:@"id"]; //!!!TODO - TEST ONLY !!!
   [serviceRequestJson setObject:adminJson forKey:@"admin"];
-  NSLog(@"adminJson: %@", adminJson);
   
   //cost
   [serviceRequestJson setObject:[serviceRequestInfo valueForKey:@"cost"] forKey:@"cost"];
@@ -438,7 +463,7 @@
     
     //schedule - author
     NSMutableDictionary *scheduleAuthor = [[NSMutableDictionary alloc] init];
-    [scheduleAuthor setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY !!! - Update
+    [scheduleAuthor setObject:@20130101500000001 forKey:@"id"]; //!!! TODO - TEST ONLY !!! - Update
     [scheduleDictionary setObject:scheduleAuthor forKey:@"author"];
     
     //schedule - periods
@@ -489,13 +514,15 @@
   
   NSLog(@"Acknowledge Service Request JSON: %@", serviceRequestJson);
   NSError *error = [[NSError alloc] init];
+  
   NSData *jsonData = [NSJSONSerialization
                       dataWithJSONObject:serviceRequestJson
-                      options:NSJSONWritingPrettyPrinted
-                      error:&error];
+                                 options:NSJSONWritingPrettyPrinted
+                                   error:&error];
+  
   NSString *jsonString = [[NSString alloc]
                           initWithData:jsonData
-                          encoding:NSUTF8StringEncoding];
+                              encoding:NSUTF8StringEncoding];
   
   NSLog(@"jsonData Request: %@", jsonData);
   NSLog(@"jsonString Request: %@", jsonString);
@@ -511,37 +538,36 @@
   [putRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
   [putRequest setHTTPMethod:@"PUT"];
   [putRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String] length:[jsonString length]]];
-  NSLog(@"%@", putRequest);
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:putRequest
-                                 delegate:self];
+                                        delegate:self];
   
   [connection start];
   
   NSLog(@"updateServiceRequest - httpResponseCode: %d", httpResponseCode);
   
   //Set alert message display depending on what operation is performed (Acknowledged || Rejected)
-  NSString *updateAlertMessage = [[NSString alloc] init];
+  NSString *updateAlertMessage     = [[NSString alloc] init];
   NSString *updateFailAlertMessage = [[NSString alloc] init];
+  
   if([operationFlag isEqual:@"REJECT"])
   {
-    updateAlertMessage = @"Service Request Rejected.";
+    updateAlertMessage     = @"Service Request Rejected.";
     updateFailAlertMessage = @"Service Request not rejected. Please try again later";
   }
   else if([operationFlag isEqual:@"ACKNOWLEDGE"])
   {
-    updateAlertMessage = @"Service Request Acknowledged.";
+    updateAlertMessage     = @"Service Request Acknowledged.";
     updateFailAlertMessage = @"Service Request not acknowledged. Please try again later";
   }
   
-  NSLog(@"operationFlag: %@", operationFlag);
   if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
   {
     UIAlertView *updateSRAlert = [[UIAlertView alloc]
-                                  initWithTitle:@"Service Request"
-                                  message:updateAlertMessage
-                                  delegate:self
+                                      initWithTitle:@"Service Request"
+                                            message:updateAlertMessage
+                                           delegate:self
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
     [updateSRAlert show];
@@ -549,9 +575,9 @@
   else //(httpResponseCode >= 400)
   {
     UIAlertView *updateSRFailAlert = [[UIAlertView alloc]
-                                      initWithTitle:@"Acknowledge Service Request Failed"
-                                      message:updateFailAlertMessage
-                                      delegate:self
+                                          initWithTitle:@"Acknowledge Service Request Failed"
+                                                message:updateFailAlertMessage
+                                               delegate:self
                                       cancelButtonTitle:@"OK"
                                       otherButtonTitles:nil];
     [updateSRFailAlert show];
@@ -560,7 +586,6 @@
   [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Service Request Acknowledged");
 }
-
 
 
 #pragma mark - Connection didFailWithError
@@ -574,22 +599,9 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
-}
-
-
-#pragma mark - Transition to Assets Page when OK on Alert Box is clicked
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-  if (buttonIndex == 0) //OK
-  {
-    //Go back to Home
-    HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
-    
-    [self.navigationController pushViewController:controller animated:YES];
-  }
 }
 
 

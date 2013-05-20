@@ -8,6 +8,7 @@
 
 #import "InspectSRPageViewController.h"
 #import "HomePageViewController.h"
+#import "ServiceRequestViewController.h"
 
 @interface InspectSRPageViewController ()
 
@@ -103,11 +104,14 @@
 @synthesize addNotesButton;
 @synthesize addSchedulesButton;
 
+@synthesize cancelSRInspectionConfirmation;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -118,14 +122,21 @@
   NSLog(@"Inspect Service Request Page");
   
   //Keyboard dismissal
-  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                        action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelInspectSR)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(cancelInspectSR)];
   
   //[Inspect] navigation button
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Inspect" style:UIBarButtonItemStylePlain target:self action:@selector(inspectSR)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Inspect"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(inspectSR)];
   
   //Scroller size
   self.inspectSRScroller.contentSize = CGSizeMake(320.0, 3000);
@@ -149,18 +160,14 @@
   //Populate fields based on previously selected Service Request for Inspection
   [self getServiceRequest];
   
-  //Add Notes utilities - Store the first note and its coordinates so that when we add notes, it will align properly
-  //notesTextAreaArray = [[NSMutableArray alloc] init];
-  //[notesTextAreaArray addObject:notesTextArea];
-  
   //Initialize array for inspection notes
   inspectionNotesArray = [[NSMutableArray alloc] init];
   
   //Initialize arrays for inspection schedule periods
   fromDatesArray = [[NSMutableArray alloc] init];
   fromTimesArray = [[NSMutableArray alloc] init];
-  toDatesArray = [[NSMutableArray alloc] init];
-  toTimesArray = [[NSMutableArray alloc] init];
+  toDatesArray   = [[NSMutableArray alloc] init];
+  toTimesArray   = [[NSMutableArray alloc] init];
   
   //Initialize date time variables
   fromDate = [[NSString alloc] init];
@@ -195,13 +202,43 @@
 #pragma mark - [Cancel] button implementation
 -(void) cancelInspectSR
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
-  NSLog(@"Cancel Inspect Service Request");
+  NSLog(@"Cancel Service Request Inspection");
   
-  //Go back to Home Page
-  HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+  cancelSRInspectionConfirmation = [[UIAlertView alloc]
+                                        initWithTitle:@"Cancel Service Request Inspection"
+                                              message:@"Are you sure you want to cancel this service request inspection?"
+                                             delegate:self
+                                    cancelButtonTitle:@"Yes"
+                                    otherButtonTitles:@"No", nil];
   
-  [self.navigationController pushViewController:controller animated:YES];
+  [cancelSRInspectionConfirmation show];
+}
+
+
+#pragma mark - Transition to a page depending on what alert box is shown and what button is clicked
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+  if([alertView isEqual:cancelSRInspectionConfirmation])
+  {
+    NSLog(@"Cancel SR Inspection");
+    if(buttonIndex == 0) //Yes - Cancel
+    {
+      //Go back to SR Page
+      ServiceRequestViewController *controller = (ServiceRequestViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"SRPage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
+  }
+  else
+  {
+    if (buttonIndex == 0) //OK
+    {
+      //Go back to Home
+      HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
+  }
 }
 
 
@@ -209,7 +246,7 @@
 -(void) getServiceRequest
 {
   //endpoint for getServiceRequest/{serviceRequestId}
-  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.107/vertex-api/service-request/getServiceRequest/%@", serviceRequestId]; //107
+  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.107/vertex-api/service-request/getServiceRequest/%@", serviceRequestId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:urlParams]];
@@ -219,7 +256,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -227,16 +264,16 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if(responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:nil
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:nil
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
@@ -260,8 +297,9 @@
   {
     serviceRequestInfo = [NSJSONSerialization
                           JSONObjectWithData:responseData
-                          options:kNilOptions
-                          error:&error];
+                                     options:kNilOptions
+                                       error:&error];
+    
     NSLog(@"getServiceRequest JSON Result: %@", serviceRequestInfo);
     
     assetField.text         = [[serviceRequestInfo valueForKey:@"asset"] valueForKey:@"name"];
@@ -290,14 +328,12 @@
     //Retrieving notes for display - Notes can be more than one
     NSMutableArray *retrievedNotesArray = [[NSMutableArray alloc] init];
     retrievedNotesArray = [serviceRequestInfo valueForKey:@"notes"];
-    NSLog(@"retrievedNotesArray: %@", retrievedNotesArray);
     NSMutableString *notesDisplay = [[NSMutableString alloc] init];
     
     for (int i = 0; i < retrievedNotesArray.count; i++)
     {
       NSMutableDictionary *retrievedNotesDictionary = [[NSMutableDictionary alloc] init];
       [retrievedNotesDictionary setObject:[retrievedNotesArray objectAtIndex:i] forKey:@"notes"];
-      NSLog(@"retrievedNotesDictionary: %@", retrievedNotesDictionary);
       
       NSMutableString *notesAuthor = [NSMutableString stringWithFormat:@"%@ %@ %@ %@"
                                       , [[[[retrievedNotesDictionary valueForKey:@"notes"] valueForKey:@"sender"] valueForKey:@"info"] valueForKey:@"firstName"]
@@ -306,12 +342,13 @@
                                       , [[[[retrievedNotesDictionary valueForKey:@"notes"] valueForKey:@"sender"] valueForKey:@"info"] valueForKey:@"suffix"]];
       
       NSMutableString *noteMessage = [[retrievedNotesDictionary valueForKey:@"notes"] valueForKey:@"message"];
-      NSMutableString *noteDate = [[retrievedNotesDictionary valueForKey:@"notes"] valueForKey:@"creationDate"];
+      NSMutableString *noteDate    = [[retrievedNotesDictionary valueForKey:@"notes"] valueForKey:@"creationDate"];
       
       //Combined information for display in the Notes area
-      notesDisplay = [NSMutableString stringWithFormat:@"Sender: %@\nDate: %@\n\n%@", notesAuthor, noteDate, noteMessage];
-      NSLog(@"notesDisplay: %@", notesDisplay);
-      
+      notesDisplay = [NSMutableString stringWithFormat:@"Sender: %@\nDate: %@\n\n%@"
+                      , notesAuthor
+                      , noteDate
+                      , noteMessage];
       if (i == 0)
       {
         //Store first Note entry in the defined notesTextArea
@@ -326,7 +363,7 @@
     }
     
     //For Inspection Schedules
-    //!!! TODO - Remove hardcoded data
+    //!!! TODO - Remove hardcoded data for author field
     statusField.text = @"For Inspection"; //For Inspection statusId = 20130101420000004
     authorField.text = @"Tim Cook"; //logged userId
   }
@@ -337,11 +374,10 @@
 - (void) displayNotesEntries: (NSString *) noteText
 {
   NSLog(@"Display multiple note entries");
-  NSLog(@"notesTextAreaArray: %@", notesTextAreaArray);
   
   //Initialize Notes text area frame size
   int height = 120;
-  int width = 284;
+  int width  = 284;
   
   UITextView *newNoteTextArea = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
   newNoteTextArea.backgroundColor = notesTextArea.backgroundColor;
@@ -352,10 +388,10 @@
   
   //Get the location of prev Notes text area and adjust new Notes area location based on that
   UITextView *prevNoteTextView = [[UITextView alloc] init];
-  prevNoteTextView = [notesTextAreaArray lastObject];
-  CGRect noteFrame = newNoteTextArea.frame;
-  noteFrame.origin.x = 17;
-  noteFrame.origin.y = (prevNoteTextView.frame.origin.y + 130);
+  prevNoteTextView      = [notesTextAreaArray lastObject];
+  CGRect noteFrame      = newNoteTextArea.frame;
+  noteFrame.origin.x    = 17;
+  noteFrame.origin.y    = (prevNoteTextView.frame.origin.y + 130);
   newNoteTextArea.frame = noteFrame;
   
   //Add Notes text area in view
@@ -363,7 +399,6 @@
   
   //Store added Notes text area in array
   [notesTextAreaArray addObject:newNoteTextArea];
-  NSLog(@"notesTextAreaArray: %@", notesTextAreaArray);
   
   //Adjust position of [Add Notes] button when new text area is added
   addNotesButtonFrame = addNotesButton.frame;
@@ -383,7 +418,7 @@
   
   //Initialize Notes text area frame size
   int height = 120;
-  int width = 284;
+  int width  = 284;
   
   UITextView *newNoteTextArea = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
   newNoteTextArea.backgroundColor = notesTextArea.backgroundColor;
@@ -391,10 +426,10 @@
   
   //Get the location of prev Notes text area and adjust new Notes area location based on that
   UITextView *prevNoteTextView = [[UITextView alloc] init];
-  prevNoteTextView = [notesTextAreaArray lastObject];
-  CGRect noteFrame = newNoteTextArea.frame;
-  noteFrame.origin.x = 17;
-  noteFrame.origin.y = (prevNoteTextView.frame.origin.y + 130);
+  prevNoteTextView      = [notesTextAreaArray lastObject];
+  CGRect noteFrame      = newNoteTextArea.frame;
+  noteFrame.origin.x    = 17;
+  noteFrame.origin.y    = (prevNoteTextView.frame.origin.y + 130);
   newNoteTextArea.frame = noteFrame;
   
   //Add Notes text area in view
@@ -425,34 +460,34 @@
   float addNotesButtonY = addNotesButtonFrame.origin.y;
   
   //Schedules Label
-  schedulesLabelFrame = schedulesLabel.frame;
+  schedulesLabelFrame          = schedulesLabel.frame;
   schedulesLabelFrame.origin.y = (addNotesButtonY + 70);
-  schedulesLabel.frame = schedulesLabelFrame;
+  schedulesLabel.frame         = schedulesLabelFrame;
   
   //Status Label
-  scheduleStatusLabelFrame = statusLabel.frame;
+  scheduleStatusLabelFrame          = statusLabel.frame;
   scheduleStatusLabelFrame.origin.y = (schedulesLabelFrame.origin.y + 30);
-  statusLabel.frame = scheduleStatusLabelFrame;
+  statusLabel.frame                 = scheduleStatusLabelFrame;
   
   //Status Field
-  scheduleStatusFieldFrame = statusField.frame;
+  scheduleStatusFieldFrame          = statusField.frame;
   scheduleStatusFieldFrame.origin.y = (scheduleStatusLabelFrame.origin.y + 30);
-  statusField.frame = scheduleStatusFieldFrame;
+  statusField.frame                 = scheduleStatusFieldFrame;
   
   //Author Label
-  scheduleAuthorLabelFrame = authorLabel.frame;
+  scheduleAuthorLabelFrame          = authorLabel.frame;
   scheduleAuthorLabelFrame.origin.y = (scheduleStatusFieldFrame.origin.y + 35);
-  authorLabel.frame = scheduleAuthorLabelFrame;
+  authorLabel.frame                 = scheduleAuthorLabelFrame;
   
   //Author Field
-  scheduleAuthorFieldFrame = authorField.frame;
+  scheduleAuthorFieldFrame          = authorField.frame;
   scheduleAuthorFieldFrame.origin.y = (scheduleAuthorLabelFrame.origin.y + 30);
-  authorField.frame = scheduleAuthorFieldFrame;
+  authorField.frame                 = scheduleAuthorFieldFrame;
   
   //Add Schedules Button
-  addScheduleButtonFrame = addSchedulesButton.frame;
+  addScheduleButtonFrame          = addSchedulesButton.frame;
   addScheduleButtonFrame.origin.y = (scheduleAuthorFieldFrame.origin.y + 45);
-  addSchedulesButton.frame = addScheduleButtonFrame;
+  addSchedulesButton.frame        = addScheduleButtonFrame;
 }
 
 
@@ -465,31 +500,31 @@
   //Initialize fields and labels
   UILabel *fromDateLabel = [[UILabel alloc] init];
   UILabel *fromTimeLabel = [[UILabel alloc] init];
-  UILabel *toDateLabel = [[UILabel alloc] init];
-  UILabel *toTimeLabel = [[UILabel alloc] init];
+  UILabel *toDateLabel   = [[UILabel alloc] init];
+  UILabel *toTimeLabel   = [[UILabel alloc] init];
   
   UITextField *fromDateField = [[UITextField alloc] init];
   UITextField *fromTimeField = [[UITextField alloc] init];
-  UITextField *toDateField = [[UITextField alloc] init];
-  UITextField *toTimeField = [[UITextField alloc] init];
+  UITextField *toDateField   = [[UITextField alloc] init];
+  UITextField *toTimeField   = [[UITextField alloc] init];
   
   //Set label texts
   fromDateLabel.text = @"From Date: ";
   fromTimeLabel.text = @"From Time: ";
-  toDateLabel.text = @"To Date: ";
-  toTimeLabel.text = @"To Time: ";
+  toDateLabel.text   = @"To Date: ";
+  toTimeLabel.text   = @"To Time: ";
   
   //Set label style
   fromDateLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
   fromTimeLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
-  toDateLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
-  toTimeLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  toDateLabel.font   = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  toTimeLabel.font   = [UIFont fontWithName:@"Helvetica-Bold" size:17];
   
   //Set field style
   fromDateField.borderStyle = UITextBorderStyleRoundedRect;
   fromTimeField.borderStyle = UITextBorderStyleRoundedRect;
-  toDateField.borderStyle = UITextBorderStyleRoundedRect;
-  toTimeField.borderStyle = UITextBorderStyleRoundedRect;
+  toDateField.borderStyle   = UITextBorderStyleRoundedRect;
+  toTimeField.borderStyle   = UITextBorderStyleRoundedRect;
   
   //Set field keyboard type
   fromDateField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
@@ -499,45 +534,45 @@
   
   //Set label size dimensions
   CGRect labelSize;
-  labelSize.size.width = 116;
+  labelSize.size.width  = 116;
   labelSize.size.height = 21;
   
   CGRect fromDateLabelSize = fromDateLabel.frame;
-  fromDateLabelSize = labelSize;
-  fromDateLabel.frame = fromDateLabelSize;
+  fromDateLabelSize        = labelSize;
+  fromDateLabel.frame      = fromDateLabelSize;
   
   CGRect fromTimeLabelSize = fromTimeLabel.frame;
-  fromTimeLabelSize = labelSize;
-  fromTimeLabel.frame = fromTimeLabelSize;
+  fromTimeLabelSize        = labelSize;
+  fromTimeLabel.frame      = fromTimeLabelSize;
   
   CGRect toDateLabelSize = toDateLabel.frame;
-  toDateLabelSize = labelSize;
-  toDateLabel.frame = toDateLabelSize;
+  toDateLabelSize        = labelSize;
+  toDateLabel.frame      = toDateLabelSize;
   
   CGRect toTimeLabelSize = toTimeLabel.frame;
-  toTimeLabelSize = labelSize;
-  toTimeLabel.frame = toTimeLabelSize;
+  toTimeLabelSize        = labelSize;
+  toTimeLabel.frame      = toTimeLabelSize;
   
   //Set field size dimensions
   CGRect fieldSize;
-  fieldSize.size.width = 141;
+  fieldSize.size.width  = 141;
   fieldSize.size.height = 30;
   
   CGRect fromDateFieldSize = fromDateField.frame;
-  fromDateFieldSize = fieldSize;
-  fromDateField.frame = fromDateFieldSize;
+  fromDateFieldSize        = fieldSize;
+  fromDateField.frame      = fromDateFieldSize;
   
   CGRect fromTimeFieldSize = fromTimeField.frame;
-  fromTimeFieldSize = fieldSize;
-  fromTimeField.frame = fromTimeFieldSize;
+  fromTimeFieldSize        = fieldSize;
+  fromTimeField.frame      = fromTimeFieldSize;
   
   CGRect toDateFieldSize = toDateField.frame;
-  toDateFieldSize = fieldSize;
-  toDateField.frame = toDateFieldSize;
+  toDateFieldSize        = fieldSize;
+  toDateField.frame      = toDateFieldSize;
   
   CGRect toTimeFieldSize = toTimeField.frame;
-  toTimeFieldSize = fieldSize;
-  toTimeField.frame = toTimeFieldSize;
+  toTimeFieldSize        = fieldSize;
+  toTimeField.frame      = toTimeFieldSize;
   
   
   CGRect startingCoordinates;
@@ -556,58 +591,58 @@
     startingCoordinates.origin.y = (toDateFieldFrame.origin.y + 50);
   }
   
-  UIView * separator = [[UIView alloc] initWithFrame:CGRectMake(0, (startingCoordinates.origin.y), 320, 1)];
+  UIView * separator        = [[UIView alloc] initWithFrame:CGRectMake(0, (startingCoordinates.origin.y), 320, 1)];
   separator.backgroundColor = [UIColor colorWithWhite:0.7 alpha:1];
   [inspectSRScroller addSubview:separator];
   
   //Set frame locations - From Date Label and Field
-  fromDateLabelFrame = fromDateLabel.frame;
+  fromDateLabelFrame          = fromDateLabel.frame;
   fromDateLabelFrame.origin.x = 16;
   fromDateLabelFrame.origin.y = (startingCoordinates.origin.y + 10);
-  fromDateLabel.frame = fromDateLabelFrame;
+  fromDateLabel.frame         = fromDateLabelFrame;
   
-  fromDateFieldFrame = fromDateField.frame;
+  fromDateFieldFrame          = fromDateField.frame;
   fromDateFieldFrame.origin.x = 16;
   fromDateFieldFrame.origin.y = (fromDateLabelFrame.origin.y + 30);
-  fromDateField.frame = fromDateFieldFrame;
+  fromDateField.frame         = fromDateFieldFrame;
   
-  fromTimeLabelFrame = fromTimeLabel.frame;
+  fromTimeLabelFrame          = fromTimeLabel.frame;
   fromTimeLabelFrame.origin.x = (fromDateLabel.frame.origin.x + 150);
   fromTimeLabelFrame.origin.y = (startingCoordinates.origin.y + 10);
-  fromTimeLabel.frame = fromTimeLabelFrame;
+  fromTimeLabel.frame         = fromTimeLabelFrame;
   
-  fromTimeFieldFrame = fromTimeField.frame;
+  fromTimeFieldFrame          = fromTimeField.frame;
   fromTimeFieldFrame.origin.x = (fromDateFieldFrame.origin.x + 150);
   fromTimeFieldFrame.origin.y = (fromTimeLabel.frame.origin.y + 30);
-  fromTimeField.frame = fromTimeFieldFrame;
+  fromTimeField.frame         = fromTimeFieldFrame;
   
   
   //Set frame locations - To Date Label and Field
-  toDateLabelFrame = toDateLabel.frame;
+  toDateLabelFrame          = toDateLabel.frame;
   toDateLabelFrame.origin.x = 16;
   toDateLabelFrame.origin.y = (fromDateField.frame.origin.y + 40);
-  toDateLabel.frame = toDateLabelFrame;
+  toDateLabel.frame         = toDateLabelFrame;
   
-  toDateFieldFrame = toDateField.frame;
+  toDateFieldFrame          = toDateField.frame;
   toDateFieldFrame.origin.x = 16;
   toDateFieldFrame.origin.y = (toDateLabelFrame.origin.y + 30);
-  toDateField.frame = toDateFieldFrame;
+  toDateField.frame         = toDateFieldFrame;
   
-  toTimeLabelFrame = toTimeLabel.frame;
+  toTimeLabelFrame          = toTimeLabel.frame;
   toTimeLabelFrame.origin.x = (toDateLabel.frame.origin.x + 150);
   toTimeLabelFrame.origin.y = (fromTimeField.frame.origin.y + 40);
-  toTimeLabel.frame = toTimeLabelFrame;
+  toTimeLabel.frame         = toTimeLabelFrame;
   
-  toTimeFieldFrame = toTimeField.frame;
+  toTimeFieldFrame          = toTimeField.frame;
   toTimeFieldFrame.origin.x = (toDateFieldFrame.origin.x + 150);
   toTimeFieldFrame.origin.y = (toTimeLabel.frame.origin.y + 30);
-  toTimeField.frame = toTimeFieldFrame;
+  toTimeField.frame         = toTimeFieldFrame;
   
   //move add schedules button
   //Add Schedules Button
-  addScheduleButtonFrame = addSchedulesButton.frame;
+  addScheduleButtonFrame          = addSchedulesButton.frame;
   addScheduleButtonFrame.origin.y = (toDateField.frame.origin.y + 60);
-  addSchedulesButton.frame = addScheduleButtonFrame;
+  addSchedulesButton.frame        = addScheduleButtonFrame;
   
   //Add the fields in scroller
   [inspectSRScroller addSubview:fromDateLabel];
@@ -637,15 +672,13 @@
   [scheduleFromDateDictionary setObject:fromDateField forKey:fromTimeField];
   [scheduleToDateDictionary setObject:toDateField forKey:toTimeField];
   
-  //NSLog(@"scheduleFromDateDictionary: %@", scheduleFromDateDictionary);
-  //NSLog(@"scheduleToDateDictionary: %@", scheduleToDateDictionary);
-  
   //Schedule Periods Operations
   actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                             delegate:nil
                                    cancelButtonTitle:nil
                               destructiveButtonTitle:nil
                                    otherButtonTitles:nil];
+  
   [actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
   
   UISegmentedControl *doneButton = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObject:@"Done"]];
@@ -655,10 +688,10 @@
   doneButton.tintColor = [UIColor blackColor];
   
   //Action Sheet definition - From Date
-  UILabel *actionSheetLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 50.0)];
-  actionSheetLabel.text = @"   Pick From Date and Time: ";
-  actionSheetLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
-  actionSheetLabel.textColor = [UIColor whiteColor];
+  UILabel *actionSheetLabel        = [[UILabel alloc] initWithFrame:CGRectMake(16, 0.0, 320.0, 50.0)];
+  actionSheetLabel.text            = @"Pick From Date and Time: ";
+  actionSheetLabel.font            = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  actionSheetLabel.textColor       = [UIColor whiteColor];
   actionSheetLabel.backgroundColor = [UIColor clearColor];
   
   [actionSheet addSubview:actionSheetLabel];
@@ -671,7 +704,10 @@
   [datePicker setDatePickerMode:UIDatePickerModeDateAndTime]; //UIDatePickerModeDate
   
   [actionSheet addSubview:datePicker];
-  [doneButton addTarget:self action:@selector(getFromDateTime) forControlEvents:UIControlEventValueChanged];
+  
+  [doneButton addTarget:self
+                 action:@selector(getFromDateTime)
+       forControlEvents:UIControlEventValueChanged];
 }
 
 
@@ -681,22 +717,24 @@
   NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
   [dateFormatter setDateFormat:@"yyyy-MM-dd"];
   fromDate = [dateFormatter stringFromDate:datePicker.date];
-  NSLog(@"fromDate: %@", fromDate);
   
   NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
-  [timeFormatter setDateFormat:@"HH:mm"]; //@"h:mm a"
+  [timeFormatter setDateFormat:@"HH:mm"];
   fromTime = [timeFormatter stringFromDate:datePicker.date];
-  NSLog(@"fromTime: %@", fromTime);
   
   //Display selected date time in fields
   UITextField *tempField = [[UITextField alloc] init];
-  tempField = [fromDatesArray lastObject];
+  
+  tempField      = [fromDatesArray lastObject];
   tempField.text = fromDate;
   
-  tempField = [fromTimesArray lastObject];
+  tempField      = [fromTimesArray lastObject];
   tempField.text = fromTime;
 
-  [self performSelector:@selector(pickToDateTime) withObject:nil afterDelay:1.0];
+  [self performSelector:@selector(pickToDateTime)
+             withObject:nil
+             afterDelay:1.0];
+  
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
 }
 
@@ -719,10 +757,10 @@
   doneButton.tintColor = [UIColor blackColor];
   
   //Action Sheet definition - From Date
-  UILabel *actionSheetLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 50.0)];
-  actionSheetLabel.text = @"   Pick To Date and Time: ";
-  actionSheetLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
-  actionSheetLabel.textColor = [UIColor whiteColor];
+  UILabel *actionSheetLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, 0.0, 320.0, 50.0)];
+  actionSheetLabel.text            = @"Pick To Date and Time: ";
+  actionSheetLabel.font            = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  actionSheetLabel.textColor       = [UIColor whiteColor];
   actionSheetLabel.backgroundColor = [UIColor clearColor];
   
   [actionSheet addSubview:actionSheetLabel];
@@ -731,10 +769,13 @@
   [actionSheet setBounds :CGRectMake(0, 0, 320, 500)];
   
   datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 40, 0, 0)];
-  [datePicker setDatePickerMode:UIDatePickerModeDateAndTime]; //UIDatePickerModeDate
+  [datePicker setDatePickerMode:UIDatePickerModeDateAndTime];
   
   [actionSheet addSubview:datePicker];
-  [doneButton addTarget:self action:@selector(getToDateTime) forControlEvents:UIControlEventValueChanged];
+  
+  [doneButton addTarget:self
+                 action:@selector(getToDateTime)
+       forControlEvents:UIControlEventValueChanged];
 }
 
 
@@ -744,19 +785,18 @@
   NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
   [dateFormatter setDateFormat:@"yyyy-MM-dd"];
   toDate = [dateFormatter stringFromDate:datePicker.date];
-  NSLog(@"toDate: %@", toDate);
   
   NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
-  [timeFormatter setDateFormat:@"HH:mm"]; //@"h:mm a"
+  [timeFormatter setDateFormat:@"HH:mm"];
   toTime = [timeFormatter stringFromDate:datePicker.date];
-  NSLog(@"toTime: %@", toTime);
   
   //Display selected date time in fields
   UITextField *tempField = [[UITextField alloc] init];
-  tempField = [toDatesArray lastObject];
+  
+  tempField      = [toDatesArray lastObject];
   tempField.text = toDate;
   
-  tempField = [toTimesArray lastObject];
+  tempField      = [toTimesArray lastObject];
   tempField.text = toTime;
   
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
@@ -770,7 +810,6 @@
   
   if(estimatedCostField.isEditing)
   {
-    NSLog(@"estimatedCost field editing");
     estimatedCostField.textColor = [UIColor redColor];
     return YES;
   }
@@ -882,7 +921,7 @@
   
   //admin
   NSMutableDictionary *adminJson = [[NSMutableDictionary alloc] init];
-  [adminJson setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY !!!
+  [adminJson setObject:@20130101500000001 forKey:@"id"]; //!!! TODO - TEST ONLY !!!
   [serviceRequestJson setObject:adminJson forKey:@"admin"];
   NSLog(@"adminJson: %@", adminJson);
   
@@ -893,7 +932,7 @@
   //notes
   NSMutableDictionary *notesDictionary = [[NSMutableDictionary alloc] init];
   NSMutableDictionary *notesSenderJson = [[NSMutableDictionary alloc] init];
-  NSMutableArray *notesArray = [[NSMutableArray alloc] init];
+  NSMutableArray *notesArray           = [[NSMutableArray alloc] init];
   
   for(int i = 0; i < inspectionNotesArray.count; i++)
   {
@@ -917,7 +956,7 @@
   NSMutableDictionary *scheduleDictionary = [[NSMutableDictionary alloc] init];
   //schedule - status
   NSMutableDictionary *scheduleStatusDictionary = [[NSMutableDictionary alloc] init];
-  NSMutableArray *scheduleArray = [[NSMutableArray alloc] init];
+  NSMutableArray *scheduleArray                 = [[NSMutableArray alloc] init];
   
   NSLog(@"service request schedules JSON assembly");
   [scheduleStatusDictionary setObject:statusId forKey:@"id"]; //For Inspection
@@ -925,7 +964,7 @@
   
   //schedule - author
   NSMutableDictionary *scheduleAuthor = [[NSMutableDictionary alloc] init];
-  [scheduleAuthor setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY !!! - Update
+  [scheduleAuthor setObject:@20130101500000001 forKey:@"id"]; //!!! TODO - TEST ONLY !!! - Update
   [scheduleDictionary setObject:scheduleAuthor forKey:@"author"];
   
   //schedule - periods
@@ -970,11 +1009,12 @@
   NSError *error = [[NSError alloc] init];
   NSData *jsonData = [NSJSONSerialization
                       dataWithJSONObject:serviceRequestJson
-                      options:NSJSONWritingPrettyPrinted
-                      error:&error];
+                                 options:NSJSONWritingPrettyPrinted
+                                   error:&error];
+  
   NSString *jsonString = [[NSString alloc]
                           initWithData:jsonData
-                          encoding:NSUTF8StringEncoding];
+                              encoding:NSUTF8StringEncoding];
   
   NSLog(@"jsonData Request: %@", jsonData);
   NSLog(@"jsonString Request: %@", jsonString);
@@ -994,28 +1034,28 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:putRequest
-                                 delegate:self];
+                                        delegate:self];
   
   [connection start];
   
   NSLog(@"updateServiceRequest - httpResponseCode: %d", httpResponseCode);
   
   //Set alert message display depending on what operation is performed in this case (FOR INSPECTION)
-  NSString *updateAlertMessage = [[NSString alloc] init];
+  NSString *updateAlertMessage     = [[NSString alloc] init];
   NSString *updateFailAlertMessage = [[NSString alloc] init];
+  
   if([operationFlag isEqual:@"FOR INSPECTION"])
   {
-    updateAlertMessage = @"Service Request Inspected.";
+    updateAlertMessage     = @"Service Request Inspected.";
     updateFailAlertMessage = @"Service Request not inspected. Please try again later";
   }
   
-  NSLog(@"operationFlag: %@", operationFlag);
   if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
   {
     UIAlertView *updateSRAlert = [[UIAlertView alloc]
-                                  initWithTitle:@"Service Request"
-                                  message:updateAlertMessage
-                                  delegate:self
+                                      initWithTitle:@"Service Request"
+                                            message:updateAlertMessage
+                                           delegate:self
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
     [updateSRAlert show];
@@ -1023,9 +1063,9 @@
   else //(httpResponseCode >= 400)
   {
     UIAlertView *updateSRFailAlert = [[UIAlertView alloc]
-                                      initWithTitle:@"Service Request Failed"
-                                      message:updateFailAlertMessage
-                                      delegate:self
+                                          initWithTitle:@"Service Request Failed"
+                                                message:updateFailAlertMessage
+                                               delegate:self
                                       cancelButtonTitle:@"OK"
                                       otherButtonTitles:nil];
     [updateSRFailAlert show];
@@ -1128,22 +1168,9 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
-}
-
-
-#pragma mark - Transition to Assets Page when OK on Alert Box is clicked
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-  if (buttonIndex == 0) //OK
-  {
-    //Go back to Home
-    HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
-    
-    [self.navigationController pushViewController:controller animated:YES];
-  }
 }
 
 
@@ -1156,11 +1183,11 @@
   if ([schedulePeriod count] == 1) //1 element meaning default 'periods' node but empty of contents
   {
     UIAlertView *emptySchedulePeriodAlert = [[UIAlertView alloc]
-                                      initWithTitle:@"Incomplete Information"
-                                      message:@"No schedule period dates entered."
-                                      delegate:nil
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles:nil];
+                                                 initWithTitle:@"Incomplete Information"
+                                                       message:@"No schedule period dates entered."
+                                                      delegate:nil
+                                             cancelButtonTitle:@"OK"
+                                             otherButtonTitles:nil];
     [emptySchedulePeriodAlert show];
     
     return FALSE;

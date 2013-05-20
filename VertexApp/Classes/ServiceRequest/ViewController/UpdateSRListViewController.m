@@ -30,6 +30,7 @@
 - (void)viewDidLoad
 {
   [self displayUpdateSRPageEntries];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }

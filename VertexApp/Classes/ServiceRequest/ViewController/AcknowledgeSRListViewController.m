@@ -35,7 +35,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -78,7 +79,6 @@
   ServiceRequestViewController* controller = (ServiceRequestViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"SRPage"];
   
   [self.navigationController pushViewController:controller animated:YES];
-  
 }
 
 
@@ -97,7 +97,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -105,46 +105,67 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if(responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:nil
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:nil
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
     
     //Connect to CoreData for local data
     //!- FOR TESTING ONLY -!
-    srForAcknowledgementAsset = [[NSMutableArray alloc] initWithObjects:@"Demo - Aircon", @"Demo - Door", @"Demo - Window", nil];
-    srForAcknowledgementService = [[NSMutableArray alloc] initWithObjects:@"- Fix filter", @"- Repair hinge", @"- Repair handle", nil];
-    srForAcknowledgementSRIds = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00003", nil];
-    srForAcknowledgementDate = [[NSMutableArray alloc] initWithObjects:@"2013-05-05", @"2013-05-06", @"2013-05-07", nil];
+    srForAcknowledgementAsset = [[NSMutableArray alloc] initWithObjects:
+                                   @"Demo - Aircon"
+                                 , @"Demo - Door"
+                                 , @"Demo - Window"
+                                 , nil];
+    
+    srForAcknowledgementService = [[NSMutableArray alloc] initWithObjects:
+                                     @"- Fix filter"
+                                   , @"- Repair hinge"
+                                   , @"- Repair handle"
+                                   , nil];
+    
+    srForAcknowledgementSRIds = [[NSMutableArray alloc] initWithObjects:
+                                   @"Demo - 00001"
+                                 , @"Demo - 00002"
+                                 , @"Demo - 00003"
+                                 , nil];
+    
+    srForAcknowledgementDate = [[NSMutableArray alloc] initWithObjects:
+                                  @"2013-05-05"
+                                , @"2013-05-06"
+                                , @"2013-05-07"
+                                , nil];
   }
   else
   {
     srForAcknowledgementDictionary = [NSJSONSerialization
-                  JSONObjectWithData:responseData
-                  options:kNilOptions
-                  error:&error];
+                                      JSONObjectWithData:responseData
+                                                 options:kNilOptions
+                                                   error:&error];
     NSLog(@"srForAcknowledgementDictionary JSON Result: %@", srForAcknowledgementDictionary);
     
-    srForAcknowledgementAsset = [[srForAcknowledgementDictionary valueForKey:@"asset"] valueForKey:@"name"];
+    srForAcknowledgementAsset   = [[srForAcknowledgementDictionary valueForKey:@"asset"] valueForKey:@"name"];
     srForAcknowledgementService = [[srForAcknowledgementDictionary valueForKey:@"service"] valueForKey:@"name"];
-    srForAcknowledgementSRIds = [srForAcknowledgementDictionary valueForKey:@"id"];
-    srForAcknowledgementDate = [srForAcknowledgementDictionary valueForKey:@"createdDate"];
+    srForAcknowledgementSRIds   = [srForAcknowledgementDictionary valueForKey:@"id"];
+    srForAcknowledgementDate    = [srForAcknowledgementDictionary valueForKey:@"createdDate"];
   }
 
   //Concatenate asset name and service name of service request for display in table view
   srForAcknowledgementEntries = [[NSMutableArray alloc] init];
   for(int i = 0; i < srForAcknowledgementAsset.count; i++)
   {
-    NSMutableString *displayString = [NSMutableString stringWithFormat:@"%@ - %@", [srForAcknowledgementAsset objectAtIndex:i], [srForAcknowledgementService objectAtIndex:i]];
+    NSMutableString *displayString = [NSMutableString stringWithFormat:@"%@ - %@"
+                                      , [srForAcknowledgementAsset objectAtIndex:i]
+                                      , [srForAcknowledgementService objectAtIndex:i]];
     
     [srForAcknowledgementEntries insertObject:displayString atIndex:i];
     displayString = [[NSMutableString alloc] init];
@@ -179,8 +200,8 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //Configure the cell title & subtitle
-  cell.textLabel.text = [srForAcknowledgementEntries objectAtIndex:indexPath.row];
-  cell.detailTextLabel.text = [srForAcknowledgementDate objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [srForAcknowledgementEntries objectAtIndex:indexPath.row];
+  cell.detailTextLabel.text    = [srForAcknowledgementDate objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
   return cell;
 }
@@ -190,6 +211,7 @@
 {
   return 70;
 }
+
 
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

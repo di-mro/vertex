@@ -16,6 +16,4 @@
 @property (nonatomic, retain) NSMutableArray *displayUpdateSRSubtitles;
 
 
-
-
 @end

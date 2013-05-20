@@ -95,6 +95,8 @@
 @property (strong, nonatomic) NSString *toDate;
 @property (strong, nonatomic) NSString *toTime;
 
+@property (strong, nonatomic) UIAlertView *cancelSRInspectionConfirmation;
+
 @property (strong, nonatomic) IBOutlet UIButton *addNotesButton;
 - (IBAction)addNotes:(id)sender;
 

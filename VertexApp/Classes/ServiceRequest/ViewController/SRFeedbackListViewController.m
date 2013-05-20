@@ -44,8 +44,6 @@
 
 - (void)viewDidLoad
 {
-  //[self displaySRFeedbackListPageEntries];
-  
   //Connect to endpoint - getServiceRequestByStatus - Fulfilled status
   [self getServiceRequestByStatus];
   
@@ -59,38 +57,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-# pragma mark - Display entries in Service Requests Feedback List Page
-- (void) displaySRFeedbackListPageEntries
-{
-  // !- TODO For demo only, remove hard coded values-!
-  displaySRFeedbackListEntries = [[NSMutableArray alloc] init];
-  NSString *entry1 = @"Aircon leak fix";
-  NSString *entry2 = @"Faulty electrical wiring";
-  NSString *entry3 = @"Lightbulb replacement";
-  
-  [displaySRFeedbackListEntries addObject:entry1];
-  [displaySRFeedbackListEntries addObject:entry2];
-  [displaySRFeedbackListEntries addObject:entry3];
-  
-  // !- TODO For the subtitles/details, remove these hard coded values -!
-  displaySRFeedbackSubtitles = [[NSMutableArray alloc] init];
-  NSString *sub1 = @"2013-02-28";
-  NSString *sub2 = @"2013-03-04";
-  NSString *sub3 = @"2013-03-10";
-  
-  [displaySRFeedbackSubtitles addObject:sub1];
-  [displaySRFeedbackSubtitles addObject:sub2];
-  [displaySRFeedbackSubtitles addObject:sub3];
-}
-*/
-
 
 #pragma mark - Retrieve Service Request with 'Service Request Creation' Status ID - for Acknowledgement
 -(void) getServiceRequestByStatus
 {
   //endpoint for getServiceRequestByStatus
-  statusId = @20130101420000001; //9 //Service Request Fulfilled Status Id - Awaiting Feedbacks
+  statusId = @20130101420000009; //Service Request Fulfilled Status Id - Awaiting Feedbacks
   NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.107/vertex-api/service-request/getServiceRequestByStatus/%@", statusId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
@@ -101,7 +73,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -109,46 +81,68 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if(responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:nil
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:nil
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
     
     //Connect to CoreData for local data
     //!- FOR TESTING ONLY -!
-    srForFeedbackAsset = [[NSMutableArray alloc] initWithObjects:@"Demo - Aircon", @"Demo - Door", @"Demo - Window", nil];
-    srForFeedbackService = [[NSMutableArray alloc] initWithObjects:@"- Fix filter", @"- Repair hinge", @"- Repair handle", nil];
-    srForFeedbackSRIds = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00003", nil];
-    srForFeedbackDate = [[NSMutableArray alloc] initWithObjects:@"2013-05-05", @"2013-05-06", @"2013-05-07", nil];
+    srForFeedbackAsset = [[NSMutableArray alloc] initWithObjects:
+                            @"Demo - Aircon"
+                          , @"Demo - Door"
+                          , @"Demo - Window"
+                          , nil];
+    
+    srForFeedbackService = [[NSMutableArray alloc] initWithObjects:
+                              @"- Fix filter"
+                            , @"- Repair hinge"
+                            , @"- Repair handle"
+                            , nil];
+    
+    srForFeedbackSRIds = [[NSMutableArray alloc] initWithObjects:
+                            @"Demo - 00001"
+                          , @"Demo - 00002"
+                          , @"Demo - 00003"
+                          , nil];
+    
+    srForFeedbackDate = [[NSMutableArray alloc] initWithObjects:
+                           @"2013-05-05"
+                         , @"2013-05-06"
+                         , @"2013-05-07"
+                         , nil];
   }
   else
   {
     srForFeedbackDictionary = [NSJSONSerialization
-                                      JSONObjectWithData:responseData
-                                      options:kNilOptions
-                                      error:&error];
+                               JSONObjectWithData:responseData
+                                          options:kNilOptions
+                                            error:&error];
+    
     NSLog(@"srForFeedbackDictionary JSON Result: %@", srForFeedbackDictionary);
     
-    srForFeedbackAsset = [[srForFeedbackDictionary valueForKey:@"asset"] valueForKey:@"name"];
+    srForFeedbackAsset   = [[srForFeedbackDictionary valueForKey:@"asset"] valueForKey:@"name"];
     srForFeedbackService = [[srForFeedbackDictionary valueForKey:@"service"] valueForKey:@"name"];
-    srForFeedbackSRIds = [srForFeedbackDictionary valueForKey:@"id"];
-    srForFeedbackDate = [srForFeedbackDictionary valueForKey:@"createdDate"];
+    srForFeedbackSRIds   = [srForFeedbackDictionary valueForKey:@"id"];
+    srForFeedbackDate    = [srForFeedbackDictionary valueForKey:@"createdDate"];
   }
   
   //Concatenate asset name and service name of service request for display in table view
   srForFeedbackEntries = [[NSMutableArray alloc] init];
   for(int i = 0; i < srForFeedbackAsset.count; i++)
   {
-    NSMutableString *displayString = [NSMutableString stringWithFormat:@"%@ - %@", [srForFeedbackAsset objectAtIndex:i], [srForFeedbackService objectAtIndex:i]];
+    NSMutableString *displayString = [NSMutableString stringWithFormat:@"%@ - %@"
+                                      , [srForFeedbackAsset objectAtIndex:i]
+                                      , [srForFeedbackService objectAtIndex:i]];
     
     [srForFeedbackEntries insertObject:displayString atIndex:i];
     displayString = [[NSMutableString alloc] init];
@@ -156,7 +150,6 @@
   
   NSLog(@"srForFeedbackEntries: %@", srForFeedbackEntries);
 }
-
 
 
 #pragma mark - Table view data source implementation
@@ -184,9 +177,10 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //Configure the cell title & subtitle
-  cell.textLabel.text = [srForFeedbackEntries objectAtIndex:indexPath.row];
-  cell.detailTextLabel.text = [srForFeedbackDate objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [srForFeedbackEntries objectAtIndex:indexPath.row];
+  cell.detailTextLabel.text    = [srForFeedbackDate objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
 
@@ -195,6 +189,7 @@
 {
   return 70;
 }
+
 
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

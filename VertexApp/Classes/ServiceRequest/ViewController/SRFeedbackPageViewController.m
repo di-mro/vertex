@@ -21,6 +21,8 @@
 @synthesize srFeedbackScroller;
 @synthesize displaySRFeedbackQuestions;
 @synthesize srRatings;
+@synthesize cancelSRFeedbackConfirmation;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,14 +37,21 @@
 - (void)viewDidLoad
 {
   //Keyboard dismissal
-  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                        action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelSRFeedback)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(cancelSRFeedback)];
   
   //[Submit] navigation button
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Submit" style:UIBarButtonItemStylePlain target:self action:@selector(submitSRFeedback)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Submit"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(submitSRFeedback)];
   
   //Scroller size
   self.srFeedbackScroller.contentSize = CGSizeMake(320.0, 900.0);
@@ -51,6 +60,7 @@
   srRatings = 0;
   
   [self displaySRFeedbackPageQuestions];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -93,12 +103,12 @@
 {
   //Return the number of rows in the section
   return [displaySRFeedbackQuestions count];
-  NSLog(@"%d", [displaySRFeedbackQuestions count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
   NSLog(@"Service Requests Feedback Page Questions");
+  
   static NSString *CellIdentifier = @"srFeedbackQuestionCell";
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
@@ -109,13 +119,11 @@
   NSArray *choices = [NSArray arrayWithObjects:@"Yes", @"No", nil];
   UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:choices];
   
-  CGRect segmentedControlFrame = segmentedControl.frame;
-  segmentedControlFrame.size.width = 100;
+  CGRect segmentedControlFrame      = segmentedControl.frame;
+  segmentedControlFrame.size.width  = 100;
   segmentedControlFrame.size.height = 40;
-  segmentedControl.frame = segmentedControlFrame;
+  segmentedControl.frame            = segmentedControlFrame;
   
-  //segmentedControl.frame = CGRectMake(35, 200, 250, 50);
-  //segmentedControl.segmentedControlStyle = UISegmentedControlStylePlain;
   segmentedControl.selectedSegmentIndex = 1;
   [segmentedControl addTarget:self
 	                     action:@selector(rate:)
@@ -126,7 +134,6 @@
   return cell;
 }
 
-
 //Change the Height of the Cell [Default is 45]:
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
@@ -134,11 +141,10 @@
 }
 
 
-//Action method executes when user touches the button
+#pragma mark - Method executes when user touches the segmented control button [YES | NO] in the questions
 - (void) rate:(id)sender
 {
   UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
-  //label.text = [segmentedControl titleForSegmentAtIndex: [segmentedControl selectedSegmentIndex]];
   
   if ([[segmentedControl titleForSegmentAtIndex:segmentedControl.selectedSegmentIndex] isEqual: @"Yes"])
   {
@@ -154,13 +160,43 @@
 #pragma mark - [Cancel] button implementation
 -(void) cancelSRFeedback
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Cancel Service Request Feedback");
   
-  //Go back to Home
-  HomePageViewController *controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+  cancelSRFeedbackConfirmation = [[UIAlertView alloc]
+                                      initWithTitle:@"Cancel Service Request Feedback"
+                                            message:@"Are you sure you want to cancel this service request feedback?"
+                                           delegate:self
+                                  cancelButtonTitle:@"Yes"
+                                  otherButtonTitles:@"No", nil];
   
-  [self.navigationController pushViewController:controller animated:YES];
+  [cancelSRFeedbackConfirmation show];
+}
+
+
+#pragma mark - Transition to a page depending on what alert box is shown and what button is clicked
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+  if([alertView isEqual:cancelSRFeedbackConfirmation])
+  {
+    NSLog(@"Cancel SR Feedback");
+    if(buttonIndex == 0) //Yes - Cancel
+    {
+      //Go back to SR Page
+      ServiceRequestViewController *controller = (ServiceRequestViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"SRPage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
+  }
+  else
+  {
+    if (buttonIndex == 0) //OK
+    {
+      //Go back to Home
+      HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
+  }
 }
 
 
@@ -169,7 +205,7 @@
 {
   NSLog(@"Submit Service Request Feedback");
   
-  float finalRating = 0;
+  float finalRating  = 0;
   NSString *comments = [[NSString alloc] init];
   
   //Compute value for rating
@@ -235,19 +271,6 @@
   
   [self dismissViewControllerAnimated:YES completion:nil];
   */
-}
-
-
-#pragma mark - Transition to Service Request Page when OK on Alert Box is clicked
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-  if (buttonIndex == 0) //OK
-  {
-    //Go back to Home
-    HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
-    
-    [self.navigationController pushViewController:controller animated:YES];
-  }
 }
 
 

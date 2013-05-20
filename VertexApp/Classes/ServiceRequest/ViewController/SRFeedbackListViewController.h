@@ -25,11 +25,5 @@
 @property (strong, nonatomic) NSNumber *selectedSRId;
 @property (strong, nonatomic) NSNumber *statusId;
 
-/*
-- (void) displaySRFeedbackListPageEntries;
-
-@property (nonatomic, retain) NSMutableArray *displaySRFeedbackListEntries;
-@property (nonatomic, retain) NSMutableArray *displaySRFeedbackSubtitles;
-*/
 
 @end

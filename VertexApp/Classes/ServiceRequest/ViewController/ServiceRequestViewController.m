@@ -7,6 +7,7 @@
 //
 
 #import "ServiceRequestViewController.h"
+#import "HomePageViewController.h"
 
 @interface ServiceRequestViewController ()
 
@@ -15,6 +16,7 @@
 @implementation ServiceRequestViewController
 
 @synthesize serviceRequestPageEntries;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,7 +32,15 @@
 {
   NSLog(@"Service Request Page View");
   
+  //[Cancel] navigation button
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(goToHome)];
+  
+  
   [self displayServiceRequestPageEntries];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -65,6 +75,16 @@
   [serviceRequestPageEntries addObject:entry8];
 }
 
+
+#pragma mark - Segue to Home Page
+-(void) goToHome
+{
+  //Go back to Home Page
+  HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+  
+  [self.navigationController pushViewController:controller animated:YES];
+}
+
 #pragma mark - Table view data source
 - (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView
 {
@@ -82,7 +102,6 @@
 {
   //Return the number of rows in the section
   return [serviceRequestPageEntries count];
-  NSLog(@"%d", [serviceRequestPageEntries count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -91,8 +110,9 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.serviceRequestPageEntries objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.serviceRequestPageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
 

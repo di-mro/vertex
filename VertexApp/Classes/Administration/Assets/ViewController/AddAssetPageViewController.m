@@ -72,14 +72,21 @@
 - (void)viewDidLoad
 {
   //Keyboard dismissal
-  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                        action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelAddAsset)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(cancelAddAsset)];
   
   //[Add] navigation button - Add Asset
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(createAsset)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(createAsset)];
   
   //Configure Scroller size
   self.addAssetScroller.contentSize = CGSizeMake(320, 720);
@@ -88,6 +95,7 @@
   //Configure Picker array
   self.assetTypePickerArray = [[NSArray alloc] init];
   
+  //Get Asset Types for Asset Types Picker
   [self getAssetTypes];
   
   //Configure Asset Attributes Scroller size
@@ -130,7 +138,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:getRequest
-                                   delegate:self];
+                                          delegate:self];
   [connection start];
     
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -139,30 +147,39 @@
   //GET
   NSData *responseData = [NSURLConnection
                             sendSynchronousRequest:getRequest
-                            returningResponse:&urlResponse
-                            error:&error];
+                                 returningResponse:&urlResponse
+                                             error:&error];
   
   if (responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:nil
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:nil
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
     
     //TODO: Connect to CoreData for local data
     //!- FOR TESTING ONLY -!
-    self.assetTypePickerArray = [[NSArray alloc] initWithObjects:@"Demo - Aircon",@"Demo - Door", @"Demo - Exhaust Fan", @"Demo - Faucet", @"Demo - Toilet", @"Demo - Kitchen Sink", @"Demo - Lighting Fixtures", nil];
+    self.assetTypePickerArray = [[NSArray alloc] initWithObjects:
+                                   @"Demo - Aircon"
+                                 , @"Demo - Door"
+                                 , @"Demo - Exhaust Fan"
+                                 , @"Demo - Faucet"
+                                 , @"Demo - Toilet"
+                                 , @"Demo - Kitchen Sink"
+                                 , @"Demo - Lighting Fixtures"
+                                 , nil];
   }
   else
   {
     assetTypes = [NSJSONSerialization
-                                 JSONObjectWithData:responseData
-                                 options:kNilOptions
-                                 error:&error];
+                  JSONObjectWithData:responseData
+                             options:kNilOptions
+                               error:&error];
+    
     NSLog(@"getAssetTypes JSON Result: %@", assetTypes);
     
     assetTypePickerArray = [assetTypes valueForKey:@"name"]; //store assetType names only in PickerArray
@@ -191,11 +208,11 @@
                                    cancelButtonTitle:nil
                               destructiveButtonTitle:nil
                                    otherButtonTitles:nil];
+  
   [actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
   
   if(assetTypeField.isEditing)
   {
-    NSLog(@"textFieldDidBeginEditing - function call");
     [textField resignFirstResponder];
     
     //Action sheet [Done] button functionality for Asset Type Picker - @selector(selectedRow)
@@ -222,11 +239,10 @@
     
     currentPickerArray = [[NSArray alloc] initWithObjects: nil];
     currentPickerArray = assetTypePickerArray;
-    currentTextField = assetTypeField;
+    currentTextField   = assetTypeField;
     
-    //clear subviews (attribute field)
+    //Clear subviews (attribute field)
     NSArray *subviews = [[assetAttributeScroller subviews] copy];
-    NSLog(@"subviews: %@", subviews);
     for (UIView *subview in subviews)
     {
       [subview removeFromSuperview];
@@ -264,16 +280,14 @@
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
   
   //Match selected index with corresponding Asset Type Name
-  selectedIndex = [assetTypePicker selectedRowInComponent:0];
+  selectedIndex           = [assetTypePicker selectedRowInComponent:0];
   NSString *assetTypeName = [assetTypePickerArray objectAtIndex:selectedIndex];
-  NSLog(@"selectedRow - assetTypeName: %@", assetTypeName);
-  assetTypeField.text = assetTypeName;
+  assetTypeField.text     = assetTypeName;
   
   //Match selected index with corresponding Asset Type Id
   NSMutableArray *assetTypeIdArray = [[NSMutableArray alloc] init];
-  assetTypeIdArray = [assetTypes valueForKey:@"id"];
+  assetTypeIdArray    = [assetTypes valueForKey:@"id"];
   selectedAssetTypeId = [assetTypeIdArray objectAtIndex:selectedIndex];
-  NSLog(@"selectedRow-selectedAssetTypeId: %@", selectedAssetTypeId);
   
   //Set asset attributes field dynamically based on asset selected
   [self setAttributesField];
@@ -291,47 +305,42 @@
   {
     NSMutableArray *allAssetAttrib = [[NSMutableArray alloc] init];
     attribTextFields = [[NSMutableDictionary alloc] init];
-    attribUnits = [[NSMutableDictionary alloc] init];
+    attribUnits      = [[NSMutableDictionary alloc] init];
     
     allAssetAttrib = [assetTypes valueForKey:@"attributes"];
-    NSLog(@"allAssetAttrib: %@", allAssetAttrib);
     
     assetTypeAttributes = [allAssetAttrib objectAtIndex:selectedIndex]; //array
-    NSLog(@"assetTypeAttributes: %@", assetTypeAttributes);
     
     NSMutableArray *unitNames = [[NSMutableArray alloc] init];
-    NSMutableArray *unitIds = [[NSMutableArray alloc] init];
+    NSMutableArray *unitIds   = [[NSMutableArray alloc] init];
+    
     unitNames = [[assetTypeAttributes valueForKey:@"units"] valueForKey:@"name"];
-    unitIds = [[assetTypeAttributes valueForKey:@"units"] valueForKey:@"id"];
-    NSLog(@"unitNames: %@", unitNames);
+    unitIds   = [[assetTypeAttributes valueForKey:@"units"] valueForKey:@"id"];
     
     int attribTextfieldHeight = 30;
-    int attribTextfieldWidth = 240;
-    int unitTextfieldHeight = 30;
-    //int unitTextfieldWidth = 90;
-    int yOrigin = 0;
+    int attribTextfieldWidth  = 240;
+    int unitTextfieldHeight   = 30;
+    int yOrigin               = 0;
     
     UITextField *attribField = [[UITextField alloc] init];
     for(int i = 0; i < [assetTypeAttributes count]; i++)
     {
       NSString *textFieldLabel = [[NSString alloc] initWithString:[[assetTypeAttributes objectAtIndex:i] valueForKey:@"keyName"]];
       
-      NSMutableArray *unitsPerAttrib = [[NSMutableArray alloc] init];
+      NSMutableArray *unitsPerAttrib   = [[NSMutableArray alloc] init];
       NSMutableArray *unitIdsPerAttrib = [[NSMutableArray alloc] init];
-      unitsPerAttrib = [unitNames objectAtIndex:i];
+      unitsPerAttrib   = [unitNames objectAtIndex:i];
       unitIdsPerAttrib = [unitIds objectAtIndex:i];
-      NSLog(@"unitsPerAttrib: %@", unitsPerAttrib);
-      NSLog(@"unitIdsPerAttrib: %@", unitIdsPerAttrib);
       
       //attributeField
       attribField = [[UITextField alloc] initWithFrame:CGRectMake(0, (i * attribTextfieldHeight + 10), attribTextfieldWidth, attribTextfieldHeight)];
       attribField.borderStyle = UITextBorderStyleRoundedRect;
       attribField.placeholder = textFieldLabel;
       
-      CGRect attribTextFieldFrame = attribField.frame;
+      CGRect attribTextFieldFrame   = attribField.frame;
       attribTextFieldFrame.origin.x = 20;
       attribTextFieldFrame.origin.y += (yOrigin += 15);
-      attribField.frame = attribTextFieldFrame;
+      attribField.frame             = attribTextFieldFrame;
       
       //Initialize choices for the units segmented control per asset attribute
       NSArray *unitChoices = [NSArray arrayWithArray:unitsPerAttrib];
@@ -350,7 +359,7 @@
       
       attribUnitTextFieldFrame.origin.x = 20;
       attribUnitTextFieldFrame.origin.y += (yOrigin += 40);
-      unitsSegmentedControl.frame = attribUnitTextFieldFrame;
+      unitsSegmentedControl.frame       = attribUnitTextFieldFrame;
 
       //Method when button is selected TODO !!!
       unitsSegmentedControl.selectedSegmentIndex = 0;
@@ -370,8 +379,6 @@
       attribField = [[UITextField alloc] init];
     }
   }
-  NSLog(@"attribTextFields: %@", attribTextFields);
-  NSLog(@"attribUnits - selected segmented control button: %@", attribUnits);
 }
 
 
@@ -427,10 +434,10 @@
     NSLog(@"selectedAssetTypeId: %@", selectedAssetTypeId);
     
     //Getting and setting Asset Attributes
-    NSMutableArray *assetAttribKeyArray = [[NSMutableArray alloc] init];
-    NSMutableArray *assetAttribValueArray = [[NSMutableArray alloc] init];
+    NSMutableArray *assetAttribKeyArray    = [[NSMutableArray alloc] init];
+    NSMutableArray *assetAttribValueArray  = [[NSMutableArray alloc] init];
     NSMutableArray *assetAttribUnitIdArray = [[NSMutableArray alloc] init];
-    UITextField *fieldContent = [[UITextField alloc] init];
+    UITextField *fieldContent              = [[UITextField alloc] init];
     
     //Store keysName and value pair
     for(NSString *key in [attribTextFields allKeys])
@@ -453,8 +460,8 @@
     }
     
     NSMutableDictionary *assetAttributesDict = [[NSMutableDictionary alloc] init];
-    NSMutableDictionary *attribUnitsDict = [[NSMutableDictionary alloc] init];
-    NSMutableArray *innerAssetAttribArray = [[NSMutableArray alloc] init];
+    NSMutableDictionary *attribUnitsDict     = [[NSMutableDictionary alloc] init];
+    NSMutableArray *innerAssetAttribArray    = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < [assetAttribKeyArray count]; i++) //attribute number
     {
@@ -479,6 +486,7 @@
                         dataWithJSONObject:mainDictionary
                                    options:NSJSONWritingPrettyPrinted
                                      error:&error];
+    
     NSString *jsonString = [[NSString alloc]
                             initWithData:jsonData
                                 encoding:NSUTF8StringEncoding];
@@ -497,13 +505,12 @@
     [postRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [postRequest setValue:@"20130101500000001" forHTTPHeaderField:@"userId"]; //make userID dynamic
     [postRequest setHTTPMethod:@"POST"];
-    //[postRequest setHTTPBody:jsonData];
     [postRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String] length:[jsonString length]]]; //pass JSON as string
     NSLog(@"%@", postRequest);
     
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:postRequest
-                                   delegate:self];
+                                          delegate:self];
     
     [connection start];
     
@@ -511,20 +518,19 @@
     if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
     {
       UIAlertView *createAssetAlert = [[UIAlertView alloc]
-                                       initWithTitle:@"Add Asset"
-                                       message:@"Asset Created."
-                                       delegate:self
+                                           initWithTitle:@"Add Asset"
+                                                 message:@"Asset Created."
+                                                delegate:self
                                        cancelButtonTitle:@"OK"
                                        otherButtonTitles:nil];
       [createAssetAlert show];
-      //Transition to Assets Page - alertView clickedButtonAtIndex
     }
     else //(httpResponseCode >= 400)
     {
       UIAlertView *createAssetFailAlert = [[UIAlertView alloc]
-                                           initWithTitle:@"Add Asset Failed"
-                                           message:@"Asset not added. Please try again later"
-                                           delegate:self
+                                               initWithTitle:@"Add Asset Failed"
+                                                     message:@"Asset not added. Please try again later"
+                                                    delegate:self
                                            cancelButtonTitle:@"OK"
                                            otherButtonTitles:nil];
       [createAssetFailAlert show];
@@ -579,7 +585,7 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
@@ -590,9 +596,14 @@
 {
   if (buttonIndex == 0)
   {
+    HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+    
+    [self.navigationController pushViewController:controller animated:YES];
+    /*
     AssetPageViewController* controller = (AssetPageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"AssetsPage"];
     
     [self.navigationController pushViewController:controller animated:YES];
+     */
   }
 }
 
@@ -601,8 +612,8 @@
 -(BOOL) validateAddAssetFields
 {
   UIAlertView *updateAssetValidateAlert = [[UIAlertView alloc]
-                                        initWithTitle:@"Incomplete Information"
-                                              message:@"Please fill out the necessary fields."
+                                         initWithTitle:@"Incomplete Information"
+                                               message:@"Please fill out the necessary fields."
                                               delegate:nil
                                      cancelButtonTitle:@"OK"
                                      otherButtonTitles:nil];

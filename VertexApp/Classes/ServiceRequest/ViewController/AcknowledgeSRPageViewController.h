@@ -48,6 +48,9 @@
 @property (strong, nonatomic) NSString *URL;
 @property int httpResponseCode;
 
+@property (strong, nonatomic) UIAlertView *cancelSRAcknowledgementConfirmation;
+@property (strong, nonatomic) UIAlertView *rejectSRAcknowledgementConfirmation;
+
 @property (strong, nonatomic) IBOutlet UIButton *addNotesButton;
 - (IBAction)addNotes:(id)sender;
 

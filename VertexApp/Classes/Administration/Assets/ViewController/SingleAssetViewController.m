@@ -42,6 +42,7 @@
   
   //Connect to WS endpoint to retrieve details for the chosen Asset
   [self getAssetInfo];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -82,7 +83,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -90,16 +91,16 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if (responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:self
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:self
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
@@ -111,16 +112,17 @@
     //JSON
     assetInfo = [NSJSONSerialization
                   JSONObjectWithData:responseData
-                  options:kNilOptions
-                  error:&error];
+                             options:kNilOptions
+                               error:&error];
+    
     NSLog(@"assetInfo JSON: %@", assetInfo);
     
     
     NSMutableDictionary *assetAttributesDict = [[NSMutableDictionary alloc] init];
-    NSMutableString *assetAttribString = [[NSMutableString alloc] init];
-    NSMutableArray *assetAttribListing = [[NSMutableArray alloc] init];
+    NSMutableString *assetAttribString       = [[NSMutableString alloc] init];
+    NSMutableArray *assetAttribListing       = [[NSMutableArray alloc] init];
     
-    NSMutableArray *assetAttribKeyArray = [[NSMutableArray alloc] init];
+    NSMutableArray *assetAttribKeyArray   = [[NSMutableArray alloc] init];
     NSMutableArray *assetAttribValueArray = [[NSMutableArray alloc] init];
     
     //Get the key-value pair in the returned JSON object
@@ -128,32 +130,33 @@
     for(NSString *key in assetAttributesDict)
     {
       [assetAttribKeyArray addObject:[key valueForKey:@"keyName"]];
-      NSLog(@"assetAttribKeyArray: %@", [key valueForKey:@"keyName"]);
       [assetAttribValueArray addObject:[key valueForKey:@"value"]];
-      NSLog(@"assetAttribValueArray: %@", [key valueForKey:@"value"]);
     }
     
     //Format as string the key-value pair and save in an array
     for(int i = 0; i < [assetAttribKeyArray count]; i++)
     {
       assetAttribString = [NSMutableString stringWithFormat:@"%@ : %@",
-                           [assetAttribKeyArray objectAtIndex:i], [assetAttribValueArray objectAtIndex:i]];
-      NSLog(@"assetAttribString: %@", assetAttribString);
+                             [assetAttribKeyArray objectAtIndex:i]
+                           , [assetAttribValueArray objectAtIndex:i]];
+      
       [assetAttribListing insertObject:assetAttribString atIndex:i];
-      NSLog(@"assetAttribListing: %@", assetAttribListing);
+      
       assetAttribString = [[NSMutableString alloc] init];
     }
     
     NSString *assetAttribStringFormatted = [[NSString alloc] init];
-    assetAttribStringFormatted = [assetAttribListing componentsJoinedByString:@"\n  "];
+    assetAttribStringFormatted           = [assetAttribListing componentsJoinedByString:@"\n  "];
     
     //Setting the display for the Text Area
     NSMutableString *assetDetailsDisplay = [[NSMutableString alloc] init];
     
     //Format display string
     assetDetailsDisplay = [NSMutableString
-                           stringWithFormat:@"ASSET NAME: \n  %@ \n\nASSET TYPE: \n  %@ \n\nASSET ATTRIBUTES: \n  %@ \n\n",
-                           [assetInfo valueForKey:@"name"], [[assetInfo valueForKey:@"assetType"] valueForKey:@"name"], assetAttribStringFormatted];
+                           stringWithFormat:@"ASSET NAME: \n  %@ \n\nASSET TYPE: \n  %@ \n\nASSET ATTRIBUTES: \n  %@ \n\n"
+                           , [assetInfo valueForKey:@"name"]
+                           , [[assetInfo valueForKey:@"assetType"] valueForKey:@"name"]
+                           , assetAttribStringFormatted];
     
     assetDetailsTextArea.text = assetDetailsDisplay;
   } //end - else if (responseData == nil)

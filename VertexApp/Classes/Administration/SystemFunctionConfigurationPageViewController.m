@@ -31,6 +31,7 @@
   NSLog(@"System Function Configuration Page View");
   
   [self displaySystemFunctionConfigPageEntries];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -68,7 +69,6 @@
 {
   //Return the number of rows in the section
   return [systemFunctionConfigPageEntries count];
-  NSLog(@"%d", [systemFunctionConfigPageEntries count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -77,11 +77,11 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.systemFunctionConfigPageEntries objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.systemFunctionConfigPageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
-
 
 //Change the Height of the Cell [Default is 45]:
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath

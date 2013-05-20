@@ -34,7 +34,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -71,7 +72,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -79,46 +80,68 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if(responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:nil
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:nil
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
     
     //Connect to CoreData for local data
     //!- FOR TESTING ONLY -!
-    srForInspectionAsset = [[NSMutableArray alloc] initWithObjects:@"Demo - Aircon", @"Demo - Door", @"Demo - Window", nil];
-    srForInspectionService = [[NSMutableArray alloc] initWithObjects:@"- Fix filter", @"- Repair hinge", @"- Repair handle", nil];
-    srForInspectionSRIds = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00003", nil];
-    srForInspectionDate = [[NSMutableArray alloc] initWithObjects:@"2013-05-05", @"2013-05-06", @"2013-05-07", nil];
+    srForInspectionAsset = [[NSMutableArray alloc] initWithObjects:
+                              @"Demo - Aircon"
+                            , @"Demo - Door"
+                            , @"Demo - Window"
+                            , nil];
+    
+    srForInspectionService = [[NSMutableArray alloc] initWithObjects:
+                                @"- Fix filter"
+                              , @"- Repair hinge"
+                              , @"- Repair handle"
+                              , nil];
+    
+    srForInspectionSRIds = [[NSMutableArray alloc] initWithObjects:
+                              @"Demo - 00001"
+                            , @"Demo - 00002"
+                            , @"Demo - 00003"
+                            , nil];
+    
+    srForInspectionDate = [[NSMutableArray alloc] initWithObjects:
+                             @"2013-05-05"
+                           , @"2013-05-06"
+                           , @"2013-05-07"
+                           , nil];
   }
   else
   {
     srForInspectionDictionary = [NSJSONSerialization
-                                      JSONObjectWithData:responseData
-                                      options:kNilOptions
-                                      error:&error];
+                                 JSONObjectWithData:responseData
+                                            options:kNilOptions
+                                              error:&error];
+    
     NSLog(@"srForInspectionDictionary JSON Result: %@", srForInspectionDictionary);
     
-    srForInspectionAsset = [[srForInspectionDictionary valueForKey:@"asset"] valueForKey:@"name"];
+    srForInspectionAsset   = [[srForInspectionDictionary valueForKey:@"asset"] valueForKey:@"name"];
     srForInspectionService = [[srForInspectionDictionary valueForKey:@"service"] valueForKey:@"name"];
-    srForInspectionSRIds = [srForInspectionDictionary valueForKey:@"id"];
-    srForInspectionDate = [srForInspectionDictionary valueForKey:@"createdDate"];
+    srForInspectionSRIds   = [srForInspectionDictionary valueForKey:@"id"];
+    srForInspectionDate    = [srForInspectionDictionary valueForKey:@"createdDate"];
   }
   
   //Concatenate asset name and service name of service request for display in table view
   srForInspectionEntries = [[NSMutableArray alloc] init];
   for(int i = 0; i < srForInspectionAsset.count; i++)
   {
-    NSMutableString *displayString = [NSMutableString stringWithFormat:@"%@ - %@", [srForInspectionAsset objectAtIndex:i], [srForInspectionService objectAtIndex:i]];
+    NSMutableString *displayString = [NSMutableString stringWithFormat:@"%@ - %@"
+                                      , [srForInspectionAsset objectAtIndex:i]
+                                      , [srForInspectionService objectAtIndex:i]];
     
     [srForInspectionEntries insertObject:displayString atIndex:i];
     displayString = [[NSMutableString alloc] init];
@@ -153,9 +176,10 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //Configure the cell title & subtitle
-  cell.textLabel.text = [srForInspectionEntries objectAtIndex:indexPath.row];
-  cell.detailTextLabel.text = [srForInspectionDate objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [srForInspectionEntries objectAtIndex:indexPath.row];
+  cell.detailTextLabel.text    = [srForInspectionDate objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
 
@@ -164,6 +188,7 @@
 {
   return 70;
 }
+
 
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

@@ -17,7 +17,7 @@
 @property (strong, nonatomic) UIActionSheet *actionSheet;
 
 @property (strong, nonatomic) IBOutlet UILabel *chooseAssetLabel;
-@property (nonatomic, retain) NSMutableArray *assetPickerArray; //NSArray
+@property (nonatomic, retain) NSMutableArray *assetPickerArray;
 @property (strong, nonatomic) IBOutlet UITextField *assetField;
 
 @property (strong, nonatomic) IBOutlet UILabel *chooseLifecycleLabel;
@@ -43,9 +43,9 @@
 
 @property (strong, nonatomic) NSString *URL;
 @property int httpResponseCode;
+
 @property (strong, nonatomic) NSNumber *userId;
 
-/***/
 @property (nonatomic, retain) NSArray *ownedAssetsArray;
 @property (nonatomic, retain) NSArray *ownedAssetsIdArray;
 @property (nonatomic, retain) NSArray *ownedAssetTypeIdArray;
@@ -77,8 +77,9 @@
 @property (strong, nonatomic) NSNumber *selectedLifecycleId;
 @property (strong, nonatomic) NSNumber *selectedServicesId;
 @property (strong, nonatomic) NSNumber *selectedPriorityId;
-/***/
 
 @property (strong, nonatomic) NSMutableDictionary *serviceRequestJson;
+
+@property (strong, nonatomic) UIAlertView *cancelSRConfirmation;
 
 @end

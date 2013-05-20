@@ -31,6 +31,7 @@
   NSLog(@"Admin Tasks Page View");
   
   [self displayAdminTaskPageEntries];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -46,7 +47,6 @@
 {
   adminTaskPageEntries = [[NSMutableArray alloc] init];
   
-  /* !- For demo only, remove hard coded values. Must retrieve listing in DB -! */
   NSString *entry1 = @"Asset";
   NSString *entry2 = @"Lifecycle";
   NSString *entry3 = @"Service";
@@ -79,7 +79,6 @@
 {
   //Return the number of rows in the section
   return [adminTaskPageEntries count];
-  NSLog(@"%d", [adminTaskPageEntries count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -88,11 +87,11 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.adminTaskPageEntries objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.adminTaskPageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
-
 
 //Change the Height of the Cell [Default is 45]:
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath

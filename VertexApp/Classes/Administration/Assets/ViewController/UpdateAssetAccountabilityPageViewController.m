@@ -41,14 +41,21 @@
   NSLog(@"Update Asset Accountability Page");
   
   //Keyboard dismissal
-  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                        action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelUpdateAssetAccountability)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(cancelUpdateAssetAccountability)];
   
   //[Update] navigation button - Update Asset Accountability
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Update" style:UIBarButtonItemStylePlain target:self action:@selector(updateAssetAccountability)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Update"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(updateAssetAccountability)];
   
   //Configure Scroller size
   self.updateAssetAccountabilityScroller.contentSize = CGSizeMake(320, 720);
@@ -85,6 +92,7 @@
   if([self validateUpdateAssetAccountabilityFields])
   {
     NSMutableDictionary *updateAssetAccountabilityJson = [[NSMutableDictionary alloc] init];
+    
     //TODO : Construct JSON Request
     //[updateAssetAccountabilityJson setObject:@"" forKey:@""];
     
@@ -92,11 +100,12 @@
     NSError *error = [[NSError alloc] init];
     NSData *jsonData = [NSJSONSerialization
                         dataWithJSONObject:updateAssetAccountabilityJson
-                        options:NSJSONWritingPrettyPrinted
-                        error:&error];
+                                   options:NSJSONWritingPrettyPrinted
+                                     error:&error];
+    
     NSString *jsonString = [[NSString alloc]
                             initWithData:jsonData
-                            encoding:NSUTF8StringEncoding];
+                                encoding:NSUTF8StringEncoding];
     
     NSLog(@"jsonData Request: %@", jsonData);
     NSLog(@"jsonString Request: %@", jsonString);
@@ -117,7 +126,7 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:putRequest
-                                   delegate:self];
+                                          delegate:self];
     
     [connection start];
     
@@ -125,22 +134,22 @@
     if(httpResponseCode == 200) //ok
     {
       UIAlertView *updateAssetAccountabilityAlert = [[UIAlertView alloc]
-                                       initWithTitle:@"Update Asset Accountability"
-                                       message:@"Asset Accountability Updated."
-                                       delegate:self
-                                       cancelButtonTitle:@"OK"
-                                       otherButtonTitles:nil];
+                                                         initWithTitle:@"Update Asset Accountability"
+                                                               message:@"Asset Accountability Updated."
+                                                              delegate:self
+                                                     cancelButtonTitle:@"OK"
+                                                     otherButtonTitles:nil];
       [updateAssetAccountabilityAlert show];
       //Transition to Assets Page - alertView clickedButtonAtIndex
     }
     else //(httpResponseCode >= 400)
     {
       UIAlertView *updateAssetAccountabilityFailAlert = [[UIAlertView alloc]
-                                           initWithTitle:@"Update Asset Accountability Failed"
-                                           message:@"Asset Accountability not updated. Please try again later"
-                                           delegate:self
-                                           cancelButtonTitle:@"OK"
-                                           otherButtonTitles:nil];
+                                                             initWithTitle:@"Update Asset Accountability Failed"
+                                                                   message:@"Asset Accountability not updated. Please try again later"
+                                                                  delegate:self
+                                                         cancelButtonTitle:@"OK"
+                                                         otherButtonTitles:nil];
       [updateAssetAccountabilityFailAlert show];
       
     }
@@ -165,7 +174,7 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
@@ -187,11 +196,11 @@
 -(BOOL) validateUpdateAssetAccountabilityFields
 {
   UIAlertView *updateAssetAccountabilityValidateAlert = [[UIAlertView alloc]
-                                           initWithTitle:@"Incomplete Information"
-                                           message:@"Please fill out the necessary fields."
-                                           delegate:nil
-                                           cancelButtonTitle:@"OK"
-                                           otherButtonTitles:nil];
+                                                             initWithTitle:@"Incomplete Information"
+                                                                   message:@"Please fill out the necessary fields."
+                                                                  delegate:nil
+                                                         cancelButtonTitle:@"OK"
+                                                         otherButtonTitles:nil];
   
   if([assetNameField.text isEqualToString:(@"")] || [userAccountField.text isEqualToString:(@"")])
   {

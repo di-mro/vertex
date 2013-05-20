@@ -19,4 +19,6 @@
 
 @property float srRatings;
 
+@property (strong, nonatomic) UIAlertView *cancelSRFeedbackConfirmation;
+
 @end

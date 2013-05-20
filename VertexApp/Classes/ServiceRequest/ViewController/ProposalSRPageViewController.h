@@ -41,20 +41,13 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *schedulesLabel;
 
-/*
-@property (strong, nonatomic) IBOutlet UILabel *statusLabel;
-@property (strong, nonatomic) IBOutlet UITextField *statusField;
-
-@property (strong, nonatomic) IBOutlet UILabel *authorLabel;
-@property (strong, nonatomic) IBOutlet UITextField *authorField;
-*/
-
 @property CGRect addNotesButtonFrame;
 @property CGRect schedulesLabelFrame;
-@property CGRect scheduleStatusLabelFrame;
-@property CGRect scheduleStatusFieldFrame;
-@property CGRect scheduleAuthorLabelFrame;
-@property CGRect scheduleAuthorFieldFrame;
+@property CGRect proposalLabelFrame;
+@property CGRect statusLabelFrame;
+@property CGRect statusFieldFrame;
+@property CGRect authorLabelFrame;
+@property CGRect authorFieldFrame;
 @property CGRect addScheduleButtonFrame;
 
 @property CGRect fromDateLabelFrame;
@@ -68,6 +61,8 @@
 
 @property CGRect separatorFrame;
 
+@property (strong, nonatomic) NSMutableArray *statusArray;
+@property (strong, nonatomic) NSMutableArray *authorArray;
 @property (strong, nonatomic) NSMutableArray *fromDatesArray;
 @property (strong, nonatomic) NSMutableArray *fromTimesArray;
 @property (strong, nonatomic) NSMutableArray *toDatesArray;
@@ -99,6 +94,7 @@
 @property (strong, nonatomic) NSString *URL;
 @property int httpResponseCode;
 
+@property (strong, nonatomic) UIAlertView *cancelSRProposalConfirmation;
 
 @property (strong, nonatomic) IBOutlet UIButton *addNotesButton;
 - (IBAction)addNotes:(id)sender;

@@ -8,6 +8,7 @@
 
 #import "ProposalSRPageViewController.h"
 #import "HomePageViewController.h"
+#import "ServiceRequestViewController.h"
 
 @interface ProposalSRPageViewController ()
 
@@ -60,10 +61,11 @@
 
 @synthesize addNotesButtonFrame;
 @synthesize schedulesLabelFrame;
-@synthesize scheduleStatusLabelFrame;
-@synthesize scheduleStatusFieldFrame;
-@synthesize scheduleAuthorLabelFrame;
-@synthesize scheduleAuthorFieldFrame;
+@synthesize proposalLabelFrame;
+@synthesize statusLabelFrame;
+@synthesize statusFieldFrame;
+@synthesize authorLabelFrame;
+@synthesize authorFieldFrame;
 @synthesize addScheduleButtonFrame;
 
 @synthesize fromDateLabelFrame;
@@ -77,6 +79,8 @@
 
 @synthesize separatorFrame;
 
+@synthesize statusArray;
+@synthesize authorArray;
 @synthesize fromDatesArray;
 @synthesize fromTimesArray;
 @synthesize toDatesArray;
@@ -100,6 +104,8 @@
 @synthesize URL;
 @synthesize httpResponseCode;
 
+@synthesize cancelSRProposalConfirmation;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -116,37 +122,42 @@
   NSLog(@"Proposal Service Request Page");
   
   //Keyboard dismissal
-  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                        action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //[Back] (Cancel) navigation button
   UIBarButtonItem *backButton = [[UIBarButtonItem alloc]
                                  initWithTitle:@"Back"
-                                 style:UIBarButtonItemStylePlain
-                                 target:self
-                                 action:@selector(cancelProposalSR)];
+                                         style:UIBarButtonItemStylePlain
+                                        target:self
+                                        action:@selector(cancelProposalSR)];
   
   self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:backButton, nil];
   
   //[Propose] navigation button
   UIBarButtonItem *proposeButton = [[UIBarButtonItem alloc]
                                    initWithTitle:@"Propose"
-                                   style:UIBarButtonItemStylePlain
-                                   target:self
-                                   action:@selector(proposeSR)];
+                                           style:UIBarButtonItemStylePlain
+                                          target:self
+                                          action:@selector(proposeSR)];
 
   //[Accept] navigation button
   UIBarButtonItem *acceptButton = [[UIBarButtonItem alloc]
                                    initWithTitle:@"Accept"
-                                   style:UIBarButtonItemStylePlain
-                                   target:self
-                                   action:@selector(acceptSR)];
+                                           style:UIBarButtonItemStylePlain
+                                          target:self
+                                          action:@selector(acceptSR)];
   
   //Initialize bar button items
-  self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects: proposeButton, acceptButton, nil];
+  self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:
+                                               proposeButton
+                                             , acceptButton
+                                             , nil];
   
   //Scroller size
-  self.proposalSRPageScroller.contentSize = CGSizeMake(320.0, 3000);
+  self.proposalSRPageScroller.contentSize = CGSizeMake(320.0, 5000);
+  //[self setScrollerSize];
   
   //Disable fields - for viewing only
   assetField.enabled         = NO;
@@ -164,22 +175,20 @@
   //Populate fields based on previously selected Service Request for Proposal Stage
   [self getServiceRequest];
   
-  //Add Notes utilities - Store the first note and its coordinates so that when we add notes, it will align properly
-  //notesTextAreaArray = [[NSMutableArray alloc] init];
-  //[notesTextAreaArray addObject:notesTextArea];
-  
   //Initialize array for proposal notes
   proposalNotesArray = [[NSMutableArray alloc] init];
   
   //Initialize arrays for proposal schedule periods
+  statusArray    = [[NSMutableArray alloc] init];
+  authorArray    = [[NSMutableArray alloc] init];
   fromDatesArray = [[NSMutableArray alloc] init];
   fromTimesArray = [[NSMutableArray alloc] init];
-  toDatesArray = [[NSMutableArray alloc] init];
-  toTimesArray = [[NSMutableArray alloc] init];
+  toDatesArray   = [[NSMutableArray alloc] init];
+  toTimesArray   = [[NSMutableArray alloc] init];
   
   //Initialize dictionaries for proposal schedules
   scheduleFromDateDictionary = [[NSMutableDictionary alloc] init];
-  scheduleToDateDictionary = [[NSMutableDictionary alloc] init];
+  scheduleToDateDictionary   = [[NSMutableDictionary alloc] init];
   
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -189,6 +198,19 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - Adjust proposalSRPageScroller height depending on number of elements in view
+-(void) setScrollerSize
+{
+  CGFloat scrollViewHeight = 640.0f;
+  for (UIView *view in proposalSRPageScroller.subviews)
+  {
+    scrollViewHeight += view.frame.size.height;
+  }
+  NSLog(@"scroller height: %f", scrollViewHeight);
+  [proposalSRPageScroller setContentSize:(CGSizeMake(320, scrollViewHeight))];
 }
 
 
@@ -203,13 +225,43 @@
 #pragma mark - [Cancel] button implementation
 -(void) cancelProposalSR
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Cancel Proposal Service Request");
   
-  //Go back to Home Page
-  HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+  cancelSRProposalConfirmation = [[UIAlertView alloc]
+                                      initWithTitle:@"Cancel Service Request Proposal"
+                                            message:@"Are you sure you want to cancel this service request proposal?"
+                                           delegate:self
+                                  cancelButtonTitle:@"Yes"
+                                  otherButtonTitles:@"No", nil];
   
-  [self.navigationController pushViewController:controller animated:YES];
+  [cancelSRProposalConfirmation show];
+}
+
+
+#pragma mark - Transition to a page depending on what alert box is shown and what button is clicked
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+  if([alertView isEqual:cancelSRProposalConfirmation])
+  {
+    NSLog(@"Cancel SR Proposal");
+    if(buttonIndex == 0) //Yes - Cancel
+    {
+      //Go back to SR Page
+      ServiceRequestViewController *controller = (ServiceRequestViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"SRPage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
+  }
+  else
+  {
+    if (buttonIndex == 0) //OK
+    {
+      //Go back to Home
+      HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
+  }
 }
 
 
@@ -227,7 +279,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -235,16 +287,16 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if(responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:nil
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:nil
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
@@ -266,8 +318,9 @@
   {
     serviceRequestInfo = [NSJSONSerialization
                           JSONObjectWithData:responseData
-                          options:kNilOptions
-                          error:&error];
+                                     options:kNilOptions
+                                       error:&error];
+    
     NSLog(@"getServiceRequest JSON Result: %@", serviceRequestInfo);
     
     assetField.text         = [[serviceRequestInfo valueForKey:@"asset"] valueForKey:@"name"];
@@ -296,14 +349,12 @@
     //Retrieving notes for display - Notes can be more than one
     NSMutableArray *retrievedNotesArray = [[NSMutableArray alloc] init];
     retrievedNotesArray = [serviceRequestInfo valueForKey:@"notes"];
-    NSLog(@"retrievedNotesArray: %@", retrievedNotesArray);
     NSMutableString *notesDisplay = [[NSMutableString alloc] init];
     
     for (int i = 0; i < retrievedNotesArray.count; i++)
     {
       NSMutableDictionary *retrievedNotesDictionary = [[NSMutableDictionary alloc] init];
       [retrievedNotesDictionary setObject:[retrievedNotesArray objectAtIndex:i] forKey:@"notes"];
-      NSLog(@"retrievedNotesDictionary: %@", retrievedNotesDictionary);
       
       NSMutableString *notesAuthor = [NSMutableString stringWithFormat:@"%@ %@ %@ %@"
                                       , [[[[retrievedNotesDictionary valueForKey:@"notes"] valueForKey:@"sender"] valueForKey:@"info"] valueForKey:@"firstName"]
@@ -312,11 +363,13 @@
                                       , [[[[retrievedNotesDictionary valueForKey:@"notes"] valueForKey:@"sender"] valueForKey:@"info"] valueForKey:@"suffix"]];
       
       NSMutableString *noteMessage = [[retrievedNotesDictionary valueForKey:@"notes"] valueForKey:@"message"];
-      NSMutableString *noteDate = [[retrievedNotesDictionary valueForKey:@"notes"] valueForKey:@"creationDate"];
+      NSMutableString *noteDate    = [[retrievedNotesDictionary valueForKey:@"notes"] valueForKey:@"creationDate"];
       
       //Combined information for display in the Notes area
-      notesDisplay = [NSMutableString stringWithFormat:@"Sender: %@\nDate: %@\n\n%@", notesAuthor, noteDate, noteMessage];
-      NSLog(@"notesDisplay: %@", notesDisplay);
+      notesDisplay = [NSMutableString stringWithFormat:@"Sender: %@\nDate: %@\n\n%@"
+                      , notesAuthor
+                      , noteDate
+                      , noteMessage];
       
       if (i == 0)
       {
@@ -330,11 +383,10 @@
         [self displayNotesEntries:notesDisplay];
       }
     }
-    
+
     //!!! TODO - Retrieve values for Schedules
     NSMutableArray *retrievedSchedulesArray = [[NSMutableArray alloc] init];
     retrievedSchedulesArray = [serviceRequestInfo valueForKey:@"schedules"];
-    NSLog(@"retrievedSchedulesArray: %@", retrievedSchedulesArray);
     
     for(int i = 0; i < retrievedSchedulesArray.count; i++)
     {
@@ -345,7 +397,6 @@
       //Status
       NSMutableString *scheduleStatus = [[NSMutableString alloc] init];
       scheduleStatus = [[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"status"] valueForKey:@"name"];
-      NSLog(@"scheduleStatus: %@", scheduleStatus);
       
       //Author
       NSMutableString *scheduleAuthor = [NSMutableString stringWithFormat:@"%@ %@ %@ %@"
@@ -353,7 +404,6 @@
                                       , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"middleName"]
                                       , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"lastName"]
                                       , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"suffix"]];
-      NSLog(@"scheduleAuthor: %@", scheduleAuthor);
       
       //First display
       CGRect startingCoordinates;
@@ -384,9 +434,9 @@
   
   //Initialize Notes text area frame size
   int height = 120;
-  int width = 284;
+  int width  = 284;
   
-  UITextView *newNoteTextArea = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+  UITextView *newNoteTextArea     = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
   newNoteTextArea.backgroundColor = notesTextArea.backgroundColor;
   [newNoteTextArea setFont:[UIFont systemFontOfSize:14]];
   
@@ -395,10 +445,10 @@
   
   //Get the location of prev Notes text area and adjust new Notes area location based on that
   UITextView *prevNoteTextView = [[UITextView alloc] init];
-  prevNoteTextView = [notesTextAreaArray lastObject];
-  CGRect noteFrame = newNoteTextArea.frame;
-  noteFrame.origin.x = 17;
-  noteFrame.origin.y = (prevNoteTextView.frame.origin.y + 130);
+  prevNoteTextView      = [notesTextAreaArray lastObject];
+  CGRect noteFrame      = newNoteTextArea.frame;
+  noteFrame.origin.x    = 17;
+  noteFrame.origin.y    = (prevNoteTextView.frame.origin.y + 130);
   newNoteTextArea.frame = noteFrame;
   
   //Add Notes text area in view
@@ -406,13 +456,12 @@
   
   //Store added Notes text area in array
   [notesTextAreaArray addObject:newNoteTextArea];
-  NSLog(@"notesTextAreaArray: %@", notesTextAreaArray);
   
   //Adjust position of [Add Notes] button when new text area is added
-  addNotesButtonFrame = addNotesButton.frame;
+  addNotesButtonFrame          = addNotesButton.frame;
   addNotesButtonFrame.origin.x = 20;
   addNotesButtonFrame.origin.y = (newNoteTextArea.frame.origin.y + 130);
-  addNotesButton.frame = addNotesButtonFrame;
+  addNotesButton.frame         = addNotesButtonFrame;
   
   //Move all element below the added notesTextArea
   [self adjustFieldAfterNotes];
@@ -426,18 +475,18 @@
   
   //Initialize Notes text area frame size
   int height = 120;
-  int width = 284;
+  int width  = 284;
   
-  UITextView *newNoteTextArea = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+  UITextView *newNoteTextArea     = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
   newNoteTextArea.backgroundColor = notesTextArea.backgroundColor;
   [newNoteTextArea setFont:[UIFont systemFontOfSize:14]];
   
   //Get the location of prev Notes text area and adjust new Notes area location based on that
   UITextView *prevNoteTextView = [[UITextView alloc] init];
-  prevNoteTextView = [notesTextAreaArray lastObject];
-  CGRect noteFrame = newNoteTextArea.frame;
-  noteFrame.origin.x = 17;
-  noteFrame.origin.y = (prevNoteTextView.frame.origin.y + 130);
+  prevNoteTextView      = [notesTextAreaArray lastObject];
+  CGRect noteFrame      = newNoteTextArea.frame;
+  noteFrame.origin.x    = 17;
+  noteFrame.origin.y    = (prevNoteTextView.frame.origin.y + 130);
   newNoteTextArea.frame = noteFrame;
   
   //Add Notes text area in view
@@ -447,10 +496,13 @@
   [proposalNotesArray addObject:newNoteTextArea];
   
   //Adjust position of [Add Notes] button when new text area is added
-  addNotesButtonFrame = addNotesButton.frame;
+  addNotesButtonFrame          = addNotesButton.frame;
   addNotesButtonFrame.origin.x = 20;
   addNotesButtonFrame.origin.y = (newNoteTextArea.frame.origin.y + 130);
-  addNotesButton.frame = addNotesButtonFrame;
+  addNotesButton.frame         = addNotesButtonFrame;
+  
+  //Adjust scroller height
+  //[self setScrollerSize];
   
   //Move all element below the added notesTextArea
   [self adjustFieldAfterNotes];
@@ -464,20 +516,70 @@
   
   //Move the Y coordinate of the elements, X remains constant
   //[Add Notes] button location is the starting coordinate
-  [proposalSRPageScroller reloadInputViews];
   
   //Schedules Label
-  schedulesLabelFrame = schedulesLabel.frame;
+  schedulesLabelFrame          = schedulesLabel.frame;
   schedulesLabelFrame.origin.y = (addNotesButtonFrame.origin.y + 70);
-  schedulesLabel.frame = schedulesLabelFrame;
+  schedulesLabel.frame         = schedulesLabelFrame;
+  
+  /*
+  //Retrieve values for Schedules and draw the fields
+  NSMutableArray *retrievedSchedulesArray = [[NSMutableArray alloc] init];
+  retrievedSchedulesArray = [serviceRequestInfo valueForKey:@"schedules"];
+  NSLog(@"02 retrievedSchedulesArray: %@", retrievedSchedulesArray);
+  
+  for(int i = 0; i < retrievedSchedulesArray.count; i++)
+  {
+    NSMutableDictionary *retrievedSchedulesDictionary = [[NSMutableDictionary alloc] init];
+    [retrievedSchedulesDictionary setObject:[retrievedSchedulesArray objectAtIndex:i] forKey:@"schedules"];
+    NSLog(@"02 retrievedSchedulesDictionary: %@", retrievedSchedulesDictionary);
+    
+    //Status
+    NSMutableString *scheduleStatus = [[NSMutableString alloc] init];
+    scheduleStatus = [[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"status"] valueForKey:@"name"];
+    NSLog(@"02 scheduleStatus: %@", scheduleStatus);
+    
+    //Author
+    NSMutableString *scheduleAuthor = [NSMutableString stringWithFormat:@"%@ %@ %@ %@"
+                                       , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"firstName"]
+                                       , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"middleName"]
+                                       , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"lastName"]
+                                       , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"suffix"]];
+    NSLog(@"02 scheduleAuthor: %@", scheduleAuthor);
+    
+    //First display
+    CGRect startingCoordinates;
+    startingCoordinates.origin.x = 16;
+    
+    if(i == 0)
+    {
+      NSLog(@"schedulesLabelFrame: %f", schedulesLabelFrame.origin.y);
+      startingCoordinates.origin.y = (schedulesLabelFrame.origin.y + 40);
+    }
+    else
+    {
+      [proposalSRPageScroller setNeedsDisplay];
+      NSLog(@"separatorFrame: %f", separatorFrame.origin.y);
+      startingCoordinates.origin.y = (separatorFrame.origin.y);
+    }
 
+    //Display retrieved values
+    //Layout for [Add Schedules] button is done in displayScheduleEntries already
+
+    [self displayScheduleEntries:scheduleStatus
+                                :scheduleAuthor
+                                :[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"periods"]
+                                :startingCoordinates];
+    
+  }
+   */
+
+  /*
   //Add Schedules Button
   addScheduleButtonFrame = addSchedulesButton.frame;
   addScheduleButtonFrame.origin.y = (separatorFrame.origin.y + 45);
   addSchedulesButton.frame = addScheduleButtonFrame;
 
-
-  /*
   //Move the fields and labels after the 'Schedules' label
   for (int i = 0; i < [proposalSRPageScroller.subviews count]; i++)
   {
@@ -518,6 +620,8 @@
   }
   */
   
+  //Adjust scroller height
+  //[self setScrollerSize];
 }
 
 
@@ -588,164 +692,174 @@
   labelSize.size.height = 21;
   
   CGRect statusLabelSize = statusLabel.frame;
-  statusLabelSize = labelSize;
-  statusLabel.frame = statusLabelSize;
+  statusLabelSize        = labelSize;
+  statusLabel.frame      = statusLabelSize;
   
   CGRect authorLabelSize = authorLabel.frame;
-  authorLabelSize = labelSize;
-  authorLabel.frame = authorLabelSize;
+  authorLabelSize        = labelSize;
+  authorLabel.frame      = authorLabelSize;
   
   CGRect fromDateLabelSize = fromDateLabel.frame;
-  fromDateLabelSize = labelSize;
-  fromDateLabel.frame = fromDateLabelSize;
+  fromDateLabelSize        = labelSize;
+  fromDateLabel.frame      = fromDateLabelSize;
   
   CGRect fromTimeLabelSize = fromTimeLabel.frame;
-  fromTimeLabelSize = labelSize;
-  fromTimeLabel.frame = fromTimeLabelSize;
+  fromTimeLabelSize        = labelSize;
+  fromTimeLabel.frame      = fromTimeLabelSize;
   
   CGRect toDateLabelSize = toDateLabel.frame;
-  toDateLabelSize = labelSize;
-  toDateLabel.frame = toDateLabelSize;
+  toDateLabelSize        = labelSize;
+  toDateLabel.frame      = toDateLabelSize;
   
   CGRect toTimeLabelSize = toTimeLabel.frame;
-  toTimeLabelSize = labelSize;
-  toTimeLabel.frame = toTimeLabelSize;
+  toTimeLabelSize        = labelSize;
+  toTimeLabel.frame      = toTimeLabelSize;
   
   //Set field size dimensions
   CGRect fieldSize;
   fieldSize.size.width  = 141;
   fieldSize.size.height = 30;
   
-  CGRect statusFieldSize = statusField.frame;
-  statusFieldSize.size.width = 287;
+  CGRect statusFieldSize      = statusField.frame;
+  statusFieldSize.size.width  = 287;
   statusFieldSize.size.height = 30;
-  statusField.frame = statusFieldSize;
+  statusField.frame           = statusFieldSize;
   
-  CGRect authorFieldSize = authorField.frame;
-  authorFieldSize.size.width = 287;
+  CGRect authorFieldSize      = authorField.frame;
+  authorFieldSize.size.width  = 287;
   authorFieldSize.size.height = 30;
-  authorField.frame = authorFieldSize;
+  authorField.frame           = authorFieldSize;
   
   CGRect fromDateFieldSize = fromDateField.frame;
-  fromDateFieldSize = fieldSize;
-  fromDateField.frame = fromDateFieldSize;
+  fromDateFieldSize        = fieldSize;
+  fromDateField.frame      = fromDateFieldSize;
   
   CGRect fromTimeFieldSize = fromTimeField.frame;
-  fromTimeFieldSize = fieldSize;
-  fromTimeField.frame = fromTimeFieldSize;
+  fromTimeFieldSize        = fieldSize;
+  fromTimeField.frame      = fromTimeFieldSize;
   
   CGRect toDateFieldSize = toDateField.frame;
-  toDateFieldSize = fieldSize;
-  toDateField.frame = toDateFieldSize;
+  toDateFieldSize        = fieldSize;
+  toDateField.frame      = toDateFieldSize;
   
   CGRect toTimeFieldSize = toTimeField.frame;
-  toTimeFieldSize = fieldSize;
-  toTimeField.frame = toTimeFieldSize;
+  toTimeFieldSize        = fieldSize;
+  toTimeField.frame      = toTimeFieldSize;
 
   //Set frame locations and contents - Status label and field
-  scheduleStatusLabelFrame = statusLabel.frame;
-  scheduleStatusLabelFrame.origin.x = 16;
-  scheduleStatusLabelFrame.origin.y = (startingCoordinates.origin.y + 10);
-  statusLabel.frame = scheduleStatusLabelFrame;
-  [proposalSRPageScroller addSubview:statusLabel];
+  statusLabelFrame          = statusLabel.frame;
+  statusLabelFrame.origin.x = 16;
+  statusLabelFrame.origin.y = (startingCoordinates.origin.y + 10);
+  statusLabel.frame         = statusLabelFrame;
   
-  scheduleStatusFieldFrame = statusField.frame;
-  scheduleStatusFieldFrame.origin.x = 16;
-  scheduleStatusFieldFrame.origin.y = (scheduleStatusLabelFrame.origin.y + 30);
-  statusField.frame = scheduleStatusFieldFrame;
-  statusField.text = scheduleStatus;
-  [proposalSRPageScroller addSubview:statusField];
+  statusFieldFrame          = statusField.frame;
+  statusFieldFrame.origin.x = 16;
+  statusFieldFrame.origin.y = (statusLabelFrame.origin.y + 30);
+  statusField.frame         = statusFieldFrame;
+  statusField.text          = scheduleStatus;
   
   //Set frame locations and contents - Author label and field
-  scheduleAuthorLabelFrame = authorLabel.frame;
-  scheduleAuthorLabelFrame.origin.x = 16;
-  scheduleAuthorLabelFrame.origin.y = (statusField.frame.origin.y + 40);
-  authorLabel.frame = scheduleAuthorLabelFrame;
-  [proposalSRPageScroller addSubview:authorLabel];
+  authorLabelFrame          = authorLabel.frame;
+  authorLabelFrame.origin.x = 16;
+  authorLabelFrame.origin.y = (statusField.frame.origin.y + 40);
+  authorLabel.frame         = authorLabelFrame;
   
-  scheduleAuthorFieldFrame = authorField.frame;
-  scheduleAuthorFieldFrame.origin.x = 16;
-  scheduleAuthorFieldFrame.origin.y = (authorLabel.frame.origin.y + 30);
-  authorField.frame = scheduleAuthorFieldFrame;
-  authorField.text = scheduleAuthor;
+  authorFieldFrame          = authorField.frame;
+  authorFieldFrame.origin.x = 16;
+  authorFieldFrame.origin.y = (authorLabel.frame.origin.y + 30);
+  authorField.frame         = authorFieldFrame;
+  authorField.text          = scheduleAuthor;
+  
+  //Add views in scroller
+  [proposalSRPageScroller addSubview:statusLabel];
+  [proposalSRPageScroller addSubview:statusField];
+  
+  [proposalSRPageScroller addSubview:authorLabel];
   [proposalSRPageScroller addSubview:authorField];
   
-  //Displaying one or many schedule period entries
+  //Displaying one or many schedule period entries depending on response parameter
   for (int i = 0; i < schedulePeriodArray.count; i++)
   {
     //Set frame locations - From Date label and field
-    fromDateLabelFrame = fromDateLabel.frame;
+    fromDateLabelFrame          = fromDateLabel.frame;
     fromDateLabelFrame.origin.x = 16;
     fromDateLabelFrame.origin.y = (authorField.frame.origin.y + 40);
-    fromDateLabel.frame = fromDateLabelFrame;
-    [proposalSRPageScroller addSubview:fromDateLabel];
+    fromDateLabel.frame         = fromDateLabelFrame;
     
-    fromDateFieldFrame = fromDateField.frame;
+    fromDateFieldFrame          = fromDateField.frame;
     fromDateFieldFrame.origin.x = 16;
     fromDateFieldFrame.origin.y = (fromDateLabelFrame.origin.y + 30);
-    fromDateField.frame = fromDateFieldFrame;
-    fromDateField.text = [[schedulePeriodArray objectAtIndex:i] valueForKey:@"fromDate"];
-    [proposalSRPageScroller addSubview:fromDateField];
+    fromDateField.frame         = fromDateFieldFrame;
+    fromDateField.text          = [[schedulePeriodArray objectAtIndex:i] valueForKey:@"fromDate"];
     
-    fromTimeLabelFrame = fromTimeLabel.frame;
+    fromTimeLabelFrame          = fromTimeLabel.frame;
     fromTimeLabelFrame.origin.x = (fromDateLabel.frame.origin.x + 150);
     fromTimeLabelFrame.origin.y = (authorField.frame.origin.y + 40);
-    fromTimeLabel.frame = fromTimeLabelFrame;
-    [proposalSRPageScroller addSubview:fromTimeLabel];
+    fromTimeLabel.frame         = fromTimeLabelFrame;
     
-    fromTimeFieldFrame = fromTimeField.frame;
+    fromTimeFieldFrame          = fromTimeField.frame;
     fromTimeFieldFrame.origin.x = (fromDateFieldFrame.origin.x + 150);
     fromTimeFieldFrame.origin.y = (fromTimeLabel.frame.origin.y + 30);
-    fromTimeField.frame = fromTimeFieldFrame;
-    fromTimeField.text = [[schedulePeriodArray objectAtIndex:i] valueForKey:@"fromTime"];
-    [proposalSRPageScroller addSubview:fromTimeField];
-    
+    fromTimeField.frame         = fromTimeFieldFrame;
+    fromTimeField.text          = [[schedulePeriodArray objectAtIndex:i] valueForKey:@"fromTime"];
     
     //Set frame locations - To Date label and field
-    toDateLabelFrame = toDateLabel.frame;
+    toDateLabelFrame          = toDateLabel.frame;
     toDateLabelFrame.origin.x = 16;
     toDateLabelFrame.origin.y = (fromDateField.frame.origin.y + 40);
-    toDateLabel.frame = toDateLabelFrame;
-    [proposalSRPageScroller addSubview:toDateLabel];
+    toDateLabel.frame         = toDateLabelFrame;
     
-    toDateFieldFrame = toDateField.frame;
+    toDateFieldFrame          = toDateField.frame;
     toDateFieldFrame.origin.x = 16;
     toDateFieldFrame.origin.y = (toDateLabelFrame.origin.y + 30);
-    toDateField.frame = toDateFieldFrame;
-    toDateField.text = [[schedulePeriodArray objectAtIndex:i] valueForKey:@"toDate"];
-    [proposalSRPageScroller addSubview:toDateField];
+    toDateField.frame         = toDateFieldFrame;
+    toDateField.text          = [[schedulePeriodArray objectAtIndex:i] valueForKey:@"toDate"];
     
-    toTimeLabelFrame = toTimeLabel.frame;
+    toTimeLabelFrame          = toTimeLabel.frame;
     toTimeLabelFrame.origin.x = (toDateLabel.frame.origin.x + 150);
     toTimeLabelFrame.origin.y = (fromTimeField.frame.origin.y + 40);
-    toTimeLabel.frame = toTimeLabelFrame;
-    [proposalSRPageScroller addSubview:toTimeLabel];
+    toTimeLabel.frame         = toTimeLabelFrame;
     
-    toTimeFieldFrame = toTimeField.frame;
+    toTimeFieldFrame          = toTimeField.frame;
     toTimeFieldFrame.origin.x = (toDateFieldFrame.origin.x + 150);
     toTimeFieldFrame.origin.y = (toTimeLabel.frame.origin.y + 30);
-    toTimeField.frame = toTimeFieldFrame;
-    toTimeField.text = [[schedulePeriodArray objectAtIndex:i] valueForKey:@"toTime"];
-    [proposalSRPageScroller addSubview:toTimeField];
+    toTimeField.frame         = toTimeFieldFrame;
+    toTimeField.text          = [[schedulePeriodArray objectAtIndex:i] valueForKey:@"toTime"];
 
     //Define separator line for the period entries
-    separator.backgroundColor = [UIColor colorWithWhite:0.7 alpha:1];
-    separatorFrame = separator.frame;
-    separatorFrame.origin.x = 0;
-    separatorFrame.origin.y = (toTimeField.frame.origin.y + 50);
+    separator.backgroundColor  = [UIColor colorWithWhite:0.7 alpha:1];
+    separatorFrame             = separator.frame;
+    separatorFrame.origin.x    = 0;
+    separatorFrame.origin.y    = (toTimeField.frame.origin.y + 50);
     separatorFrame.size.height = 1;
-    separatorFrame.size.width = 320;
-    separator.frame = separatorFrame;
+    separatorFrame.size.width  = 320;
+    separator.frame            = separatorFrame;
+    
+    //Add views in scroller
+    [proposalSRPageScroller addSubview:fromDateLabel];
+    [proposalSRPageScroller addSubview:fromDateField];
+    
+    [proposalSRPageScroller addSubview:fromTimeLabel];
+    [proposalSRPageScroller addSubview:fromTimeField];
+    
+    [proposalSRPageScroller addSubview:toDateLabel];
+    [proposalSRPageScroller addSubview:toDateField];
+    
+    [proposalSRPageScroller addSubview:toTimeLabel];
+    [proposalSRPageScroller addSubview:toTimeField];
+    
     [proposalSRPageScroller addSubview:separator];
 
     //Move add schedules button location
     //Add Schedules Button
-    addScheduleButtonFrame = addSchedulesButton.frame;
+    addScheduleButtonFrame          = addSchedulesButton.frame;
     addScheduleButtonFrame.origin.y = (separatorFrame.origin.y + 30);
-    addSchedulesButton.frame = addScheduleButtonFrame;
+    addSchedulesButton.frame        = addScheduleButtonFrame;
+    
+    //Adjust scroller height
+    //[self setScrollerSize];
   }
 }
-
 
 
 #pragma mark - [Add Schedules] button implementation
@@ -762,16 +876,16 @@
   UILabel *toDateLabel   = [[UILabel alloc] init];
   UILabel *toTimeLabel   = [[UILabel alloc] init];
   
-  UITextField *statusField  = [[UITextField alloc] init];
-  UITextField *authorField  = [[UITextField alloc] init];
+  UITextField *statusField   = [[UITextField alloc] init];
+  UITextField *authorField   = [[UITextField alloc] init];
   UITextField *fromDateField = [[UITextField alloc] init];
   UITextField *fromTimeField = [[UITextField alloc] init];
   UITextField *toDateField   = [[UITextField alloc] init];
   UITextField *toTimeField   = [[UITextField alloc] init];
   
   //Set label texts
-  statusLabel.text   = @"Status";
-  authorLabel.text   = @"Author";
+  statusLabel.text   = @"Status: ";
+  authorLabel.text   = @"Author: ";
   fromDateLabel.text = @"From Date: ";
   fromTimeLabel.text = @"From Time: ";
   toDateLabel.text   = @"To Date: ";
@@ -805,120 +919,190 @@
   
   //Set label size dimensions
   CGRect labelSize;
-  labelSize.size.width = 116;
+  labelSize.size.width  = 116;
   labelSize.size.height = 21;
   
   CGRect statusLabelSize = statusLabel.frame;
-  statusLabelSize = labelSize;
-  statusLabel.frame = statusLabelSize;
+  statusLabelSize        = labelSize;
+  statusLabel.frame      = statusLabelSize;
   
   CGRect authorLabelSize = authorLabel.frame;
-  authorLabelSize = labelSize;
-  authorLabel.frame = authorLabelSize;
+  authorLabelSize        = labelSize;
+  authorLabel.frame      = authorLabelSize;
   
   CGRect fromDateLabelSize = fromDateLabel.frame;
-  fromDateLabelSize = labelSize;
-  fromDateLabel.frame = fromDateLabelSize;
+  fromDateLabelSize        = labelSize;
+  fromDateLabel.frame      = fromDateLabelSize;
   
   CGRect fromTimeLabelSize = fromTimeLabel.frame;
-  fromTimeLabelSize = labelSize;
-  fromTimeLabel.frame = fromTimeLabelSize;
+  fromTimeLabelSize        = labelSize;
+  fromTimeLabel.frame      = fromTimeLabelSize;
   
   CGRect toDateLabelSize = toDateLabel.frame;
-  toDateLabelSize = labelSize;
-  toDateLabel.frame = toDateLabelSize;
+  toDateLabelSize        = labelSize;
+  toDateLabel.frame      = toDateLabelSize;
   
   CGRect toTimeLabelSize = toTimeLabel.frame;
-  toTimeLabelSize = labelSize;
-  toTimeLabel.frame = toTimeLabelSize;
+  toTimeLabelSize        = labelSize;
+  toTimeLabel.frame      = toTimeLabelSize;
   
   //Set field size dimensions
   CGRect fieldSize;
-  fieldSize.size.width = 141;
+  fieldSize.size.width  = 141;
   fieldSize.size.height = 30;
   
-  CGRect statusFieldSize = statusField.frame;
-  statusFieldSize = fieldSize;
-  statusField.frame = statusFieldSize;
+  CGRect statusFieldSize      = statusField.frame;
+  statusFieldSize.size.width  = 287;
+  statusFieldSize.size.height = 30;
+  statusField.frame           = statusFieldSize;
   
-  CGRect authorFieldSize = authorField.frame;
-  authorFieldSize = fieldSize;
-  authorField.frame = authorFieldSize;
+  CGRect authorFieldSize      = authorField.frame;
+  authorFieldSize.size.width  = 287;
+  authorFieldSize.size.height = 30;
+  authorField.frame           = authorFieldSize;
   
   CGRect fromDateFieldSize = fromDateField.frame;
-  fromDateFieldSize = fieldSize;
-  fromDateField.frame = fromDateFieldSize;
+  fromDateFieldSize        = fieldSize;
+  fromDateField.frame      = fromDateFieldSize;
   
   CGRect fromTimeFieldSize = fromTimeField.frame;
-  fromTimeFieldSize = fieldSize;
-  fromTimeField.frame = fromTimeFieldSize;
+  fromTimeFieldSize        = fieldSize;
+  fromTimeField.frame      = fromTimeFieldSize;
   
   CGRect toDateFieldSize = toDateField.frame;
-  toDateFieldSize = fieldSize;
-  toDateField.frame = toDateFieldSize;
+  toDateFieldSize        = fieldSize;
+  toDateField.frame      = toDateFieldSize;
   
   CGRect toTimeFieldSize = toTimeField.frame;
-  toTimeFieldSize = fieldSize;
-  toTimeField.frame = toTimeFieldSize;
+  toTimeFieldSize        = fieldSize;
+  toTimeField.frame      = toTimeFieldSize;
   
   
   CGRect startingCoordinates;
-  startingCoordinates.origin.y = (separatorFrame.origin.y + 50);
+  startingCoordinates.origin.y = (separatorFrame.origin.y);
   
-  UIView * separator = [[UIView alloc] initWithFrame:CGRectMake(0, (startingCoordinates.origin.y), 320, 1)];
-  separator.backgroundColor = [UIColor colorWithWhite:0.7 alpha:1];
-  [proposalSRPageScroller addSubview:separator];
+  //Display "Proposal Schedules: " only once, not redundant
+  if([statusArray count] == 0)
+  {
+    UILabel *proposalLabel = [[UILabel alloc] init];
+    
+    proposalLabel.text = @"Proposal Schedules: ";
+    proposalLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+    
+    proposalLabelFrame             = proposalLabel.frame;
+    proposalLabelFrame.size.width  = 320;
+    proposalLabelFrame.size.height = 21;
+    proposalLabelFrame.origin.x    = 16;
+    proposalLabelFrame.origin.y    = (startingCoordinates.origin.y + 10);
+    proposalLabel.frame            = proposalLabelFrame;
+                              
+    [proposalSRPageScroller addSubview:proposalLabel];
+    
+    //Set frame locations and contents - Status label and field
+    statusLabelFrame          = statusLabel.frame;
+    statusLabelFrame.origin.x = 16;
+    statusLabelFrame.origin.y = (startingCoordinates.origin.y + 40);
+    statusLabel.frame         = statusLabelFrame;
+  }
+  else
+  {
+    //Set frame locations and contents - Status label and field
+    statusLabelFrame          = statusLabel.frame;
+    statusLabelFrame.origin.x = 16;
+    statusLabelFrame.origin.y = (startingCoordinates.origin.y + 20);
+    statusLabel.frame         = statusLabelFrame;
+  }
+  
+  //Set frame locations and contents - Status field
+  statusFieldFrame          = statusField.frame;
+  statusFieldFrame.origin.x = 16;
+  statusFieldFrame.origin.y = (statusLabelFrame.origin.y + 30);
+  statusField.frame         = statusFieldFrame;
+  //Set the default text value for the status - Proposal
+  statusField.text          = @"Proposal";
+  
+  //Set frame locations and contents - Author label and field
+  authorLabelFrame          = authorLabel.frame;
+  authorLabelFrame.origin.x = 16;
+  authorLabelFrame.origin.y = (statusFieldFrame.origin.y + 40);
+  authorLabel.frame         = authorLabelFrame;
+  
+  authorFieldFrame          = authorField.frame;
+  authorFieldFrame.origin.x = 16;
+  authorFieldFrame.origin.y = (authorLabelFrame.origin.y + 30);
+  authorField.frame         = authorFieldFrame;
+  
+  //!!! TODO - Set author name to the logged person
+  authorField.text = @"Juan Pedro dela Cruz Sr.";
   
   //Set frame locations - From Date Label and Field
-  fromDateLabelFrame = fromDateLabel.frame;
+  fromDateLabelFrame          = fromDateLabel.frame;
   fromDateLabelFrame.origin.x = 16;
-  fromDateLabelFrame.origin.y = (startingCoordinates.origin.y + 10);
-  fromDateLabel.frame = fromDateLabelFrame;
+  fromDateLabelFrame.origin.y = (authorFieldFrame.origin.y + 40);
+  fromDateLabel.frame         = fromDateLabelFrame;
   
-  fromDateFieldFrame = fromDateField.frame;
+  fromDateFieldFrame          = fromDateField.frame;
   fromDateFieldFrame.origin.x = 16;
   fromDateFieldFrame.origin.y = (fromDateLabelFrame.origin.y + 30);
-  fromDateField.frame = fromDateFieldFrame;
+  fromDateField.frame         = fromDateFieldFrame;
   
-  fromTimeLabelFrame = fromTimeLabel.frame;
+  fromTimeLabelFrame          = fromTimeLabel.frame;
   fromTimeLabelFrame.origin.x = (fromDateLabel.frame.origin.x + 150);
-  fromTimeLabelFrame.origin.y = (startingCoordinates.origin.y + 10);
-  fromTimeLabel.frame = fromTimeLabelFrame;
+  fromTimeLabelFrame.origin.y = (authorFieldFrame.origin.y + 40);
+  fromTimeLabel.frame         = fromTimeLabelFrame;
   
-  fromTimeFieldFrame = fromTimeField.frame;
+  fromTimeFieldFrame          = fromTimeField.frame;
   fromTimeFieldFrame.origin.x = (fromDateFieldFrame.origin.x + 150);
   fromTimeFieldFrame.origin.y = (fromTimeLabel.frame.origin.y + 30);
-  fromTimeField.frame = fromTimeFieldFrame;
+  fromTimeField.frame         = fromTimeFieldFrame;
   
   
   //Set frame locations - To Date Label and Field
-  toDateLabelFrame = toDateLabel.frame;
+  toDateLabelFrame          = toDateLabel.frame;
   toDateLabelFrame.origin.x = 16;
-  toDateLabelFrame.origin.y = (fromDateField.frame.origin.y + 40);
-  toDateLabel.frame = toDateLabelFrame;
+  toDateLabelFrame.origin.y = (fromDateFieldFrame.origin.y + 40);
+  toDateLabel.frame         = toDateLabelFrame;
   
-  toDateFieldFrame = toDateField.frame;
+  toDateFieldFrame          = toDateField.frame;
   toDateFieldFrame.origin.x = 16;
   toDateFieldFrame.origin.y = (toDateLabelFrame.origin.y + 30);
-  toDateField.frame = toDateFieldFrame;
+  toDateField.frame         = toDateFieldFrame;
   
-  toTimeLabelFrame = toTimeLabel.frame;
+  toTimeLabelFrame          = toTimeLabel.frame;
   toTimeLabelFrame.origin.x = (toDateLabel.frame.origin.x + 150);
-  toTimeLabelFrame.origin.y = (fromTimeField.frame.origin.y + 40);
-  toTimeLabel.frame = toTimeLabelFrame;
+  toTimeLabelFrame.origin.y = (fromTimeFieldFrame.origin.y + 40);
+  toTimeLabel.frame         = toTimeLabelFrame;
   
-  toTimeFieldFrame = toTimeField.frame;
+  toTimeFieldFrame          = toTimeField.frame;
   toTimeFieldFrame.origin.x = (toDateFieldFrame.origin.x + 150);
-  toTimeFieldFrame.origin.y = (toTimeLabel.frame.origin.y + 30);
-  toTimeField.frame = toTimeFieldFrame;
+  toTimeFieldFrame.origin.y = (toTimeLabelFrame.origin.y + 30);
+  toTimeField.frame         = toTimeFieldFrame;
   
-  //move add schedules button
-  //Add Schedules Button
-  addScheduleButtonFrame = addSchedulesButton.frame;
-  addScheduleButtonFrame.origin.y = (toDateField.frame.origin.y + 60);
-  addSchedulesButton.frame = addScheduleButtonFrame;
+  //Add separator line at end
+  //Define separator line for the period entries
+  UIView *separator          = [[UIView alloc] init];
+  separator.backgroundColor  = [UIColor colorWithWhite:0.7 alpha:1];
+  separatorFrame = separator.frame;
+  separatorFrame.origin.x    = 0;
+  separatorFrame.origin.y    = (toTimeField.frame.origin.y + 50);
+  separatorFrame.size.height = 1;
+  separatorFrame.size.width  = 320;
+  separator.frame            = separatorFrame;
+  
+  [proposalSRPageScroller addSubview:separator];
+  
+  //Move [Add Schedules] button
+  addScheduleButtonFrame          = addSchedulesButton.frame;
+  addScheduleButtonFrame.origin.y = (toDateFieldFrame.origin.y + 60);
+  addSchedulesButton.frame        = addScheduleButtonFrame;
   
   //Add the fields in scroller
+  [proposalSRPageScroller addSubview:statusLabel];
+  [proposalSRPageScroller addSubview:statusField];
+  
+  [proposalSRPageScroller addSubview:authorLabel];
+  [proposalSRPageScroller addSubview:authorField];
+  
   [proposalSRPageScroller addSubview:fromDateLabel];
   [proposalSRPageScroller addSubview:fromDateField];
   
@@ -931,7 +1115,11 @@
   [proposalSRPageScroller addSubview:toTimeLabel];
   [proposalSRPageScroller addSubview:toTimeField];
   
+  [proposalSRPageScroller addSubview:separator];
+  
   //Store fields in arrays
+  [statusArray addObject:statusField];
+  [authorArray addObject:authorField];
   [fromDatesArray addObject:fromDateField];
   [fromTimesArray addObject:fromTimeField];
   [toDatesArray addObject:toDateField];
@@ -942,12 +1130,12 @@
   NSLog(@"toDatesArray: %@", toDatesArray);
   NSLog(@"toTimesArray: %@", toTimesArray);
   
+  //Adjust scroller height
+  //[self setScrollerSize];
+  
   //Store the fields in a dictionary
   [scheduleFromDateDictionary setObject:fromDateField forKey:fromTimeField];
   [scheduleToDateDictionary setObject:toDateField forKey:toTimeField];
-  
-  //NSLog(@"scheduleFromDateDictionary: %@", scheduleFromDateDictionary);
-  //NSLog(@"scheduleToDateDictionary: %@", scheduleToDateDictionary);
   
   //Schedule Periods Operations
   actionSheet = [[UIActionSheet alloc] initWithTitle:nil
@@ -955,6 +1143,7 @@
                                    cancelButtonTitle:nil
                               destructiveButtonTitle:nil
                                    otherButtonTitles:nil];
+  
   [actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
   
   UISegmentedControl *doneButton = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObject:@"Done"]];
@@ -964,10 +1153,10 @@
   doneButton.tintColor = [UIColor blackColor];
   
   //Action Sheet definition - From Date
-  UILabel *actionSheetLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 50.0)];
-  actionSheetLabel.text = @"   Pick From Date and Time: ";
-  actionSheetLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
-  actionSheetLabel.textColor = [UIColor whiteColor];
+  UILabel *actionSheetLabel        = [[UILabel alloc] initWithFrame:CGRectMake(16, 0.0, 320.0, 50.0)];
+  actionSheetLabel.text            = @"Pick From Date and Time: ";
+  actionSheetLabel.font            = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  actionSheetLabel.textColor       = [UIColor whiteColor];
   actionSheetLabel.backgroundColor = [UIColor clearColor];
   
   [actionSheet addSubview:actionSheetLabel];
@@ -990,22 +1179,24 @@
   NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
   [dateFormatter setDateFormat:@"yyyy-MM-dd"];
   fromDate = [dateFormatter stringFromDate:datePicker.date];
-  NSLog(@"fromDate: %@", fromDate);
   
   NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
   [timeFormatter setDateFormat:@"HH:mm"]; //@"h:mm a"
   fromTime = [timeFormatter stringFromDate:datePicker.date];
-  NSLog(@"fromTime: %@", fromTime);
   
   //Display selected date time in fields
   UITextField *tempField = [[UITextField alloc] init];
-  tempField = [fromDatesArray lastObject];
+  
+  tempField      = [fromDatesArray lastObject];
   tempField.text = fromDate;
   
-  tempField = [fromTimesArray lastObject];
+  tempField      = [fromTimesArray lastObject];
   tempField.text = fromTime;
   
-  [self performSelector:@selector(pickToDateTime) withObject:nil afterDelay:1.0];
+  [self performSelector:@selector(pickToDateTime)
+             withObject:nil
+             afterDelay:1.0];
+  
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
 }
 
@@ -1019,6 +1210,7 @@
                                    cancelButtonTitle:nil
                               destructiveButtonTitle:nil
                                    otherButtonTitles:nil];
+  
   [actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
   
   UISegmentedControl *doneButton = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObject:@"Done"]];
@@ -1028,10 +1220,10 @@
   doneButton.tintColor = [UIColor blackColor];
   
   //Action Sheet definition - From Date
-  UILabel *actionSheetLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 50.0)];
-  actionSheetLabel.text = @"   Pick To Date and Time: ";
-  actionSheetLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
-  actionSheetLabel.textColor = [UIColor whiteColor];
+  UILabel *actionSheetLabel        = [[UILabel alloc] initWithFrame:CGRectMake(16, 0.0, 320.0, 50.0)];
+  actionSheetLabel.text            = @"Pick To Date and Time: ";
+  actionSheetLabel.font            = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  actionSheetLabel.textColor       = [UIColor whiteColor];
   actionSheetLabel.backgroundColor = [UIColor clearColor];
   
   [actionSheet addSubview:actionSheetLabel];
@@ -1053,19 +1245,18 @@
   NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
   [dateFormatter setDateFormat:@"yyyy-MM-dd"];
   toDate = [dateFormatter stringFromDate:datePicker.date];
-  NSLog(@"toDate: %@", toDate);
   
   NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
-  [timeFormatter setDateFormat:@"HH:mm"]; //@"h:mm a"
+  [timeFormatter setDateFormat:@"HH:mm"];
   toTime = [timeFormatter stringFromDate:datePicker.date];
-  NSLog(@"toTime: %@", toTime);
   
   //Display selected date time in fields
   UITextField *tempField = [[UITextField alloc] init];
-  tempField = [toDatesArray lastObject];
+  
+  tempField      = [toDatesArray lastObject];
   tempField.text = toDate;
   
-  tempField = [toTimesArray lastObject];
+  tempField      = [toTimesArray lastObject];
   tempField.text = toTime;
   
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
@@ -1079,8 +1270,8 @@
   
   if(estimatedCostField.isEditing)
   {
-    NSLog(@"estimatedCost field editing");
     estimatedCostField.textColor = [UIColor redColor];
+    
     return YES;
   }
   else
@@ -1094,7 +1285,7 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
   NSString *originalEstimatedCost = [[NSString alloc] init];
-  originalEstimatedCost = [serviceRequestInfo valueForKey:@"cost"];
+  originalEstimatedCost           = [serviceRequestInfo valueForKey:@"cost"];
   
   //!!! TODO - Handling decimal digits
   NSMutableString *enteredCost = [NSMutableString stringWithFormat:@"%@.0", estimatedCostField.text];
@@ -1208,7 +1399,6 @@
   //cost - updated based on user input
   [serviceRequestJson setObject:estimatedCostField.text forKey:@"cost"];
   
-  
   //notes
   NSMutableDictionary *notesDictionary = [[NSMutableDictionary alloc] init];
   NSMutableDictionary *notesSenderJson = [[NSMutableDictionary alloc] init];
@@ -1217,7 +1407,7 @@
   for(int i = 0; i < proposalNotesArray.count; i++)
   {
     //sender
-    [notesSenderJson setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY - Remove hardcoded value
+    [notesSenderJson setObject:@20130101500000001 forKey:@"id"]; //!!! TODO - TEST ONLY - Remove hardcoded value
     [notesDictionary setObject:notesSenderJson forKey:@"sender"];
     
     //message
@@ -1234,6 +1424,7 @@
   //schedules
   //TODO - schedules !!!
   NSMutableDictionary *scheduleDictionary = [[NSMutableDictionary alloc] init];
+  
   //schedule - status
   NSMutableDictionary *scheduleStatusDictionary = [[NSMutableDictionary alloc] init];
   NSMutableArray *scheduleArray = [[NSMutableArray alloc] init];
@@ -1244,7 +1435,7 @@
   
   //schedule - author
   NSMutableDictionary *scheduleAuthor = [[NSMutableDictionary alloc] init];
-  [scheduleAuthor setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY !!! - Update
+  [scheduleAuthor setObject:@20130101500000001 forKey:@"id"]; //!!! TODO - TEST ONLY !!! - Update
   [scheduleDictionary setObject:scheduleAuthor forKey:@"author"];
   
   //schedule - periods
@@ -1289,11 +1480,12 @@
   NSError *error = [[NSError alloc] init];
   NSData *jsonData = [NSJSONSerialization
                       dataWithJSONObject:serviceRequestJson
-                      options:NSJSONWritingPrettyPrinted
-                      error:&error];
+                                 options:NSJSONWritingPrettyPrinted
+                                   error:&error];
+  
   NSString *jsonString = [[NSString alloc]
                           initWithData:jsonData
-                          encoding:NSUTF8StringEncoding];
+                              encoding:NSUTF8StringEncoding];
   
   NSLog(@"jsonData Request: %@", jsonData);
   NSLog(@"jsonString Request: %@", jsonString);
@@ -1313,23 +1505,24 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:putRequest
-                                 delegate:self];
+                                        delegate:self];
   
   [connection start];
   
   NSLog(@"updateServiceRequest - httpResponseCode: %d", httpResponseCode);
   
   //Set alert message display depending on what operation is performed (ACCEPTED or PROPOSAL)
-  NSString *updateAlertMessage = [[NSString alloc] init];
+  NSString *updateAlertMessage     = [[NSString alloc] init];
   NSString *updateFailAlertMessage = [[NSString alloc] init];
+  
   if([operationFlag isEqual:@"ACCEPTED"])
   {
-    updateAlertMessage = @"Service Request Accepted.";
+    updateAlertMessage     = @"Service Request Accepted.";
     updateFailAlertMessage = @"Service Request not accepted. Please try again later";
   }
   else if([operationFlag isEqual:@"PROPOSAL"])
   {
-    updateAlertMessage = @"Service Request Under Proposal Stage.";
+    updateAlertMessage     = @"Service Request Under Proposal Stage.";
     updateFailAlertMessage = @"Service Request not updated to proposal stage. Please try again later";
   }
   
@@ -1337,9 +1530,9 @@
   if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
   {
     UIAlertView *updateSRAlert = [[UIAlertView alloc]
-                                  initWithTitle:@"Service Request"
-                                  message:updateAlertMessage
-                                  delegate:self
+                                      initWithTitle:@"Service Request"
+                                            message:updateAlertMessage
+                                           delegate:self
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
     [updateSRAlert show];
@@ -1347,9 +1540,9 @@
   else //(httpResponseCode >= 400)
   {
     UIAlertView *updateSRFailAlert = [[UIAlertView alloc]
-                                      initWithTitle:@"Service Request Failed"
-                                      message:updateFailAlertMessage
-                                      delegate:self
+                                          initWithTitle:@"Service Request Failed"
+                                                message:updateFailAlertMessage
+                                               delegate:self
                                       cancelButtonTitle:@"OK"
                                       otherButtonTitles:nil];
     [updateSRFailAlert show];
@@ -1373,22 +1566,9 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
-}
-
-
-#pragma mark - Transition to Assets Page when OK on Alert Box is clicked
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-  if (buttonIndex == 0) //OK
-  {
-    //Go back to Home
-    HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
-    
-    [self.navigationController pushViewController:controller animated:YES];
-  }
 }
 
 

@@ -45,6 +45,7 @@
   NSLog(@"Update Assets List Page");
   
   [self displayUpdateAssetsPageEntries];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -65,7 +66,7 @@
   URL = @"http://192.168.2.107/vertex-api/asset/getOwnership/";
   
   //TEST
-  //Update userId >> Where to get userId
+  //!!! TODO - Update userId >> Where to get userId
   NSString *userId = @"20130101500000001";
   NSMutableString *urlParams = [NSMutableString
                                 stringWithFormat:@"http://192.168.2.107/vertex-api/asset/getOwnership/%@"
@@ -80,7 +81,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -88,16 +89,16 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if (responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:self
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:self
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
@@ -130,31 +131,30 @@
     //JSON
     assetOwned = [NSJSONSerialization
                   JSONObjectWithData:responseData
-                  options:kNilOptions
-                  error:&error];
+                             options:kNilOptions
+                               error:&error];
+    
     NSLog(@"assetOwned JSON: %@", assetOwned);
     
     updateAssetsPageEntries = [assetOwned valueForKey:@"name"];
     
-    assetNameArray = [[NSMutableArray alloc] init];
-    assetIdArray = [[NSMutableArray alloc] init];
+    assetNameArray   = [[NSMutableArray alloc] init];
+    assetIdArray     = [[NSMutableArray alloc] init];
     assetIdNameArray = [[NSMutableArray alloc] init];
+    
     NSMutableDictionary *assetInfoDict = [[NSMutableDictionary alloc] init];
     
     assetNameArray = [assetOwned valueForKey:@"name"];
-    assetIdArray = [assetOwned valueForKey:@"id"];
-    
-    NSLog(@"assetNameArray: %@", assetNameArray);
-    NSLog(@"assetIdArray: %@", assetIdArray);
+    assetIdArray   = [assetOwned valueForKey:@"id"];
     
     for(int i = 0; i < [updateAssetsPageEntries count]; i++)
     {
       [assetInfoDict setObject:[assetIdArray objectAtIndex:i] forKey:@"id"];
       [assetInfoDict setObject:[assetNameArray objectAtIndex:i] forKey:@"name"];
-      NSLog(@"assetInfoDict: %@", assetInfoDict);
       
-      //container of id-name pair for asset
+      //Container of id-name pair for asset
       [assetIdNameArray insertObject:assetInfoDict atIndex:i];
+     
       assetInfoDict = [[NSMutableDictionary alloc] init];
     }
     NSLog(@"assetIdNameArray: %@", assetIdNameArray);
@@ -172,7 +172,7 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
@@ -218,24 +218,24 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.updateAssetsPageEntries objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.updateAssetsPageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
+
 
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   NSString *selectedRowName = [[NSString alloc] init];
-  selectedRowName = [updateAssetsPageEntries objectAtIndex:indexPath.row];
-  NSLog(@"Selected row name: %@", selectedRowName);
   
+  selectedRowName = [updateAssetsPageEntries objectAtIndex:indexPath.row];
   selectedAssetId = [assetIdArray objectAtIndex:indexPath.row];
-  NSLog(@"selectedAssetId: %@", selectedAssetId);
   
   [self performSegueWithIdentifier:@"updateAssetListToUpdateAssetPage" sender:self];
-
 }
+
 
 #pragma mark - prepare for segue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

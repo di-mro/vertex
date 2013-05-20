@@ -26,6 +26,7 @@
 @synthesize URL;
 @synthesize httpResponseCode;
 
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -41,14 +42,21 @@
   NSLog(@"Update Asset Ownership Page");
   
   //Keyboard dismissal
-  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                        action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelUpdateAssetOwnership)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(cancelUpdateAssetOwnership)];
   
   //[Update] navigation button - Update Asset Ownership
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Update" style:UIBarButtonItemStylePlain target:self action:@selector(updateAssetOwnership)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Update"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(updateAssetOwnership)];
   
   //Configure Scroller size
   self.updateAssetOwnershipScroller.contentSize = CGSizeMake(320, 720);
@@ -85,6 +93,7 @@
   if([self validateUpdateAssetOwnershipFields])
   {
     NSMutableDictionary *updateAssetOwnershipJson = [[NSMutableDictionary alloc] init];
+    
     //TODO : Construct JSON Request
     //[updateAssetOwnershipJson setObject:@"" forKey:@""];
     
@@ -92,11 +101,12 @@
     NSError *error = [[NSError alloc] init];
     NSData *jsonData = [NSJSONSerialization
                         dataWithJSONObject:updateAssetOwnershipJson
-                        options:NSJSONWritingPrettyPrinted
-                        error:&error];
+                                   options:NSJSONWritingPrettyPrinted
+                                     error:&error];
+    
     NSString *jsonString = [[NSString alloc]
                             initWithData:jsonData
-                            encoding:NSUTF8StringEncoding];
+                                encoding:NSUTF8StringEncoding];
     
     NSLog(@"jsonData Request: %@", jsonData);
     NSLog(@"jsonString Request: %@", jsonString);
@@ -117,7 +127,7 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:putRequest
-                                   delegate:self];
+                                          delegate:self];
     
     [connection start];
     
@@ -125,22 +135,22 @@
     if(httpResponseCode == 200) //ok
     {
       UIAlertView *updateAssetOwnershipAlert = [[UIAlertView alloc]
-                                                     initWithTitle:@"Update Asset Ownership"
-                                                     message:@"Asset Ownership Updated."
-                                                     delegate:self
-                                                     cancelButtonTitle:@"OK"
-                                                     otherButtonTitles:nil];
+                                                    initWithTitle:@"Update Asset Ownership"
+                                                          message:@"Asset Ownership Updated."
+                                                         delegate:self
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
       [updateAssetOwnershipAlert show];
       //Transition to Asset Config Page - alertView clickedButtonAtIndex
     }
     else //(httpResponseCode >= 400)
     {
       UIAlertView *updateAssetOwnershipFailAlert = [[UIAlertView alloc]
-                                                         initWithTitle:@"Update Asset Ownership Failed"
-                                                         message:@"Asset Ownership not updated. Please try again later"
-                                                         delegate:self
-                                                         cancelButtonTitle:@"OK"
-                                                         otherButtonTitles:nil];
+                                                        initWithTitle:@"Update Asset Ownership Failed"
+                                                              message:@"Asset Ownership not updated. Please try again later"
+                                                             delegate:self
+                                                    cancelButtonTitle:@"OK"
+                                                    otherButtonTitles:nil];
       [updateAssetOwnershipFailAlert show];
       
     }
@@ -165,7 +175,7 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
@@ -187,11 +197,11 @@
 -(BOOL) validateUpdateAssetOwnershipFields
 {
   UIAlertView *updateAssetOwnershipValidateAlert = [[UIAlertView alloc]
-                                                         initWithTitle:@"Incomplete Information"
-                                                         message:@"Please fill out the necessary fields."
-                                                         delegate:nil
-                                                         cancelButtonTitle:@"OK"
-                                                         otherButtonTitles:nil];
+                                                        initWithTitle:@"Incomplete Information"
+                                                              message:@"Please fill out the necessary fields."
+                                                             delegate:nil
+                                                    cancelButtonTitle:@"OK"
+                                                    otherButtonTitles:nil];
   
   if([assetNameField.text isEqualToString:(@"")] || [esseInfoField.text isEqualToString:(@"")])
   {
