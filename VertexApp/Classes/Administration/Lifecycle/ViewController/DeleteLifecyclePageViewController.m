@@ -39,12 +39,19 @@
 - (void)viewDidLoad
 {
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelDeleteLifecycle)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(cancelDeleteLifecycle)];
   
   //[Delete] navigation button - Delete Lifecycle
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Delete" style:UIBarButtonItemStylePlain target:self action:@selector(deleteLifecycle)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Delete"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(deleteLifecycle)];
   
   [self displayDeleteLifecyclesPageEntries];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -73,7 +80,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -81,16 +88,16 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if (responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:self
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:self
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
@@ -121,17 +128,18 @@
     //JSON
     lifecyclesDict = [NSJSONSerialization
                       JSONObjectWithData:responseData
-                      options:kNilOptions
-                      error:&error];
+                                 options:kNilOptions
+                                   error:&error];
+    
     NSLog(@"lifecycles JSON: %@", lifecyclesDict);
     
     deleteLifecyclePageEntries = [lifecyclesDict valueForKey:@"name"];
     
     lifecycleNameArray = [[NSMutableArray alloc] init];
-    lifecycleIdArray = [[NSMutableArray alloc] init];
+    lifecycleIdArray   = [[NSMutableArray alloc] init];
     
     lifecycleNameArray = [lifecyclesDict valueForKey:@"name"];
-    lifecycleIdArray = [lifecyclesDict valueForKey:@"id"];
+    lifecycleIdArray   = [lifecyclesDict valueForKey:@"id"];
   }
 }
 
@@ -153,9 +161,9 @@
 -(void) deleteLifecycle
 {
   UIAlertView *lifecycleDeleteConfirmation = [[UIAlertView alloc]
-                                       initWithTitle:@"Lifecycle Delete"
-                                       message:@"Are you sure you want to delete the selected lifecycle?"
-                                       delegate:self
+                                           initWithTitle:@"Lifecycle Delete"
+                                                 message:@"Are you sure you want to delete the selected lifecycle?"
+                                                delegate:self
                                        cancelButtonTitle:@"Yes"
                                        otherButtonTitles:@"No",
                                        nil];
@@ -188,7 +196,7 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:deleteRequest
-                                   delegate:self];
+                                          delegate:self];
     [connection start];
     
     NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -196,16 +204,16 @@
     
     NSData *responseData = [NSURLConnection
                             sendSynchronousRequest:deleteRequest
-                            returningResponse:&urlResponse
-                            error:&error];
+                                 returningResponse:&urlResponse
+                                             error:&error];
     
     if (responseData == nil)
     {
       //Show an alert if connection is not available
       UIAlertView *lifecycleDeleteAlert = [[UIAlertView alloc]
-                                           initWithTitle:@"Warning"
-                                           message:@"Lifecycle not deleted. Please try again."
-                                           delegate:nil
+                                               initWithTitle:@"Warning"
+                                                     message:@"Lifecycle not deleted. Please try again."
+                                                    delegate:nil
                                            cancelButtonTitle:@"OK"
                                            otherButtonTitles:nil];
       [lifecycleDeleteAlert show];
@@ -213,9 +221,9 @@
     else
     {
       UIAlertView *lifecycleDeleteAlert = [[UIAlertView alloc]
-                                           initWithTitle:@"Lifecycle Delete"
-                                           message:@"Lifecycle deleted"
-                                           delegate:nil
+                                               initWithTitle:@"Lifecycle Delete"
+                                                     message:@"Lifecycle deleted"
+                                                    delegate:nil
                                            cancelButtonTitle:@"OK"
                                            otherButtonTitles:nil];
       [lifecycleDeleteAlert show];
@@ -241,7 +249,7 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
@@ -264,7 +272,6 @@
 {
   //Return the number of rows in the section
   return [deleteLifecyclePageEntries count];
-  NSLog(@"%d", [deleteLifecyclePageEntries count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -273,8 +280,9 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.deleteLifecyclePageEntries objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.deleteLifecyclePageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
 
@@ -282,11 +290,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   NSString *selectedRowName = [[NSString alloc] init];
-  selectedRowName = [deleteLifecyclePageEntries objectAtIndex:indexPath.row];
-  NSLog(@"Selected row name: %@", selectedRowName);
   
+  selectedRowName     = [deleteLifecyclePageEntries objectAtIndex:indexPath.row];
   selectedLifecycleId = [lifecycleIdArray objectAtIndex:indexPath.row];
-  NSLog(@"selectedLifecycleId: %@", selectedLifecycleId);
   
   //Call method to delete lifecycle, pass lifecycleId
   //[self deleteLifecycle];

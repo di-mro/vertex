@@ -31,6 +31,7 @@
   NSLog(@"Lifecycle Configurations Page View");
   
   [self displayLifecycleConfigPageEntries];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -40,6 +41,7 @@
   [super didReceiveMemoryWarning];
   // Dispose of any resources that can be recreated.
 }
+
 
 # pragma mark - Display entries in Admin Page
 - (void) displayLifecycleConfigPageEntries
@@ -56,6 +58,7 @@
   [lifecycleConfigPageEntries addObject:entry3];
   [lifecycleConfigPageEntries addObject:entry4];
 }
+
 
 #pragma mark - Table view data source implementation
 - (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView
@@ -74,7 +77,6 @@
 {
   //Return the number of rows in the section
   return [lifecycleConfigPageEntries count];
-  NSLog(@"%d", [lifecycleConfigPageEntries count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -83,10 +85,12 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.lifecycleConfigPageEntries objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.lifecycleConfigPageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
+
 
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

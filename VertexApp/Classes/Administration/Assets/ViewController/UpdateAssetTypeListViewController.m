@@ -40,6 +40,7 @@
   NSLog(@"Update Asset Type Page");
   
   [self displayUpdateAssetTypePageEntries];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -68,7 +69,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -76,16 +77,16 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if (responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:self
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:self
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
@@ -106,8 +107,9 @@
     //JSON
     assetTypeDict = [NSJSONSerialization
                      JSONObjectWithData:responseData
-                     options:kNilOptions
-                     error:&error];
+                                options:kNilOptions
+                                  error:&error];
+    
     NSLog(@"assetTypeDict JSON: %@", assetTypeDict);
     
     updateAssetTypePageEntries = [assetTypeDict valueForKey:@"name"];
@@ -131,7 +133,7 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
@@ -154,7 +156,6 @@
 {
   //Return the number of rows in the section
   return [updateAssetTypePageEntries count];
-  NSLog(@"%d", [updateAssetTypePageEntries count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -163,8 +164,9 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.updateAssetTypePageEntries objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.updateAssetTypePageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
 
@@ -172,11 +174,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   NSString *selectedRowName = [[NSString alloc] init];
-  selectedRowName = [updateAssetTypePageEntries objectAtIndex:indexPath.row];
-  NSLog(@"Selected row name: %@", selectedRowName);
   
+  selectedRowName     = [updateAssetTypePageEntries objectAtIndex:indexPath.row];
   selectedAssetTypeId = [assetTypeIdArray objectAtIndex:indexPath.row];
-  NSLog(@"selectedAssetTypeId: %@", selectedAssetTypeId);
   
   [self performSegueWithIdentifier:@"updateAssetTypeListToUpdateAssetTypePage" sender:self];
 }

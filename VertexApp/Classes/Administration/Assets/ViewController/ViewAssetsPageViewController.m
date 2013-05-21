@@ -29,6 +29,7 @@
 @synthesize assetNameArray;
 @synthesize assetIdArray;
 
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -44,9 +45,13 @@
   NSLog(@"View Assets Page View");
   
   //[Home] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:self action:@selector(backToHome)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(backToHome)];
   
   [self displayViewAssetsPageEntries];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -94,7 +99,7 @@
 
   NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:getRequest
-                                   delegate:self];
+                                          delegate:self];
   [connection start];
 
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -102,16 +107,16 @@
     
   NSData *responseData = [NSURLConnection
                             sendSynchronousRequest:getRequest
-                            returningResponse:&urlResponse
-                            error:&error];
+                                 returningResponse:&urlResponse
+                                             error:&error];
 
   if (responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                      initWithTitle:@"Warning"
-                                      message:@"No network connection detected. Displaying data from phone cache."
-                                      delegate:self
+                                          initWithTitle:@"Warning"
+                                                message:@"No network connection detected. Displaying data from phone cache."
+                                               delegate:self
                                       cancelButtonTitle:@"OK"
                                       otherButtonTitles:nil];
     [connectionAlert show];
@@ -144,34 +149,31 @@
     //JSON
     assetOwned = [NSJSONSerialization
                   JSONObjectWithData:responseData
-                  options:kNilOptions
-                  error:&error];
+                             options:kNilOptions
+                               error:&error];
+    
     NSLog(@"assetOwned JSON: %@", assetOwned);
     
     viewAssetsPageEntries = [assetOwned valueForKey:@"name"];
     
-    assetNameArray = [[NSMutableArray alloc] init];
-    assetIdArray = [[NSMutableArray alloc] init];
+    assetNameArray   = [[NSMutableArray alloc] init];
+    assetIdArray     = [[NSMutableArray alloc] init];
     assetIdNameArray = [[NSMutableArray alloc] init];
+    
     NSMutableDictionary *assetInfoDict = [[NSMutableDictionary alloc] init];
     
     assetNameArray = [assetOwned valueForKey:@"name"];
-    assetIdArray = [assetOwned valueForKey:@"id"];
-    
-    NSLog(@"assetNameArray: %@", assetNameArray);
-    NSLog(@"assetIdArray: %@", assetIdArray);
+    assetIdArray   = [assetOwned valueForKey:@"id"];
     
     for(int i = 0; i < [viewAssetsPageEntries count]; i++)
     {
       [assetInfoDict setObject:[assetIdArray objectAtIndex:i] forKey:@"id"];
       [assetInfoDict setObject:[assetNameArray objectAtIndex:i] forKey:@"name"];
-      NSLog(@"assetInfoDict: %@", assetInfoDict);
       
       //container of id-name pair for asset
       [assetIdNameArray insertObject:assetInfoDict atIndex:i];
       assetInfoDict = [[NSMutableDictionary alloc] init];
     }
-    NSLog(@"assetIdNameArray: %@", assetIdNameArray);
   }
 }
 
@@ -216,8 +218,9 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.viewAssetsPageEntries objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.viewAssetsPageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
 
@@ -225,11 +228,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   NSString *selectedRowName = [[NSString alloc] init];
-  selectedRowName = [viewAssetsPageEntries objectAtIndex:indexPath.row];
-  NSLog(@"Selected row name: %@", selectedRowName);
   
+  selectedRowName = [viewAssetsPageEntries objectAtIndex:indexPath.row];
   selectedAssetId = [assetIdArray objectAtIndex:indexPath.row];
-  NSLog(@"selectedAssetId: %@", selectedAssetId);
   
   [self performSegueWithIdentifier:@"viewAssetsToSingleAsset" sender:self];
 }

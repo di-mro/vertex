@@ -61,17 +61,24 @@
 - (void)viewDidLoad
 {
   //Keyboard dismissal
-  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                        action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //Configure Scroller size
   self.addServiceScroller.contentSize = CGSizeMake(320, 720);
   
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelAddService)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(cancelAddService)];
   
   //[Add] navigation button - Add Lifecycle
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addService)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(addService)];
   
   //For populating the values in the Picker fields
   [self getAssetType];
@@ -108,7 +115,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -117,36 +124,50 @@
   //GET
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if (responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:nil
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:nil
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
     
     //TODO: Connect to CoreData for local data
     //!- FOR TESTING ONLY -!
-    assetPickerArray = [[NSMutableArray alloc] initWithObjects:@"Demo - Aircon",@"Demo - Door", @"Demo - Exhaust Fan", @"Demo - Faucet", @"Demo - Toilet", @"Demo - Kitchen Sink", @"Demo - Lighting Fixtures", nil];
-    assetTypeIdArray = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00004", @"Demo - 00005", nil];
+    assetPickerArray = [[NSMutableArray alloc] initWithObjects:
+                          @"Demo - Aircon"
+                        , @"Demo - Door"
+                        , @"Demo - Exhaust Fan"
+                        , @"Demo - Faucet"
+                        , @"Demo - Toilet"
+                        , @"Demo - Kitchen Sink"
+                        , @"Demo - Lighting Fixtures"
+                        , nil];
+    
+    assetTypeIdArray = [[NSMutableArray alloc] initWithObjects:
+                          @"Demo - 00001"
+                        , @"Demo - 00002"
+                        , @"Demo - 00004"
+                        , @"Demo - 00005"
+                        , nil];
   }
   else
   {
     assetTypes = [NSJSONSerialization
                   JSONObjectWithData:responseData
-                  options:kNilOptions
-                  error:&error];
+                             options:kNilOptions
+                               error:&error];
+    
     NSLog(@"getAssetTypes JSON Result: %@", assetTypes);
     
     assetPickerArray = [assetTypes valueForKey:@"name"]; //store assetType names only in PickerArray
     assetTypeIdArray = [assetTypes valueForKey:@"id"];
-    NSLog(@"assetPickerArray: %@", assetPickerArray);
   }
 }
 
@@ -166,7 +187,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -174,36 +195,49 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if(responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *lifecycleAlert = [[UIAlertView alloc]
-                                   initWithTitle:@"Warning"
-                                   message:@"No network connection detected. Displaying data from phone cache."
-                                   delegate:nil
+                                       initWithTitle:@"Warning"
+                                             message:@"No network connection detected. Displaying data from phone cache."
+                                            delegate:nil
                                    cancelButtonTitle:@"OK"
                                    otherButtonTitles:nil];
     [lifecycleAlert show];
     
     //Connect to CoreData for local data
     //!- FOR TESTING ONLY -!
-    lifecyclePickerArray = [[NSMutableArray alloc] initWithObjects: @"Demo - Canvas", @"Demo - Requisition", @"Demo - Purchase", @"Demo - Installation", @"Demo - Repair", @"Demo - Decommission", nil];
-    lifecycleIdArray = [[NSMutableArray alloc] initWithObjects: @"Demo - 00001", @"Demo - 00002", @"Demo - 00004", @"Demo - 00005", nil];
+    lifecyclePickerArray = [[NSMutableArray alloc] initWithObjects:
+                              @"Demo - Canvas"
+                            , @"Demo - Requisition"
+                            , @"Demo - Purchase"
+                            , @"Demo - Installation"
+                            , @"Demo - Repair"
+                            , @"Demo - Decommission"
+                            , nil];
+    
+    lifecycleIdArray = [[NSMutableArray alloc] initWithObjects:
+                          @"Demo - 00001"
+                        , @"Demo - 00002"
+                        , @"Demo - 00004"
+                        , @"Demo - 00005"
+                        , nil];
   }
   else
   {
     lifecycles = [NSJSONSerialization
                   JSONObjectWithData:responseData
-                  options:kNilOptions
-                  error:&error];
+                             options:kNilOptions
+                               error:&error];
+    
     NSLog(@"lifecycles JSON Result: %@", lifecycles);
     
     lifecyclePickerArray = [lifecycles valueForKey:@"name"]; //store lifecycles names only in PickerArray
-    lifecycleIdArray = [lifecycles valueForKey:@"id"];
-    NSLog(@"lifecyclePickerArray: %@", lifecyclePickerArray);
+    lifecycleIdArray     = [lifecycles valueForKey:@"id"];
   }
 }
 
@@ -215,7 +249,7 @@
   srGenericPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 40, 0, 0)];
   srGenericPicker.showsSelectionIndicator = YES;
   srGenericPicker.dataSource = self;
-  srGenericPicker.delegate = self;
+  srGenericPicker.delegate   = self;
 }
 
 
@@ -228,6 +262,7 @@
                                    cancelButtonTitle:nil
                               destructiveButtonTitle:nil
                                    otherButtonTitles:nil];
+  
   [actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
   
   UISegmentedControl *doneButton = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObject:@"Done"]];
@@ -250,8 +285,8 @@
     [self defineGenericPicker];
     [actionSheet addSubview:srGenericPicker];
     
-    currentArray = assetPickerArray;
-    currentTextField = assetTypeField;
+    currentArray             = assetPickerArray;
+    currentTextField         = assetTypeField;
     assetTypeField.inputView = actionSheet;
     
     [doneButton addTarget:self action:@selector(getAssetTypeIndex) forControlEvents:UIControlEventValueChanged];
@@ -266,8 +301,8 @@
     [self defineGenericPicker];
     [actionSheet addSubview:srGenericPicker];
     
-    currentArray = lifecyclePickerArray;
-    currentTextField = lifecycleField;
+    currentArray             = lifecyclePickerArray;
+    currentTextField         = lifecycleField;
     lifecycleField.inputView = actionSheet;
     
     [doneButton addTarget:self action:@selector(getLifecycleIndex) forControlEvents:UIControlEventValueChanged];
@@ -280,43 +315,31 @@
 }
 
 
+#pragma mark - Get selected index in Asset Type picker
 -(void) getAssetTypeIndex
 {
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
   
-  int assetTypeIndex = [srGenericPicker selectedRowInComponent:0];
-  NSLog(@"assetTypeIndex: %d", assetTypeIndex);
+  int assetTypeIndex  = [srGenericPicker selectedRowInComponent:0];
   selectedAssetTypeId = [assetTypeIdArray objectAtIndex:assetTypeIndex]; //selectedIndex
-  NSLog(@"selectedAssetTypeId: %@", selectedAssetTypeId);
   
   NSString *selectedEntity = [currentArray objectAtIndex:assetTypeIndex];
-  currentTextField.text = selectedEntity;
+  currentTextField.text    = selectedEntity;
 }
 
+
+#pragma mark - Get selected index in Lifecycle Picker
 -(void) getLifecycleIndex
 {
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
   
-  int lifecycleIndex = [srGenericPicker selectedRowInComponent:0];
-  NSLog(@"lifecycleIndex: %d", lifecycleIndex);
+  int lifecycleIndex  = [srGenericPicker selectedRowInComponent:0];
   selectedLifecycleId = [lifecycleIdArray objectAtIndex:lifecycleIndex]; //selectedIndex
-  NSLog(@"selectedLifecycleId: %@", selectedLifecycleId);
   
   NSString *selectedEntity = [currentArray objectAtIndex:lifecycleIndex];
-  currentTextField.text = selectedEntity;
+  currentTextField.text    = selectedEntity;
 }
 
-/*
-#pragma mark - Get selected row in Picker and set the text field to the selected entity
--(void)selectedRow
-{
-  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
-  
-  selectedIndex = [srGenericPicker selectedRowInComponent:0];
-  NSString *selectedEntity = [currentArray objectAtIndex:selectedIndex];
-  currentTextField.text = selectedEntity;
-}
-*/
 
 #pragma mark - Dismissing onscreen keyboard
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -384,21 +407,22 @@
     NSMutableDictionary *servicesDictionary = [[NSMutableDictionary alloc] init];
     [servicesDictionary setObject:serviceField.text forKey:@"name"];
     [servicesDictionary setObject:serviceCostField.text forKey:@"cost"];
+    
     NSMutableArray *servicesArray = [[NSMutableArray alloc] init];
     [servicesArray addObject:servicesDictionary];
     [addServiceJson setObject:servicesArray forKey:@"services"];
-    //[addServiceJson setObject:servicesDictionary forKey:@"services"];
     
     NSLog(@"addService JSON: %@", addServiceJson);
     
     NSError *error = [[NSError alloc] init];
     NSData *jsonData = [NSJSONSerialization
                         dataWithJSONObject:addServiceJson
-                        options:NSJSONWritingPrettyPrinted
-                        error:&error];
+                                   options:NSJSONWritingPrettyPrinted
+                                     error:&error];
+    
     NSString *jsonString = [[NSString alloc]
                             initWithData:jsonData
-                            encoding:NSUTF8StringEncoding];
+                                encoding:NSUTF8StringEncoding];
     
     NSLog(@"jsonData Request: %@", jsonData);
     NSLog(@"jsonString Request: %@", jsonString);
@@ -418,7 +442,7 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:postRequest
-                                   delegate:self];
+                                          delegate:self];
     
     [connection start];
     
@@ -426,9 +450,9 @@
     if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
     {
       UIAlertView *addServiceAlert = [[UIAlertView alloc]
-                                      initWithTitle:@"Add Service"
-                                      message:@"Service Added."
-                                      delegate:self
+                                          initWithTitle:@"Add Service"
+                                                message:@"Service Added."
+                                               delegate:self
                                       cancelButtonTitle:@"OK"
                                       otherButtonTitles:nil];
       [addServiceAlert show];
@@ -436,9 +460,9 @@
     else //(httpResponseCode >= 400)
     {
       UIAlertView *addServiceAlert = [[UIAlertView alloc]
-                                      initWithTitle:@"Add Service Failed"
-                                      message:@"Service not added. Please try again later"
-                                      delegate:self
+                                          initWithTitle:@"Add Service Failed"
+                                                message:@"Service not added. Please try again later"
+                                               delegate:self
                                       cancelButtonTitle:@"OK"
                                       otherButtonTitles:nil];
       [addServiceAlert show];
@@ -465,7 +489,7 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
@@ -493,9 +517,9 @@
 -(BOOL) validateAddServiceFields
 {
   UIAlertView *addServiceValidateAlert = [[UIAlertView alloc]
-                                           initWithTitle:@"Incomplete Information"
-                                           message:@"Please fill out the necessary fields."
-                                           delegate:nil
+                                               initWithTitle:@"Incomplete Information"
+                                                     message:@"Please fill out the necessary fields."
+                                                    delegate:nil
                                            cancelButtonTitle:@"OK"
                                            otherButtonTitles:nil];
   

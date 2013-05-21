@@ -27,6 +27,7 @@
 @synthesize URL;
 @synthesize httpResponseCode;
 
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -40,17 +41,24 @@
 - (void)viewDidLoad
 {
   //Keyboard dismissal
-  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                        action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //Configure Scroller size
   self.addLifecycleScroller.contentSize = CGSizeMake(320, 720);
   
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelAddLifecycle)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(cancelAddLifecycle)];
   
   //[Add] navigation button - Add Lifecycle
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addLifecycle)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(addLifecycle)];
     
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -90,11 +98,12 @@
     NSError *error = [[NSError alloc] init];
     NSData *jsonData = [NSJSONSerialization
                         dataWithJSONObject:addLifecycleJson
-                        options:NSJSONWritingPrettyPrinted
-                        error:&error];
+                                   options:NSJSONWritingPrettyPrinted
+                                     error:&error];
+    
     NSString *jsonString = [[NSString alloc]
                             initWithData:jsonData
-                            encoding:NSUTF8StringEncoding];
+                                encoding:NSUTF8StringEncoding];
     
     NSLog(@"jsonData Request: %@", jsonData);
     NSLog(@"jsonString Request: %@", jsonString);
@@ -114,12 +123,11 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:postRequest
-                                   delegate:self];
+                                          delegate:self];
     
     [connection start];
     
     NSLog(@"addLifecycle - httpResponseCode: %d", httpResponseCode);
-    //***
   }
   else
   {
@@ -146,9 +154,9 @@
   if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
   {
     UIAlertView *addLifecycleAlert = [[UIAlertView alloc]
-                                      initWithTitle:@"Add Lifecycle"
-                                      message:@"Lifecycle Added."
-                                      delegate:self
+                                          initWithTitle:@"Add Lifecycle"
+                                                message:@"Lifecycle Added."
+                                               delegate:self
                                       cancelButtonTitle:@"OK"
                                       otherButtonTitles:nil];
     [addLifecycleAlert show];
@@ -156,9 +164,9 @@
   else //(httpResponseCode >= 400)
   {
     UIAlertView *addLifecycleFailAlert = [[UIAlertView alloc]
-                                          initWithTitle:@"Add Lifecycle Failed"
-                                          message:@"Lifecycle not added. Please try again later"
-                                          delegate:self
+                                              initWithTitle:@"Add Lifecycle Failed"
+                                                    message:@"Lifecycle not added. Please try again later"
+                                                   delegate:self
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
     [addLifecycleFailAlert show];
@@ -185,9 +193,9 @@
 -(BOOL) validateAddLifecycleFields
 {
   UIAlertView *addLifeycleValidateAlert = [[UIAlertView alloc]
-                                           initWithTitle:@"Incomplete Information"
-                                           message:@"Please fill out the necessary fields."
-                                           delegate:nil
+                                               initWithTitle:@"Incomplete Information"
+                                                     message:@"Please fill out the necessary fields."
+                                                    delegate:nil
                                            cancelButtonTitle:@"OK"
                                            otherButtonTitles:nil];
   

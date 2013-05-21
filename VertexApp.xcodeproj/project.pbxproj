@@ -162,6 +162,8 @@
 		ED68A0FF1715D10E0090DF1E /* eye.png in Resources */ = {isa = PBXBuildFile; fileRef = ED68A0F91715D10E0090DF1E /* eye.png */; };
 		ED8A7C7D16E4A34200F06AF1 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8A7C7716E4941200F06AF1 /* TPKeyboardAvoidingScrollView.m */; };
 		ED8A7C7E16E4A34D00F06AF1 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8A7C7916E4941200F06AF1 /* TPKeyboardAvoidingTableView.m */; };
+		ED925DF81749CB5E00E2CF03 /* ApprovalSRListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED925DF71749CB5A00E2CF03 /* ApprovalSRListViewController.m */; };
+		ED925DFE1749E6FA00E2CF03 /* ApprovalSRPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED925DFD1749E6F600E2CF03 /* ApprovalSRPageViewController.m */; };
 		EDA8E70916F05C2D00B9C57E /* UserAccounts.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA8E70816F05C2000B9C57E /* UserAccounts.m */; };
 		EDA8E70F16F05D3300B9C57E /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA8E70E16F05D2800B9C57E /* UserInfo.m */; };
 		EDA8E71216F0630B00B9C57E /* AssetTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA8E71116F062FE00B9C57E /* AssetTypes.m */; };
@@ -544,6 +546,10 @@
 		ED8A7C7716E4941200F06AF1 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
 		ED8A7C7816E4941200F06AF1 /* TPKeyboardAvoidingTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingTableView.h; sourceTree = "<group>"; };
 		ED8A7C7916E4941200F06AF1 /* TPKeyboardAvoidingTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingTableView.m; sourceTree = "<group>"; };
+		ED925DF61749CB5700E2CF03 /* ApprovalSRListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApprovalSRListViewController.h; sourceTree = "<group>"; };
+		ED925DF71749CB5A00E2CF03 /* ApprovalSRListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApprovalSRListViewController.m; sourceTree = "<group>"; };
+		ED925DFC1749E6F000E2CF03 /* ApprovalSRPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApprovalSRPageViewController.h; sourceTree = "<group>"; };
+		ED925DFD1749E6F600E2CF03 /* ApprovalSRPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApprovalSRPageViewController.m; sourceTree = "<group>"; };
 		EDA8E70716F05C1300B9C57E /* UserAccounts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAccounts.h; sourceTree = "<group>"; };
 		EDA8E70816F05C2000B9C57E /* UserAccounts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAccounts.m; sourceTree = "<group>"; };
 		EDA8E70D16F05D1900B9C57E /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
@@ -1282,6 +1288,10 @@
 				ED634A1A173794E8003540A4 /* AcknowledgeSRListViewController.m */,
 				ED634A1F1737950A003540A4 /* AcknowledgeSRPageViewController.h */,
 				ED634A201737950A003540A4 /* AcknowledgeSRPageViewController.m */,
+				ED925DF61749CB5700E2CF03 /* ApprovalSRListViewController.h */,
+				ED925DF71749CB5A00E2CF03 /* ApprovalSRListViewController.m */,
+				ED925DFC1749E6F000E2CF03 /* ApprovalSRPageViewController.h */,
+				ED925DFD1749E6F600E2CF03 /* ApprovalSRPageViewController.m */,
 				EDEFE7AA16DF3C51002C35D6 /* CreateSRViewController.h */,
 				EDEFE7AB16DF3C51002C35D6 /* CreateSRViewController.m */,
 				EDEFE7AC16DF3C51002C35D6 /* DisplaySRViewController.h */,
@@ -1698,6 +1708,8 @@
 				EDDA2D43173A284100FCF15F /* InspectSRPageViewController.m in Sources */,
 				ED569ADD1741F5F90002D6E4 /* ProposalSRListViewController.m in Sources */,
 				ED569AE31741FA9B0002D6E4 /* ProposalSRPageViewController.m in Sources */,
+				ED925DF81749CB5E00E2CF03 /* ApprovalSRListViewController.m in Sources */,
+				ED925DFE1749E6FA00E2CF03 /* ApprovalSRPageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

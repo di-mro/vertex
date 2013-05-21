@@ -401,10 +401,10 @@
   [notesTextAreaArray addObject:newNoteTextArea];
   
   //Adjust position of [Add Notes] button when new text area is added
-  addNotesButtonFrame = addNotesButton.frame;
+  addNotesButtonFrame          = addNotesButton.frame;
   addNotesButtonFrame.origin.x = 20;
   addNotesButtonFrame.origin.y = (newNoteTextArea.frame.origin.y + 130);
-  addNotesButton.frame = addNotesButtonFrame;
+  addNotesButton.frame         = addNotesButtonFrame;
   
   //Move all element below the added notesTextArea
   [self adjustFieldAfterNotes];
@@ -435,14 +435,17 @@
   //Add Notes text area in view
   [inspectSRScroller addSubview:newNoteTextArea];
   
+  //Store added Notes text view in ALL Notes array - to track placement of text views when adding new notes
+  [notesTextAreaArray addObject:newNoteTextArea];
+  
   //Store added Notes text area in array for service request inspection notes
   [inspectionNotesArray addObject:newNoteTextArea];
   
   //Adjust position of [Add Notes] button when new text area is added
-  addNotesButtonFrame = addNotesButton.frame;
+  addNotesButtonFrame          = addNotesButton.frame;
   addNotesButtonFrame.origin.x = 20;
   addNotesButtonFrame.origin.y = (newNoteTextArea.frame.origin.y + 130);
-  addNotesButton.frame = addNotesButtonFrame;
+  addNotesButton.frame         = addNotesButtonFrame;
   
   //Move all element below the added notesTextArea
   [self adjustFieldAfterNotes];

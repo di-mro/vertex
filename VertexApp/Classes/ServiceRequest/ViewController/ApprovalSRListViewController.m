@@ -1,33 +1,30 @@
 //
-//  ProposalSRListViewController.m
+//  ApprovalSRListViewController.m
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 5/14/13.
+//  Created by Mary Rose Oh on 5/20/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
-#import "ProposalSRListViewController.h"
-#import "ServiceRequestViewController.h"
-#import "HomePageViewController.h"
-#import "ProposalSRPageViewController.h"
+#import "ApprovalSRListViewController.h"
 
-@interface ProposalSRListViewController ()
+@interface ApprovalSRListViewController ()
 
 @end
 
-@implementation ProposalSRListViewController
+@implementation ApprovalSRListViewController
 
-@synthesize srForProposalAsset;
-@synthesize srForProposalService;
-@synthesize srForProposalSRIds;
+@synthesize srForApprovalAsset;
+@synthesize srForApprovalService;
+@synthesize srForApprovalSRIds;
 
-@synthesize srForProposalEntries;
-@synthesize srForProposalDate;
+@synthesize srForApprovalEntries;
+@synthesize srForApprovalDate;
 
 @synthesize URL;
 @synthesize httpResponseCode;
 
-@synthesize srForProposalDictionary;
+@synthesize srForApprovalDictionary;
 
 @synthesize selectedSRId;
 @synthesize statusId;
@@ -45,7 +42,7 @@
 
 - (void)viewDidLoad
 {
-  //Connect to endpoint - getServiceRequestByStatus - Created status
+  //Connect to endpoint - getServiceRequestByStatus - Proposal status
   [self getServiceRequestByStatus];
   
   [super viewDidLoad];
@@ -59,22 +56,13 @@
 }
 
 
-#pragma mark - Segue to SR Page
--(void) backToSRPage
-{
-  //Go back to Service Request Page
-  ServiceRequestViewController* controller = (ServiceRequestViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"SRPage"];
-  
-  [self.navigationController pushViewController:controller animated:YES];
-}
-
-
-#pragma mark - Retrieve Service Request with 'Service Request Creation' Status ID - for Acknowledgement
+#pragma mark - Retrieve Service Request with 'Service Request Proposal' Status ID - for Approval
 -(void) getServiceRequestByStatus
 {
-  //Endpoint for getServiceRequestByStatus
-  statusId = @20130101420000004; //Service Request For Inspection Status Id
-  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.107/vertex-api/service-request/getServiceRequestByStatus/%@", statusId];
+  //endpoint for getServiceRequestByStatus
+  //Service Request Proposal Status Id
+  statusId = @20130101420000005;
+  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.107/vertex-api/service-request/getServiceRequestByStatus/%@", statusId]; //113
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:urlParams]];
@@ -108,59 +96,58 @@
     
     //Connect to CoreData for local data
     //!- FOR TESTING ONLY -!
-    srForProposalAsset = [[NSMutableArray alloc] initWithObjects:
-                            @"Demo - Aircon"
-                          , @"Demo - Door"
-                          , @"Demo - Window"
-                          , nil];
+    srForApprovalAsset = [[NSMutableArray alloc] initWithObjects:
+                                 @"Demo - Aircon"
+                                 , @"Demo - Door"
+                                 , @"Demo - Window"
+                                 , nil];
     
-    srForProposalService = [[NSMutableArray alloc] initWithObjects:
-                              @"- Fix filter"
-                            , @"- Repair hinge"
-                            , @"- Repair handle"
-                            , nil];
+    srForApprovalService = [[NSMutableArray alloc] initWithObjects:
+                                   @"- Fix filter"
+                                   , @"- Repair hinge"
+                                   , @"- Repair handle"
+                                   , nil];
     
-    srForProposalSRIds = [[NSMutableArray alloc] initWithObjects:
-                            @"Demo - 00001"
-                          , @"Demo - 00002"
-                          , @"Demo - 00003"
-                          , nil];
+    srForApprovalSRIds = [[NSMutableArray alloc] initWithObjects:
+                                 @"Demo - 00001"
+                                 , @"Demo - 00002"
+                                 , @"Demo - 00003"
+                                 , nil];
     
-    srForProposalDate = [[NSMutableArray alloc] initWithObjects:
-                           @"2013-05-05"
-                         , @"2013-05-06"
-                         , @"2013-05-07"
-                         , nil];
+    srForApprovalDate = [[NSMutableArray alloc] initWithObjects:
+                                @"2013-05-05"
+                                , @"2013-05-06"
+                                , @"2013-05-07"
+                                , nil];
   }
   else
   {
-    srForProposalDictionary = [NSJSONSerialization
+    srForApprovalDictionary = [NSJSONSerialization
                                 JSONObjectWithData:responseData
                                            options:kNilOptions
                                              error:&error];
     
-    NSLog(@"srForProposalDictionary JSON Result: %@", srForProposalDictionary);
+    NSLog(@"srForApprovalDictionary JSON Result: %@", srForApprovalDictionary);
     
-    srForProposalAsset   = [[srForProposalDictionary valueForKey:@"asset"] valueForKey:@"name"];
-    srForProposalService = [[srForProposalDictionary valueForKey:@"service"] valueForKey:@"name"];
-    srForProposalSRIds   = [srForProposalDictionary valueForKey:@"id"];
-    srForProposalDate    = [srForProposalDictionary valueForKey:@"createdDate"];
+    srForApprovalAsset   = [[srForApprovalDictionary valueForKey:@"asset"] valueForKey:@"name"];
+    srForApprovalService = [[srForApprovalDictionary valueForKey:@"service"] valueForKey:@"name"];
+    srForApprovalSRIds   = [srForApprovalDictionary valueForKey:@"id"];
+    srForApprovalDate    = [srForApprovalDictionary valueForKey:@"createdDate"];
   }
   
   //Concatenate asset name and service name of service request for display in table view
-  srForProposalEntries = [[NSMutableArray alloc] init];
-  
-  for(int i = 0; i < srForProposalAsset.count; i++)
+  srForApprovalEntries = [[NSMutableArray alloc] init];
+  for(int i = 0; i < srForApprovalAsset.count; i++)
   {
     NSMutableString *displayString = [NSMutableString stringWithFormat:@"%@ - %@"
-                                      , [srForProposalAsset objectAtIndex:i]
-                                      , [srForProposalService objectAtIndex:i]];
+                                      , [srForApprovalAsset objectAtIndex:i]
+                                      , [srForApprovalService objectAtIndex:i]];
     
-    [srForProposalEntries insertObject:displayString atIndex:i];
+    [srForApprovalEntries insertObject:displayString atIndex:i];
     displayString = [[NSMutableString alloc] init];
   }
   
-  NSLog(@"srForProposalEntries: %@", srForProposalEntries);
+  NSLog(@"srForApprovalEntries: %@", srForApprovalEntries);
 }
 
 
@@ -173,26 +160,25 @@
 
 - (NSString *) tableView:(UITableView *) tableView titleForHeaderInSection:(NSInteger)section
 {
-  NSString *myTitle = [[NSString alloc] initWithFormat:@"For Proposal List"];
+  NSString *myTitle = [[NSString alloc] initWithFormat:@"For Approval List"];
   return myTitle;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
   //Return the number of rows in the section
-  return [srForProposalEntries count];
+  return [srForApprovalEntries count];
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  static NSString *CellIdentifier = @"srProposalCell";
+  static NSString *CellIdentifier = @"srApprovalCell";
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //Configure the cell title & subtitle
-  cell.textLabel.text          = [srForProposalEntries objectAtIndex:indexPath.row];
-  cell.detailTextLabel.text    = [srForProposalDate objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [srForApprovalEntries objectAtIndex:indexPath.row];
+  cell.detailTextLabel.text    = [srForApprovalDate objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
-  
   return cell;
 }
 
@@ -206,23 +192,21 @@
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  selectedSRId = [srForProposalSRIds objectAtIndex:indexPath.row];
+  selectedSRId = [srForApprovalSRIds objectAtIndex:indexPath.row];
   NSLog(@"selectedSRId: %@", selectedSRId);
   
-  [self performSegueWithIdentifier:@"srProposalListToProposalPage" sender:self];
+  //[self performSegueWithIdentifier:@"srAcknowledgeListToAcknowledgePage" sender:self];
 }
 
-
+/*
 #pragma mark - prepare for segue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-  if ([segue.identifier isEqualToString:@"srProposalListToProposalPage"])
+  if ([segue.identifier isEqualToString:@"srAcknowledgeListToAcknowledgePage"])
   {
     [segue.destinationViewController setServiceRequestId:selectedSRId];
   }
 }
-
-
-
+*/
 
 @end

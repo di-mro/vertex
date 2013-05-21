@@ -11,6 +11,7 @@
 @interface ProposalSRPageViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UIScrollView *proposalSRPageScroller;
+@property CGFloat scrollViewHeight;
 
 @property (strong, nonatomic) IBOutlet UILabel *assetLabel;
 @property (strong, nonatomic) IBOutlet UITextField *assetField;
@@ -67,6 +68,15 @@
 @property (strong, nonatomic) NSMutableArray *fromTimesArray;
 @property (strong, nonatomic) NSMutableArray *toDatesArray;
 @property (strong, nonatomic) NSMutableArray *toTimesArray;
+
+/*
+@property (strong, nonatomic) NSMutableArray *statusLabelArray;
+@property (strong, nonatomic) NSMutableArray *authorLabelArray;
+@property (strong, nonatomic) NSMutableArray *fromDatesLabelArray;
+@property (strong, nonatomic) NSMutableArray *fromTimesLabelArray;
+@property (strong, nonatomic) NSMutableArray *toDatesLabelArray;
+@property (strong, nonatomic) NSMutableArray *toTimesLabelArray;
+*/
 
 @property (strong, nonatomic) NSMutableDictionary *scheduleFromDateDictionary;
 @property (strong, nonatomic) NSMutableDictionary *scheduleToDateDictionary;

@@ -39,6 +39,7 @@
   NSLog(@"Update Lifecycle List View");
   
   [self displayViewLifecyclesPageEntries];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -66,7 +67,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -74,16 +75,16 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if (responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:self
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:self
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
@@ -114,17 +115,18 @@
     //JSON
     lifecyclesDict = [NSJSONSerialization
                       JSONObjectWithData:responseData
-                      options:kNilOptions
-                      error:&error];
+                                 options:kNilOptions
+                                   error:&error];
+    
     NSLog(@"lifecycles JSON: %@", lifecyclesDict);
     
     viewLifecyclesPageEntries = [lifecyclesDict valueForKey:@"name"];
     
     lifecycleNameArray = [[NSMutableArray alloc] init];
-    lifecycleIdArray = [[NSMutableArray alloc] init];
+    lifecycleIdArray   = [[NSMutableArray alloc] init];
     
     lifecycleNameArray = [lifecyclesDict valueForKey:@"name"];
-    lifecycleIdArray = [lifecyclesDict valueForKey:@"id"];
+    lifecycleIdArray   = [lifecyclesDict valueForKey:@"id"];
   }
 }
 
@@ -146,7 +148,6 @@
 {
   //Return the number of rows in the section
   return [viewLifecyclesPageEntries count];
-  NSLog(@"%d", [viewLifecyclesPageEntries count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -155,20 +156,20 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.viewLifecyclesPageEntries objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.viewLifecyclesPageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
+
 
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   NSString *selectedRowName = [[NSString alloc] init];
-  selectedRowName = [viewLifecyclesPageEntries objectAtIndex:indexPath.row];
-  NSLog(@"Selected row name: %@", selectedRowName);
   
+  selectedRowName     = [viewLifecyclesPageEntries objectAtIndex:indexPath.row];
   selectedLifecycleId = [lifecycleIdArray objectAtIndex:indexPath.row];
-  NSLog(@"selectedLifecycleId: %@", selectedLifecycleId);
   
   [self performSegueWithIdentifier:@"lifecycleListToUpdateLifecycle" sender:self];
 }

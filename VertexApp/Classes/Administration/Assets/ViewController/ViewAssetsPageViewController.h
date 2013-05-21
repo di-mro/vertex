@@ -22,8 +22,8 @@
 
 @property (nonatomic, strong) NSMutableArray *assetNameArray;
 @property (nonatomic, strong) NSMutableArray *assetIdArray;
-//@property (nonatomic, strong) NSMutableDictionary *assetIdNameDict;
 @property (nonatomic, strong) NSMutableArray *assetIdNameArray;
 @property (nonatomic, strong) NSNumber *selectedAssetId;
+
 
 @end

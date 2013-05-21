@@ -133,8 +133,8 @@
     //Proposal
     case 3: [self performSegueWithIdentifier:@"srToProposalSR" sender:self];
       break;
-    //~ Approval
-    case 4: [self performSegueWithIdentifier:@"srToViewSR" sender:self];
+    //Approval
+    case 4: [self performSegueWithIdentifier:@"srToApprovalSR" sender:self];
       break;
     //~ Provisioning
     case 5: [self performSegueWithIdentifier:@"srToViewSR" sender:self];

@@ -584,18 +584,19 @@
     //Constructing JSON Request Object - POST
     /*
      "{
-     id: long
-     name: string
-     assetType :
-     {
-     id: long
-     }
-     assetAttributes :
-     [           {
-     keyName: string,
-     value : string
-     }, ...
-     ]
+        id: long
+        name: string
+        assetType :
+        {
+          id: long
+        }
+        assetAttributes :
+        [           
+          {
+            keyName: string,
+            value : string
+          }, ...
+        ]
      }"
      */
     
@@ -606,37 +607,33 @@
     //AssetType Object
     NSMutableDictionary *assetTypeDict = [[NSMutableDictionary alloc] init];
     [assetTypeDict setObject:selectedAssetTypeId forKey:@"id"];
-    NSLog(@"selectedAssetTypeId: %@", selectedAssetTypeId);
     
     //Getting and setting Asset Attributes
-    NSMutableArray *assetAttribKeyArray = [[NSMutableArray alloc] init];
-    NSMutableArray *assetAttribValueArray = [[NSMutableArray alloc] init];
+    NSMutableArray *assetAttribKeyArray    = [[NSMutableArray alloc] init];
+    NSMutableArray *assetAttribValueArray  = [[NSMutableArray alloc] init];
     NSMutableArray *assetAttribUnitIdArray = [[NSMutableArray alloc] init];
-    UITextField *fieldContent = [[UITextField alloc] init];
+    UITextField *fieldContent              = [[UITextField alloc] init];
     
     //Store keysName and value pair
     for(NSString *key in [attribTextFields allKeys])
     {
       [assetAttribKeyArray addObject:key];
-      NSLog(@"assetAttribKeyArray: %@", assetAttribKeyArray);
       
       fieldContent = [attribTextFields valueForKey:key];
       [assetAttribValueArray addObject:fieldContent.text];
       
       fieldContent = [[UITextField alloc] init];
-      NSLog(@"assetAttribValueArray: %@", assetAttribValueArray);
     }
     
     //Store all attribute unit Ids in array
     for(NSString *key in [attribUnits allKeys])
     {
       [assetAttribUnitIdArray addObject:key];
-      NSLog(@"assetAttribUnitIdArray: %@", assetAttribUnitIdArray);
     }
     
     NSMutableDictionary *assetAttributesDict = [[NSMutableDictionary alloc] init];
-    NSMutableDictionary *attribUnitsDict = [[NSMutableDictionary alloc] init];
-    NSMutableArray *innerAssetAttribArray = [[NSMutableArray alloc] init];
+    NSMutableDictionary *attribUnitsDict     = [[NSMutableDictionary alloc] init];
+    NSMutableArray *innerAssetAttribArray    = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < [assetAttribKeyArray count]; i++) //attribute number
     {
@@ -659,11 +656,12 @@
     NSError *error = [[NSError alloc] init];
     NSData *jsonData = [NSJSONSerialization
                         dataWithJSONObject:mainDictionary
-                        options:NSJSONWritingPrettyPrinted
-                        error:&error];
+                                   options:NSJSONWritingPrettyPrinted
+                                     error:&error];
+    
     NSString *jsonString = [[NSString alloc]
                             initWithData:jsonData
-                            encoding:NSUTF8StringEncoding];
+                                encoding:NSUTF8StringEncoding];
     
     NSLog(@"jsonData Request: %@", jsonData);
     NSLog(@"jsonString Request: %@", jsonString);
@@ -679,12 +677,12 @@
     [putRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [putRequest setHTTPMethod:@"PUT"];
     [putRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String]
-                                            length:[jsonString length]]];
+                                           length:[jsonString length]]];
     NSLog(@"%@", putRequest);
     
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:putRequest
-                                   delegate:self];
+                                          delegate:self];
     
     [connection start];
     
@@ -692,9 +690,9 @@
     if(httpResponseCode == 200) //ok
     {
       UIAlertView *updateAssetAlert = [[UIAlertView alloc]
-                                       initWithTitle:@"Update Asset"
-                                       message:@"Asset Updated."
-                                       delegate:self
+                                           initWithTitle:@"Update Asset"
+                                                 message:@"Asset Updated."
+                                                delegate:self
                                        cancelButtonTitle:@"OK"
                                        otherButtonTitles:nil];
       [updateAssetAlert show];
@@ -703,9 +701,9 @@
     else //(httpResponseCode >= 400)
     {
       UIAlertView *updateAssetFailAlert = [[UIAlertView alloc]
-                                           initWithTitle:@"Update Asset Failed"
-                                           message:@"Asset not updated. Please try again later"
-                                           delegate:self
+                                               initWithTitle:@"Update Asset Failed"
+                                                     message:@"Asset not updated. Please try again later"
+                                                    delegate:self
                                            cancelButtonTitle:@"OK"
                                            otherButtonTitles:nil];
       [updateAssetFailAlert show];
@@ -732,7 +730,7 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
@@ -754,9 +752,9 @@
 -(BOOL) validateAddAssetFields
 {
   UIAlertView *updateAssetValidateAlert = [[UIAlertView alloc]
-                                           initWithTitle:@"Incomplete Information"
-                                           message:@"Please fill out the necessary fields."
-                                           delegate:nil
+                                               initWithTitle:@"Incomplete Information"
+                                                     message:@"Please fill out the necessary fields."
+                                                    delegate:nil
                                            cancelButtonTitle:@"OK"
                                            otherButtonTitles:nil];
   
@@ -770,6 +768,7 @@
     for(NSString *key in [attribTextFields allKeys])
     {
       UITextField *tempField = [[UITextField alloc] init];
+      
       tempField = [attribTextFields objectForKey:key];
       if(tempField.hasText)
       {

@@ -111,7 +111,7 @@
                                              , nil];
   
   //Scroller size
-  self.acknowledgeSRScroller.contentSize = CGSizeMake(320.0, 2000.0);
+  self.acknowledgeSRScroller.contentSize = CGSizeMake(320.0, 3000.0);
   
   //Disable fields - for viewing only
   assetField.enabled         = NO;

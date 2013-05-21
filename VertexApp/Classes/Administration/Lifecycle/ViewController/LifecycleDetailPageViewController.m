@@ -33,6 +33,7 @@
 - (void)viewDidLoad
 {
   [self getLifecycleInfo];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -80,16 +81,16 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if (responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:self
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:self
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
@@ -101,8 +102,9 @@
     
     //Format display string
     lifecycleDetailsDisplay = [NSMutableString
-                           stringWithFormat:@"LIFECYCLE NAME: \n  %@ \n\nLIFECYCLE DESCRIPTION: \n  %@",
-                           @"Demo - repair", @"Demo - repair"];
+                               stringWithFormat:@"LIFECYCLE NAME: \n  %@ \n\nLIFECYCLE DESCRIPTION: \n  %@"
+                                                , @"Demo - repair"
+                                                , @"Demo - repair"];
     
     lifecycleDetailTextArea.text = lifecycleDetailsDisplay;
   }
@@ -110,9 +112,10 @@
   {
     //JSON
     lifecycleInfo = [NSJSONSerialization
-                 JSONObjectWithData:responseData
-                 options:kNilOptions
-                 error:&error];
+                     JSONObjectWithData:responseData
+                                options:kNilOptions
+                                  error:&error];
+    
     NSLog(@"lifecycleInfo JSON: %@", lifecycleInfo);
     
     //Setting the display for the Text Area
@@ -120,8 +123,9 @@
     
     //Format display string
     lifecycleDetailsDisplay = [NSMutableString
-                               stringWithFormat:@"LIFECYCLE NAME: \n  %@ \n\nLIFECYCLE DESCRIPTION: \n  %@",
-                               [lifecycleInfo valueForKey:@"name"], [lifecycleInfo valueForKey:@"description"]];
+                               stringWithFormat:@"LIFECYCLE NAME: \n  %@ \n\nLIFECYCLE DESCRIPTION: \n  %@"
+                               , [lifecycleInfo valueForKey:@"name"]
+                               , [lifecycleInfo valueForKey:@"description"]];
     
     lifecycleDetailTextArea.text = lifecycleDetailsDisplay;
   } //end - else if (responseData == nil)

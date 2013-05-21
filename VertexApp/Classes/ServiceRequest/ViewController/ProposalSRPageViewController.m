@@ -17,6 +17,7 @@
 @implementation ProposalSRPageViewController
 
 @synthesize proposalSRPageScroller;
+@synthesize scrollViewHeight;
 
 @synthesize assetLabel;
 @synthesize assetField;
@@ -86,6 +87,15 @@
 @synthesize toDatesArray;
 @synthesize toTimesArray;
 
+/*
+@synthesize statusLabelArray;
+@synthesize authorLabelArray;
+@synthesize fromDatesLabelArray;
+@synthesize fromTimesLabelArray;
+@synthesize toDatesLabelArray;
+@synthesize toTimesLabelArray;
+*/
+
 @synthesize scheduleFromDateDictionary;
 @synthesize scheduleToDateDictionary;
 
@@ -128,7 +138,7 @@
   
   //[Back] (Cancel) navigation button
   UIBarButtonItem *backButton = [[UIBarButtonItem alloc]
-                                 initWithTitle:@"Back"
+                                 initWithTitle:@"Cancel"
                                          style:UIBarButtonItemStylePlain
                                         target:self
                                         action:@selector(cancelProposalSR)];
@@ -156,8 +166,9 @@
                                              , nil];
   
   //Scroller size
-  self.proposalSRPageScroller.contentSize = CGSizeMake(320.0, 5000);
-  //[self setScrollerSize];
+  //.proposalSRPageScroller.contentSize = CGSizeMake(320.0, 5000);
+  scrollViewHeight = 0.0f;
+  [self setScrollerSize];
   
   //Disable fields - for viewing only
   assetField.enabled         = NO;
@@ -186,6 +197,15 @@
   toDatesArray   = [[NSMutableArray alloc] init];
   toTimesArray   = [[NSMutableArray alloc] init];
   
+  /*
+  statusLabelArray    = [[NSMutableArray alloc] init];
+  authorLabelArray    = [[NSMutableArray alloc] init];
+  fromDatesLabelArray = [[NSMutableArray alloc] init];
+  fromTimesLabelArray = [[NSMutableArray alloc] init];
+  toDatesLabelArray   = [[NSMutableArray alloc] init];
+  toTimesLabelArray   = [[NSMutableArray alloc] init];
+  */
+  
   //Initialize dictionaries for proposal schedules
   scheduleFromDateDictionary = [[NSMutableDictionary alloc] init];
   scheduleToDateDictionary   = [[NSMutableDictionary alloc] init];
@@ -204,7 +224,6 @@
 #pragma mark - Adjust proposalSRPageScroller height depending on number of elements in view
 -(void) setScrollerSize
 {
-  CGFloat scrollViewHeight = 640.0f;
   for (UIView *view in proposalSRPageScroller.subviews)
   {
     scrollViewHeight += view.frame.size.height;
@@ -383,7 +402,7 @@
         [self displayNotesEntries:notesDisplay];
       }
     }
-
+    
     //!!! TODO - Retrieve values for Schedules
     NSMutableArray *retrievedSchedulesArray = [[NSMutableArray alloc] init];
     retrievedSchedulesArray = [serviceRequestInfo valueForKey:@"schedules"];
@@ -483,6 +502,7 @@
   
   //Get the location of prev Notes text area and adjust new Notes area location based on that
   UITextView *prevNoteTextView = [[UITextView alloc] init];
+  NSLog(@"notesTextAreaArray: %@", notesTextAreaArray);
   prevNoteTextView      = [notesTextAreaArray lastObject];
   CGRect noteFrame      = newNoteTextArea.frame;
   noteFrame.origin.x    = 17;
@@ -492,7 +512,10 @@
   //Add Notes text area in view
   [proposalSRPageScroller addSubview:newNoteTextArea];
   
-  //Store added Notes text area in array for service request proposal notes
+  //Store added Notes text view in ALL Notes array - to track placement of text views when adding new notes
+  [notesTextAreaArray addObject:newNoteTextArea];
+  
+  //Store added Notes text view in array for service request proposal notes
   [proposalNotesArray addObject:newNoteTextArea];
   
   //Adjust position of [Add Notes] button when new text area is added
@@ -502,7 +525,7 @@
   addNotesButton.frame         = addNotesButtonFrame;
   
   //Adjust scroller height
-  //[self setScrollerSize];
+  [self setScrollerSize];
   
   //Move all element below the added notesTextArea
   [self adjustFieldAfterNotes];
@@ -519,25 +542,110 @@
   
   //Schedules Label
   schedulesLabelFrame          = schedulesLabel.frame;
+  schedulesLabelFrame.origin.x = 16;
   schedulesLabelFrame.origin.y = (addNotesButtonFrame.origin.y + 70);
   schedulesLabel.frame         = schedulesLabelFrame;
   
+  //Move the fields and labels after the 'Schedules' label
+  for (int i = 0; i < [proposalSRPageScroller.subviews count]; i++)
+  {
+    if([[[proposalSRPageScroller subviews] objectAtIndex:i] isEqual:schedulesLabel])
+    {
+      int y = 1; //Multiplier to move the y coordinates
+      CGRect labelFrame;
+      CGRect fieldFrame;
+      CGRect viewFrame;
+      
+      for(int j = i++; j < [proposalSRPageScroller.subviews count]; j++) //Begin at element after schedulesLabel
+      {
+        if([[[proposalSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UILabel class]])
+        {
+          UILabel *tempLabel = [[UILabel alloc] init];
+          tempLabel = [[proposalSRPageScroller subviews] objectAtIndex:j];
+          NSLog(@"tempLabel: %@", tempLabel);
+          
+          labelFrame = tempLabel.frame;
+          if ([tempLabel.text isEqual:@"From Time: "]
+              || [tempLabel.text isEqual:@"To Time: "])
+          {
+            labelFrame.origin.x = 166;
+          }
+          else
+          {
+            labelFrame.origin.x = 16;
+          }
+          labelFrame.origin.x = 16;
+          labelFrame.origin.y = (schedulesLabelFrame.origin.y + (30 * y));
+          tempLabel.frame = labelFrame;
+        }
+        else if([[[proposalSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UITextField class]])
+        {
+          UITextField *tempField = [[UITextField alloc] init];
+          tempField = [[proposalSRPageScroller subviews] objectAtIndex:j];
+          NSLog(@"tempField: %@", tempField);
+          
+          fieldFrame = tempField.frame;
+          if((tempField.tag == 3) || (tempField.tag == 5)) //Tags for 'From Time' and 'To Time' fields
+          {
+            fieldFrame.origin.x = 166;
+            
+          }
+          else
+          {
+            fieldFrame.origin.x = 16;
+          }
+
+          fieldFrame.origin.x = 16;
+          fieldFrame.origin.y = (schedulesLabelFrame.origin.y + (30 * y));
+          tempField.frame = fieldFrame;
+        }
+
+        /*
+        else if ([[[proposalSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UIView class]])
+        {
+          UIView *tempView = [[UIView alloc] init]; //for the separator
+          tempView = [[proposalSRPageScroller subviews] objectAtIndex:j];
+          NSLog(@"tempView/separator: %@", tempView);
+          
+          viewFrame = tempView.frame;
+          viewFrame.origin.x = 0;
+          viewFrame.origin.y = (schedulesLabelFrame.origin.y + (30 * y));
+          tempView.frame = viewFrame;
+        }
+         */
+        y++;
+      }
+    }
+  }
   /*
-  //Retrieve values for Schedules and draw the fields
+  //Remove the fields and labels after the 'Schedules' label
+  for (int i = 0; i < [proposalSRPageScroller.subviews count]; i++)
+  {
+    if([[[proposalSRPageScroller subviews] objectAtIndex:i] isEqual:schedulesLabel])
+    {
+      for(int j = i++; j < [proposalSRPageScroller.subviews count]; j++)
+      {
+        [[[proposalSRPageScroller subviews] objectAtIndex:j] removeFromSuperview];
+      }
+    }
+  }
+   */
+  /*
+  //Then redraw the fields
+  //***
+  //!!! TODO - Retrieve values for Schedules
   NSMutableArray *retrievedSchedulesArray = [[NSMutableArray alloc] init];
   retrievedSchedulesArray = [serviceRequestInfo valueForKey:@"schedules"];
-  NSLog(@"02 retrievedSchedulesArray: %@", retrievedSchedulesArray);
   
   for(int i = 0; i < retrievedSchedulesArray.count; i++)
   {
     NSMutableDictionary *retrievedSchedulesDictionary = [[NSMutableDictionary alloc] init];
     [retrievedSchedulesDictionary setObject:[retrievedSchedulesArray objectAtIndex:i] forKey:@"schedules"];
-    NSLog(@"02 retrievedSchedulesDictionary: %@", retrievedSchedulesDictionary);
+    NSLog(@"retrievedSchedulesDictionary: %@", retrievedSchedulesDictionary);
     
     //Status
     NSMutableString *scheduleStatus = [[NSMutableString alloc] init];
     scheduleStatus = [[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"status"] valueForKey:@"name"];
-    NSLog(@"02 scheduleStatus: %@", scheduleStatus);
     
     //Author
     NSMutableString *scheduleAuthor = [NSMutableString stringWithFormat:@"%@ %@ %@ %@"
@@ -545,40 +653,95 @@
                                        , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"middleName"]
                                        , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"lastName"]
                                        , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"suffix"]];
-    NSLog(@"02 scheduleAuthor: %@", scheduleAuthor);
     
     //First display
     CGRect startingCoordinates;
     startingCoordinates.origin.x = 16;
-    
     if(i == 0)
     {
-      NSLog(@"schedulesLabelFrame: %f", schedulesLabelFrame.origin.y);
-      startingCoordinates.origin.y = (schedulesLabelFrame.origin.y + 40);
+      startingCoordinates.origin.y = (schedulesLabel.frame.origin.y + 30);
     }
     else
     {
-      [proposalSRPageScroller setNeedsDisplay];
-      NSLog(@"separatorFrame: %f", separatorFrame.origin.y);
       startingCoordinates.origin.y = (separatorFrame.origin.y);
     }
-
+    
     //Display retrieved values
-    //Layout for [Add Schedules] button is done in displayScheduleEntries already
-
     [self displayScheduleEntries:scheduleStatus
                                 :scheduleAuthor
                                 :[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"periods"]
                                 :startingCoordinates];
-    
   }
+  //***
    */
 
   /*
+  //Move the fields and labels after the 'Schedules' label
+  for (int i = 0; i < [proposalSRPageScroller.subviews count]; i++)
+  {
+    if([[[proposalSRPageScroller subviews] objectAtIndex:i] isEqual:schedulesLabel])
+    {
+      for(int j = i++; j < [proposalSRPageScroller.subviews count]; j++)
+      {
+        int y = 1; //Multiplier to move the y coordinates
+        if([[[proposalSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UILabel class]])
+        {
+          CGRect frame;
+          UILabel *tempLabel = [[UILabel alloc] init];
+          tempLabel = [[proposalSRPageScroller subviews] objectAtIndex:j];
+          frame = tempLabel.frame;
+          frame.origin.y = (schedulesLabelFrame.origin.y + (30 * y));
+          tempLabel.frame = frame;
+          [[[proposalSRPageScroller subviews] objectAtIndex:j] removeFromSuperview];
+          [proposalSRPageScroller addSubview:tempLabel];
+        }
+        else if([[[proposalSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UITextField class]])
+        {
+          CGRect frame;
+          UITextField *tempField = [[UITextField alloc] init];
+          tempField = [[proposalSRPageScroller subviews] objectAtIndex:j];
+          frame = tempField.frame;
+          frame.origin.y = (schedulesLabelFrame.origin.y + (30 * y));
+          tempField.frame = frame;
+          [[[proposalSRPageScroller subviews] objectAtIndex:j] removeFromSuperview];
+          [proposalSRPageScroller addSubview:tempField];
+        }
+        else if ([[[proposalSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UIView class]])
+        {
+          UIView *tempView = [[UIView alloc] init];
+          tempView = [[proposalSRPageScroller subviews] objectAtIndex:j];
+          separatorFrame = tempView.frame;
+          separatorFrame.origin.y = (schedulesLabelFrame.origin.y + (30 * y));
+          tempView.frame = separatorFrame;
+          [[[proposalSRPageScroller subviews] objectAtIndex:j] removeFromSuperview];
+          [proposalSRPageScroller addSubview:tempView];
+        }
+        y++;
+      }
+    }
+  }
+  */
+  
   //Add Schedules Button
   addScheduleButtonFrame = addSchedulesButton.frame;
   addScheduleButtonFrame.origin.y = (separatorFrame.origin.y + 45);
   addSchedulesButton.frame = addScheduleButtonFrame;
+  
+  /*
+  //Clear / redraw the fields and labels after the 'Schedules' label
+  for (int i = 0; i < [proposalSRPageScroller.subviews count]; i++)
+  {
+    if([[[proposalSRPageScroller subviews] objectAtIndex:i] isEqual:schedulesLabel])
+    {
+      for(int j = i++ ; j < [proposalSRPageScroller.subviews count]; j++)
+      {
+        [[[proposalSRPageScroller subviews] objectAtIndex:j] removeFromSuperview];
+      }
+    }
+  }
+   */
+
+  /*
 
   //Move the fields and labels after the 'Schedules' label
   for (int i = 0; i < [proposalSRPageScroller.subviews count]; i++)
@@ -619,9 +782,15 @@
    }
   }
   */
+  /*
+   //Add Schedules Button
+   addScheduleButtonFrame = addSchedulesButton.frame;
+   addScheduleButtonFrame.origin.y = (separatorFrame.origin.y + 45);
+   addSchedulesButton.frame = addScheduleButtonFrame;
+   */
   
   //Adjust scroller height
-  //[self setScrollerSize];
+  [self setScrollerSize];
 }
 
 
@@ -685,6 +854,13 @@
   toDateField.enabled   = NO;
   toTimeField.enabled   = NO;
   
+  //Put tags to identify fields
+  statusField.tag = 0;
+  authorField.tag = 1;
+  fromDateField.tag = 2;
+  fromTimeField.tag = 3;
+  toDateField.tag = 4;
+  toTimeField.tag = 5;
   
   //Set label size dimensions
   CGRect labelSize;
@@ -857,7 +1033,7 @@
     addSchedulesButton.frame        = addScheduleButtonFrame;
     
     //Adjust scroller height
-    //[self setScrollerSize];
+    [self setScrollerSize];
   }
 }
 
@@ -906,6 +1082,14 @@
   fromTimeField.borderStyle = UITextBorderStyleRoundedRect;
   toDateField.borderStyle   = UITextBorderStyleRoundedRect;
   toTimeField.borderStyle   = UITextBorderStyleRoundedRect;
+  
+  //Put tags to identify fields
+  statusField.tag = 0;
+  authorField.tag = 1;
+  fromDateField.tag = 2;
+  fromTimeField.tag = 3;
+  toDateField.tag = 4;
+  toTimeField.tag = 5;
   
   //Disable status and author fields
   statusField.enabled = NO;
@@ -1131,7 +1315,7 @@
   NSLog(@"toTimesArray: %@", toTimesArray);
   
   //Adjust scroller height
-  //[self setScrollerSize];
+  [self setScrollerSize];
   
   //Store the fields in a dictionary
   [scheduleFromDateDictionary setObject:fromDateField forKey:fromTimeField];

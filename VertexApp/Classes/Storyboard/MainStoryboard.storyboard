@@ -495,11 +495,12 @@
                         <segue destination="d39-75-xDB" kind="push" identifier="srToAcknowledgeSR" id="nTB-V2-6zk"/>
                         <segue destination="isg-Ht-zYv" kind="push" identifier="srToInspectSR" id="QZ6-sQ-iVi"/>
                         <segue destination="abt-ag-6uP" kind="push" identifier="srToProposalSR" id="aaU-2z-I74"/>
+                        <segue destination="jVb-1Q-bQw" kind="push" identifier="srToApprovalSR" id="Y34-vJ-UzN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wDa-Wc-o40" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="922" y="-4304"/>
+            <point key="canvasLocation" x="890" y="-4852"/>
         </scene>
         <!--AcknowledgeSR List View Controller - AcknowledgeSRListPage-->
         <scene sceneID="VEX-Bd-lyS">
@@ -555,7 +556,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jIr-hJ-E9F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1440" y="-4440"/>
+            <point key="canvasLocation" x="1436" y="-5568"/>
         </scene>
         <!--InspectSR List View Controller-->
         <scene sceneID="QJt-yV-Jyl">
@@ -611,7 +612,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VJi-wS-sJI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1436" y="-3804"/>
+            <point key="canvasLocation" x="1440" y="-4944"/>
         </scene>
         <!--CreateSR View Controller - Request-->
         <scene sceneID="gGc-4v-f07">
@@ -743,7 +744,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vvh-P2-1jn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1432" y="-5065"/>
+            <point key="canvasLocation" x="1440" y="-6209"/>
         </scene>
         <!--DisplaySR View Controller - Request Summary-->
         <scene sceneID="cOU-vZ-1pj">
@@ -2108,7 +2109,60 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eKj-K0-Ziy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1440" y="-3206"/>
+            <point key="canvasLocation" x="1440" y="-4306"/>
+        </scene>
+        <!--ApprovalSR List View Controller-->
+        <scene sceneID="vza-aw-UzW">
+            <objects>
+                <viewController id="jVb-1Q-bQw" customClass="ApprovalSRListViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="P4y-Zp-VfE">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="MvQ-ZA-3om">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="srApprovalCell" editingAccessoryType="disclosureIndicator" textLabel="Wen-4u-Crj" detailTextLabel="NyB-1c-JZB" style="IBUITableViewCellStyleSubtitle" id="CRQ-pG-wfj">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wen-4u-Crj">
+                                                    <rect key="frame" x="10" y="2" width="38" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NyB-1c-JZB">
+                                                    <rect key="frame" x="10" y="24" width="47" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="jVb-1Q-bQw" id="FKA-iv-rJq"/>
+                                    <outlet property="delegate" destination="jVb-1Q-bQw" id="Cl1-EQ-nsX"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="xwH-xd-BpR"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lfe-77-LBl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1444" y="-3664"/>
         </scene>
         <!--ViewSR View Controller-->
         <scene sceneID="sFG-nc-dYz">
@@ -2215,7 +2269,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wc9-bH-06t" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="914" y="-6337"/>
+            <point key="canvasLocation" x="902" y="-7517"/>
         </scene>
         <!--Single Asset View Controller - Asset Details-->
         <scene sceneID="rjr-a5-LH5">
@@ -2249,7 +2303,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yA5-GW-nk8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1835" y="-6941"/>
+            <point key="canvasLocation" x="1911" y="-8177"/>
         </scene>
         <!--View Assets Page View Controller - View Asset-->
         <scene sceneID="Dis-He-RHO">
@@ -2298,7 +2352,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7ZW-CW-i1l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1432" y="-6941"/>
+            <point key="canvasLocation" x="1440" y="-8185"/>
         </scene>
         <!--Login View Controller - Vertex-->
         <scene sceneID="2tN-0K-i6W">
@@ -2429,7 +2483,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Bj-K2-whK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1448" y="-6320"/>
+            <point key="canvasLocation" x="1440" y="-7548"/>
         </scene>
         <!--Feedback List View Controller-->
         <scene sceneID="KYd-m9-d66">
@@ -3094,7 +3148,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ycl-Yj-eZu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1448" y="-5705"/>
+            <point key="canvasLocation" x="1432" y="-6901"/>
         </scene>
         <!--User Group Configuration Page View Controller - User Group-->
         <scene sceneID="QSh-JM-pEr">
@@ -3589,7 +3643,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EiE-Hs-2Iv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1860" y="-5705"/>
+            <point key="canvasLocation" x="1886" y="-6901"/>
         </scene>
         <!--AcknowledgeSR Page View Controller-->
         <scene sceneID="Xlk-uu-08H">
@@ -3752,7 +3806,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EUw-l3-InM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1886" y="-4440"/>
+            <point key="canvasLocation" x="1886" y="-5568"/>
         </scene>
         <!--InspectSR Page View Controller-->
         <scene sceneID="04d-j1-rAU">
@@ -3984,7 +4038,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n2I-YT-eWV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1886" y="-3804"/>
+            <point key="canvasLocation" x="1886" y="-4936"/>
         </scene>
         <!--ProposalSR Page View Controller-->
         <scene sceneID="NGa-ka-QCg">
@@ -4186,7 +4240,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="16A-ZZ-ecb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1886" y="-3206"/>
+            <point key="canvasLocation" x="1878" y="-4300"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="6Sq-Ha-tjj">
@@ -4254,7 +4308,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mqn-Cr-9kQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2302" y="-3206"/>
+            <point key="canvasLocation" x="2294" y="-4294"/>
         </scene>
     </scenes>
     <classes>
@@ -4371,6 +4425,9 @@
         </class>
         <class className="AdminTasksViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AdminTasksViewController.h"/>
+        </class>
+        <class className="ApprovalSRListViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ApprovalSRListViewController.h"/>
         </class>
         <class className="AssetConfigurationPageViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AssetConfigurationPageViewController.h"/>

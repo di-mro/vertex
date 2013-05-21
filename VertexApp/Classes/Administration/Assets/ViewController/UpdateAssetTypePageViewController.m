@@ -194,7 +194,7 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:putRequest
-                                   delegate:self];
+                                          delegate:self];
     
     [connection start];
     
@@ -202,9 +202,9 @@
     if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
     {
       UIAlertView *updateAssetTypeAlert = [[UIAlertView alloc]
-                                        initWithTitle:@"Update Asset Type"
-                                        message:@"Asset Type Updated."
-                                        delegate:self
+                                            initWithTitle:@"Update Asset Type"
+                                                  message:@"Asset Type Updated."
+                                                 delegate:self
                                         cancelButtonTitle:@"OK"
                                         otherButtonTitles:nil];
       [updateAssetTypeAlert show];
@@ -212,9 +212,9 @@
     else //(httpResponseCode >= 400)
     {
       UIAlertView *updateAssetTypeFailAlert = [[UIAlertView alloc]
-                                            initWithTitle:@"Update Asset Type Failed"
-                                            message:@"Asset Type not updated. Please try again later"
-                                            delegate:self
+                                                initWithTitle:@"Update Asset Type Failed"
+                                                      message:@"Asset Type not updated. Please try again later"
+                                                     delegate:self
                                             cancelButtonTitle:@"OK"
                                             otherButtonTitles:nil];
       [updateAssetTypeFailAlert show];
@@ -241,7 +241,7 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
@@ -263,9 +263,9 @@
 -(BOOL) validateUpdateAssetTypeFields
 {
   UIAlertView *updateAssetTypeValidateAlert = [[UIAlertView alloc]
-                                              initWithTitle:@"Incomplete Information"
-                                              message:@"Please fill out the necessary fields."
-                                              delegate:nil
+                                                  initWithTitle:@"Incomplete Information"
+                                                        message:@"Please fill out the necessary fields."
+                                                       delegate:nil
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
   [updateAssetTypeValidateAlert show];

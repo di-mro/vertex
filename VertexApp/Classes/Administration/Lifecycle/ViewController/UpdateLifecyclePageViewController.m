@@ -47,17 +47,24 @@
   NSLog(@"Update Lifecycle Page View");
   
   //Keyboard dismissal
-  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                        action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //Configure Scroller size
   self.updateLifecycleScroller.contentSize = CGSizeMake(320, 720);
   
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelUpdateLifecycle)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(cancelUpdateLifecycle)];
   
   //[Update] navigation button - Update Lifecycle
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Update" style:UIBarButtonItemStylePlain target:self action:@selector(updateLifecycle)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Update"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(updateLifecycle)];
   
   //Get info for the selected Lifecycle
   [self getLifecycleInfo];
@@ -114,7 +121,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -122,38 +129,39 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if (responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:self
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:self
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
     
     //TODO: Retrieve local records from CoreData
     //TEST DATA ONLY
-    lifecycleNameField.text = @"Demo - repair";
+    lifecycleNameField.text        = @"Demo - repair";
     lifecycleDescriptionField.text = @"Demo - repair";
-    lifecyclePreviousField.text = @"Demo - 1";
+    lifecyclePreviousField.text    = @"Demo - 1";
   }
   else
   {
     //JSON
     lifecycleInfo = [NSJSONSerialization
                      JSONObjectWithData:responseData
-                     options:kNilOptions
-                     error:&error];
+                                options:kNilOptions
+                                  error:&error];
+    
     NSLog(@"lifecycleInfo JSON: %@", lifecycleInfo);
     
-    lifecycleNameField.text = [lifecycleInfo objectForKey:@"name"];
+    lifecycleNameField.text        = [lifecycleInfo objectForKey:@"name"];
     lifecycleDescriptionField.text = [lifecycleInfo objectForKey:@"description"];
-    lifecyclePreviousField.text = [lifecycleInfo objectForKey:@"prev"];
+    lifecyclePreviousField.text    = [lifecycleInfo objectForKey:@"prev"];
   
   }//end - else if (responseData == nil)
 }
@@ -174,11 +182,12 @@
     NSError *error = [[NSError alloc] init];
     NSData *jsonData = [NSJSONSerialization
                         dataWithJSONObject:updateLifecycleJson
-                        options:NSJSONWritingPrettyPrinted
-                        error:&error];
+                                   options:NSJSONWritingPrettyPrinted
+                                     error:&error];
+    
     NSString *jsonString = [[NSString alloc]
                             initWithData:jsonData
-                            encoding:NSUTF8StringEncoding];
+                                encoding:NSUTF8StringEncoding];
     
     NSLog(@"jsonData Request: %@", jsonData);
     NSLog(@"jsonString Request: %@", jsonString);
@@ -198,7 +207,7 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:putRequest
-                                   delegate:self];
+                                          delegate:self];
     
     [connection start];
     
@@ -206,9 +215,9 @@
     if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
     {
       UIAlertView *updateLifecycleAlert = [[UIAlertView alloc]
-                                        initWithTitle:@"Update Lifecycle"
-                                        message:@"Lifecycle Updated."
-                                        delegate:self
+                                            initWithTitle:@"Update Lifecycle"
+                                                  message:@"Lifecycle Updated."
+                                                 delegate:self
                                         cancelButtonTitle:@"OK"
                                         otherButtonTitles:nil];
       [updateLifecycleAlert show];
@@ -216,9 +225,9 @@
     else //(httpResponseCode >= 400)
     {
       UIAlertView *updateLifecycleFailAlert = [[UIAlertView alloc]
-                                            initWithTitle:@"Update Lifecycle Failed"
-                                            message:@"Lifecycle not updated. Please try again later"
-                                            delegate:self
+                                                initWithTitle:@"Update Lifecycle Failed"
+                                                      message:@"Lifecycle not updated. Please try again later"
+                                                     delegate:self
                                             cancelButtonTitle:@"OK"
                                             otherButtonTitles:nil];
       [updateLifecycleFailAlert show];
@@ -245,7 +254,7 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
@@ -267,9 +276,9 @@
 -(BOOL) validateUpdateLifecycleFields
 {
   UIAlertView *updateLifeycleValidateAlert = [[UIAlertView alloc]
-                                           initWithTitle:@"Incomplete Information"
-                                           message:@"Please fill out the necessary fields."
-                                           delegate:nil
+                                               initWithTitle:@"Incomplete Information"
+                                                     message:@"Please fill out the necessary fields."
+                                                    delegate:nil
                                            cancelButtonTitle:@"OK"
                                            otherButtonTitles:nil];
   
@@ -298,6 +307,7 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
   [self.view endEditing:YES];
 }
+
 
 #pragma mark - Dismiss onscreen keyboard
 -(void)dismissKeyboard

@@ -20,5 +20,4 @@
 @property int httpResponseCode;
 
 
-
 @end

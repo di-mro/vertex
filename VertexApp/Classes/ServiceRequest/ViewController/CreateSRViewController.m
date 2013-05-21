@@ -120,13 +120,14 @@
   //getLifecycle
   lifecyclePickerArray = [[NSArray alloc] init];
   lifecycleIdArray     = [[NSMutableArray alloc] init];
-  [self getLifecycles];
+  //Call to getLifecycle is in texFieldDidBeginEditing method, must get the assetType id first before calling getLifecycle
   
   //getServices
   servicePickerArray = [[NSArray alloc] init];
   servicesIdArray    = [[NSMutableArray alloc] init];
   servicesCostArray  = [[NSMutableArray alloc] init];
   serviceCost        = 0;
+  //Call to getServices is in texFieldDidBeginEditing method, must get the assetType and lifecycle id first before calling getServices
   
   //getPriorities
   priorityPickerArray = [[NSArray alloc] init];
@@ -162,7 +163,7 @@
 -(void) getAssetOwnership
 {
   userId = @20130101500000001;
-  NSString *urlParams = [NSString stringWithFormat:@"http://192.168.2.107/vertex-api/asset/getOwnership/%@", userId];
+  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.107/vertex-api/asset/getOwnership/%@", userId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:urlParams]];
@@ -324,10 +325,13 @@
 {
   //endpoint for getLifecycles
   //URL = @"http://192.168.2.113/vertex-api/lifecycle/getLifecycles";
-  URL = @"http://192.168.2.107/vertex-api/lifecycle/getLifecycles";
+  //URL = @"http://192.168.2.107/vertex-api/lifecycle/getLifecycles";
+  
+  NSLog(@"getLifecycles - selectedAssetTypeId: %@", selectedAssetTypeId);
+  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.107/vertex-api/lifecycle/getAssetTypeLifecycles/%@", selectedAssetTypeId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
-                                      requestWithURL:[NSURL URLWithString:URL]];
+                                      requestWithURL:[NSURL URLWithString:urlParams]];
   
   [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
   [getRequest setHTTPMethod:@"GET"];
@@ -622,6 +626,9 @@
   {
     NSLog(@"textFieldDidBeginEditing - lifecycleField");
     [textField resignFirstResponder];
+    
+    //Connect to endpoint with the selected asset type id as parameter
+    [self getLifecycles];
     
     currentArray = [[NSArray alloc] initWithObjects: nil];
     [self defineGenericPicker];
