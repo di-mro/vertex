@@ -16,6 +16,7 @@
 
 @synthesize noticesPageEntries;
 
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -31,6 +32,7 @@
   NSLog(@"Notices Page View");
   
   [self displayNoticesPageEntries];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -52,8 +54,8 @@
   [noticesPageEntries addObject:entry3];
   [noticesPageEntries addObject:entry4];
   [noticesPageEntries addObject:entry5];
-
 }
+
 
 #pragma mark - Table view data source implementation
 - (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView
@@ -72,7 +74,6 @@
 {
   //Return the number of rows in the section
   return [noticesPageEntries count];
-  NSLog(@"%d", [noticesPageEntries count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -81,11 +82,11 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.noticesPageEntries objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.noticesPageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
-
 
 //Change the Height of the Cell [Default is 45]:
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath

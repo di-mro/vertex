@@ -16,6 +16,7 @@
 
 @synthesize esseInfoConfigPageEntries;
 
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -31,6 +32,7 @@
   NSLog(@"Esse Info Configuration Page View");
   
   [self displayEsseInfoConfigPageEntries];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -57,6 +59,7 @@
   [esseInfoConfigPageEntries addObject:entry4];
 }
 
+
 #pragma mark - Table view data source implementation
 - (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView
 {
@@ -74,7 +77,6 @@
 {
   //Return the number of rows in the section
   return [esseInfoConfigPageEntries count];
-  NSLog(@"%d", [esseInfoConfigPageEntries count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -83,10 +85,12 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.esseInfoConfigPageEntries objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.esseInfoConfigPageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
+
 
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

@@ -36,6 +36,7 @@
 - (void)viewDidLoad
 {
   [self getEsseInfo];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -77,7 +78,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -85,16 +86,16 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if (responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:nil //TEST ~ ~ ~
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:nil //TEST ~ ~ ~
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
@@ -105,8 +106,14 @@
     
     //Format display string
     esseDetailsDisplay = [NSMutableString
-                               stringWithFormat:@"LAST NAME: \n  %@ \n\nFIRST NAME: \n  %@ \n\nMIDDLE NAME: \n  %@ \n\nWIRELINE: \n  %@ \n\nWIRELESS: \n  %@ \n\nEMAIL ADDRESS: \n  %@ \n\nADDRESS: \n  %@ \n",
-                               @"Demo - Jobs", @"Demo - Steven", @"Demo - Paul", @"Demo - 123-456", @"Demo - 09110000000", @"Demo - steve.jobs@apple.com", @"Demo - Cupertino, California"];
+                               stringWithFormat:@"LAST NAME: \n  %@ \n\nFIRST NAME: \n  %@ \n\nMIDDLE NAME: \n  %@ \n\nWIRELINE: \n  %@ \n\nWIRELESS: \n  %@ \n\nEMAIL ADDRESS: \n  %@ \n\nADDRESS: \n  %@ \n"
+                          , @"Demo - Jobs"
+                          , @"Demo - Steven"
+                          , @"Demo - Paul"
+                          , @"Demo - 123-456"
+                          , @"Demo - 09110000000"
+                          , @"Demo - steve.jobs@apple.com"
+                          , @"Demo - Cupertino, California"];
     
     esseDetailTextArea.text = esseDetailsDisplay;
   }
@@ -115,8 +122,9 @@
     //JSON
     esseInfo = [NSJSONSerialization
                 JSONObjectWithData:responseData
-                options:kNilOptions
-                error:&error];
+                           options:kNilOptions
+                             error:&error];
+    
     NSLog(@"esseInfo JSON: %@", esseInfo);
     
     //Setting the display for the Text Area
@@ -124,8 +132,14 @@
     
     //Format display string
     esseDetailsDisplay = [NSMutableString
-                               stringWithFormat:@"LAST NAME: \n  %@ \n\nFIRST NAME: \n  %@ \n\nMIDDLE NAME: \n  %@ \n\nWIRELINE: \n  %@ \n\nWIRELESS: \n  %@ \n\nEMAIL ADDRESS: \n  %@ \n\nADDRESS: \n  %@ \n",
-                               [esseInfo valueForKey:@"lastname"], [esseInfo valueForKey:@"firstname"], [esseInfo valueForKey:@"middlename"], [esseInfo valueForKey:@"wireline"], [esseInfo valueForKey:@"wireless"], [esseInfo valueForKey:@"emailaddress"], [esseInfo valueForKey:@"address"]];
+                               stringWithFormat:@"LAST NAME: \n  %@ \n\nFIRST NAME: \n  %@ \n\nMIDDLE NAME: \n  %@ \n\nWIRELINE: \n  %@ \n\nWIRELESS: \n  %@ \n\nEMAIL ADDRESS: \n  %@ \n\nADDRESS: \n  %@ \n"
+                          , [esseInfo valueForKey:@"lastname"]
+                          , [esseInfo valueForKey:@"firstname"]
+                          , [esseInfo valueForKey:@"middlename"]
+                          , [esseInfo valueForKey:@"wireline"]
+                          , [esseInfo valueForKey:@"wireless"]
+                          , [esseInfo valueForKey:@"emailaddress"]
+                          , [esseInfo valueForKey:@"address"]];
 
     esseDetailTextArea.text = esseDetailsDisplay;
     

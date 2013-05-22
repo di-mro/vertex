@@ -60,17 +60,24 @@
   NSLog(@"Edit User Account Details Page");
   
   //Keyboard dismissal
-  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                        action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //Configure Scroller size
   self.editUserAccountDetailsScroller.contentSize = CGSizeMake(320, 720);
   
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelEditUserAccountDetails)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(cancelEditUserAccountDetails)];
   
   //[Update] navigation button - Update Lifecycle
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Update" style:UIBarButtonItemStylePlain target:self action:@selector(editUserAccountDetails)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Update"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(editUserAccountDetails)];
   
   //Populate User Accounts Picker
   [self getUsers];
@@ -105,7 +112,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -114,39 +121,44 @@
   //GET
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if (responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:nil
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:nil
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
     
     //TODO: Connect to CoreData for local data
     //!- FOR TESTING ONLY -!
-    self.userAccountsPickerArray = [[NSMutableArray alloc] initWithObjects:@"Demo - elan-0001",@"Demo - elan-0002", @"Demo - elan-0003", @"Demo - elan-0004", @"Demo - elan-0005", nil];
+    self.userAccountsPickerArray = [[NSMutableArray alloc] initWithObjects:
+                                      @"Demo - elan-0001"
+                                    , @"Demo - elan-0002"
+                                    , @"Demo - elan-0003"
+                                    , @"Demo - elan-0004"
+                                    , @"Demo - elan-0005"
+                                    , nil];
   }
   else
   {
     users = [NSJSONSerialization
              JSONObjectWithData:responseData
-             options:kNilOptions
-             error:&error];
+                        options:kNilOptions
+                          error:&error];
+    
     NSLog(@"getUsers JSON Result: %@", users);
     
     userAccountsPickerArray = [users valueForKey:@"username"]; //store usernames only in PickerArray
-    NSLog(@"userAccountsPickerArray: %@", userAccountsPickerArray);
 
     NSMutableDictionary *userContactInfo = [[NSMutableDictionary alloc] init];
     userContactInfo = [users valueForKey:@"info"];
     userInfoIdArray = [userContactInfo valueForKey:@"id"]; //array for retrieved userInfoId
-    NSLog(@"userInfoIdArray: %@", userInfoIdArray);
   }
 }
 
@@ -170,7 +182,7 @@
     userAccountsPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 40, 0, 0)];
     userAccountsPicker.showsSelectionIndicator = YES;
     userAccountsPicker.dataSource = self;
-    userAccountsPicker.delegate = self;
+    userAccountsPicker.delegate   = self;
     
     [actionSheet addSubview:userAccountsPicker];
     
@@ -188,10 +200,10 @@
     usernameField.inputView = actionSheet;
     
     //Clear / init detail fields
-    wirelineField.text = @"";
-    wirelessField.text = @"";
+    wirelineField.text     = @"";
+    wirelessField.text     = @"";
     emailAddressField.text = @"";
-    addressField.text = @"";
+    addressField.text      = @"";
     
     return YES;
   }
@@ -200,6 +212,7 @@
     return NO;
   }
 }
+
 
 #pragma mark - Implementing the Picker View
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -223,10 +236,10 @@
 {
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
   
-  selectedIndex = [userAccountsPicker selectedRowInComponent:0];
+  selectedIndex      = [userAccountsPicker selectedRowInComponent:0];
   NSString *username = [userAccountsPickerArray objectAtIndex:selectedIndex];
   usernameField.text = username;
-  userInfoId = [userInfoIdArray objectAtIndex:selectedIndex];
+  userInfoId         = [userInfoIdArray objectAtIndex:selectedIndex];
   
   //Populate Account Detail Fields
   [self getUserInfo];
@@ -254,6 +267,7 @@
   NSMutableString *urlParams = [NSMutableString
                                 stringWithFormat:@"http://192.168.2.113/vertex-api/user/getUserInfo/%@"
                                 , userInfoId];
+  
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:urlParams]];
   
@@ -263,7 +277,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -271,40 +285,40 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if (responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:self
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:self
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
     
     //TODO: Retrieve local records from CoreData
     //TEST DATA ONLY
-    wirelineField.text = @"Demo - 123-456";
-    wirelessField.text = @"Demo - 0916-000-0000";
+    wirelineField.text     = @"Demo - 123-456";
+    wirelessField.text     = @"Demo - 0916-000-0000";
     emailAddressField.text = @"Demo - steve.jobs@apple.com";
-    addressField.text = @"Apple Campus, 1 Infinite Loop, Cupertino, California, U.S.";
+    addressField.text      = @"Apple Campus, 1 Infinite Loop, Cupertino, California, U.S.";
   }
   else
   {
     //JSON for retrieved userInfo
     userInfo = [NSJSONSerialization
-                     JSONObjectWithData:responseData
-                     options:kNilOptions
-                     error:&error];
+                JSONObjectWithData:responseData
+                           options:kNilOptions
+                             error:&error];
+    
     NSLog(@"userInfo JSON: %@", userInfo);
     
     //Array for the contactInfo of the retrieved userInfo
     NSMutableArray *userContactInfo = [[NSMutableArray alloc] init];
     userContactInfo = [userInfo valueForKey:@"contactInfo"];
-    NSLog(@"userContactInfo: %@", userContactInfo);
     
     if([userContactInfo count] == 0)
     {
@@ -350,16 +364,16 @@
   {
     //Set JSON Request
     NSMutableDictionary *editUserAccountDetailsJson = [[NSMutableDictionary alloc] init];
-    //[editUserAccountDetailsJson setObject:@"" forKey:@"id"];
     
-    NSError *error = [[NSError alloc] init];
+    NSError *error   = [[NSError alloc] init];
     NSData *jsonData = [NSJSONSerialization
                         dataWithJSONObject:editUserAccountDetailsJson
-                        options:NSJSONWritingPrettyPrinted
-                        error:&error];
+                                   options:NSJSONWritingPrettyPrinted
+                                     error:&error];
+    
     NSString *jsonString = [[NSString alloc]
                             initWithData:jsonData
-                            encoding:NSUTF8StringEncoding];
+                                encoding:NSUTF8StringEncoding];
     
     NSLog(@"jsonData Request: %@", jsonData);
     NSLog(@"jsonString Request: %@", jsonString);
@@ -378,7 +392,7 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:putRequest
-                                   delegate:self];
+                                          delegate:self];
     
     [connection start];
     
@@ -386,21 +400,21 @@
     if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
     {
       UIAlertView *editUserAccountDetailsAlert = [[UIAlertView alloc]
-                                           initWithTitle:@"Edit User Account Details"
-                                           message:@"User account details edited."
-                                           delegate:self
-                                           cancelButtonTitle:@"OK"
-                                           otherButtonTitles:nil];
+                                                      initWithTitle:@"Edit User Account Details"
+                                                            message:@"User account details edited."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
       [editUserAccountDetailsAlert show];
     }
     else //(httpResponseCode >= 400)
     {
       UIAlertView *editUserAccountDetailsFailAlert = [[UIAlertView alloc]
-                                               initWithTitle:@"Edit User Account Failed"
-                                               message:@"User account not edited. Please try again later"
-                                               delegate:self
-                                               cancelButtonTitle:@"OK"
-                                               otherButtonTitles:nil];
+                                                          initWithTitle:@"Edit User Account Failed"
+                                                                message:@"User account not edited. Please try again later"
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
       [editUserAccountDetailsFailAlert show];
     }
     
@@ -424,7 +438,7 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
@@ -446,15 +460,16 @@
 -(BOOL) validateEditUserAccountDetailFields
 {
   UIAlertView *editUserAccountDetailsValidateAlert = [[UIAlertView alloc]
-                                              initWithTitle:@"Incomplete Information"
-                                              message:@"Please fill out the necessary fields."
-                                              delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
+                                                          initWithTitle:@"Incomplete Information"
+                                                                message:@"Please fill out the necessary fields."
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
   
   if([usernameField.text isEqualToString:(@"")])
   {
     [editUserAccountDetailsValidateAlert show];
+    
     return false;
   }
   else
@@ -472,9 +487,11 @@
 
 
 #pragma mark - Dismiss the onscreen keyboard when not in use
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
   [self.view endEditing:YES];
 }
+
 
 #pragma mark - Dismiss onscreen keyboard
 -(void)dismissKeyboard

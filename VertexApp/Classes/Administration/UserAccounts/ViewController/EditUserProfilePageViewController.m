@@ -19,7 +19,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -28,7 +29,11 @@
 - (void)viewDidLoad
 {
   //TEST
-  userAccountsArray = [[NSMutableArray alloc] initWithObjects:@"Demo-1", @"Demo-2", @"Demo-3", nil];
+  userAccountsArray = [[NSMutableArray alloc] initWithObjects:
+                         @"Demo-1"
+                       , @"Demo-2"
+                       , @"Demo-3"
+                       , nil];
   
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -58,7 +63,6 @@
 {
   //Return the number of rows in the section
   return [userAccountsArray count];
-  NSLog(@"%d", [userAccountsArray count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -67,8 +71,9 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.userAccountsArray objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.userAccountsArray objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
 

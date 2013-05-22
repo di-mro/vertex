@@ -7,6 +7,8 @@
 //
 
 #import "ApprovalSRListViewController.h"
+#import "ApprovalSRPageViewController.h"
+
 
 @interface ApprovalSRListViewController ()
 
@@ -195,18 +197,18 @@
   selectedSRId = [srForApprovalSRIds objectAtIndex:indexPath.row];
   NSLog(@"selectedSRId: %@", selectedSRId);
   
-  //[self performSegueWithIdentifier:@"srAcknowledgeListToAcknowledgePage" sender:self];
+  [self performSegueWithIdentifier:@"srApprovalListToApprovalPage" sender:self];
 }
 
-/*
+
 #pragma mark - prepare for segue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-  if ([segue.identifier isEqualToString:@"srAcknowledgeListToAcknowledgePage"])
+  if ([segue.identifier isEqualToString:@"srApprovalListToApprovalPage"])
   {
     [segue.destinationViewController setServiceRequestId:selectedSRId];
   }
 }
-*/
+
 
 @end

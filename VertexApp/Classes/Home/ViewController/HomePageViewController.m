@@ -18,6 +18,7 @@
 @synthesize homePageEntries;
 @synthesize homePageIcons;
 
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -33,9 +34,13 @@
   NSLog(@"Home Page View");
 
   //[Logout] button initialization
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(logout)];
   
   [self displayHomePageEntries];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -45,6 +50,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 # pragma mark - Display entries in Home Page
 - (void) displayHomePageEntries
@@ -70,7 +76,7 @@
   [homePageEntries addObject:entry8];
   
   
-  homePageIcons = [[NSMutableArray alloc] initWithObjects:@"notification_icon.png"
+  homePageIcons = [[NSMutableArray alloc] initWithObjects: @"notification_icon.png"
                                                          , @"service_request_icon.png"
                                                          , @"asset_icon.png"
                                                          , @"billing_icon.png"
@@ -98,7 +104,6 @@
 {
   //Return the number of rows in the section
   return [homePageEntries count];
-  NSLog(@"%d", [homePageEntries count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -108,19 +113,19 @@
   
   //configure the cell
   
-  cell.textLabel.text = [self.homePageEntries objectAtIndex:indexPath.row];
-  cell.imageView.image = [UIImage imageNamed:(NSString*)[self.homePageIcons objectAtIndex:indexPath.row]];
-  
+  cell.textLabel.text          = [self.homePageEntries objectAtIndex:indexPath.row];
+  cell.imageView.image         = [UIImage imageNamed:(NSString*)[self.homePageIcons objectAtIndex:indexPath.row]];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
-
 
 //Change the Height of the Cell [Default is 45]:
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
   return 50;
 }
+
 
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -155,6 +160,7 @@
   }
 }
 
+
 #pragma mark - [Logout] button logic implementation
 -(void) logout
 {
@@ -165,7 +171,9 @@
   
   controller.navigationItem.hidesBackButton = YES;
   [self.navigationController pushViewController:controller animated:YES];
-    
+  
+  //http://192.168.2.113/vertex-api/auth/logout
+  
   /* !- TODO -!
    Clear user tokens/objects when [Logout] is pressed
    */

@@ -50,11 +50,15 @@
   NSLog(@"View User Profile Page");
   
   //Keyboard dismissal
-  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                        action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelViewUserProfile)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(cancelViewUserProfile)];
   
   //Configure Scroller size
   self.viewUserProfileScroller.contentSize = CGSizeMake(320, 720);
@@ -91,7 +95,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -100,34 +104,39 @@
   //GET
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if (responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:nil
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:nil
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
     
     //TODO: Connect to CoreData for local data
     //!- FOR TESTING ONLY -!
-    self.userProfilePickerArray = [[NSMutableArray alloc] initWithObjects:@"Demo - admin",@"Demo - engineering", @"Demo - maintenance", @"Demo - dwellers_38", nil];
+    self.userProfilePickerArray = [[NSMutableArray alloc] initWithObjects:
+                                     @"Demo - admin"
+                                   , @"Demo - engineering"
+                                   , @"Demo - maintenance"
+                                   , @"Demo - dwellers_38"
+                                   , nil];
   }
   else
   {
     userProfiles = [NSJSONSerialization
-             JSONObjectWithData:responseData
-             options:kNilOptions
-             error:&error];
+                    JSONObjectWithData:responseData
+                               options:kNilOptions
+                                 error:&error];
+    
     NSLog(@"get JSON Result: %@", userProfiles);
     
     userProfilePickerArray = [userProfiles valueForKey:@"username"]; //store usernames only in PickerArray
-    NSLog(@"userProfilePickerArray: %@", userProfilePickerArray);
   }
 }
 
@@ -151,7 +160,7 @@
     userProfileNamePicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 40, 0, 0)];
     userProfileNamePicker.showsSelectionIndicator = YES;
     userProfileNamePicker.dataSource = self;
-    userProfileNamePicker.delegate = self;
+    userProfileNamePicker.delegate   = self;
     
     [actionSheet addSubview:userProfileNamePicker];
     
@@ -199,8 +208,8 @@
 {
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
   
-  selectedIndex = [userProfileNamePicker selectedRowInComponent:0];
-  NSString *username = [userProfilePickerArray objectAtIndex:selectedIndex];
+  selectedIndex             = [userProfileNamePicker selectedRowInComponent:0];
+  NSString *username        = [userProfilePickerArray objectAtIndex:selectedIndex];
   userProfileNameField.text = username;
   
   //pass id of selected profile ???
@@ -213,7 +222,12 @@
 {
   //TEST ONLY
   //Replace with getting userAccounts associated with the userProfile
-  userProfileUserAccountsArray = [[NSMutableArray alloc] initWithObjects:@"DEMO-elan-38-01-1", @"DEMO-elan-38-02-2", @"DEMO-elan-38-03-3", nil];
+  userProfileUserAccountsArray = [[NSMutableArray alloc] initWithObjects:
+                                    @"DEMO-elan-38-01-1"
+                                  , @"DEMO-elan-38-02-2"
+                                  , @"DEMO-elan-38-03-3"
+                                  , nil];
+  
   [userProfileUserAccountsTableView reloadData];
 }
 
@@ -242,7 +256,7 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
@@ -273,8 +287,9 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.userProfileUserAccountsArray objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.userProfileUserAccountsArray objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
 
@@ -287,7 +302,8 @@
 
 
 #pragma mark - Dismiss the onscreen keyboard when not in use
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
   [self.view endEditing:YES];
 }
 

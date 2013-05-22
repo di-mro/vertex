@@ -39,10 +39,16 @@
 - (void)viewDidLoad
 {
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelDeleteEsse)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(cancelDeleteEsse)];
   
   //[Delete] navigation button - Delete Esse
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Delete" style:UIBarButtonItemStylePlain target:self action:@selector(removeEsse)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Delete"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(removeEsse)];
   
   [self displayDeleteEssePageEntries];
 
@@ -75,7 +81,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -83,16 +89,16 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if (responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:nil
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:nil
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
@@ -114,18 +120,19 @@
   {
     //JSON
     esse = [NSJSONSerialization
-                      JSONObjectWithData:responseData
-                      options:kNilOptions
-                      error:&error];
+            JSONObjectWithData:responseData
+                       options:kNilOptions
+                         error:&error];
+    
     NSLog(@"esse JSON: %@", esse);
     
     removeEssePageEntries = [esse valueForKey:@"name"];
     
-    esseIdArray = [[NSMutableArray alloc] init];
+    esseIdArray   = [[NSMutableArray alloc] init];
     esseNameArray = [[NSMutableArray alloc] init];
     
     esseNameArray = [esse valueForKey:@"name"];
-    esseIdArray = [esse valueForKey:@"id"];
+    esseIdArray   = [esse valueForKey:@"id"];
   }
 }
 
@@ -148,11 +155,11 @@
 {
   UIAlertView *removeEsseConfirmation = [[UIAlertView alloc]
                                               initWithTitle:@"Remove Esse"
-                                              message:@"Are you sure you want to delete the selected esse?"
-                                              delegate:self
-                                              cancelButtonTitle:@"Yes"
-                                              otherButtonTitles:@"No",
-                                              nil];
+                                                    message:@"Are you sure you want to delete the selected esse?"
+                                                   delegate:self
+                                          cancelButtonTitle:@"Yes"
+                                          otherButtonTitles:@"No",
+                                          nil];
   [removeEsseConfirmation show];
   //clickedButtonAtIndex:
 }
@@ -182,7 +189,7 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:deleteRequest
-                                   delegate:self];
+                                          delegate:self];
     [connection start];
     
     NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -190,28 +197,28 @@
     
     NSData *responseData = [NSURLConnection
                             sendSynchronousRequest:deleteRequest
-                            returningResponse:&urlResponse
-                            error:&error];
+                                 returningResponse:&urlResponse
+                                             error:&error];
     
     if (responseData == nil)
     {
       //Show an alert if connection is not available
       UIAlertView *removeEsseAlert = [[UIAlertView alloc]
-                                           initWithTitle:@"Warning"
-                                           message:@"Esse not removed. Please try again."
-                                           delegate:nil
-                                           cancelButtonTitle:@"OK"
-                                           otherButtonTitles:nil];
+                                          initWithTitle:@"Warning"
+                                                message:@"Esse not removed. Please try again."
+                                               delegate:nil
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
       [removeEsseAlert show];
     }
     else
     {
       UIAlertView *removeEsseAlert = [[UIAlertView alloc]
-                                           initWithTitle:@"Remove Esse"
-                                           message:@"Esse removed"
-                                           delegate:nil
-                                           cancelButtonTitle:@"OK"
-                                           otherButtonTitles:nil];
+                                          initWithTitle:@"Remove Esse"
+                                                message:@"Esse removed"
+                                               delegate:nil
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
       [removeEsseAlert show];
     }
     [self.navigationController pushViewController:controller animated:YES];
@@ -235,7 +242,7 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
@@ -266,20 +273,20 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.removeEssePageEntries objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.removeEssePageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
+
 
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   NSString *selectedRowName = [[NSString alloc] init];
-  selectedRowName = [removeEssePageEntries objectAtIndex:indexPath.row];
-  NSLog(@"Selected row name: %@", selectedRowName);
   
-  selectedEsseId = [esseIdArray objectAtIndex:indexPath.row];
-  NSLog(@"selectedEsseId: %@", selectedEsseId);
+  selectedRowName = [removeEssePageEntries objectAtIndex:indexPath.row];
+  selectedEsseId  = [esseIdArray objectAtIndex:indexPath.row];
 }
 
 

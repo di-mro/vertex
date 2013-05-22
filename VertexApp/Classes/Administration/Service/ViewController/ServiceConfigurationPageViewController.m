@@ -31,6 +31,7 @@
   NSLog(@"Service Configurations Page View");
   
   [self displayServiceConfigPageEntries];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -74,7 +75,6 @@
 {
   //Return the number of rows in the section
   return [serviceConfigPageEntries count];
-  NSLog(@"%d", [serviceConfigPageEntries count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -83,10 +83,12 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.serviceConfigPageEntries objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.serviceConfigPageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
+
 
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

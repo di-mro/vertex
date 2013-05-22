@@ -50,14 +50,21 @@
   NSLog(@"Add User Profile Page");
   
   //Keyboard dismissal
-  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                        action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelAddUserProfile)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(cancelAddUserProfile)];
   
   //[Add] navigation button - Add Asset Type
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addUserProfile)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(addUserProfile)];
   
   //Configure Scroller size
   self.addUserProfileScroller.contentSize = CGSizeMake(320, 720);
@@ -84,10 +91,12 @@
 - (IBAction)addUserAccount:(id)sender
 {
   [userAccountsArray addObject:addUserAccountsField.text];
-  NSLog(@"userAccountsArray: %@", userAccountsArray);
   
+  //To refresh the table view entries
   [userAccountsTableView reloadData];
+  
   addUserAccountsField.text = @"";
+  
   [addUserAccountsField resignFirstResponder];
 }
 
@@ -108,7 +117,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -117,34 +126,40 @@
   //GET
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if (responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:nil
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:nil
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
     
     //TODO: Connect to CoreData for local data
     //!- FOR TESTING ONLY -!
-    self.userAccountsPickerArray = [[NSMutableArray alloc] initWithObjects:@"Demo - elan-0001",@"Demo - elan-0002", @"Demo - elan-0003", @"Demo - elan-0004", @"Demo - elan-0005", nil];
+    self.userAccountsPickerArray = [[NSMutableArray alloc] initWithObjects:
+                                      @"Demo - elan-0001"
+                                    , @"Demo - elan-0002"
+                                    , @"Demo - elan-0003"
+                                    , @"Demo - elan-0004"
+                                    , @"Demo - elan-0005"
+                                    , nil];
   }
   else
   {
     users = [NSJSONSerialization
              JSONObjectWithData:responseData
-             options:kNilOptions
-             error:&error];
+                        options:kNilOptions
+                          error:&error];
+    
     NSLog(@"getUsers JSON Result: %@", users);
     
     userAccountsPickerArray = [users valueForKey:@"username"]; //store usernames only in PickerArray
-    NSLog(@"userAccountsPickerArray: %@", userAccountsPickerArray);
   }
 }
 
@@ -168,7 +183,7 @@
     userAccountsPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 40, 0, 0)];
     userAccountsPicker.showsSelectionIndicator = YES;
     userAccountsPicker.dataSource = self;
-    userAccountsPicker.delegate = self;
+    userAccountsPicker.delegate   = self;
     
     [actionSheet addSubview:userAccountsPicker];
     
@@ -193,6 +208,7 @@
   }
 }
 
+
 #pragma mark - Implementing the Picker View
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
@@ -216,7 +232,8 @@
   [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
   
   selectedIndex = [userAccountsPicker selectedRowInComponent:0];
-  NSString *username = [userAccountsPickerArray objectAtIndex:selectedIndex];
+  
+  NSString *username        = [userAccountsPickerArray objectAtIndex:selectedIndex];
   addUserAccountsField.text = username;  
 }
 
@@ -241,17 +258,19 @@
   {
     //Set JSON Request
     NSMutableDictionary *addUserProfileJson = [[NSMutableDictionary alloc] init];
+    
     //TODO : Construct JSON request body User Group Configuration
     //[addUserProfileJson setObject:@"" forKey:@"name"];
     
     NSError *error = [[NSError alloc] init];
     NSData *jsonData = [NSJSONSerialization
                         dataWithJSONObject:addUserProfileJson
-                        options:NSJSONWritingPrettyPrinted
-                        error:&error];
+                                   options:NSJSONWritingPrettyPrinted
+                                     error:&error];
+    
     NSString *jsonString = [[NSString alloc]
                             initWithData:jsonData
-                            encoding:NSUTF8StringEncoding];
+                                encoding:NSUTF8StringEncoding];
     
     NSLog(@"jsonData Request: %@", jsonData);
     NSLog(@"jsonString Request: %@", jsonString);
@@ -270,7 +289,7 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:postRequest
-                                   delegate:self];
+                                          delegate:self];
     
     [connection start];
     
@@ -278,9 +297,9 @@
     if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
     {
       UIAlertView *addUserProfileAlert = [[UIAlertView alloc]
-                                           initWithTitle:@"Add User Profile"
-                                           message:@"User profile added."
-                                           delegate:self
+                                               initWithTitle:@"Add User Profile"
+                                                     message:@"User profile added."
+                                                    delegate:self
                                            cancelButtonTitle:@"OK"
                                            otherButtonTitles:nil];
       [addUserProfileAlert show];
@@ -288,9 +307,9 @@
     else //(httpResponseCode >= 400)
     {
       UIAlertView *addUserProfileFailAlert = [[UIAlertView alloc]
-                                               initWithTitle:@"Add User Profile Failed"
-                                               message:@"User profile not added. Please try again later"
-                                               delegate:self
+                                                   initWithTitle:@"Add User Profile Failed"
+                                                         message:@"User profile not added. Please try again later"
+                                                        delegate:self
                                                cancelButtonTitle:@"OK"
                                                otherButtonTitles:nil];
       [addUserProfileFailAlert show];
@@ -316,7 +335,7 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
@@ -338,15 +357,16 @@
 -(BOOL) validateAddUserProfileFields
 {
   UIAlertView *addUserProfileValidateAlert = [[UIAlertView alloc]
-                                               initWithTitle:@"Incomplete Information"
-                                               message:@"Please fill out the necessary fields."
-                                               delegate:nil
+                                                   initWithTitle:@"Incomplete Information"
+                                                         message:@"Please fill out the necessary fields."
+                                                        delegate:nil
                                                cancelButtonTitle:@"OK"
                                                otherButtonTitles:nil];
   
   if([userProfileNameField.text isEqualToString:(@"")])
   {
     [addUserProfileValidateAlert show];
+    
     return false;
   }
   else
@@ -373,7 +393,6 @@
 {
   //Return the number of rows in the section
   return [userAccountsArray count];
-  NSLog(@"%d", [userAccountsArray count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -382,8 +401,9 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.userAccountsArray objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.userAccountsArray objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
 

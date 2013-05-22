@@ -40,4 +40,5 @@
 @property (strong, nonatomic) NSString *URL;
 @property int httpResponseCode;
 
+
 @end

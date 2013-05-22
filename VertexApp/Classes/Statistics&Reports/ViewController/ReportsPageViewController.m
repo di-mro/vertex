@@ -16,6 +16,7 @@
 
 @synthesize reportsPageEntries;
 
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -29,6 +30,7 @@
 - (void)viewDidLoad
 {
   [self displayReportsPageEntries];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -39,12 +41,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+
 # pragma mark - Display entries in Settings Page
 - (void) displayReportsPageEntries
 {
   reportsPageEntries = [[NSMutableArray alloc] init];
   
-  /* !-For demo only, remove hard coded values. Must retrieve listing in DB -! */
   /*
   NSString *entry1 = @"Edit Password";
   NSString *entry2 = @"Edit Account Details";
@@ -53,6 +55,7 @@
   [reportsPageEntries addObject:entry2];
   */
 }
+
 
 #pragma mark - Table view data source implementation
 - (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView
@@ -90,7 +93,6 @@
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  /* !-Remove these hardcoded cases -! */
   switch (indexPath.row)
   {
       /*

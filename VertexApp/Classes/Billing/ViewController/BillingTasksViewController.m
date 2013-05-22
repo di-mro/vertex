@@ -16,6 +16,7 @@
 
 @synthesize billingTasksPageEntries;
 
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -29,6 +30,7 @@
 - (void)viewDidLoad
 {
   [self displayBillingTasksPageEntries];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -55,6 +57,7 @@
   [billingTasksPageEntries addObject:entry4];
 }
 
+
 #pragma mark - Table view data source implementation
 - (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView
 {
@@ -72,7 +75,6 @@
 {
   //Return the number of rows in the section
   return [billingTasksPageEntries count];
-  NSLog(@"%d", [billingTasksPageEntries count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -81,8 +83,9 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.billingTasksPageEntries objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.billingTasksPageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
 

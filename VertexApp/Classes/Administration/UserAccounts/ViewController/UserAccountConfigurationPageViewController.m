@@ -31,6 +31,7 @@
   NSLog(@"User Account Configuration Page View");
   
   [self displayUserAccountConfigPageEntries];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -40,6 +41,7 @@
   [super didReceiveMemoryWarning];
   // Dispose of any resources that can be recreated.
 }
+
 
 # pragma mark - Display entries in Admin Page
 - (void) displayUserAccountConfigPageEntries
@@ -61,8 +63,8 @@
   [userAccountConfigPageEntries addObject:entry5];
   [userAccountConfigPageEntries addObject:entry6];
   [userAccountConfigPageEntries addObject:entry7];
-
 }
+
 
 #pragma mark - Table view data source implementation
 - (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView
@@ -81,7 +83,6 @@
 {
   //Return the number of rows in the section
   return [userAccountConfigPageEntries count];
-  NSLog(@"%d", [userAccountConfigPageEntries count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -90,8 +91,9 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.userAccountConfigPageEntries objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.userAccountConfigPageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
 

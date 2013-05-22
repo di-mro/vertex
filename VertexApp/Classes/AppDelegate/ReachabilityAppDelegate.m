@@ -53,59 +53,69 @@ Copyright (C) 2010 Apple Inc. All Rights Reserved.
 - (void) configureTextField: (UITextField*) textField imageView: (UIImageView*) imageView reachability: (Reachability*) curReach
 {
     NetworkStatus netStatus = [curReach currentReachabilityStatus];
-    BOOL connectionRequired= [curReach connectionRequired];
-    NSString* statusString= @"";
+    BOOL connectionRequired = [curReach connectionRequired];
+    NSString* statusString  = @"";
+  
     switch (netStatus)
     {
         case NotReachable:
         {
-            statusString = @"Access Not Available";
+            statusString    = @"Access Not Available";
             imageView.image = [UIImage imageNamed: @"stop-32.png"] ;
+          
             //Minor interface detail- connectionRequired may return yes, even when the host is unreachable.  We cover that up here...
-            connectionRequired= NO;  
+            connectionRequired= NO;
+          
             break;
         }
             
         case ReachableViaWWAN:
         {
-            statusString = @"Reachable WWAN";
+            statusString    = @"Reachable WWAN";
             imageView.image = [UIImage imageNamed: @"WWAN5.png"];
+          
             break;
         }
         case ReachableViaWiFi:
         {
-             statusString= @"Reachable WiFi";
+            statusString    = @"Reachable WiFi";
             imageView.image = [UIImage imageNamed: @"Airport.png"];
+          
             break;
       }
     }
     if(connectionRequired)
     {
-        statusString= [NSString stringWithFormat: @"%@, Connection Required", statusString];
+        statusString = [NSString stringWithFormat: @"%@, Connection Required", statusString];
     }
-    textField.text= statusString;
+  
+    textField.text = statusString;
 }
 
 - (void) updateInterfaceWithReachability: (Reachability*) curReach
 {
-    if(curReach == hostReach)
+  if(curReach == hostReach)
 	{
 		[self configureTextField: remoteHostStatusField imageView: remoteHostIcon reachability: curReach];
+    
         NetworkStatus netStatus = [curReach currentReachabilityStatus];
-        BOOL connectionRequired= [curReach connectionRequired];
+        BOOL connectionRequired = [curReach connectionRequired];
 
         summaryLabel.hidden = (netStatus != ReachableViaWWAN);
-        NSString* baseLabel=  @"";
+        NSString* baseLabel =  @"";
+    
         if(connectionRequired)
         {
-            baseLabel=  @"Cellular data network is available.\n  Internet traffic will be routed through it after a connection is established.";
+            baseLabel =  @"Cellular data network is available.\n  Internet traffic will be routed through it after a connection is established.";
         }
         else
         {
-            baseLabel=  @"Cellular data network is active.\n  Internet traffic will be routed through it.";
+            baseLabel =  @"Cellular data network is active.\n  Internet traffic will be routed through it.";
         }
-        summaryLabel.text= baseLabel;
-    }
+    
+        summaryLabel.text = baseLabel;
+  }
+   
 	if(curReach == internetReach)
 	{	
 		[self configureTextField: internetConnectionStatusField imageView: internetConnectionIcon reachability: curReach];
@@ -122,6 +132,7 @@ Copyright (C) 2010 Apple Inc. All Rights Reserved.
 {
 	Reachability* curReach = [note object];
 	NSParameterAssert([curReach isKindOfClass: [Reachability class]]);
+  
 	[self updateInterfaceWithReachability: curReach];
 }
 
@@ -141,8 +152,8 @@ Copyright (C) 2010 Apple Inc. All Rights Reserved.
     //Change the host name here to change the server your monitoring
   //remoteHostLabel.text = [NSString stringWithFormat: @"Remote Host: %@", @"www.apple.com"];
 	//hostReach = [[Reachability reachabilityWithHostName: @"www.apple.com"] retain];
-  remoteHostLabel.text = [NSString stringWithFormat: @"Remote Host: %@", @"http://192.168.2.108:8080/vertex/ws/"];
-	hostReach = [Reachability reachabilityWithHostName: @"http://192.168.2.108:8080/vertex/ws/"];
+  remoteHostLabel.text = [NSString stringWithFormat: @"Remote Host: %@", @"http://192.168.2.107/vertex-api/auth/login"];
+	hostReach = [Reachability reachabilityWithHostName: @"http://192.168.2.107/vertex-api/auth/login"];
 	[hostReach startNotifier];
 	[self updateInterfaceWithReachability: hostReach];
 	
@@ -155,6 +166,7 @@ Copyright (C) 2010 Apple Inc. All Rights Reserved.
 	[self updateInterfaceWithReachability: wifiReach];
 
 	[window makeKeyAndVisible];
-    
 }
+
+
 @end

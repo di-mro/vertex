@@ -57,17 +57,24 @@
   NSLog(@"Update Esse Page View");
   
   //Keyboard dismissal
-  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                        action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //Configure Scroller size
   self.updateEsseScroller.contentSize = CGSizeMake(320, 720);
   
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelUpdateEsse)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(cancelUpdateEsse)];
   
   //[Update] navigation button - Update Esse
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Update" style:UIBarButtonItemStylePlain target:self action:@selector(updateEsse)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Update"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(updateEsse)];
   
   //Get info for the selected Esse
   [self getEsseInfo];
@@ -126,7 +133,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -134,16 +141,16 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if (responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:nil //TEST ~ ~ ~
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:nil //TEST ~ ~ ~
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
@@ -163,9 +170,10 @@
   {
     //JSON
     esseInfo = [NSJSONSerialization
-                     JSONObjectWithData:responseData
-                     options:kNilOptions
-                     error:&error];
+                JSONObjectWithData:responseData
+                           options:kNilOptions
+                             error:&error];
+    
     NSLog(@"esseInfo JSON: %@", esseInfo);
     
     //TODO : JSON members key
@@ -191,14 +199,15 @@
     //TODO : Construct JSON request for Update Esse
     //[updateEsseJson setObject:@"" forKey:@""];
     
-    NSError *error = [[NSError alloc] init];
+    NSError *error   = [[NSError alloc] init];
     NSData *jsonData = [NSJSONSerialization
                         dataWithJSONObject:updateEsseJson
-                        options:NSJSONWritingPrettyPrinted
-                        error:&error];
+                                   options:NSJSONWritingPrettyPrinted
+                                     error:&error];
+    
     NSString *jsonString = [[NSString alloc]
                             initWithData:jsonData
-                            encoding:NSUTF8StringEncoding];
+                                encoding:NSUTF8StringEncoding];
     
     NSLog(@"jsonData Request: %@", jsonData);
     NSLog(@"jsonString Request: %@", jsonString);
@@ -217,7 +226,7 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:putRequest
-                                   delegate:self];
+                                          delegate:self];
     
     [connection start];
     
@@ -225,21 +234,21 @@
     if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
     {
       UIAlertView *updateEsseAlert = [[UIAlertView alloc]
-                                           initWithTitle:@"Update Esse"
-                                           message:@"Esse Updated."
-                                           delegate:self
-                                           cancelButtonTitle:@"OK"
-                                           otherButtonTitles:nil];
+                                          initWithTitle:@"Update Esse"
+                                                message:@"Esse Updated."
+                                               delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
       [updateEsseAlert show];
     }
     else //(httpResponseCode >= 400)
     {
       UIAlertView *updateEsseFailAlert = [[UIAlertView alloc]
-                                               initWithTitle:@"Update Esse Failed"
-                                               message:@"Esse not updated. Please try again later"
-                                               delegate:self
-                                               cancelButtonTitle:@"OK"
-                                               otherButtonTitles:nil];
+                                              initWithTitle:@"Update Esse Failed"
+                                                    message:@"Esse not updated. Please try again later"
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
       [updateEsseFailAlert show];
     }
     
@@ -263,7 +272,7 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
@@ -286,10 +295,10 @@
 {
   UIAlertView *updateEsseValidateAlert = [[UIAlertView alloc]
                                               initWithTitle:@"Incomplete Information"
-                                              message:@"Please fill out the necessary fields."
-                                              delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
+                                                    message:@"Please fill out the necessary fields."
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
   
   if([lastNameField.text isEqualToString:@""]
        || [firstNameField.text isEqualToString:@""]
@@ -313,9 +322,11 @@
 
 
 #pragma mark - Dismiss the onscreen keyboard when not in use
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
   [self.view endEditing:YES];
 }
+
 
 #pragma mark - Dismiss onscreen keyboard
 -(void)dismissKeyboard

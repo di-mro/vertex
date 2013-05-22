@@ -55,14 +55,21 @@
   NSLog(@"Add Esse Page");
   
   //Keyboard dismissal
-  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                        action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelAddEsse)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                           action:@selector(cancelAddEsse)];
   
   //[Add] navigation button - Add Esse
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addEsse)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(addEsse)];
   
   //Configure Scroller size
   self.addEsseScroller.contentSize = CGSizeMake(320, 720);
@@ -98,17 +105,19 @@
   {
     //Set JSON Request
     addEsseJson = [[NSMutableDictionary alloc] init];
+    
     //TODO : Construct JSON request body Add Esse
     //[addEsseJson setObject:@"" forKey:@"name"];
     
     NSError *error = [[NSError alloc] init];
     NSData *jsonData = [NSJSONSerialization
                         dataWithJSONObject:addEsseJson
-                        options:NSJSONWritingPrettyPrinted
-                        error:&error];
+                                   options:NSJSONWritingPrettyPrinted
+                                     error:&error];
+    
     NSString *jsonString = [[NSString alloc]
                             initWithData:jsonData
-                            encoding:NSUTF8StringEncoding];
+                                encoding:NSUTF8StringEncoding];
     
     NSLog(@"jsonData Request: %@", jsonData);
     NSLog(@"jsonString Request: %@", jsonString);
@@ -127,7 +136,7 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:postRequest
-                                   delegate:self];
+                                          delegate:self];
     
     [connection start];
     
@@ -135,21 +144,21 @@
     if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
     {
       UIAlertView *addEsseAlert = [[UIAlertView alloc]
-                                          initWithTitle:@"Add Esse"
-                                          message:@"Esse added."
-                                          delegate:self
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
+                                        initWithTitle:@"Add Esse"
+                                              message:@"Esse added."
+                                             delegate:self
+                                    cancelButtonTitle:@"OK"
+                                    otherButtonTitles:nil];
       [addEsseAlert show];
     }
     else //(httpResponseCode >= 400)
     {
       UIAlertView *addEsseFailAlert = [[UIAlertView alloc]
-                                              initWithTitle:@"Add Esse Failed"
-                                              message:@"Esse not added. Please try again later"
-                                              delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
+                                            initWithTitle:@"Add Esse Failed"
+                                                  message:@"Esse not added. Please try again later"
+                                                 delegate:self
+                                        cancelButtonTitle:@"OK"
+                                        otherButtonTitles:nil];
       [addEsseFailAlert show];
     }
     
@@ -173,7 +182,7 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
@@ -195,17 +204,18 @@
 -(BOOL) validateAddEsseFields
 {
   UIAlertView *addEsseValidateAlert = [[UIAlertView alloc]
-                                              initWithTitle:@"Incomplete Information"
-                                              message:@"Please fill out the necessary fields."
-                                              delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
+                                            initWithTitle:@"Incomplete Information"
+                                                  message:@"Please fill out the necessary fields."
+                                                 delegate:nil
+                                        cancelButtonTitle:@"OK"
+                                        otherButtonTitles:nil];
   
   if([lastNameField.text isEqualToString:@""]
      || [firstNameField.text isEqualToString:@""]
      || [middleNameField.text isEqualToString:@""])
   {
     [addEsseValidateAlert show];
+    
     return false;
   }
   else

@@ -48,7 +48,9 @@ Copyright (C) 2010 Apple Inc. All Rights Reserved.
 #import <UIKit/UIKit.h>
 
 @class Reachability;
-@interface ReachabilityAppDelegate: NSObject {
+
+@interface ReachabilityAppDelegate: NSObject
+{
     IBOutlet UIWindow* window;
     IBOutlet UIView* contentView;
     IBOutlet UILabel* summaryLabel;
@@ -67,4 +69,6 @@ Copyright (C) 2010 Apple Inc. All Rights Reserved.
     Reachability* internetReach;
     Reachability* wifiReach;
 }
+
+
 @end

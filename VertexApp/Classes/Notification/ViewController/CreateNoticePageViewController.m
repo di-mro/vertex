@@ -30,6 +30,7 @@
 @synthesize URL;
 @synthesize httpResponseCode;
 
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -45,17 +46,24 @@
   NSLog(@"Create Notice Page");
   
   //Keyboard dismissal
-  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                        action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelCreateNotice)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(cancelCreateNotice)];
   
   //[Create] navigation button
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Create" style:UIBarButtonItemStylePlain target:self action:@selector(createNotice)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Create"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(createNotice)];
   
   //Scroller size
-  self.createNoticeScroller.contentSize = CGSizeMake(320.0, 900.0);
+  self.createNoticeScroller.contentSize = CGSizeMake(320.0, 1000.0);
   
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -88,17 +96,19 @@
   {
     //Set JSON Request
     NSMutableDictionary *createNoticeJson = [[NSMutableDictionary alloc] init];
+    
     //TODO : Construct JSON object for Create Notice
     //[createNoticeJson setObject:@"" forKey:@""];
     
-    NSError *error = [[NSError alloc] init];
+    NSError *error   = [[NSError alloc] init];
     NSData *jsonData = [NSJSONSerialization
                         dataWithJSONObject:createNoticeJson
-                        options:NSJSONWritingPrettyPrinted
-                        error:&error];
+                                   options:NSJSONWritingPrettyPrinted
+                                     error:&error];
+    
     NSString *jsonString = [[NSString alloc]
                             initWithData:jsonData
-                            encoding:NSUTF8StringEncoding];
+                                encoding:NSUTF8StringEncoding];
     
     NSLog(@"jsonData Request: %@", jsonData);
     NSLog(@"jsonString Request: %@", jsonString);
@@ -117,12 +127,11 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:postRequest
-                                   delegate:self];
+                                          delegate:self];
     
     [connection start];
     
     NSLog(@"createNotice - httpResponseCode: %d", httpResponseCode);
-    //***
   }
   else
   {
@@ -142,16 +151,16 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
   
   if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
   {
     UIAlertView *createNoticeAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Create Notice"
-                                    message:@"Notice Created."
-                                    delegate:self
+                                        initWithTitle:@"Create Notice"
+                                              message:@"Notice Created."
+                                             delegate:self
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [createNoticeAlert show];
@@ -159,9 +168,9 @@
   else //(httpResponseCode >= 400)
   {
     UIAlertView *createNoticeAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Create Notice Failed"
-                                    message:@"Notice not created. Please try again later"
-                                    delegate:self
+                                        initWithTitle:@"Create Notice Failed"
+                                              message:@"Notice not created. Please try again later"
+                                             delegate:self
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [createNoticeAlert show];
@@ -188,9 +197,9 @@
 -(BOOL) validateCreateNoticeFields
 {
   UIAlertView *createNoticeValidateAlert = [[UIAlertView alloc]
-                                          initWithTitle:@"Incomplete Information"
-                                          message:@"Please fill out the necessary fields."
-                                          delegate:nil
+                                              initWithTitle:@"Incomplete Information"
+                                                    message:@"Please fill out the necessary fields."
+                                                   delegate:nil
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
   
@@ -200,6 +209,7 @@
      || [validityField.text isEqualToString:(@"")])
   {
     [createNoticeValidateAlert show];
+    
     return false;
   }
   else
@@ -217,9 +227,11 @@
 
 
 #pragma mark - Dismiss the onscreen keyboard when not in use
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
   [self.view endEditing:YES];
 }
+
 
 #pragma mark - Dismiss onscreen keyboard
 -(void)dismissKeyboard

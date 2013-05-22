@@ -38,6 +38,7 @@
 - (void)viewDidLoad
 {
   [self displayViewEssePageEntries];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -67,7 +68,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -75,16 +76,16 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if (responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:self
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:self
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
@@ -106,18 +107,19 @@
   {
     //JSON
     esse = [NSJSONSerialization
-                      JSONObjectWithData:responseData
-                      options:kNilOptions
-                      error:&error];
+            JSONObjectWithData:responseData
+                       options:kNilOptions
+                         error:&error];
+    
     NSLog(@"esse JSON: %@", esse);
     
     viewEssePageEntries = [esse valueForKey:@"name"];
     
     esseNameArray = [[NSMutableArray alloc] init];
-    esseIdArray = [[NSMutableArray alloc] init];
+    esseIdArray   = [[NSMutableArray alloc] init];
     
     esseNameArray = [esse valueForKey:@"name"];
-    esseIdArray = [esse valueForKey:@"id"];
+    esseIdArray   = [esse valueForKey:@"id"];
   }
 }
 
@@ -147,20 +149,20 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.viewEssePageEntries objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.viewEssePageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
+
 
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   NSString *selectedRowName = [[NSString alloc] init];
-  selectedRowName = [viewEssePageEntries objectAtIndex:indexPath.row];
-  NSLog(@"Selected row name: %@", selectedRowName);
   
-  selectedEsseId = [esseIdArray objectAtIndex:indexPath.row];
-  NSLog(@"selectedEsseId: %@", selectedEsseId);
+  selectedRowName = [viewEssePageEntries objectAtIndex:indexPath.row];
+  selectedEsseId  = [esseIdArray objectAtIndex:indexPath.row];
   
   [self performSegueWithIdentifier:@"viewEsseToEsseDetail" sender:self];
 }

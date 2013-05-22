@@ -23,6 +23,7 @@
 @synthesize httpResponseCode;
 @synthesize token;
 
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -45,20 +46,22 @@
     // Dispose of any resources that can be recreated.
 }
 
+
 #pragma mark - Dismiss the onscreen keyboard when not in use
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
   [self.view endEditing:YES];
 }
+
 
 #pragma mark - [Login] button functions
 - (IBAction)login:(id)sender
 {
-  //[self performSegueWithIdentifier: @"loginToHome" sender: self];
-  
   //Set URL for Login
   //URL = @"http://192.168.2.113/vertex-api/user/login";
-  URL = @"http://192.168.2.107/vertex-api/user/login";
-
+  //URL = @"http://192.168.2.107/vertex-api/user/login";
+  URL = @"http://192.168.2.113/vertex-api/auth/login";
+  
   if([self validateLoginFields])
   {
     NSString *username = userNameField.text;
@@ -83,7 +86,7 @@
     // Initialize the NSURLConnection and proceed as usual
     NSURLConnection *connection = [[NSURLConnection alloc]
                                      initWithRequest:postRequest
-                                     delegate:self];
+                                            delegate:self];
     //start the connection
     [connection start];
       
@@ -92,16 +95,16 @@
     NSError *error = [[NSError alloc] init];
       
     NSData *responseData = [NSURLConnection
-                              sendSynchronousRequest:postRequest
-                              returningResponse:&urlResponse
-                              error:&error];
+                            sendSynchronousRequest:postRequest
+                                 returningResponse:&urlResponse
+                                             error:&error];
     
     if(responseData == nil)
     {
       UIAlertView *loginAlert = [[UIAlertView alloc]
-                                 initWithTitle:@"No Connection Detected"
-                                 message:@"Displaying data from phone cache"
-                                 delegate:nil
+                                     initWithTitle:@"No Connection Detected"
+                                           message:@"Displaying data from phone cache"
+                                          delegate:nil
                                  cancelButtonTitle:@"OK"
                                  otherButtonTitles:nil];
       [loginAlert show];
@@ -111,15 +114,16 @@
     else
     {
       NSDictionary *loginHeaderResponse = [[NSDictionary alloc] init];
-      loginHeaderResponse = [(NSHTTPURLResponse *)urlResponse allHeaderFields];
+      loginHeaderResponse               = [(NSHTTPURLResponse *)urlResponse allHeaderFields];
       NSLog(@"loginHeaderResponse: %@", loginHeaderResponse);
+      
       token = [loginHeaderResponse valueForKey:@"token"];
       NSLog(@"token: %@", token);
       
       NSMutableDictionary *json = [NSJSONSerialization
                                    JSONObjectWithData:responseData
-                                   options:kNilOptions
-                                   error:&error];
+                                              options:kNilOptions
+                                                error:&error];
       
       NSLog(@"Response JSON: %@", json);
     }
@@ -165,7 +169,7 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"connection-httpResponse status code: %d", httpResponseCode);
   
@@ -177,26 +181,14 @@
   else //(httpResponseCode >= 400)
   {
     UIAlertView *loginAlert = [[UIAlertView alloc]
-                               initWithTitle:@"Invalid User"
-                               message:@"Username and password is incorrect."
-                               delegate:nil
+                                   initWithTitle:@"Invalid User"
+                                         message:@"Username and password is incorrect."
+                                        delegate:nil
                                cancelButtonTitle:@"OK"
                                otherButtonTitles:nil];
     [loginAlert show];
   }
 }
-
-
-/*
-#pragma mark - Present warning that there is no network connection before proceeding to Home Page
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-  if (buttonIndex == 0)
-  {
-    [self performSegueWithIdentifier: @"loginToHome" sender: self];
-  }
-}
-*/
 
 
 #pragma mark - Login fields validation
@@ -205,7 +197,7 @@
   UIAlertView *loginValidateAlert = [[UIAlertView alloc]
                                      initWithTitle:@"Incomplete Information"
                                            message:@"Please fill out all the fields."
-                                          delegate:nil //set to 'nil' to not activate clickedAtButtonAtIndex
+                                          delegate:nil
                                  cancelButtonTitle:@"OK"
                                  otherButtonTitles:nil];
 
@@ -213,6 +205,7 @@
      || [passwordField.text isEqualToString:(@"")])
   {
     [loginValidateAlert show];
+    
     return false;
   }
   else

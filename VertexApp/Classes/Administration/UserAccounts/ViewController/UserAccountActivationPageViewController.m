@@ -44,17 +44,24 @@
   NSLog(@"User Account Activation Page");
   
   //Keyboard dismissal
-  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                        action:@selector (dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //Configure Scroller size
   self.userAccountActivationScroller.contentSize = CGSizeMake(320, 720);
   
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelUserAccountActivation)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(cancelUserAccountActivation)];
   
   //[Activate] navigation button - User Account Activation
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Activate" style:UIBarButtonItemStylePlain target:self action:@selector(activateUserAccount)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Activate"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(activateUserAccount)];
   
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -87,17 +94,19 @@
   {
     //Set JSON Request
     NSMutableDictionary *userAccountActivationJson = [[NSMutableDictionary alloc] init];
+    
     //TODO : Set JSON request body
     //[userAccountActivationJson setObject:@"" forKey:@""];
     
-    NSError *error = [[NSError alloc] init];
+    NSError *error   = [[NSError alloc] init];
     NSData *jsonData = [NSJSONSerialization
                         dataWithJSONObject:userAccountActivationJson
-                        options:NSJSONWritingPrettyPrinted
-                        error:&error];
+                                   options:NSJSONWritingPrettyPrinted
+                                     error:&error];
+    
     NSString *jsonString = [[NSString alloc]
                             initWithData:jsonData
-                            encoding:NSUTF8StringEncoding];
+                                encoding:NSUTF8StringEncoding];
     
     NSLog(@"jsonData Request: %@", jsonData);
     NSLog(@"jsonString Request: %@", jsonString);
@@ -116,12 +125,11 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:postRequest
-                                   delegate:self];
+                                          delegate:self];
     
     [connection start];
     
     NSLog(@"activateUserAccount - httpResponseCode: %d", httpResponseCode);
-    //***
   }
   else
   {
@@ -141,28 +149,28 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
   
   if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
   {
     UIAlertView *activateUserAccountAlert = [[UIAlertView alloc]
-                                      initWithTitle:@"Activate User Account"
-                                      message:@"User account activated."
-                                      delegate:self
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles:nil];
+                                                 initWithTitle:@"Activate User Account"
+                                                       message:@"User account activated."
+                                                      delegate:self
+                                             cancelButtonTitle:@"OK"
+                                             otherButtonTitles:nil];
     [activateUserAccountAlert show];
   }
   else //(httpResponseCode >= 400)
   {
     UIAlertView *activateUserAccountFailAlert = [[UIAlertView alloc]
-                                          initWithTitle:@"Activate User Account Failed"
-                                          message:@"User account not activated. Please try again later"
-                                          delegate:self
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
+                                                     initWithTitle:@"Activate User Account Failed"
+                                                           message:@"User account not activated. Please try again later"
+                                                          delegate:self
+                                                 cancelButtonTitle:@"OK"
+                                                 otherButtonTitles:nil];
     [activateUserAccountFailAlert show];
   }
   
@@ -187,11 +195,11 @@
 -(BOOL) validateActivateUserAccountFields
 {
   UIAlertView *activateUserAccountValidateAlert = [[UIAlertView alloc]
-                                           initWithTitle:@"Incomplete Information"
-                                           message:@"Please fill out the necessary fields."
-                                           delegate:nil
-                                           cancelButtonTitle:@"OK"
-                                           otherButtonTitles:nil];
+                                                       initWithTitle:@"Incomplete Information"
+                                                             message:@"Please fill out the necessary fields."
+                                                            delegate:nil
+                                                   cancelButtonTitle:@"OK"
+                                                   otherButtonTitles:nil];
   
   if([usernameField.text isEqualToString:(@"")]
      || [esseNameField.text isEqualToString:(@"")]
@@ -215,9 +223,11 @@
 
 
 #pragma mark - Dismiss the onscreen keyboard when not in use
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
   [self.view endEditing:YES];
 }
+
 
 #pragma mark - Dismiss onscreen keyboard
 -(void)dismissKeyboard
