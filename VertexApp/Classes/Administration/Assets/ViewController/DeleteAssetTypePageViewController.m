@@ -24,6 +24,8 @@
 @synthesize URL;
 @synthesize httpResponseCode;
 
+@synthesize assetTypeDeleteConfirmation;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -40,12 +42,19 @@
   NSLog(@"Delete Asset Type Page");
   
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelDeleteAssetType)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(cancelDeleteAssetType)];
   
   //[Delete] navigation button - Delete Lifecycle
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Delete" style:UIBarButtonItemStylePlain target:self action:@selector(deleteAssetType)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Delete"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(deleteAssetType)];
   
   [self displayDeleteAssetTypeEntries];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -122,10 +131,10 @@
     deleteAssetTypePageEntries = [assetTypeDict valueForKey:@"name"];
     
     assetTypeNameArray = [[NSMutableArray alloc] init];
-    assetTypeIdArray = [[NSMutableArray alloc] init];
+    assetTypeIdArray   = [[NSMutableArray alloc] init];
     
     assetTypeNameArray = [assetTypeDict valueForKey:@"name"];
-    assetTypeIdArray = [assetTypeDict valueForKey:@"id"];
+    assetTypeIdArray   = [assetTypeDict valueForKey:@"id"];
   }
 }
 
@@ -146,13 +155,13 @@
 #pragma mark - [Delete] button implementation
 -(void) deleteAssetType
 {
-  UIAlertView *assetTypeDeleteConfirmation = [[UIAlertView alloc]
-                                              initWithTitle:@"Asset Type Delete"
-                                              message:@"Are you sure you want to delete the selected asset type?"
-                                              delegate:self
-                                              cancelButtonTitle:@"Yes"
-                                              otherButtonTitles:@"No",
-                                              nil];
+  assetTypeDeleteConfirmation = [[UIAlertView alloc]
+                                      initWithTitle:@"Asset Type Delete"
+                                            message:@"Are you sure you want to delete the selected asset type?"
+                                           delegate:self
+                                  cancelButtonTitle:@"Yes"
+                                  otherButtonTitles:@"No", nil];
+  
   [assetTypeDeleteConfirmation show];
   //clickedButtonAtIndex:
 }
@@ -165,12 +174,12 @@
   
   if (buttonIndex == 0)
   {
-    //TODO : WS Endpoint for delete
+    //!!! TODO : WS Endpoint for delete
     URL = @"";
     
     //! TEST
     NSMutableString *urlParams = [NSMutableString
-                                  stringWithFormat:@""
+                                  stringWithFormat:@"http//blah/%@"
                                   , selectedAssetTypeId];
     
     NSMutableURLRequest *deleteRequest = [NSMutableURLRequest
@@ -182,7 +191,7 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:deleteRequest
-                                   delegate:self];
+                                          delegate:self];
     [connection start];
     
     NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -190,28 +199,28 @@
     
     NSData *responseData = [NSURLConnection
                             sendSynchronousRequest:deleteRequest
-                            returningResponse:&urlResponse
-                            error:&error];
+                                 returningResponse:&urlResponse
+                                             error:&error];
     
     if (responseData == nil)
     {
       //Show an alert if connection is not available
       UIAlertView *assetTypeDeleteAlert = [[UIAlertView alloc]
-                                       initWithTitle:@"Warning"
-                                       message:@"Asset Type not deleted. Please try again."
-                                       delegate:nil
-                                       cancelButtonTitle:@"OK"
-                                       otherButtonTitles:nil];
+                                               initWithTitle:@"Warning"
+                                                     message:@"Asset Type not deleted. Please try again."
+                                                    delegate:nil
+                                           cancelButtonTitle:@"OK"
+                                           otherButtonTitles:nil];
       [assetTypeDeleteAlert show];
     }
     else
     {
       UIAlertView *assetTypeDeleteAlert = [[UIAlertView alloc]
-                                       initWithTitle:@"Asset Type Delete"
-                                       message:@"Asset Type deleted"
-                                       delegate:nil
-                                       cancelButtonTitle:@"OK"
-                                       otherButtonTitles:nil];
+                                               initWithTitle:@"Asset Type Delete"
+                                                     message:@"Asset Type deleted"
+                                                    delegate:nil
+                                           cancelButtonTitle:@"OK"
+                                           otherButtonTitles:nil];
       [assetTypeDeleteAlert show];
     }
     [self.navigationController pushViewController:controller animated:YES];
@@ -230,12 +239,11 @@
   NSLog(@"connection didFailWithError: %@", [error localizedDescription]);
 }
 
-
 #pragma mark - Connection didReceiveResponse
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
@@ -258,7 +266,6 @@
 {
   //Return the number of rows in the section
   return [deleteAssetTypePageEntries count];
-  NSLog(@"%d", [deleteAssetTypePageEntries count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -267,8 +274,9 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.deleteAssetTypePageEntries objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.deleteAssetTypePageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
 
@@ -277,13 +285,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   NSString *selectedRowName = [[NSString alloc] init];
-  selectedRowName = [deleteAssetTypePageEntries objectAtIndex:indexPath.row];
-  NSLog(@"Selected row name: %@", selectedRowName);
-  
-  selectedAssetTypeId = [assetTypeIdArray objectAtIndex:indexPath.row];
-  NSLog(@"selectedAssetTypeId: %@", selectedAssetTypeId);
-}
 
+  selectedRowName     = [deleteAssetTypePageEntries objectAtIndex:indexPath.row];
+  selectedAssetTypeId = [assetTypeIdArray objectAtIndex:indexPath.row];
+}
 
 
 @end

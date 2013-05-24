@@ -8,6 +8,7 @@
 
 #import "DeleteAssetPageViewController.h"
 #import "HomePageViewController.h"
+#import "AssetPageViewController.h"
 
 @interface DeleteAssetPageViewController ()
 
@@ -23,6 +24,9 @@
 
 @synthesize URL;
 @synthesize httpResponseCode;
+
+@synthesize cancelDeleteAssetConfirmation;
+@synthesize deleteAssetConfirmation;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -40,10 +44,16 @@
   NSLog(@"Delete Asset Page");
   
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelDeleteAsset)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(cancelDeleteAsset)];
   
   //[Delete] navigation button - Delete Lifecycle
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Delete" style:UIBarButtonItemStylePlain target:self action:@selector(deleteAsset)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Delete"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(deleteAsset)];
   
   [self displayDeleteAssetPageEntries];
   
@@ -133,27 +143,30 @@
 #pragma mark - [Cancel] button implementation
 -(void) cancelDeleteAsset
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Cancel Delete Assets");
   
-  //Go back to Home Page
-  HomePageViewController *controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+  cancelDeleteAssetConfirmation = [[UIAlertView alloc]
+                                       initWithTitle:@"Cancel Delete Asset"
+                                             message:@"Are you sure you want to cancel deleting this asset?"
+                                            delegate:self
+                                   cancelButtonTitle:@"Yes"
+                                   otherButtonTitles:@"No", nil];
   
-  [self.navigationController pushViewController:controller animated:YES];
+  [cancelDeleteAssetConfirmation show];
 }
 
 
 #pragma mark - [Delete] button implementation
 -(void) deleteAsset
 {
-  UIAlertView *lifecycleDeleteConfirmation = [[UIAlertView alloc]
-                                              initWithTitle:@"Asset Delete"
-                                              message:@"Are you sure you want to delete the selected asset?"
-                                              delegate:self
-                                              cancelButtonTitle:@"Yes"
-                                              otherButtonTitles:@"No",
-                                              nil];
-  [lifecycleDeleteConfirmation show];
+  deleteAssetConfirmation = [[UIAlertView alloc]
+                              initWithTitle:@"Asset Delete"
+                                    message:@"Are you sure you want to delete the selected asset?"
+                                   delegate:self
+                          cancelButtonTitle:@"Yes"
+                          otherButtonTitles:@"No", nil];
+  
+  [deleteAssetConfirmation show];
   //clickedButtonAtIndex:
 }
 
@@ -161,65 +174,82 @@
 #pragma mark - Transition to Assets Page when OK on Alert Box is clicked
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-  HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+  HomePageViewController *homePageController = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
   
-  if (buttonIndex == 0)
+  if([alertView isEqual:cancelDeleteAssetConfirmation])
   {
-    //TODO : WS Endpoint for delete
-    URL = @"";
+    NSLog(@"Cancel Delete Asset Confirmation");
     
-    //! TEST
-    NSMutableString *urlParams = [NSMutableString
-                                  stringWithFormat:@""
-                                  , selectedAssetId];
-    
-    NSMutableURLRequest *deleteRequest = [NSMutableURLRequest
-                                          requestWithURL:[NSURL URLWithString:urlParams]];
-    
-    [deleteRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [deleteRequest setHTTPMethod:@"DELETE"];
-    NSLog(@"%@", deleteRequest);
-    
-    NSURLConnection *connection = [[NSURLConnection alloc]
-                                   initWithRequest:deleteRequest
-                                   delegate:self];
-    [connection start];
-    
-    NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
-    NSError *error = [[NSError alloc] init];
-    
-    NSData *responseData = [NSURLConnection
-                            sendSynchronousRequest:deleteRequest
-                            returningResponse:&urlResponse
-                            error:&error];
-    
-    if (responseData == nil)
+    if(buttonIndex == 0) //Yes - Cancel
     {
-      //Show an alert if connection is not available
-      UIAlertView *assetDeleteAlert = [[UIAlertView alloc]
-                                           initWithTitle:@"Warning"
-                                           message:@"Asset not deleted. Please try again."
-                                           delegate:nil
-                                           cancelButtonTitle:@"OK"
-                                           otherButtonTitles:nil];
-      [assetDeleteAlert show];
+      //Go back to SR Page
+      AssetPageViewController *controller = (AssetPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"AssetsPage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
+  }
+  else if([alertView isEqual:deleteAssetConfirmation])
+  {
+    NSLog(@"Delete Asset");
+    
+    if (buttonIndex == 0)
+    {
+      //!!! TODO : WS Endpoint for delete
+      URL = @"";
+      
+      //! TEST
+      NSMutableString *urlParams = [NSMutableString
+                                    stringWithFormat:@"http://blah/%@"
+                                    , selectedAssetId];
+      
+      NSMutableURLRequest *deleteRequest = [NSMutableURLRequest
+                                            requestWithURL:[NSURL URLWithString:urlParams]];
+      
+      [deleteRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+      [deleteRequest setHTTPMethod:@"DELETE"];
+      NSLog(@"%@", deleteRequest);
+      
+      NSURLConnection *connection = [[NSURLConnection alloc]
+                                     initWithRequest:deleteRequest
+                                            delegate:self];
+      [connection start];
+      
+      NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+      NSError *error = [[NSError alloc] init];
+      
+      NSData *responseData = [NSURLConnection
+                              sendSynchronousRequest:deleteRequest
+                                   returningResponse:&urlResponse
+                                               error:&error];
+      
+      if (responseData == nil)
+      {
+        //Show an alert if connection is not available
+        UIAlertView *assetDeleteAlert = [[UIAlertView alloc]
+                                             initWithTitle:@"Warning"
+                                                   message:@"Asset not deleted. Please try again."
+                                                  delegate:nil
+                                         cancelButtonTitle:@"OK"
+                                         otherButtonTitles:nil];
+        [assetDeleteAlert show];
+      }
+      else
+      {
+        UIAlertView *assetDeleteAlert = [[UIAlertView alloc]
+                                             initWithTitle:@"Asset Delete"
+                                                   message:@"Asset deleted"
+                                                  delegate:nil
+                                         cancelButtonTitle:@"OK"
+                                         otherButtonTitles:nil];
+        [assetDeleteAlert show];
+      }
+      [self.navigationController pushViewController:homePageController animated:YES];
     }
     else
     {
-      UIAlertView *assetDeleteAlert = [[UIAlertView alloc]
-                                           initWithTitle:@"Asset Delete"
-                                           message:@"Asset deleted"
-                                           delegate:nil
-                                           cancelButtonTitle:@"OK"
-                                           otherButtonTitles:nil];
-      [assetDeleteAlert show];
+      [self.navigationController pushViewController:homePageController animated:YES];
+      NSLog(@"Delete Asset Cancel");
     }
-    [self.navigationController pushViewController:controller animated:YES];
-  }
-  else
-  {
-    [self.navigationController pushViewController:controller animated:YES];
-    NSLog(@"Delete Asset Cancel");
   }
 }
 
@@ -235,7 +265,7 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
   NSHTTPURLResponse *httpResponse;
-  httpResponse = (NSHTTPURLResponse *)response;
+  httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
@@ -258,7 +288,6 @@
 {
   //Return the number of rows in the section
   return [deleteAssetPageEntries count];
-  NSLog(@"%d", [deleteAssetPageEntries count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -267,20 +296,20 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //configure the cell
-  cell.textLabel.text = [self.deleteAssetPageEntries objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.deleteAssetPageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
+
 
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   NSString *selectedRowName = [[NSString alloc] init];
+
   selectedRowName = [deleteAssetPageEntries objectAtIndex:indexPath.row];
-  NSLog(@"Selected row name: %@", selectedRowName);
-  
   selectedAssetId = [assetIdArray objectAtIndex:indexPath.row];
-  NSLog(@"selectedAssetId: %@", selectedAssetId);
 }
 
 

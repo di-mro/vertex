@@ -31,6 +31,8 @@
 @synthesize URL;
 @synthesize httpResponseCode;
 
+@synthesize cancelUpdateLifecycleConfirmation;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,7 +50,7 @@
   
   //Keyboard dismissal
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                        action:@selector (dismissKeyboard)];
+                                                                        action:@selector(dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //Configure Scroller size
@@ -91,13 +93,16 @@
 #pragma mark - [Cancel] button implementation
 -(void) cancelUpdateLifecycle
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Cancel Update Lifecycle");
   
-  //Go back to Home Page
-  HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+  cancelUpdateLifecycleConfirmation = [[UIAlertView alloc]
+                                           initWithTitle:@"Cancel Update Lifecycle"
+                                                 message:@"Are you sure you want to cancel lifecycle update?"
+                                                delegate:self
+                                       cancelButtonTitle:@"Yes"
+                                       otherButtonTitles:@"No", nil];
   
-  [self.navigationController pushViewController:controller animated:YES];
+  [cancelUpdateLifecycleConfirmation show];
 }
 
 
@@ -260,14 +265,29 @@
 }
 
 
-#pragma mark - Transition to Assets Page when OK on Alert Box is clicked
+#pragma mark - Transition to Lifecycle Configuration Page when OK on Alert Box is clicked
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-  if (buttonIndex == 0)
+  if([alertView isEqual:cancelUpdateLifecycleConfirmation])
   {
-    LifecycleConfigurationPageViewController* controller = (LifecycleConfigurationPageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"LifecycleConfigPage"];
-    
-    [self.navigationController pushViewController:controller animated:YES];
+    NSLog(@"Cancel Update Lifecycle Confirmation");
+    if(buttonIndex == 0) //Yes - Cancel
+    {
+      //Go back to SR Page
+      LifecycleConfigurationPageViewController *controller = (LifecycleConfigurationPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"LifecycleConfigPage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
+  }
+  else
+  {
+    if (buttonIndex == 0) //OK
+    {
+      //Go back to Home
+      HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
   }
 }
 

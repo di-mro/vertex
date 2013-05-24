@@ -32,7 +32,7 @@
 {
   NSLog(@"Service Request Page View");
   
-  //[Cancel] navigation button
+  //[Home] navigation button
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home"
                                                                            style:UIBarButtonItemStylePlain
                                                                           target:self
@@ -85,7 +85,8 @@
   [self.navigationController pushViewController:controller animated:YES];
 }
 
-#pragma mark - Table view data source
+
+#pragma mark - Table view data source implementation
 - (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView
 {
   //Return the number of sections.
@@ -136,8 +137,8 @@
     //Approval
     case 4: [self performSegueWithIdentifier:@"srToApprovalSR" sender:self];
       break;
-    //~ Provisioning
-    case 5: [self performSegueWithIdentifier:@"srToViewSR" sender:self];
+    //Provisioning
+    case 5: [self performSegueWithIdentifier:@"srToProvisionSR" sender:self];
       break;
     //Feedback
     case 6: [self performSegueWithIdentifier:@"srToSRFeedbackList" sender:self];

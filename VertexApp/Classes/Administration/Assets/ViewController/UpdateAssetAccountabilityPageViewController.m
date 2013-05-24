@@ -25,6 +25,7 @@
 
 @synthesize URL;
 @synthesize httpResponseCode;
+@synthesize cancelUpdateAssetAccountabilityConfirmation;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -76,13 +77,16 @@
 #pragma mark - [Cancel] button implementation
 -(void) cancelUpdateAssetAccountability
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Cancel Update Asset Accountability");
   
-  //Go back to Home Page
-  HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+  cancelUpdateAssetAccountabilityConfirmation = [[UIAlertView alloc]
+                                                initWithTitle:@"Cancel Update Asset Accountability"
+                                                 message:@"Are you sure you want to cancel updating this asset accoutability?"
+                                                 delegate:self
+                                                 cancelButtonTitle:@"Yes"
+                                                 otherButtonTitles:@"No", nil];
   
-  [self.navigationController pushViewController:controller animated:YES];
+  [cancelUpdateAssetAccountabilityConfirmation show];
 }
 
 
@@ -183,11 +187,26 @@
 #pragma mark - Transition to Assets Page when OK on Alert Box is clicked
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-  if (buttonIndex == 0)
+  if([alertView isEqual:cancelUpdateAssetAccountabilityConfirmation])
   {
-    AssetConfigurationPageViewController *controller = (AssetConfigurationPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"AssetConfigPage"];
-    
-    [self.navigationController pushViewController:controller animated:YES];
+    NSLog(@"Cancel Update Asset Accountability Confirmation");
+    if(buttonIndex == 0) //Yes - Cancel
+    {
+      //Go back to Asset Config Page
+      AssetConfigurationPageViewController *controller = (AssetConfigurationPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"AssetConfigPage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
+  }
+  else
+  {
+    if (buttonIndex == 0) //OK
+    {
+      //Go back to Home
+      HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
   }
 }
 

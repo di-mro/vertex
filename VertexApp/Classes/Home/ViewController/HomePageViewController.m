@@ -18,6 +18,13 @@
 @synthesize homePageEntries;
 @synthesize homePageIcons;
 
+@synthesize userProfileId;
+
+@synthesize systemFunctionsInfo;
+
+@synthesize URL;
+@synthesize httpResponseCode;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -40,6 +47,7 @@
                                                                           action:@selector(logout)];
   
   [self displayHomePageEntries];
+  //[self getSystemFunctions];
   
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -49,6 +57,94 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - Set Profile ID to the logged userProfileId
+- (void) setUserProfileId:(NSNumber *) idFromLogin
+{
+  if (idFromLogin == NULL)
+  {
+    [self displayHomePageEntries];
+  }
+  else
+  {
+    userProfileId = idFromLogin;
+    NSLog(@"HomePage - userProfileId: %@", userProfileId);
+  }
+}
+
+
+#pragma mark - System Function Hierarchies
+- (void) getSystemFunctions
+{
+  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.113/vertex-api/user/system-function/getSystemFunctionsByProfile/%@", userProfileId];
+  
+  NSMutableURLRequest *getRequest = [NSMutableURLRequest
+                                     requestWithURL:[NSURL URLWithString:urlParams]];
+  
+  //GET method
+  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+  [getRequest setHTTPMethod:@"GET"];
+  NSLog(@"%@", getRequest);
+  
+  NSURLConnection *connection = [[NSURLConnection alloc]
+                                 initWithRequest:getRequest
+                                 delegate:self];
+  //start the connection
+  [connection start];
+  
+  // Get Response. Validation before proceeding to next page. Retrieve confirmation from the ws that user is valid.
+  NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+  NSError *error = [[NSError alloc] init];
+  
+  NSData *responseData = [NSURLConnection
+                          sendSynchronousRequest:getRequest
+                          returningResponse:&urlResponse
+                          error:&error];
+  
+  if(responseData == nil)
+  {
+    UIAlertView *systemFunctionAlert = [[UIAlertView alloc]
+                               initWithTitle:@"No Connection Detected"
+                               message:@"Displaying data from phone cache"
+                               delegate:nil
+                               cancelButtonTitle:@"OK"
+                               otherButtonTitles:nil];
+    [systemFunctionAlert show];
+    
+    [self performSegueWithIdentifier: @"loginToHome" sender: self];
+  }
+  else
+  {
+    systemFunctionsInfo = [NSJSONSerialization
+                           JSONObjectWithData:responseData
+                           options:kNilOptions
+                           error:&error];
+    
+    NSLog(@"systemFunctionsInfo JSON Result: %@", systemFunctionsInfo);
+    
+    //!!! TODO - How to determine if submenu ???
+    homePageEntries = [[NSMutableArray alloc] init];
+    //!!! TODO - For admin view only
+    for (int i = 0; i < 8; i++)
+    {
+      [homePageEntries addObject:[[systemFunctionsInfo valueForKey:@"name"] objectAtIndex:i]];
+    }
+  }
+  
+  NSLog(@"homePageEntries: %@", homePageEntries);
+  
+  homePageIcons = [[NSMutableArray alloc] initWithObjects: @"notification_icon.png"
+                   , @"service_request_icon.png"
+                   , @"asset_icon.png"
+                   , @"billing_icon.png"
+                   , @"reports_icon.png"
+                   , @"administration_icon.png"
+                   , @"schedule_icon.png"
+                   , @"settings_icon.png"
+                   , nil];
+  
 }
 
 
@@ -83,7 +179,8 @@
                                                          , @"reports_icon.png"
                                                          , @"administration_icon.png"
                                                          , @"schedule_icon.png"
-                                                         , @"settings_icon.png" ,nil];
+                                                         , @"settings_icon.png"
+                                                         , nil];
 }
 
 
@@ -168,16 +265,80 @@
   
   //Go back to Login Page
   LoginViewController* controller = (LoginViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"LoginPage"];
-  
+   
   controller.navigationItem.hidesBackButton = YES;
   [self.navigationController pushViewController:controller animated:YES];
-  
-  //http://192.168.2.113/vertex-api/auth/logout
-  
+   
   /* !- TODO -!
    Clear user tokens/objects when [Logout] is pressed
    */
+  
+  /*
+  URL = @"http://192.168.2.113/vertex-api/auth/logout";
+  
+  NSMutableURLRequest *postRequest = [NSMutableURLRequest
+                                      requestWithURL:[NSURL URLWithString:URL]];
+  
+  //POST method
+  //!!! TODO - Pass tokens
+  [postRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+  [postRequest setHTTPMethod:@"POST"];
+  NSLog(@"%@", postRequest);
+  
+  NSURLConnection *connection = [[NSURLConnection alloc]
+                                 initWithRequest:postRequest
+                                 delegate:self];
+  [connection start];
+  
+  NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+  NSError *error = [[NSError alloc] init];
+  
+  NSData *responseData = [NSURLConnection
+                          sendSynchronousRequest:postRequest
+                          returningResponse:&urlResponse
+                          error:&error];
+  
+  NSLog(@"logout - httpResponseCode: %d", httpResponseCode);
+  if((httpResponseCode == 201) || (httpResponseCode == 200)) //Logout successful
+  {
+    //Go back to Login Page
+    LoginViewController* controller = (LoginViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"LoginPage"];
+    
+    controller.navigationItem.hidesBackButton = YES;
+    [self.navigationController pushViewController:controller animated:YES];
+  }
+  else //(httpResponseCode >= 400)
+  {
+    UIAlertView *logoutAlert = [[UIAlertView alloc]
+                                         initWithTitle:@"Logout Unsuccessful"
+                                         message:@"Could not logout user. Please try again later."
+                                         delegate:self
+                                         cancelButtonTitle:@"OK"
+                                         otherButtonTitles:nil];
+    [logoutAlert show];
+  }
+  
+  [self dismissViewControllerAnimated:YES completion:nil];
+   */
 }
+
+
+#pragma mark - Connection didFailWithError
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+  NSLog(@"connection didFailWithError: %@", [error localizedDescription]);
+}
+
+
+#pragma mark - Connection didReceiveResponse
+-(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+  NSHTTPURLResponse *httpResponse;
+  httpResponse     = (NSHTTPURLResponse *)response;
+  httpResponseCode = [httpResponse statusCode];
+  NSLog(@"httpResponse status code: %d", httpResponseCode);
+}
+
 
 
 @end

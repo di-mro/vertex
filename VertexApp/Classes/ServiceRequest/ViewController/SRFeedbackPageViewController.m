@@ -19,9 +19,15 @@
 
 @synthesize srCommentsTextArea;
 @synthesize srFeedbackScroller;
-@synthesize displaySRFeedbackQuestions;
 @synthesize srRatings;
 @synthesize cancelSRFeedbackConfirmation;
+
+@synthesize URL;
+@synthesize httpResponseCode;
+
+@synthesize topicId;
+@synthesize srFeedbackInfo;
+@synthesize srFeedbackQuestions;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -56,10 +62,14 @@
   //Scroller size
   self.srFeedbackScroller.contentSize = CGSizeMake(320.0, 900.0);
   
-  //srRatings init
-  srRatings = 0;
+  //Set topicId to Service Request topic Id
+  topicId = @20130101530000001;
   
-  [self displaySRFeedbackPageQuestions];
+  //srRatings init
+  srRatings = 0.0;
+  
+  //Retrieve feedback questions from endpoint URL
+  [self getFeedbackQuestions];
   
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -71,20 +81,86 @@
     // Dispose of any resources that can be recreated.
 }
 
-# pragma mark - Display entries/questions in Service Requests Feedback Page
-- (void) displaySRFeedbackPageQuestions
+
+#pragma mark - Get Feedback Questions
+- (void) getFeedbackQuestions
 {
-  displaySRFeedbackQuestions = [[NSMutableArray alloc] init];
-  NSString *entry1 = @"Service is fast?";
-  NSString *entry2 = @"Service is efficient?";
-  NSString *entry3 = @"Reasonable fee?";
-  NSString *entry4 = @"Service quality is good?";
+  //endpoint for getTopicQuestions/{topicId}
+  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.113/vertex-api/feedback/topic/getTopicQuestions/%@", topicId];
   
-  [displaySRFeedbackQuestions addObject:entry1];
-  [displaySRFeedbackQuestions addObject:entry2];
-  [displaySRFeedbackQuestions addObject:entry3];
-  [displaySRFeedbackQuestions addObject:entry4];
+  NSMutableURLRequest *getRequest = [NSMutableURLRequest
+                                     requestWithURL:[NSURL URLWithString:urlParams]];
+  
+  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+  [getRequest setHTTPMethod:@"GET"];
+  
+  NSURLConnection *connection = [[NSURLConnection alloc]
+                                 initWithRequest:getRequest
+                                        delegate:self];
+  [connection start];
+  
+  NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+  NSError *error = [[NSError alloc] init];
+  
+  NSData *responseData = [NSURLConnection
+                          sendSynchronousRequest:getRequest
+                               returningResponse:&urlResponse
+                                           error:&error];
+  
+  if(responseData == nil)
+  {
+    //Show an alert if connection is not available
+    UIAlertView *connectionAlert = [[UIAlertView alloc]
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:nil
+                                    cancelButtonTitle:@"OK"
+                                    otherButtonTitles:nil];
+    [connectionAlert show];
+    
+    //Connect to CoreData for local data
+    //!- FOR TESTING ONLY -!
+    srFeedbackQuestions = [[NSMutableArray alloc] init];
+    [srFeedbackQuestions addObject:@"Is the Service fast?"];
+    [srFeedbackQuestions addObject:@"Is Service efficient?"];
+    [srFeedbackQuestions addObject:@"Is the fee reasonable?"];
+    [srFeedbackQuestions addObject:@"Was the Service quality good?"];
+  }
+  else
+  {
+    srFeedbackInfo = [NSJSONSerialization
+                      JSONObjectWithData:responseData
+                                 options:kNilOptions
+                                   error:&error];
+    
+    NSLog(@"getTopicQuestions JSON Result: %@", srFeedbackInfo);
+    
+    srFeedbackQuestions = [[NSMutableArray alloc] init];
+    for(int i = 0; i < [[[srFeedbackInfo valueForKey:@"questions"] valueForKey:@"question"] count]; i++)
+    {
+      [srFeedbackQuestions addObject:[[[srFeedbackInfo valueForKey:@"questions"] valueForKey:@"question"] objectAtIndex:i]];
+    }
+    NSLog(@"srFeedbackQuestions: %@", srFeedbackQuestions);
+  }
 }
+
+
+#pragma mark - Connection didFailWithError
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+  NSLog(@"connection didFailWithError: %@", [error localizedDescription]);
+}
+
+
+#pragma mark - Connection didReceiveResponse
+-(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+  NSHTTPURLResponse *httpResponse;
+  httpResponse     = (NSHTTPURLResponse *)response;
+  httpResponseCode = [httpResponse statusCode];
+  NSLog(@"httpResponse status code: %d", httpResponseCode);
+}
+
 
 #pragma mark - Table view data source implementation
 - (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView
@@ -95,14 +171,14 @@
 
 - (NSString *) tableView:(UITableView *) tableView titleForHeaderInSection:(NSInteger)section
 {
-  NSString *myTitle = [[NSString alloc] initWithFormat:@"Feedback and Comments"];
+  NSString *myTitle = [[NSString alloc] initWithFormat:@"Feedbacks and Comments"];
   return myTitle;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
   //Return the number of rows in the section
-  return [displaySRFeedbackQuestions count];
+  return [srFeedbackQuestions count];
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -113,7 +189,7 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //Configure the cell title & subtitle
-  cell.textLabel.text = [self.displaySRFeedbackQuestions objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.srFeedbackQuestions objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
   
   NSArray *choices = [NSArray arrayWithObjects:@"Yes", @"No", nil];
@@ -124,7 +200,7 @@
   segmentedControlFrame.size.height = 40;
   segmentedControl.frame            = segmentedControlFrame;
   
-  segmentedControl.selectedSegmentIndex = 1;
+  segmentedControl.selectedSegmentIndex = 0; //set 'Yes' as default selected button
   [segmentedControl addTarget:self
 	                     action:@selector(rate:)
 	           forControlEvents:UIControlEventValueChanged];
@@ -148,11 +224,11 @@
   
   if ([[segmentedControl titleForSegmentAtIndex:segmentedControl.selectedSegmentIndex] isEqual: @"Yes"])
   {
-    srRatings += 25;
+    srRatings += 25.0;
   }
   else
   {
-    srRatings += 0;
+    srRatings += 0.0;
   }
 }
 
@@ -205,15 +281,20 @@
 {
   NSLog(@"Submit Service Request Feedback");
   
-  float finalRating  = 0;
+  int finalRating  = 0.0;
   NSString *comments = [[NSString alloc] init];
   
   //Compute value for rating
   finalRating = (srRatings / 100) * 10;
-  NSLog(@"finalRating: %f", finalRating);
+  NSLog(@"finalRating: %d", finalRating);
+  NSLog(@"srRatings: %d", srRatings);
   
   comments = srCommentsTextArea.text;
   NSLog(@"Comments: %@", comments);
+  
+  //? key-value pair - for passing feedbacks
+  //Feedback form content
+  //each question has a rating
   
   /*
   NSError *error = [[NSError alloc] init];

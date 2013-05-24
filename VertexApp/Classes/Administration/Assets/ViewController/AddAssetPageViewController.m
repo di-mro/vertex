@@ -56,6 +56,8 @@
 @synthesize URL;
 @synthesize httpResponseCode;
 
+@synthesize cancelAddAssetConfirmation;
+
 @synthesize context;
 
 
@@ -385,13 +387,16 @@
 #pragma mark - [Cancel] button implementation
 -(void) cancelAddAsset
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Cancel Add Asset");
   
-  //Go back to Home Page
-  HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
-
-  [self.navigationController pushViewController:controller animated:YES];
+  cancelAddAssetConfirmation = [[UIAlertView alloc]
+                                    initWithTitle:@"Cancel Add Asset"
+                                          message:@"Are you sure you want to cancel adding this asset?"
+                                         delegate:self
+                                cancelButtonTitle:@"Yes"
+                                otherButtonTitles:@"No", nil];
+  
+  [cancelAddAssetConfirmation show];
 }
 
 
@@ -594,16 +599,27 @@
 #pragma mark - Transition to Assets Page when OK on Alert Box is clicked
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-  if (buttonIndex == 0)
+  if([alertView isEqual:cancelAddAssetConfirmation])
   {
-    HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+    NSLog(@"Cancel Add Asset Confirmation");
     
-    [self.navigationController pushViewController:controller animated:YES];
-    /*
-    AssetPageViewController* controller = (AssetPageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"AssetsPage"];
-    
-    [self.navigationController pushViewController:controller animated:YES];
-     */
+    if(buttonIndex == 0) //Yes - Cancel
+    {
+      //Go back to Asset Page
+      AssetPageViewController *controller = (AssetPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"AssetsPage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
+  }
+  else
+  {
+    if (buttonIndex == 0) //OK
+    {
+      //Go back to Home
+      HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
   }
 }
 
@@ -611,7 +627,7 @@
 #pragma mark - Login fields validation
 -(BOOL) validateAddAssetFields
 {
-  UIAlertView *updateAssetValidateAlert = [[UIAlertView alloc]
+  UIAlertView *addAssetValidateAlert = [[UIAlertView alloc]
                                          initWithTitle:@"Incomplete Information"
                                                message:@"Please fill out the necessary fields."
                                               delegate:nil
@@ -620,7 +636,7 @@
   
   if([assetNameField.text isEqualToString:(@"")] || [assetTypeField.text isEqualToString:(@"")])
   {
-    [updateAssetValidateAlert show];
+    [addAssetValidateAlert show];
     return false;
   }
   

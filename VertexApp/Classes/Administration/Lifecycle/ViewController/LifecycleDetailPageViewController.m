@@ -45,7 +45,7 @@
 }
 
 
-#pragma mark - Set Asset ID to the selected assetID from previous page
+#pragma mark - Set Lifecycle ID to the selected assetID from previous page
 - (void) setLifecycleId:(NSNumber *) lifecycleIdFromPrev
 {
   lifecycleId = lifecycleIdFromPrev;

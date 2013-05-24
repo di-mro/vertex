@@ -7,6 +7,7 @@
 //
 
 #import "AssetPageViewController.h"
+#import "HomePageViewController.h"
 
 @interface AssetPageViewController ()
 
@@ -30,7 +31,14 @@
 {
   NSLog(@"Asset Page View");
   
+  //[Home] navigation button
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(goToHome)];
+  
   [self displayAssetPageEntries];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -39,6 +47,16 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - Segue to Home Page
+-(void) goToHome
+{
+  //Go back to Home Page
+  HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+  
+  [self.navigationController pushViewController:controller animated:YES];
 }
 
 
@@ -74,7 +92,6 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
   return [assetPageEntries count];
-  NSLog(@"%d", [assetPageEntries count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -83,10 +100,12 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier  forIndexPath:indexPath];
   
   //Configure the cell display
-  cell.textLabel.text = [self.assetPageEntries objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [self.assetPageEntries objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
+  
   return cell;
 }
+
 
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -102,7 +121,7 @@
     //Update
     case 2: [self performSegueWithIdentifier:@"assetsToUpdateAsset" sender:self];
       break;
-    //case 3: [self performSegueWithIdentifier:@"assetsToViewAssets" sender:self];
+    //case 3: [self performSegueWithIdentifier:@"assetsToDeleteAssets" sender:self];
     //  break;
     default: break;
   }

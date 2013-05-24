@@ -12,8 +12,16 @@
 
 - (void)displayHomePageEntries;
 
-@property (nonatomic, retain) NSMutableArray *homePageEntries;
-@property (nonatomic, retain) NSMutableArray *homePageIcons;
+@property (strong, nonatomic) NSMutableArray *homePageEntries;
+@property (strong, nonatomic) NSMutableArray *homePageIcons;
+
+@property (strong, nonatomic) NSNumber *userProfileId;
+
+@property (strong, nonatomic) NSMutableDictionary *systemFunctionsInfo;
+
+@property (strong, nonatomic) NSString *URL;
+@property int httpResponseCode;
+
 
 -(void) logout;
 

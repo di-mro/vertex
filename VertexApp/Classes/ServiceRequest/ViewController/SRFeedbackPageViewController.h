@@ -10,15 +10,22 @@
 
 @interface SRFeedbackPageViewController : UIViewController
 
-- (void) displaySRFeedbackPageQuestions;
-
-@property (nonatomic, retain) NSMutableArray *displaySRFeedbackQuestions;
+//- (void) displaySRFeedbackPageQuestions;
+//@property (nonatomic, retain) NSMutableArray *displaySRFeedbackQuestions;
 
 @property (strong, nonatomic) IBOutlet UITextView *srCommentsTextArea;
 @property (strong, nonatomic) IBOutlet UIScrollView *srFeedbackScroller;
 
-@property float srRatings;
+@property int srRatings;
 
 @property (strong, nonatomic) UIAlertView *cancelSRFeedbackConfirmation;
+
+@property (strong, nonatomic) NSString *URL;
+@property int httpResponseCode;
+
+@property (strong, nonatomic) NSNumber *topicId;
+@property (strong, nonatomic) NSMutableDictionary *srFeedbackInfo;
+@property (strong, nonatomic) NSMutableArray *srFeedbackQuestions;
+
 
 @end

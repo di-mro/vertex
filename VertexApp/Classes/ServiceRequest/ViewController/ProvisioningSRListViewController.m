@@ -1,36 +1,38 @@
 //
-//  SRFeedbackListViewController.m
+//  ProvisioningSRListViewController.m
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 3/1/13.
+//  Created by Mary Rose Oh on 5/22/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
-#import "SRFeedbackListViewController.h"
+#import "ProvisioningSRListViewController.h"
+#import "HomePageViewController.h"
+#import "ServiceRequestViewController.h"
+#import "ProvisioningSRPageViewController.h"
 
-@interface SRFeedbackListViewController ()
+
+@interface ProvisioningSRListViewController ()
 
 @end
 
-@implementation SRFeedbackListViewController
+@implementation ProvisioningSRListViewController
 
-@synthesize srForFeedbackAsset;
-@synthesize srForFeedbackService;
-@synthesize srForFeedbackSRIds;
+@synthesize srForProvisioningAsset;
+@synthesize srForProvisioningService;
+@synthesize srForProvisioningSRIds;
 
-@synthesize srForFeedbackEntries;
-@synthesize srForFeedbackDate;
+@synthesize srForProvisioningEntries;
+@synthesize srForProvisioningDate;
 
 @synthesize URL;
 @synthesize httpResponseCode;
 
-@synthesize srForFeedbackDictionary;
+@synthesize srForProvisioningDictionary;
 
 @synthesize selectedSRId;
 @synthesize statusId;
 
-//@synthesize displaySRFeedbackListEntries;
-//@synthesize displaySRFeedbackSubtitles;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,7 +46,7 @@
 
 - (void)viewDidLoad
 {
-  //Connect to endpoint - getServiceRequestByStatus - Fulfilled status
+  //Connect to endpoint - getServiceRequestByStatus - Created status
   [self getServiceRequestByStatus];
   
   [super viewDidLoad];
@@ -58,11 +60,21 @@
 }
 
 
+#pragma mark - Segue to SR Page
+-(void) backToSRPage
+{
+  //Go back to Service Request Page
+  ServiceRequestViewController* controller = (ServiceRequestViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"SRPage"];
+  
+  [self.navigationController pushViewController:controller animated:YES];
+}
+
+
 #pragma mark - Retrieve Service Request with 'Service Request Creation' Status ID - for Acknowledgement
 -(void) getServiceRequestByStatus
 {
-  //endpoint for getServiceRequestByStatus
-  statusId = @20130101420000003; //9 //Service Request Fulfilled Status Id - Awaiting Feedbacks
+  //Endpoint for getServiceRequestByStatus
+  statusId = @20130101420000007; //Service Request For Approved Status Id
   NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.107/vertex-api/service-request/getServiceRequestByStatus/%@", statusId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
@@ -97,25 +109,25 @@
     
     //Connect to CoreData for local data
     //!- FOR TESTING ONLY -!
-    srForFeedbackAsset = [[NSMutableArray alloc] initWithObjects:
+    srForProvisioningAsset = [[NSMutableArray alloc] initWithObjects:
                             @"Demo - Aircon"
                           , @"Demo - Door"
                           , @"Demo - Window"
                           , nil];
     
-    srForFeedbackService = [[NSMutableArray alloc] initWithObjects:
+    srForProvisioningService = [[NSMutableArray alloc] initWithObjects:
                               @"- Fix filter"
                             , @"- Repair hinge"
                             , @"- Repair handle"
                             , nil];
     
-    srForFeedbackSRIds = [[NSMutableArray alloc] initWithObjects:
+    srForProvisioningSRIds = [[NSMutableArray alloc] initWithObjects:
                             @"Demo - 00001"
                           , @"Demo - 00002"
                           , @"Demo - 00003"
                           , nil];
     
-    srForFeedbackDate = [[NSMutableArray alloc] initWithObjects:
+    srForProvisioningDate = [[NSMutableArray alloc] initWithObjects:
                            @"2013-05-05"
                          , @"2013-05-06"
                          , @"2013-05-07"
@@ -123,32 +135,33 @@
   }
   else
   {
-    srForFeedbackDictionary = [NSJSONSerialization
-                               JSONObjectWithData:responseData
-                                          options:kNilOptions
-                                            error:&error];
+    srForProvisioningDictionary = [NSJSONSerialization
+                                   JSONObjectWithData:responseData
+                                              options:kNilOptions
+                                                error:&error];
     
-    NSLog(@"srForFeedbackDictionary JSON Result: %@", srForFeedbackDictionary);
+    NSLog(@"srForProvisioningDictionary JSON Result: %@", srForProvisioningDictionary);
     
-    srForFeedbackAsset   = [[srForFeedbackDictionary valueForKey:@"asset"] valueForKey:@"name"];
-    srForFeedbackService = [[srForFeedbackDictionary valueForKey:@"service"] valueForKey:@"name"];
-    srForFeedbackSRIds   = [srForFeedbackDictionary valueForKey:@"id"];
-    srForFeedbackDate    = [srForFeedbackDictionary valueForKey:@"createdDate"];
+    srForProvisioningAsset   = [[srForProvisioningDictionary valueForKey:@"asset"] valueForKey:@"name"];
+    srForProvisioningService = [[srForProvisioningDictionary valueForKey:@"service"] valueForKey:@"name"];
+    srForProvisioningSRIds   = [srForProvisioningDictionary valueForKey:@"id"];
+    srForProvisioningDate    = [srForProvisioningDictionary valueForKey:@"createdDate"];
   }
   
   //Concatenate asset name and service name of service request for display in table view
-  srForFeedbackEntries = [[NSMutableArray alloc] init];
-  for(int i = 0; i < srForFeedbackAsset.count; i++)
+  srForProvisioningEntries = [[NSMutableArray alloc] init];
+  
+  for(int i = 0; i < srForProvisioningAsset.count; i++)
   {
     NSMutableString *displayString = [NSMutableString stringWithFormat:@"%@ - %@"
-                                      , [srForFeedbackAsset objectAtIndex:i]
-                                      , [srForFeedbackService objectAtIndex:i]];
+                                      , [srForProvisioningAsset objectAtIndex:i]
+                                      , [srForProvisioningService objectAtIndex:i]];
     
-    [srForFeedbackEntries insertObject:displayString atIndex:i];
+    [srForProvisioningEntries insertObject:displayString atIndex:i];
     displayString = [[NSMutableString alloc] init];
   }
   
-  NSLog(@"srForFeedbackEntries: %@", srForFeedbackEntries);
+  NSLog(@"srForProvisioningEntries: %@", srForProvisioningEntries);
 }
 
 
@@ -161,24 +174,24 @@
 
 - (NSString *) tableView:(UITableView *) tableView titleForHeaderInSection:(NSInteger)section
 {
-  NSString *myTitle = [[NSString alloc] initWithFormat:@"Service Request Feedback List"];
+  NSString *myTitle = [[NSString alloc] initWithFormat:@"For Provisioning List"];
   return myTitle;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
   //Return the number of rows in the section
-  return [srForFeedbackEntries count];
+  return [srForProvisioningEntries count];
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  static NSString *CellIdentifier = @"srFeedbackListCell";
+  static NSString *CellIdentifier = @"srProvisioningCell";
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
   
   //Configure the cell title & subtitle
-  cell.textLabel.text          = [srForFeedbackEntries objectAtIndex:indexPath.row];
-  cell.detailTextLabel.text    = [srForFeedbackDate objectAtIndex:indexPath.row];
+  cell.textLabel.text          = [srForProvisioningEntries objectAtIndex:indexPath.row];
+  cell.detailTextLabel.text    = [srForProvisioningDate objectAtIndex:indexPath.row];
   cell.textLabel.numberOfLines = 0;
   
   return cell;
@@ -194,22 +207,22 @@
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  selectedSRId = [srForFeedbackSRIds objectAtIndex:indexPath.row];
+  selectedSRId = [srForProvisioningSRIds objectAtIndex:indexPath.row];
   NSLog(@"selectedSRId: %@", selectedSRId);
   
-  [self performSegueWithIdentifier:@"srFeedbackListToQuestionsPage" sender:self];
+  [self performSegueWithIdentifier:@"srProvisioningListToProvisioningPage" sender:self];
 }
 
-/*
+
 #pragma mark - prepare for segue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-  if ([segue.identifier isEqualToString:@"srFeedbackListToQuestionsPage"])
+  if ([segue.identifier isEqualToString:@"srProvisioningListToProvisioningPage"])
   {
     [segue.destinationViewController setServiceRequestId:selectedSRId];
   }
 }
-*/
+
 
 
 @end

@@ -26,6 +26,8 @@
 @synthesize URL;
 @synthesize httpResponseCode;
 
+@synthesize cancelUpdateAssetOwnershipConfirmation;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -43,7 +45,7 @@
   
   //Keyboard dismissal
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                        action:@selector (dismissKeyboard)];
+                                                                        action:@selector(dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //[Cancel] navigation button
@@ -72,18 +74,21 @@
 }
 
 
-//TODO : Endpoints to populate fields ???
+//!!! TODO : Endpoints to populate fields ???
 
 #pragma mark - [Cancel] button implementation
 -(void) cancelUpdateAssetOwnership
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Cancel Update Asset Ownership");
+
+  cancelUpdateAssetOwnershipConfirmation = [[UIAlertView alloc]
+                                                initWithTitle:@"Update Asset Ownership"
+                                                      message:@"Are you sure you want to cancel updating this asset ownership?"
+                                                     delegate:self
+                                            cancelButtonTitle:@"Yes"
+                                            otherButtonTitles:@"No", nil];
   
-  //Go back to Home Page
-  HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
-  
-  [self.navigationController pushViewController:controller animated:YES];
+  [cancelUpdateAssetOwnershipConfirmation show];
 }
 
 
@@ -181,14 +186,29 @@
 }
 
 
-#pragma mark - Transition to Assets Page when OK on Alert Box is clicked
+#pragma mark - Transition to Assets Config Page when OK on Alert Box is clicked
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-  if (buttonIndex == 0)
+  if([alertView isEqual:cancelUpdateAssetOwnershipConfirmation])
   {
-    AssetConfigurationPageViewController *controller = (AssetConfigurationPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"AssetConfigPage"];
-    
-    [self.navigationController pushViewController:controller animated:YES];
+    NSLog(@"Cancel Update Asset Ownership Confirmation");
+    if(buttonIndex == 0) //Yes - Cancel
+    {
+      //Go back to Asset Config Page
+      AssetConfigurationPageViewController *controller = (AssetConfigurationPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"AssetConfigPage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
+  }
+  else
+  {
+    if (buttonIndex == 0) //OK
+    {
+      //Go back to Home
+      HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
   }
 }
 

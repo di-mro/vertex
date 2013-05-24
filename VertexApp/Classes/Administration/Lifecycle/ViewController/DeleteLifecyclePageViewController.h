@@ -19,5 +19,7 @@
 @property (nonatomic, strong) NSString *URL;
 @property int httpResponseCode;
 
+@property (strong, nonatomic) UIAlertView *cancelDeleteLifecycleConfirmation;
+@property (strong, nonatomic) UIAlertView *lifecycleDeleteConfirmation;
 
 @end

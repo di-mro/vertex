@@ -47,6 +47,8 @@
 @synthesize URL;
 @synthesize httpResponseCode;
 
+@synthesize cancelAddServiceConfirmation;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -62,7 +64,7 @@
 {
   //Keyboard dismissal
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                        action:@selector (dismissKeyboard)];
+                                                                        action:@selector(dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //Configure Scroller size
@@ -368,13 +370,16 @@
 #pragma mark - [Cancel] button implementation
 -(void) cancelAddService
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Cancel Add Service");
+
+  cancelAddServiceConfirmation = [[UIAlertView alloc]
+                                      initWithTitle:@"Cancel Add Service"
+                                            message:@"Are you sure you want to cancel adding this service?"
+                                           delegate:self
+                                  cancelButtonTitle:@"Yes"
+                                  otherButtonTitles:@"No", nil];
   
-  //Go back to Home Page
-  HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
-  
-  [self.navigationController pushViewController:controller animated:YES];
+  [cancelAddServiceConfirmation show];
 }
 
 
@@ -495,20 +500,29 @@
 }
 
 
-#pragma mark - Transition to Assets Page when OK on Alert Box is clicked
+#pragma mark - Transition to Service Configuration Page when OK on Alert Box is clicked
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-  if (buttonIndex == 0)
+  if([alertView isEqual:cancelAddServiceConfirmation])
   {
-    HomePageViewController *controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
-    
-    [self.navigationController pushViewController:controller animated:YES];
-    
-    /*
-    ServiceConfigurationPageViewController *controller = (ServiceConfigurationPageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"ServiceConfigPage"];
-    
-    [self.navigationController pushViewController:controller animated:YES];
-     */
+    NSLog(@"Cancel Add Service Confirmation");
+    if(buttonIndex == 0) //Yes - Cancel
+    {
+      //Go back to SR Page
+      ServiceConfigurationPageViewController *controller = (ServiceConfigurationPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"ServiceConfigPage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
+  }
+  else
+  {
+    if (buttonIndex == 0) //OK
+    {
+      //Go back to Home
+      HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
   }
 }
 

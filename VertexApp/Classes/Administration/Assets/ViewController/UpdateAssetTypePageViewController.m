@@ -25,6 +25,9 @@
 @synthesize URL;
 @synthesize httpResponseCode;
 
+@synthesize cancelUpdateAssetTypeConfirmation;
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -38,17 +41,24 @@
 - (void)viewDidLoad
 {
   //Keyboard dismissal
-  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector (dismissKeyboard)];
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                        action:@selector(dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //Configure Scroller size
   self.updateAssetTypeScroller.contentSize = CGSizeMake(320, 720);
   
   //[Cancel] navigation button
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelUpdateAssetType)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(cancelUpdateAssetType)];
   
   //[Update] navigation button - Update AssetType
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Update" style:UIBarButtonItemStylePlain target:self action:@selector(updateAssetType)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Update"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(updateAssetType)];
   
   //Get info for the selected Asset Type
   [self getAssetTypeInfo];
@@ -73,13 +83,16 @@
 #pragma mark - [Cancel] button implementation
 -(void) cancelUpdateAssetType
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Cancel Update Asset Type");
   
-  //Go back to Home Page
-  HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+  cancelUpdateAssetTypeConfirmation = [[UIAlertView alloc]
+                                           initWithTitle:@"Cancel Update Asset Type"
+                                                 message:@"Are you sure you want to cancel updating this asset type?"
+                                                delegate:self
+                                       cancelButtonTitle:@"Yes"
+                                       otherButtonTitles:@"No", nil];
   
-  [self.navigationController pushViewController:controller animated:YES];
+  [cancelUpdateAssetTypeConfirmation show];
 }
 
 
@@ -250,11 +263,26 @@
 #pragma mark - Transition to Assets Page when OK on Alert Box is clicked
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-  if (buttonIndex == 0)
+  if([alertView isEqual:cancelUpdateAssetTypeConfirmation])
   {
-    AssetConfigurationPageViewController *controller = (AssetConfigurationPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"AssetConfigPage"];
-    
-    [self.navigationController pushViewController:controller animated:YES];
+    NSLog(@"Cancel Update Asset Type Confirmation");
+    if(buttonIndex == 0) //Yes - Cancel
+    {
+      //Go back to Asset Config Page
+      AssetConfigurationPageViewController *controller = (AssetConfigurationPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"AssetConfigPage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
+  }
+  else
+  {
+    if (buttonIndex == 0) //OK
+    {
+      //Go back to Home
+      HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
   }
 }
 
@@ -297,6 +325,7 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
   [self.view endEditing:YES];
 }
+
 
 #pragma mark - Dismiss onscreen keyboard
 -(void)dismissKeyboard

@@ -136,8 +136,8 @@
     //Format as string the key-value pair and save in an array
     for(int i = 0; i < [assetAttribKeyArray count]; i++)
     {
-      assetAttribString = [NSMutableString stringWithFormat:@"%@ : %@",
-                             [assetAttribKeyArray objectAtIndex:i]
+      assetAttribString = [NSMutableString stringWithFormat:@"%@ : %@"
+                           , [assetAttribKeyArray objectAtIndex:i]
                            , [assetAttribValueArray objectAtIndex:i]];
       
       [assetAttribListing insertObject:assetAttribString atIndex:i];

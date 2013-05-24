@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED062766174C8A3F00B90EDC /* ProvisioningSRListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED062765174C8A3E00B90EDC /* ProvisioningSRListViewController.m */; };
+		ED06276C174C8ACF00B90EDC /* ProvisioningSRPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED06276B174C8ACF00B90EDC /* ProvisioningSRPageViewController.m */; };
 		ED08BDAB170700F900588760 /* LifecycleConfigurationPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED08BDAA170700F900588760 /* LifecycleConfigurationPageViewController.m */; };
 		ED08BDB1170704FB00588760 /* AddLifecyclePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED08BDB0170704FB00588760 /* AddLifecyclePageViewController.m */; };
 		ED08BDB41707114A00588760 /* ServiceConfigurationPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED08BDB31707114A00588760 /* ServiceConfigurationPageViewController.m */; };
@@ -164,8 +166,8 @@
 		ED8A7C7E16E4A34D00F06AF1 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED8A7C7916E4941200F06AF1 /* TPKeyboardAvoidingTableView.m */; };
 		ED925DF81749CB5E00E2CF03 /* ApprovalSRListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED925DF71749CB5A00E2CF03 /* ApprovalSRListViewController.m */; };
 		ED925DFE1749E6FA00E2CF03 /* ApprovalSRPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED925DFD1749E6F600E2CF03 /* ApprovalSRPageViewController.m */; };
+		ED9EA24F174DBC5800D8EBB1 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA8E70E16F05D2800B9C57E /* UserInfo.m */; };
 		EDA8E70916F05C2D00B9C57E /* UserAccounts.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA8E70816F05C2000B9C57E /* UserAccounts.m */; };
-		EDA8E70F16F05D3300B9C57E /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA8E70E16F05D2800B9C57E /* UserInfo.m */; };
 		EDA8E71216F0630B00B9C57E /* AssetTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA8E71116F062FE00B9C57E /* AssetTypes.m */; };
 		EDB1A0C716E9E24300BCD1F4 /* AdminTasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB1A0C616E9E24300BCD1F4 /* AdminTasksViewController.m */; };
 		EDB1A0CA16E9F71900BCD1F4 /* BillingTasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB1A0C916E9F71900BCD1F4 /* BillingTasksViewController.m */; };
@@ -265,6 +267,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		ED062764174C8A3E00B90EDC /* ProvisioningSRListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProvisioningSRListViewController.h; sourceTree = "<group>"; };
+		ED062765174C8A3E00B90EDC /* ProvisioningSRListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProvisioningSRListViewController.m; sourceTree = "<group>"; };
+		ED06276A174C8ACE00B90EDC /* ProvisioningSRPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProvisioningSRPageViewController.h; sourceTree = "<group>"; };
+		ED06276B174C8ACF00B90EDC /* ProvisioningSRPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProvisioningSRPageViewController.m; sourceTree = "<group>"; };
 		ED08BDA9170700F900588760 /* LifecycleConfigurationPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LifecycleConfigurationPageViewController.h; sourceTree = "<group>"; };
 		ED08BDAA170700F900588760 /* LifecycleConfigurationPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LifecycleConfigurationPageViewController.m; sourceTree = "<group>"; };
 		ED08BDAF170704FB00588760 /* AddLifecyclePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLifecyclePageViewController.h; sourceTree = "<group>"; };
@@ -1304,6 +1310,10 @@
 				ED569ADC1741F5F90002D6E4 /* ProposalSRListViewController.m */,
 				ED569AE11741FA9A0002D6E4 /* ProposalSRPageViewController.h */,
 				ED569AE21741FA9B0002D6E4 /* ProposalSRPageViewController.m */,
+				ED062764174C8A3E00B90EDC /* ProvisioningSRListViewController.h */,
+				ED062765174C8A3E00B90EDC /* ProvisioningSRListViewController.m */,
+				ED06276A174C8ACE00B90EDC /* ProvisioningSRPageViewController.h */,
+				ED06276B174C8ACF00B90EDC /* ProvisioningSRPageViewController.m */,
 				ED3BB34E16E04EA900468E44 /* SRFeedbackListViewController.h */,
 				ED3BB34F16E04EA900468E44 /* SRFeedbackListViewController.m */,
 				ED3BB35416E0524400468E44 /* SRFeedbackPageViewController.h */,
@@ -1529,6 +1539,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED9EA24F174DBC5800D8EBB1 /* UserInfo.m in Sources */,
 				ED63134C16E5BD2F00987E2D /* Reachability.m in Sources */,
 				ED63134B16E5BD2800987E2D /* ReachabilityAppDelegate.m in Sources */,
 				ED8A7C7E16E4A34D00F06AF1 /* TPKeyboardAvoidingTableView.m in Sources */,
@@ -1585,7 +1596,6 @@
 				EDFC534C16EDD7D2009AE92F /* UserProfiles.m in Sources */,
 				ED59996616EDDDD700681941 /* BroadcastUsers.m in Sources */,
 				EDA8E70916F05C2D00B9C57E /* UserAccounts.m in Sources */,
-				EDA8E70F16F05D3300B9C57E /* UserInfo.m in Sources */,
 				EDA8E71216F0630B00B9C57E /* AssetTypes.m in Sources */,
 				ED300D6316F80F5000F3063E /* ServiceRequests.m in Sources */,
 				ED300D6916F80F8B00F3063E /* Lifecycles.m in Sources */,
@@ -1710,6 +1720,8 @@
 				ED569AE31741FA9B0002D6E4 /* ProposalSRPageViewController.m in Sources */,
 				ED925DF81749CB5E00E2CF03 /* ApprovalSRListViewController.m in Sources */,
 				ED925DFE1749E6FA00E2CF03 /* ApprovalSRPageViewController.m in Sources */,
+				ED062766174C8A3F00B90EDC /* ProvisioningSRListViewController.m in Sources */,
+				ED06276C174C8ACF00B90EDC /* ProvisioningSRPageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

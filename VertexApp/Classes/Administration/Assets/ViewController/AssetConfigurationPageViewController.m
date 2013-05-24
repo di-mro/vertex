@@ -7,6 +7,9 @@
 //
 
 #import "AssetConfigurationPageViewController.h"
+#import "HomePageViewController.h"
+#import "AdminTasksViewController.h"
+
 
 @interface AssetConfigurationPageViewController ()
 
@@ -30,7 +33,14 @@
 {
   NSLog(@"Asset Configurations Page View");
   
+  //[Home] navigation button
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(goToAdminTasks)];
+  
   [self displayAssetConfigPageEntries];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -63,6 +73,17 @@
   [assetConfigPageEntries addObject:entry6];
   [assetConfigPageEntries addObject:entry7];
 }
+
+
+#pragma mark - Segue to Admin Tasks Page
+-(void) goToAdminTasks
+{
+  //Go back to Admin Tasks Page
+  AdminTasksViewController *controller = (AdminTasksViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"AdminTasksPage"];
+  
+  [self.navigationController pushViewController:controller animated:YES];
+}
+
 
 #pragma mark - Table view data source implementation
 - (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView

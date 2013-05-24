@@ -15,5 +15,4 @@
 @property (nonatomic, retain) NSMutableArray *lifecycleConfigPageEntries;
 
 
-
 @end

@@ -10,13 +10,15 @@
 
 @interface DeleteAssetTypePageViewController : UIViewController
 
-@property (nonatomic, retain) NSMutableArray *deleteAssetTypePageEntries;
-@property (nonatomic, retain) NSMutableArray *assetTypeNameArray;
-@property (nonatomic, retain) NSMutableArray *assetTypeIdArray;
-@property (nonatomic, retain) NSMutableDictionary *assetTypeDict;
-@property (nonatomic, retain) NSNumber *selectedAssetTypeId;
+@property (nonatomic, strong) NSMutableArray *deleteAssetTypePageEntries;
+@property (nonatomic, strong) NSMutableArray *assetTypeNameArray;
+@property (nonatomic, strong) NSMutableArray *assetTypeIdArray;
+@property (nonatomic, strong) NSMutableDictionary *assetTypeDict;
+@property (nonatomic, strong) NSNumber *selectedAssetTypeId;
 
 @property (nonatomic, strong) NSString *URL;
 @property int httpResponseCode;
+
+@property (nonatomic, strong) UIAlertView *assetTypeDeleteConfirmation;
 
 @end

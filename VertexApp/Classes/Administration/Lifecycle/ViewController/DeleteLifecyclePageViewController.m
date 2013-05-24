@@ -9,6 +9,8 @@
 #import "DeleteLifecyclePageViewController.h"
 #import "HomePageViewController.h"
 #import "ViewLifecyclesPageViewController.h"
+#import "LifecycleConfigurationPageViewController.h"
+
 
 @interface DeleteLifecyclePageViewController ()
 
@@ -24,6 +26,9 @@
 
 @synthesize URL;
 @synthesize httpResponseCode;
+
+@synthesize cancelDeleteLifecycleConfirmation;
+@synthesize lifecycleDeleteConfirmation;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -147,93 +152,109 @@
 #pragma mark - [Cancel] button implementation
 -(void) cancelDeleteLifecycle
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Cancel Delete Lifecycle");
   
-  //Go back to Home Page
-  HomePageViewController *controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+  cancelDeleteLifecycleConfirmation = [[UIAlertView alloc]
+                                           initWithTitle:@"Cancel Delete Lifecycle"
+                                                 message:@"Are you sure you want to cancel deleting lifecycle?"
+                                                delegate:self
+                                       cancelButtonTitle:@"Yes"
+                                       otherButtonTitles:@"No", nil];
   
-  [self.navigationController pushViewController:controller animated:YES];
+  [cancelDeleteLifecycleConfirmation show];
 }
 
 
 #pragma mark - [Delete] button implementation
 -(void) deleteLifecycle
 {
-  UIAlertView *lifecycleDeleteConfirmation = [[UIAlertView alloc]
+  lifecycleDeleteConfirmation = [[UIAlertView alloc]
                                            initWithTitle:@"Lifecycle Delete"
                                                  message:@"Are you sure you want to delete the selected lifecycle?"
                                                 delegate:self
                                        cancelButtonTitle:@"Yes"
-                                       otherButtonTitles:@"No",
-                                       nil];
+                                       otherButtonTitles:@"No", nil];
   [lifecycleDeleteConfirmation show];
   //clickedButtonAtIndex:
 }
 
 
-#pragma mark - Transition to Assets Page when OK on Alert Box is clicked
+#pragma mark - Transition to Lifecycle Configuration when OK on Alert Box is clicked
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
   HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
   
-  if (buttonIndex == 0)
+  if([alertView isEqual:cancelDeleteLifecycleConfirmation])
   {
-    //TODO
-    URL = @"";
-    
-    //! TEST
-    NSMutableString *urlParams = [NSMutableString
-                                  stringWithFormat:@""
-                                  , selectedLifecycleId];
-    
-    NSMutableURLRequest *deleteRequest = [NSMutableURLRequest
-                                          requestWithURL:[NSURL URLWithString:urlParams]];
-    
-    [deleteRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [deleteRequest setHTTPMethod:@"DELETE"];
-    NSLog(@"%@", deleteRequest);
-    
-    NSURLConnection *connection = [[NSURLConnection alloc]
-                                   initWithRequest:deleteRequest
-                                          delegate:self];
-    [connection start];
-    
-    NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
-    NSError *error = [[NSError alloc] init];
-    
-    NSData *responseData = [NSURLConnection
-                            sendSynchronousRequest:deleteRequest
-                                 returningResponse:&urlResponse
-                                             error:&error];
-    
-    if (responseData == nil)
+    NSLog(@"Cancel Delete Lifecycle Confirmation");
+    if(buttonIndex == 0) //Yes - Cancel
     {
-      //Show an alert if connection is not available
-      UIAlertView *lifecycleDeleteAlert = [[UIAlertView alloc]
-                                               initWithTitle:@"Warning"
-                                                     message:@"Lifecycle not deleted. Please try again."
-                                                    delegate:nil
-                                           cancelButtonTitle:@"OK"
-                                           otherButtonTitles:nil];
-      [lifecycleDeleteAlert show];
+      //Go back to SR Page
+      LifecycleConfigurationPageViewController *controller = (LifecycleConfigurationPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"LifecycleConfigPage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
+  }
+  else if([alertView isEqual:lifecycleDeleteConfirmation])
+  {
+    if (buttonIndex == 0)
+    {
+      //TODO
+      URL = @"";
+      
+      //! TEST
+      NSMutableString *urlParams = [NSMutableString
+                                    stringWithFormat:@"http://blah/%@"
+                                    , selectedLifecycleId];
+      
+      NSMutableURLRequest *deleteRequest = [NSMutableURLRequest
+                                            requestWithURL:[NSURL URLWithString:urlParams]];
+      
+      [deleteRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+      [deleteRequest setHTTPMethod:@"DELETE"];
+      NSLog(@"%@", deleteRequest);
+      
+      NSURLConnection *connection = [[NSURLConnection alloc]
+                                     initWithRequest:deleteRequest
+                                            delegate:self];
+      [connection start];
+      
+      NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+      NSError *error = [[NSError alloc] init];
+      
+      NSData *responseData = [NSURLConnection
+                              sendSynchronousRequest:deleteRequest
+                                   returningResponse:&urlResponse
+                                               error:&error];
+      
+      if (responseData == nil)
+      {
+        //Show an alert if connection is not available
+        UIAlertView *lifecycleDeleteAlert = [[UIAlertView alloc]
+                                                 initWithTitle:@"Warning"
+                                                       message:@"Lifecycle not deleted. Please try again."
+                                                      delegate:nil
+                                             cancelButtonTitle:@"OK"
+                                             otherButtonTitles:nil];
+        [lifecycleDeleteAlert show];
+      }
+      else
+      {
+        UIAlertView *lifecycleDeleteAlert = [[UIAlertView alloc]
+                                                 initWithTitle:@"Lifecycle Delete"
+                                                       message:@"Lifecycle deleted"
+                                                      delegate:nil
+                                             cancelButtonTitle:@"OK"
+                                             otherButtonTitles:nil];
+        [lifecycleDeleteAlert show];
+      }
+      [self.navigationController pushViewController:controller animated:YES];
     }
     else
     {
-      UIAlertView *lifecycleDeleteAlert = [[UIAlertView alloc]
-                                               initWithTitle:@"Lifecycle Delete"
-                                                     message:@"Lifecycle deleted"
-                                                    delegate:nil
-                                           cancelButtonTitle:@"OK"
-                                           otherButtonTitles:nil];
-      [lifecycleDeleteAlert show];
+      [self.navigationController pushViewController:controller animated:YES];
+      NSLog(@"Delete Lifecycle Cancel");
     }
-    [self.navigationController pushViewController:controller animated:YES];
-  }
-  else
-  {
-    [self.navigationController pushViewController:controller animated:YES];
-    NSLog(@"Delete Lifecycle Cancel");
   }
 }
 

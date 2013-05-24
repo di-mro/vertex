@@ -21,4 +21,6 @@
 @property (strong, nonatomic) NSString *URL;
 @property int httpResponseCode;
 
+@property (strong, nonatomic) UIAlertView *cancelUpdateAssetAccountabilityConfirmation;
+
 @end

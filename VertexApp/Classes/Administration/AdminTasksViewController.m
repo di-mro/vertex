@@ -7,6 +7,8 @@
 //
 
 #import "AdminTasksViewController.h"
+#import "HomePageViewController.h"
+
 
 @interface AdminTasksViewController ()
 
@@ -30,6 +32,12 @@
 {
   NSLog(@"Admin Tasks Page View");
   
+  //[Home] navigation button
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(goToHome)];
+
   [self displayAdminTaskPageEntries];
   
   [super viewDidLoad];
@@ -41,6 +49,17 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+#pragma mark - Segue to Home Page
+-(void) goToHome
+{
+  //Go back to Home Page
+  HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+  
+  [self.navigationController pushViewController:controller animated:YES];
+}
+
 
 # pragma mark - Display entries in Admin Page
 - (void) displayAdminTaskPageEntries

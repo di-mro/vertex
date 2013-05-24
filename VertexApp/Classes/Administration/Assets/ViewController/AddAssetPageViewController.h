@@ -51,5 +51,7 @@
 
 @property (strong, nonatomic) NSManagedObjectContext *context;
 
+@property (strong, nonatomic) UIAlertView *cancelAddAssetConfirmation;
+
 
 @end

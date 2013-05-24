@@ -1,23 +1,23 @@
 //
-//  ApprovalSRPageViewController.m
+//  ProvisioningSRPageViewController.m
 //  VertexApp
 //
-//  Created by Mary Rose Oh on 5/20/13.
+//  Created by Mary Rose Oh on 5/22/13.
 //  Copyright (c) 2013 Dungeon Innovations. All rights reserved.
 //
 
-#import "ApprovalSRPageViewController.h"
-#import "HomePageViewController.h"
+#import "ProvisioningSRPageViewController.h"
 #import "ServiceRequestViewController.h"
+#import "HomePageViewController.h"
 
 
-@interface ApprovalSRPageViewController ()
+@interface ProvisioningSRPageViewController ()
 
 @end
 
-@implementation ApprovalSRPageViewController
+@implementation ProvisioningSRPageViewController
 
-@synthesize approvalSRPageScroller;
+@synthesize provisioningSRPageScroller;
 @synthesize scrollViewHeight;
 
 @synthesize assetLabel;
@@ -47,26 +47,17 @@
 @synthesize notesLabel;
 @synthesize notesTextArea;
 
-@synthesize addNotesButton;
-
 @synthesize schedulesLabel;
 
-//@synthesize actionSheet;
-//@synthesize datePicker;
-
-@synthesize fromDate;
-@synthesize fromTime;
-@synthesize toDate;
-@synthesize toTime;
+@synthesize tasksLabel;
 
 @synthesize addNotesButtonFrame;
 @synthesize schedulesLabelFrame;
-//@synthesize proposalLabelFrame;
+@synthesize proposalLabelFrame;
 @synthesize statusLabelFrame;
 @synthesize statusFieldFrame;
 @synthesize authorLabelFrame;
 @synthesize authorFieldFrame;
-@synthesize addScheduleButtonFrame;
 
 @synthesize fromDateLabelFrame;
 @synthesize fromDateFieldFrame;
@@ -79,32 +70,42 @@
 
 @synthesize separatorFrame;
 
-@synthesize statusArray;
-@synthesize authorArray;
-@synthesize fromDatesArray;
-@synthesize fromTimesArray;
-@synthesize toDatesArray;
-@synthesize toTimesArray;
+@synthesize tasksLabelFrame;
+@synthesize taskNameFrame;
+@synthesize taskNameFieldFrame;
+@synthesize taskDescriptionFrame;
+@synthesize taskDescriptionAreaFrame;
+@synthesize personnelLabelFrame;
+@synthesize personnelFieldFrame;
+@synthesize addTasksButtonFrame;
 
-@synthesize scheduleFromDateDictionary;
-@synthesize scheduleToDateDictionary;
+@synthesize taskNameArray;
+@synthesize taskDescriptionArray;
+@synthesize personnelArray;
 
 @synthesize userId;
 @synthesize serviceRequestId;
 @synthesize serviceRequestInfo;
 
 @synthesize statusId;
+
 @synthesize notesTextAreaArray;
-@synthesize approvalNotesArray;
+@synthesize provisioningNotesArray;
 @synthesize schedulesStatusArray;
 @synthesize schedulesAuthorArray;
+
+@synthesize actionSheet;
+@synthesize personnelPicker;
 
 @synthesize serviceRequestJson;
 
 @synthesize URL;
 @synthesize httpResponseCode;
 
-@synthesize cancelSRApprovalConfirmation;
+@synthesize cancelSRProvisioningConfirmation;
+
+@synthesize addNotesButton;
+@synthesize addTasksButton;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -119,47 +120,55 @@
 
 - (void)viewDidLoad
 {
-  NSLog(@"Approval Service Request Page");
+  NSLog(@"Service Request Provisioning");
   
   //Keyboard dismissal
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                        action:@selector (dismissKeyboard)];
+                                                                        action:@selector(dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
-  //[Back] (Cancel) navigation button
+  //[Back] navigation button
   UIBarButtonItem *backButton = [[UIBarButtonItem alloc]
                                  initWithTitle:@"Back"
                                          style:UIBarButtonItemStylePlain
                                         target:self
-                                        action:@selector(cancelApprovalSR)];
+                                        action:@selector(cancelProvisioningSR)];
   
-  //[Reject] navigation button
-  UIBarButtonItem *rejectButton = [[UIBarButtonItem alloc]
-                                   initWithTitle:@"Reject"
-                                           style:UIBarButtonItemStylePlain
-                                          target:self
-                                          action:@selector(rejectSR)];
+  //[Save] navigation button
+  UIBarButtonItem *saveButton = [[UIBarButtonItem alloc]
+                                 initWithTitle:@"Save"
+                                         style:UIBarButtonItemStylePlain
+                                        target:self
+                                        action:@selector(saveProvisioningSR)];
   
   self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:
                                               backButton
-                                            , rejectButton
+                                            , saveButton
                                             , nil];
   
-  //[Approve] navigation button
-  UIBarButtonItem *acceptButton = [[UIBarButtonItem alloc]
-                                   initWithTitle:@"Approve"
-                                           style:UIBarButtonItemStylePlain
-                                          target:self
-                                          action:@selector(approveSR)];
+  //[Complete] navigation button
+  UIBarButtonItem *completeButton = [[UIBarButtonItem alloc]
+                                    initWithTitle:@"Complete"
+                                    style:UIBarButtonItemStylePlain
+                                    target:self
+                                    action:@selector(completeSR)];
   
-  //Initialize right bar button items
+  //[Close] navigation button
+  UIBarButtonItem *closeButton = [[UIBarButtonItem alloc]
+                                   initWithTitle:@"Close"
+                                   style:UIBarButtonItemStylePlain
+                                   target:self
+                                   action:@selector(closeSR)];
+  
+  //Initialize bar button items
   self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:
-                                               acceptButton
+                                               completeButton
+                                             , closeButton
                                              , nil];
-
   
   //Scroller size
-  //approvalSRPageScroller.contentSize = CGSizeMake(320.0, 5000);
+  provisioningSRPageScroller.contentSize = CGSizeMake(320.0, 5000);
+  //scrollViewHeight = 0.0f;
   [self setScrollerSize];
   
   //Disable fields - for viewing only
@@ -172,23 +181,17 @@
   requestorField.enabled     = NO;
   adminField.enabled         = NO;
   
-  //Populate fields based on previously selected Service Request for Approval Stage
+  //Populate fields based on previously selected Service Request for Provisioning Stage
   [self getServiceRequest];
   
-  //Initialize array for approval notes
-  approvalNotesArray = [[NSMutableArray alloc] init];
+  //Initialize array for provisioning notes
+  provisioningNotesArray = [[NSMutableArray alloc] init];
   
-  //Initialize arrays for approval schedule periods
-  statusArray    = [[NSMutableArray alloc] init];
-  authorArray    = [[NSMutableArray alloc] init];
-  fromDatesArray = [[NSMutableArray alloc] init];
-  fromTimesArray = [[NSMutableArray alloc] init];
-  toDatesArray   = [[NSMutableArray alloc] init];
-  toTimesArray   = [[NSMutableArray alloc] init];
+  //Initialize array for tasks
+  taskNameArray        = [[NSMutableArray alloc] init];
+  taskDescriptionArray = [[NSMutableArray alloc] init];
+  personnelArray       = [[NSMutableArray alloc] init];
   
-  //Initialize dictionaries for approval schedules
-  scheduleFromDateDictionary = [[NSMutableDictionary alloc] init];
-  scheduleToDateDictionary   = [[NSMutableDictionary alloc] init];
   
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -201,49 +204,48 @@
 }
 
 
-#pragma mark - Adjust approvalSRPageScroller height depending on number of elements in view
+#pragma mark - Adjust page scroller height depending on number of elements in view
 -(void) setScrollerSize
 {
-  scrollViewHeight = 0.0f;
-  for (UIView *view in approvalSRPageScroller.subviews)
+  for (UIView *view in provisioningSRPageScroller.subviews)
   {
     scrollViewHeight += view.frame.size.height;
   }
   NSLog(@"scroller height: %f", scrollViewHeight);
-  [approvalSRPageScroller setContentSize:(CGSizeMake(320, scrollViewHeight))];
+  [provisioningSRPageScroller setContentSize:(CGSizeMake(320, scrollViewHeight))];
 }
 
 
-#pragma mark - Set Asset ID to the selected assetID from previous page
+#pragma mark - Set Service Request ID to the selected serviceRequestId from previous page
 - (void) setServiceRequestId:(NSNumber *) srIdFromPrev
 {
   serviceRequestId = srIdFromPrev;
-  NSLog(@"ApprovalSRpage - serviceRequestId: %@", serviceRequestId);
+  NSLog(@"ProposalSRPage - serviceRequestId: %@", serviceRequestId);
 }
 
 
 #pragma mark - [Cancel] button implementation
--(void) cancelApprovalSR
+-(void) cancelProvisioningSR
 {
-  NSLog(@"Cancel Approval Service Request");
+  NSLog(@"Cancel Service Request Provisioning");
   
-  cancelSRApprovalConfirmation = [[UIAlertView alloc]
-                                      initWithTitle:@"Cancel Service Request Approval"
-                                            message:@"Are you sure you want to cancel this service request approval?"
-                                           delegate:self
-                                  cancelButtonTitle:@"Yes"
-                                  otherButtonTitles:@"No", nil];
+  cancelSRProvisioningConfirmation = [[UIAlertView alloc]
+                                          initWithTitle:@"Cancel Service Request Provisioning"
+                                                message:@"Are you sure you want to cancel this service request provisioning?"
+                                               delegate:self
+                                      cancelButtonTitle:@"Yes"
+                                      otherButtonTitles:@"No", nil];
   
-  [cancelSRApprovalConfirmation show];
+  [cancelSRProvisioningConfirmation show];
 }
 
 
 #pragma mark - Transition to a page depending on what alert box is shown and what button is clicked
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-  if([alertView isEqual:cancelSRApprovalConfirmation])
+  if([alertView isEqual:cancelSRProvisioningConfirmation])
   {
-    NSLog(@"Cancel SR Approval");
+    NSLog(@"Cancel SR Provisioning");
     if(buttonIndex == 0) //Yes - Cancel
     {
       //Go back to SR Page
@@ -279,7 +281,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -287,16 +289,16 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if(responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:nil
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:nil
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
@@ -318,8 +320,8 @@
   {
     serviceRequestInfo = [NSJSONSerialization
                           JSONObjectWithData:responseData
-                          options:kNilOptions
-                          error:&error];
+                                     options:kNilOptions
+                                       error:&error];
     
     NSLog(@"getServiceRequest JSON Result: %@", serviceRequestInfo);
     
@@ -452,7 +454,7 @@
   newNoteTextArea.frame = noteFrame;
   
   //Add Notes text area in view
-  [approvalSRPageScroller addSubview:newNoteTextArea];
+  [provisioningSRPageScroller addSubview:newNoteTextArea];
   
   //Store added Notes text area in array
   [notesTextAreaArray addObject:newNoteTextArea];
@@ -491,13 +493,13 @@
   newNoteTextArea.frame = noteFrame;
   
   //Add Notes text area in view
-  [approvalSRPageScroller addSubview:newNoteTextArea];
+  [provisioningSRPageScroller addSubview:newNoteTextArea];
   
   //Store added Notes text view in ALL Notes array - to track placement of text views when adding new notes
   [notesTextAreaArray addObject:newNoteTextArea];
   
-  //Store added Notes text view in array for service request approval notes
-  [approvalNotesArray addObject:newNoteTextArea];
+  //Store added Notes text view in array for service request proposal notes
+  [provisioningNotesArray addObject:newNoteTextArea];
   
   //Adjust position of [Add Notes] button when new text area is added
   addNotesButtonFrame          = addNotesButton.frame;
@@ -528,21 +530,21 @@
   schedulesLabel.frame         = schedulesLabelFrame;
   
   //Move the fields and labels after the 'Schedules' label
-  for (int i = 0; i < [approvalSRPageScroller.subviews count]; i++)
+  for (int i = 0; i < [provisioningSRPageScroller.subviews count]; i++)
   {
-    if([[[approvalSRPageScroller subviews] objectAtIndex:i] isEqual:schedulesLabel])
+    if([[[provisioningSRPageScroller subviews] objectAtIndex:i] isEqual:schedulesLabel])
     {
       int y = 1; //Multiplier to move the y coordinates
       CGRect labelFrame;
       CGRect fieldFrame;
       CGRect viewFrame;
       
-      for(int j = i++; j < [approvalSRPageScroller.subviews count]; j++) //Begin at element after schedulesLabel
+      for(int j = i++; j < [provisioningSRPageScroller.subviews count]; j++) //Begin at element after schedulesLabel
       {
-        if([[[approvalSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UILabel class]])
+        if([[[provisioningSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UILabel class]])
         {
           UILabel *tempLabel = [[UILabel alloc] init];
-          tempLabel = [[approvalSRPageScroller subviews] objectAtIndex:j];
+          tempLabel = [[provisioningSRPageScroller subviews] objectAtIndex:j];
           NSLog(@"tempLabel: %@", tempLabel);
           
           labelFrame = tempLabel.frame;
@@ -559,10 +561,10 @@
           labelFrame.origin.y = (schedulesLabelFrame.origin.y + (30 * y));
           tempLabel.frame = labelFrame;
         }
-        else if([[[approvalSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UITextField class]])
+        else if([[[provisioningSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UITextField class]])
         {
           UITextField *tempField = [[UITextField alloc] init];
-          tempField = [[approvalSRPageScroller subviews] objectAtIndex:j];
+          tempField = [[provisioningSRPageScroller subviews] objectAtIndex:j];
           NSLog(@"tempField: %@", tempField);
           
           fieldFrame = tempField.frame;
@@ -582,10 +584,10 @@
         }
         
         /*
-         else if ([[[approvalSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UIView class]])
+         else if ([[[provisioningSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UIView class]])
          {
          UIView *tempView = [[UIView alloc] init]; //for the separator
-         tempView = [[approvalSRPageScroller subviews] objectAtIndex:j];
+         tempView = [[provisioningSRPageScroller subviews] objectAtIndex:j];
          NSLog(@"tempView/separator: %@", tempView);
          
          viewFrame = tempView.frame;
@@ -598,7 +600,180 @@
       }
     }
   }
-
+  /*
+   //Remove the fields and labels after the 'Schedules' label
+   for (int i = 0; i < [proposalSRPageScroller.subviews count]; i++)
+   {
+   if([[[proposalSRPageScroller subviews] objectAtIndex:i] isEqual:schedulesLabel])
+   {
+   for(int j = i++; j < [proposalSRPageScroller.subviews count]; j++)
+   {
+   [[[proposalSRPageScroller subviews] objectAtIndex:j] removeFromSuperview];
+   }
+   }
+   }
+   */
+  /*
+   //Then redraw the fields
+   //***
+   //!!! TODO - Retrieve values for Schedules
+   NSMutableArray *retrievedSchedulesArray = [[NSMutableArray alloc] init];
+   retrievedSchedulesArray = [serviceRequestInfo valueForKey:@"schedules"];
+   
+   for(int i = 0; i < retrievedSchedulesArray.count; i++)
+   {
+   NSMutableDictionary *retrievedSchedulesDictionary = [[NSMutableDictionary alloc] init];
+   [retrievedSchedulesDictionary setObject:[retrievedSchedulesArray objectAtIndex:i] forKey:@"schedules"];
+   NSLog(@"retrievedSchedulesDictionary: %@", retrievedSchedulesDictionary);
+   
+   //Status
+   NSMutableString *scheduleStatus = [[NSMutableString alloc] init];
+   scheduleStatus = [[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"status"] valueForKey:@"name"];
+   
+   //Author
+   NSMutableString *scheduleAuthor = [NSMutableString stringWithFormat:@"%@ %@ %@ %@"
+   , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"firstName"]
+   , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"middleName"]
+   , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"lastName"]
+   , [[[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"author"] valueForKey:@"info"] valueForKey:@"suffix"]];
+   
+   //First display
+   CGRect startingCoordinates;
+   startingCoordinates.origin.x = 16;
+   if(i == 0)
+   {
+   startingCoordinates.origin.y = (schedulesLabel.frame.origin.y + 30);
+   }
+   else
+   {
+   startingCoordinates.origin.y = (separatorFrame.origin.y);
+   }
+   
+   //Display retrieved values
+   [self displayScheduleEntries:scheduleStatus
+   :scheduleAuthor
+   :[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"periods"]
+   :startingCoordinates];
+   }
+   //***
+   */
+  
+  /*
+   //Move the fields and labels after the 'Schedules' label
+   for (int i = 0; i < [proposalSRPageScroller.subviews count]; i++)
+   {
+   if([[[proposalSRPageScroller subviews] objectAtIndex:i] isEqual:schedulesLabel])
+   {
+   for(int j = i++; j < [proposalSRPageScroller.subviews count]; j++)
+   {
+   int y = 1; //Multiplier to move the y coordinates
+   if([[[proposalSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UILabel class]])
+   {
+   CGRect frame;
+   UILabel *tempLabel = [[UILabel alloc] init];
+   tempLabel = [[proposalSRPageScroller subviews] objectAtIndex:j];
+   frame = tempLabel.frame;
+   frame.origin.y = (schedulesLabelFrame.origin.y + (30 * y));
+   tempLabel.frame = frame;
+   [[[proposalSRPageScroller subviews] objectAtIndex:j] removeFromSuperview];
+   [proposalSRPageScroller addSubview:tempLabel];
+   }
+   else if([[[proposalSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UITextField class]])
+   {
+   CGRect frame;
+   UITextField *tempField = [[UITextField alloc] init];
+   tempField = [[proposalSRPageScroller subviews] objectAtIndex:j];
+   frame = tempField.frame;
+   frame.origin.y = (schedulesLabelFrame.origin.y + (30 * y));
+   tempField.frame = frame;
+   [[[proposalSRPageScroller subviews] objectAtIndex:j] removeFromSuperview];
+   [proposalSRPageScroller addSubview:tempField];
+   }
+   else if ([[[proposalSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UIView class]])
+   {
+   UIView *tempView = [[UIView alloc] init];
+   tempView = [[proposalSRPageScroller subviews] objectAtIndex:j];
+   separatorFrame = tempView.frame;
+   separatorFrame.origin.y = (schedulesLabelFrame.origin.y + (30 * y));
+   tempView.frame = separatorFrame;
+   [[[proposalSRPageScroller subviews] objectAtIndex:j] removeFromSuperview];
+   [proposalSRPageScroller addSubview:tempView];
+   }
+   y++;
+   }
+   }
+   }
+   */
+  
+  /*
+  //Add Schedules Button
+  addScheduleButtonFrame = addSchedulesButton.frame;
+  addScheduleButtonFrame.origin.y = (separatorFrame.origin.y + 45);
+  addSchedulesButton.frame = addScheduleButtonFrame;
+  */
+   
+  /*
+   //Clear / redraw the fields and labels after the 'Schedules' label
+   for (int i = 0; i < [proposalSRPageScroller.subviews count]; i++)
+   {
+   if([[[proposalSRPageScroller subviews] objectAtIndex:i] isEqual:schedulesLabel])
+   {
+   for(int j = i++ ; j < [proposalSRPageScroller.subviews count]; j++)
+   {
+   [[[proposalSRPageScroller subviews] objectAtIndex:j] removeFromSuperview];
+   }
+   }
+   }
+   */
+  
+  /*
+   
+   //Move the fields and labels after the 'Schedules' label
+   for (int i = 0; i < [proposalSRPageScroller.subviews count]; i++)
+   {
+   if([[[proposalSRPageScroller subviews] objectAtIndex:i] isEqual:schedulesLabel])
+   {
+   for(int j = 0; j < [proposalSRPageScroller.subviews count]; j++)
+   {
+   int y = 1; //Multiplier to move the y coordinates
+   if([[[proposalSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UILabel class]])
+   {
+   CGRect frame;
+   UILabel *tempLabel = [[UILabel alloc] init];
+   tempLabel = [[proposalSRPageScroller subviews] objectAtIndex:j];
+   frame = tempLabel.frame;
+   frame.origin.y = (schedulesLabelFrame.origin.y + (30 * y));
+   tempLabel.frame = frame;
+   }
+   else if([[[proposalSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UITextField class]])
+   {
+   CGRect frame;
+   UITextField *tempField = [[UITextField alloc] init];
+   tempField = [[proposalSRPageScroller subviews] objectAtIndex:j];
+   frame = tempField.frame;
+   frame.origin.y = (schedulesLabelFrame.origin.y + (30 * y));
+   tempField.frame = frame;
+   }
+   else if ([[[proposalSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UIView class]])
+   {
+   UIView *tempView = [[UIView alloc] init];
+   tempView = [[proposalSRPageScroller subviews] objectAtIndex:j];
+   separatorFrame = tempView.frame;
+   separatorFrame.origin.y = (schedulesLabelFrame.origin.y + (30 * y));
+   tempView.frame = separatorFrame;
+   }
+   y++;
+   }
+   }
+   }
+   */
+  /*
+   //Add Schedules Button
+   addScheduleButtonFrame = addSchedulesButton.frame;
+   addScheduleButtonFrame.origin.y = (separatorFrame.origin.y + 45);
+   addSchedulesButton.frame = addScheduleButtonFrame;
+   */
+  
   //Adjust scroller height
   [self setScrollerSize];
 }
@@ -757,11 +932,11 @@
   authorField.text          = scheduleAuthor;
   
   //Add views in scroller
-  [approvalSRPageScroller addSubview:statusLabel];
-  [approvalSRPageScroller addSubview:statusField];
+  [provisioningSRPageScroller addSubview:statusLabel];
+  [provisioningSRPageScroller addSubview:statusField];
   
-  [approvalSRPageScroller addSubview:authorLabel];
-  [approvalSRPageScroller addSubview:authorField];
+  [provisioningSRPageScroller addSubview:authorLabel];
+  [provisioningSRPageScroller addSubview:authorField];
   
   //Displaying one or many schedule period entries depending on response parameter
   for (int i = 0; i < schedulePeriodArray.count; i++)
@@ -822,47 +997,155 @@
     separator.frame            = separatorFrame;
     
     //Add views in scroller
-    [approvalSRPageScroller addSubview:fromDateLabel];
-    [approvalSRPageScroller addSubview:fromDateField];
+    [provisioningSRPageScroller addSubview:fromDateLabel];
+    [provisioningSRPageScroller addSubview:fromDateField];
     
-    [approvalSRPageScroller addSubview:fromTimeLabel];
-    [approvalSRPageScroller addSubview:fromTimeField];
+    [provisioningSRPageScroller addSubview:fromTimeLabel];
+    [provisioningSRPageScroller addSubview:fromTimeField];
     
-    [approvalSRPageScroller addSubview:toDateLabel];
-    [approvalSRPageScroller addSubview:toDateField];
+    [provisioningSRPageScroller addSubview:toDateLabel];
+    [provisioningSRPageScroller addSubview:toDateField];
     
-    [approvalSRPageScroller addSubview:toTimeLabel];
-    [approvalSRPageScroller addSubview:toTimeField];
+    [provisioningSRPageScroller addSubview:toTimeLabel];
+    [provisioningSRPageScroller addSubview:toTimeField];
     
-    [approvalSRPageScroller addSubview:separator];
+    [provisioningSRPageScroller addSubview:separator];
     
+    /*
+    //Move add schedules button location
+    //Add Schedules Button
+    addScheduleButtonFrame          = addSchedulesButton.frame;
+    addScheduleButtonFrame.origin.y = (separatorFrame.origin.y + 30);
+    addSchedulesButton.frame        = addScheduleButtonFrame;
+    */
     //Adjust scroller height
     [self setScrollerSize];
   }
 }
 
 
-#pragma mark - [Reject] button implementation
-- (void) rejectSR
+#pragma mark - [Add Tasks] button functionality
+- (IBAction)addTasks:(id)sender
 {
-  NSLog(@"Reject Service Request");
+  NSLog(@"Add Tasks");
   
-  statusId = @20130101420000002;
-  [self updateServiceRequestStatus:@"CANCELLED"];
+  //Field and label definitions for 'Tasks' area
+  //Initialize label
+  UILabel *taskNameLabel        = [[UILabel alloc] init];
+  UILabel *taskDescriptionLabel = [[UILabel alloc] init];
+  UILabel *personnelLabel       = [[UILabel alloc] init];
+  
+  //Initialize fields
+  UITextField *taskNameField  = [[UITextField alloc] init];
+  UITextField *personnelField = [[UITextField alloc] init];
+  
+  //Initialize text view
+  UITextView *taskDescriptionTextArea = [[UITextView alloc] init];
+  
+  //Set label texts
+  taskNameLabel.text        = @"Task Name: ";
+  taskDescriptionLabel.text = @"Task Description: ";
+  personnelLabel.text       = @"Personnel";
+  
+  //Set label style
+  taskNameLabel.font        = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  taskDescriptionLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  personnelLabel.font       = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  
+  //Set field style
+  taskNameField.borderStyle  = UITextBorderStyleRoundedRect;
+  personnelField.borderStyle = UITextBorderStyleRoundedRect;
+  
+  //Set text view style
+  taskDescriptionTextArea.backgroundColor = notesTextArea.backgroundColor;
+  [taskDescriptionTextArea setFont:[UIFont systemFontOfSize:14]];
+  
+  //Set label size dimensions
+  CGRect labelSize;
+  labelSize.size.width  = 320;
+  labelSize.size.height = 21;
+  
+  CGRect taskNameLabelSize = taskNameLabel.frame;
+  taskNameLabelSize        = labelSize;
+  taskNameLabel.frame      = taskNameLabelSize;
+  
+  CGRect taskDescriptionLabelSize = taskDescriptionLabel.frame;
+  taskDescriptionLabelSize        = labelSize;
+  taskDescriptionLabel.frame      = taskDescriptionLabelSize;
+  
+  CGRect personnelLabelSize = personnelLabel.frame;
+  personnelLabelSize        = labelSize;
+  personnelLabel.frame      = personnelLabelSize;
+  
+  //Set field size dimensions
+  CGRect fieldSize;
+  fieldSize.size.width  = 287;
+  fieldSize.size.height = 30;
+  
+  CGRect taskNameFieldSize = taskNameField.frame;
+  taskNameFieldSize = fieldSize;
+  taskNameField.frame = taskNameFieldSize;
+  
+  CGRect personnelFieldSize = personnelField.frame;
+  personnelFieldSize = fieldSize;
+  personnelField.frame = personnelFieldSize;
+  
+  //Set text view dimensions
+  CGRect taskDescriptionSize = taskDescriptionTextArea.frame;
+  
+  
+  
+  /*
+   //Set field size dimensions
+   CGRect fieldSize;
+   fieldSize.size.width  = 141;
+   fieldSize.size.height = 30;
+   
+   CGRect statusFieldSize      = statusField.frame;
+   statusFieldSize.size.width  = 287;
+   statusFieldSize.size.height = 30;
+   statusField.frame           = statusFieldSize;
+   */
+
+  
+  
+  
+  
 }
 
 
-#pragma mark - [Approve] button implementation
-- (void) approveSR
+
+#pragma mark - [Save] button implementation
+-(void) saveProvisioningSR
 {
-  NSLog(@"Approval Service Request");
+  NSLog(@"Save Service Request Provisioning");
   
-  statusId = @20130101420000007;
-  [self updateServiceRequestStatus:@"APPROVED"];
+  //statusId = @20130101420000005;
+  //[self updateServiceRequestStatus:@"PROPOSAL"];
 }
 
 
-#pragma mark - Update Service Request status to 'Approved' or 'Cancelled'
+#pragma mark - [Complete] button implementation
+-(void) completeSR
+{
+  NSLog(@"Complete Service Request Provisioning");
+  
+  //statusId = @20130101420000005;
+  //[self updateServiceRequestStatus:@"PROPOSAL"];
+}
+
+
+#pragma mark - [Close] button implementation
+-(void) closeSR
+{
+  NSLog(@"Close Service Request Provisioning");
+  
+  //statusId = @20130101420000005;
+  //[self updateServiceRequestStatus:@"PROPOSAL"];
+}
+
+
+#pragma mark - Update Service Request status to 'Acceptance' or 'Proposed Service'
 -(void) updateServiceRequestStatus: (NSString *) operationFlag
 {
   NSLog(@"updateServiceRequestStatus");
@@ -926,12 +1209,12 @@
   //status
   NSLog(@"statusId: %@", statusId);
   NSMutableDictionary *statusJson = [[NSMutableDictionary alloc] init];
-  [statusJson setObject:statusId forKey:@"id"]; //For 'Approved' or 'Cancelled'
+  [statusJson setObject:statusId forKey:@"id"]; //For Proposal or Accepted
   [serviceRequestJson setObject:statusJson forKey:@"status"];
   
   //admin
   NSMutableDictionary *adminJson = [[NSMutableDictionary alloc] init];
-  [adminJson setObject:@20130101500000001 forKey:@"id"]; //!!! TODO - TEST ONLY !!!
+  [adminJson setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY !!!
   [serviceRequestJson setObject:adminJson forKey:@"admin"];
   NSLog(@"adminJson: %@", adminJson);
   
@@ -943,7 +1226,7 @@
   NSMutableDictionary *notesSenderJson = [[NSMutableDictionary alloc] init];
   NSMutableArray *notesArray = [[NSMutableArray alloc] init];
   
-  for(int i = 0; i < approvalNotesArray.count; i++)
+  for(int i = 0; i < provisioningNotesArray.count; i++)
   {
     //sender
     [notesSenderJson setObject:@20130101500000001 forKey:@"id"]; //!!! TODO - TEST ONLY - Remove hardcoded value
@@ -951,7 +1234,7 @@
     
     //message
     UITextView *tempTextView = [[UITextView alloc] init];
-    tempTextView = [approvalNotesArray objectAtIndex:i]; //Begin at second element
+    tempTextView = [provisioningNotesArray objectAtIndex:i]; //Begin at second element
     [notesDictionary setObject:tempTextView.text forKey:@"message"];
     
     //save the sender-message node in an array
@@ -969,7 +1252,7 @@
   NSMutableArray *scheduleArray = [[NSMutableArray alloc] init];
   
   NSLog(@"service request schedules JSON assembly");
-  [scheduleStatusDictionary setObject:statusId forKey:@"id"]; //For 'Approved' or 'Cancelled'
+  [scheduleStatusDictionary setObject:statusId forKey:@"id"]; //For Proposal or Accepted
   [scheduleDictionary setObject:scheduleStatusDictionary forKey:@"status"];
   
   //schedule - author
@@ -979,7 +1262,6 @@
   
   //schedule - periods
   NSMutableArray *schedulePeriodArray = [[NSMutableArray alloc] init];
-  //No need to initialize and pass 'Schedule' JSON node - no schedules are added in SR Approval stage
   /*
   for(int i = 0; i < [fromDatesArray count]; i++)
   {
@@ -1006,6 +1288,7 @@
     [schedulePeriodArray addObject:schedulePeriodDictionary];
   }
   */
+  
   [scheduleDictionary setObject:schedulePeriodArray forKey:@"periods"];
   [serviceRequestJson setObject:scheduleDictionary forKey:@"schedules"];
   
@@ -1016,8 +1299,8 @@
   [scheduleArray addObject:scheduleDictionary];
   [serviceRequestJson setObject:scheduleArray forKey:@"schedules"];
   
-  //Construct JSON request for Approval update
-  NSLog(@"For Approval Service Request JSON: %@", serviceRequestJson);
+  //Construct JSON request for Proposal update
+  NSLog(@"For Proposal Service Request JSON: %@", serviceRequestJson);
   NSError *error = [[NSError alloc] init];
   NSData *jsonData = [NSJSONSerialization
                       dataWithJSONObject:serviceRequestJson
@@ -1033,8 +1316,7 @@
   
   //Set URL for Update Service Request
   //URL = @"http://192.168.2.113/vertex-api/service-request/updateServiceRequest";
-  //URL = @"http://192.168.2.107/vertex-api/service-request/updateServiceRequest";
-  URL = @"http://blah"; //!!! TEST ONLY
+  URL = @"http://192.168.2.107/vertex-api/service-request/updateServiceRequest";
   
   NSMutableURLRequest *putRequest = [NSMutableURLRequest
                                      requestWithURL:[NSURL URLWithString:URL]];
@@ -1053,19 +1335,20 @@
   
   NSLog(@"updateServiceRequest - httpResponseCode: %d", httpResponseCode);
   
-  //Set alert message display depending on what operation is performed (REJECTED or APPROVED)
+  //Set alert message display depending on what operation is performed (ACCEPTED or PROPOSAL)
   NSString *updateAlertMessage     = [[NSString alloc] init];
   NSString *updateFailAlertMessage = [[NSString alloc] init];
   
-  if([operationFlag isEqual:@"APPROVED"])
+  //!!! TODO - operationFlag
+  if([operationFlag isEqual:@"ACCEPTED"])
   {
-    updateAlertMessage     = @"Service Request Approved.";
-    updateFailAlertMessage = @"Service Request not approved. Please try again later";
+    updateAlertMessage     = @"Service Request Accepted.";
+    updateFailAlertMessage = @"Service Request not accepted. Please try again later";
   }
-  else if([operationFlag isEqual:@"CANCELLED"])
+  else if([operationFlag isEqual:@"PROPOSAL"])
   {
-    updateAlertMessage     = @"Service Request Rejected.";
-    updateFailAlertMessage = @"Service Request not rejected. Please try again later";
+    updateAlertMessage     = @"Service Request Under Proposal Stage.";
+    updateFailAlertMessage = @"Service Request not updated to proposal stage. Please try again later";
   }
   
   NSLog(@"operationFlag: %@", operationFlag);
@@ -1091,7 +1374,7 @@
   }
   
   [self dismissViewControllerAnimated:YES completion:nil];
-  NSLog(@"Service Request Approval");
+  NSLog(@"Service Request Provisioning");
 }
 
 
@@ -1112,16 +1395,41 @@
 }
 
 
+/*
+ #pragma mark - Validation if there are Schedule Periods entered
+ -(BOOL) validateSchedulePeriods: (NSMutableArray *) schedulePeriod
+ {
+ NSLog(@"validateSchedulePeriods");
+ NSLog(@"schedulePeriod count: %d", [schedulePeriod count]);
+ //!!! TODO
+ if ([schedulePeriod count] == 1) //1 element meaning default 'periods' node but empty of contents
+ {
+ UIAlertView *emptySchedulePeriodAlert = [[UIAlertView alloc]
+ initWithTitle:@"Incomplete Information"
+ message:@"No schedule period dates entered."
+ delegate:nil
+ cancelButtonTitle:@"OK"
+ otherButtonTitles:nil];
+ [emptySchedulePeriodAlert show];
+ 
+ return FALSE;
+ }
+ else
+ {
+ return TRUE;
+ }
+ }
+ */
+
+
 #pragma mark - Dismiss onscreen keyboard
 -(void)dismissKeyboard
 {
-  for (int i = 0; i < [approvalSRPageScroller.subviews count]; i++)
+  for (int i = 0; i < [provisioningSRPageScroller.subviews count]; i++)
   {
-    [[[approvalSRPageScroller subviews] objectAtIndex:i] resignFirstResponder];
+    [[[provisioningSRPageScroller subviews] objectAtIndex:i] resignFirstResponder];
   }
 }
-
-
 
 
 @end
