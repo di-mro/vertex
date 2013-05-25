@@ -28,11 +28,14 @@
 
 - (void)viewDidLoad
 {
+  //[Cancel] Button
+  //[Edit] Button
+  
   //TEST
   userAccountsArray = [[NSMutableArray alloc] initWithObjects:
-                         @"Demo-1"
-                       , @"Demo-2"
-                       , @"Demo-3"
+                         @"Demo - user000"
+                       , @"Demo - user001"
+                       , @"Demo - user002"
                        , nil];
   
   [super viewDidLoad];

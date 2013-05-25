@@ -10,6 +10,7 @@
 #import "HomePageViewController.h"
 #import "EsseInfoConfigurationPageViewController.h"
 
+
 @interface UpdateEssePageViewController ()
 
 @end
@@ -41,6 +42,8 @@
 @synthesize URL;
 @synthesize httpResponseCode;
 
+@synthesize cancelUpdateEsseConfirmation;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -58,7 +61,7 @@
   
   //Keyboard dismissal
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                        action:@selector (dismissKeyboard)];
+                                                                        action:@selector(dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //Configure Scroller size
@@ -101,13 +104,16 @@
 #pragma mark - [Cancel] button implementation
 -(void) cancelUpdateEsse
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Cancel Update Esse");
   
-  //Go back to Home Page
-  HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+  cancelUpdateEsseConfirmation = [[UIAlertView alloc]
+                                      initWithTitle:@"Cancel Esse Update"
+                                            message:@"Are you sure you want to cancel updating this esse?"
+                                           delegate:self
+                                  cancelButtonTitle:@"Yes"
+                                  otherButtonTitles:@"No", nil];
   
-  [self.navigationController pushViewController:controller animated:YES];
+  [cancelUpdateEsseConfirmation show];
 }
 
 
@@ -281,11 +287,26 @@
 #pragma mark - Transition to Assets Page when OK on Alert Box is clicked
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-  if (buttonIndex == 0)
+  if([alertView isEqual:cancelUpdateEsseConfirmation])
   {
-    EsseInfoConfigurationPageViewController *controller = (EsseInfoConfigurationPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"EsseInfoConfigPage"];
-    
-    [self.navigationController pushViewController:controller animated:YES];
+    NSLog(@"Cancel Update Esse Confirmation");
+    if(buttonIndex == 0) //Yes - Cancel
+    {
+      //Go back to Esse Config Page
+      EsseInfoConfigurationPageViewController *controller = (EsseInfoConfigurationPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"EsseInfoConfigPage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
+  }
+  else
+  {
+    if (buttonIndex == 0) //OK
+    {
+      //Go back to Home
+      HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
   }
 }
 

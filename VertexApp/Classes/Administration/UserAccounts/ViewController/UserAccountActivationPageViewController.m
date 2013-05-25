@@ -28,6 +28,8 @@
 @synthesize URL;
 @synthesize httpResponseCode;
 
+@synthesize cancelUserAccountActivationConfirmation;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,7 +47,7 @@
   
   //Keyboard dismissal
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                        action:@selector (dismissKeyboard)];
+                                                                        action:@selector(dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //Configure Scroller size
@@ -77,13 +79,16 @@
 #pragma mark - [Cancel] button implementation
 -(void) cancelUserAccountActivation
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Cancel User Account Activation");
   
-  //Go back to Home Page
-  HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+  cancelUserAccountActivationConfirmation = [[UIAlertView alloc]
+                                                 initWithTitle:@"Cancel User Account Activation"
+                                                       message:@"Are you sure you want to cancel activating this user account?"
+                                                      delegate:self
+                                             cancelButtonTitle:@"Yes"
+                                             otherButtonTitles:@"No", nil];
   
-  [self.navigationController pushViewController:controller animated:YES];
+  [cancelUserAccountActivationConfirmation show];
 }
 
 
@@ -182,11 +187,26 @@
 #pragma mark - Transition to Assets Page when OK on Alert Box is clicked
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-  if (buttonIndex == 0)
+  if([alertView isEqual:cancelUserAccountActivationConfirmation])
   {
-    UserAccountConfigurationPageViewController *controller = (UserAccountConfigurationPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"UserAccountConfigPage"];
-    
-    [self.navigationController pushViewController:controller animated:YES];
+    NSLog(@"Cancel User Account Activation Confirmation");
+    if(buttonIndex == 0) //Yes - Cancel
+    {
+      //Go back to User Account Configuration Page
+      UserAccountConfigurationPageViewController *controller = (UserAccountConfigurationPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"UserAccountConfigPage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
+  }
+  else
+  {
+    if (buttonIndex == 0) //OK
+    {
+      //Go back to Home
+      HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
   }
 }
 

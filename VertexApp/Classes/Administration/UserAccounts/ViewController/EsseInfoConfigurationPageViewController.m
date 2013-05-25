@@ -7,6 +7,8 @@
 //
 
 #import "EsseInfoConfigurationPageViewController.h"
+#import "AdminTasksViewController.h"
+
 
 @interface EsseInfoConfigurationPageViewController ()
 
@@ -31,6 +33,12 @@
 {
   NSLog(@"Esse Info Configuration Page View");
   
+  //[Back] navigation button
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(goToAdminTasks)];
+  
   [self displayEsseInfoConfigPageEntries];
   
   [super viewDidLoad];
@@ -42,6 +50,17 @@
   [super didReceiveMemoryWarning];
   // Dispose of any resources that can be recreated.
 }
+
+
+#pragma mark - Segue to Admin Tasks Page
+-(void) goToAdminTasks
+{
+  //Go back to Admin Tasks Page
+  AdminTasksViewController *controller = (AdminTasksViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"AdminTasksPage"];
+  
+  [self.navigationController pushViewController:controller animated:YES];
+}
+
 
 # pragma mark - Display entries in Admin Page
 - (void) displayEsseInfoConfigPageEntries

@@ -44,6 +44,8 @@
 @synthesize URL;
 @synthesize httpResponseCode;
 
+@synthesize cancelEditUserAccountDetailsConfirmation;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -61,7 +63,7 @@
   
   //Keyboard dismissal
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                        action:@selector (dismissKeyboard)];
+                                                                        action:@selector(dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //Configure Scroller size
@@ -249,13 +251,16 @@
 #pragma mark - [Cancel] button implementation
 -(void) cancelEditUserAccountDetails
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Cancel Edit User Account Details");
   
-  //Go back to Home Page
-  HomePageViewController* controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+  cancelEditUserAccountDetailsConfirmation = [[UIAlertView alloc]
+                                                  initWithTitle:@"Cancel Edit User Account Details"
+                                                        message:@"Are you sure you want to cancel editing this user account details?"
+                                                       delegate:self
+                                              cancelButtonTitle:@"Yes"
+                                              otherButtonTitles:@"No", nil];
   
-  [self.navigationController pushViewController:controller animated:YES];
+  [cancelEditUserAccountDetailsConfirmation show];
 }
 
 
@@ -447,11 +452,26 @@
 #pragma mark - Transition to Assets Page when OK on Alert Box is clicked
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-  if (buttonIndex == 0)
+  if([alertView isEqual:cancelEditUserAccountDetailsConfirmation])
   {
-    UserAccountConfigurationPageViewController *controller = (UserAccountConfigurationPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"UserAccountConfigPage"];
-    
-    [self.navigationController pushViewController:controller animated:YES];
+    NSLog(@"Cancel Edit User Account Details Confirmation");
+    if(buttonIndex == 0) //Yes - Cancel
+    {
+      //Go back to SR Page
+      UserAccountConfigurationPageViewController *controller = (UserAccountConfigurationPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"UserAccountConfigPage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
+  }
+  else
+  {
+    if (buttonIndex == 0) //OK
+    {
+      //Go back to Home
+      HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
   }
 }
 

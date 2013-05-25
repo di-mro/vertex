@@ -50,10 +50,21 @@
 @synthesize schedulesLabel;
 
 @synthesize tasksLabel;
+@synthesize personnelField;
+
+@synthesize actionSheet;
+@synthesize personnelPicker;
+
+@synthesize personnels;
+
+@synthesize personnelNameArray;
+@synthesize personnelIdArray;
+
+@synthesize selectedPersonnelId;
+@synthesize selectedPersonnelName;
 
 @synthesize addNotesButtonFrame;
 @synthesize schedulesLabelFrame;
-@synthesize proposalLabelFrame;
 @synthesize statusLabelFrame;
 @synthesize statusFieldFrame;
 @synthesize authorLabelFrame;
@@ -69,19 +80,22 @@
 @synthesize toTimeFieldFrame;
 
 @synthesize separatorFrame;
+@synthesize taskSeparatorFrame;
 
 @synthesize tasksLabelFrame;
-@synthesize taskNameFrame;
+@synthesize taskNameLabelFrame;
 @synthesize taskNameFieldFrame;
-@synthesize taskDescriptionFrame;
+@synthesize taskDescriptionLabelFrame;
 @synthesize taskDescriptionAreaFrame;
 @synthesize personnelLabelFrame;
 @synthesize personnelFieldFrame;
+@synthesize taskStatusLabelFrame;
 @synthesize addTasksButtonFrame;
 
 @synthesize taskNameArray;
 @synthesize taskDescriptionArray;
 @synthesize personnelArray;
+@synthesize taskStatusArray;
 
 @synthesize userId;
 @synthesize serviceRequestId;
@@ -94,10 +108,8 @@
 @synthesize schedulesStatusArray;
 @synthesize schedulesAuthorArray;
 
-@synthesize actionSheet;
-@synthesize personnelPicker;
-
 @synthesize serviceRequestJson;
+@synthesize tasksJson;
 
 @synthesize URL;
 @synthesize httpResponseCode;
@@ -166,9 +178,13 @@
                                              , closeButton
                                              , nil];
   
+  //Disable these buttons
+  completeButton.enabled = NO;
+  closeButton.enabled    = NO;
+  
   //Scroller size
   provisioningSRPageScroller.contentSize = CGSizeMake(320.0, 5000);
-  //scrollViewHeight = 0.0f;
+  scrollViewHeight = 0.0f;
   [self setScrollerSize];
   
   //Disable fields - for viewing only
@@ -191,7 +207,15 @@
   taskNameArray        = [[NSMutableArray alloc] init];
   taskDescriptionArray = [[NSMutableArray alloc] init];
   personnelArray       = [[NSMutableArray alloc] init];
+  taskStatusArray      = [[NSMutableArray alloc] init];
   
+  //Initializations for the Personnel picker
+  personnelArray     = [[NSMutableArray alloc] init];
+  personnelNameArray = [[NSMutableArray alloc] init];
+  personnelIdArray   = [[NSMutableArray alloc] init];
+  
+  //Get Personnels endpoint connection to populate Personnel Picker
+  [self getPersonnels];
   
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -207,6 +231,7 @@
 #pragma mark - Adjust page scroller height depending on number of elements in view
 -(void) setScrollerSize
 {
+  //scrollViewHeight = 0.0;
   for (UIView *view in provisioningSRPageScroller.subviews)
   {
     scrollViewHeight += view.frame.size.height;
@@ -425,6 +450,9 @@
                                   :[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"periods"]
                                   :startingCoordinates];
     }
+    
+    //Display fields for 'Tasks' area
+    [self displayTasks];
   }
 }
 
@@ -840,12 +868,12 @@
   toTimeField.enabled   = NO;
   
   //Put tags to identify fields
-  statusField.tag = 0;
-  authorField.tag = 1;
+  statusField.tag   = 0;
+  authorField.tag   = 1;
   fromDateField.tag = 2;
   fromTimeField.tag = 3;
-  toDateField.tag = 4;
-  toTimeField.tag = 5;
+  toDateField.tag   = 4;
+  toTimeField.tag   = 5;
   
   //Set label size dimensions
   CGRect labelSize;
@@ -1010,17 +1038,36 @@
     [provisioningSRPageScroller addSubview:toTimeField];
     
     [provisioningSRPageScroller addSubview:separator];
-    
-    /*
-    //Move add schedules button location
-    //Add Schedules Button
-    addScheduleButtonFrame          = addSchedulesButton.frame;
-    addScheduleButtonFrame.origin.y = (separatorFrame.origin.y + 30);
-    addSchedulesButton.frame        = addScheduleButtonFrame;
-    */
+
     //Adjust scroller height
     [self setScrollerSize];
   }
+}
+
+
+#pragma mark - Display 'Tasks' label and button - Starting point for displaying the fields and labels for 'Tasks' area
+-(void) displayTasks
+{
+  //Initialize Task label
+  tasksLabel      = [[UILabel alloc] init];
+  tasksLabel.text = @"Tasks: ";
+  tasksLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  
+  //Set frame location and size - Tasks label
+  tasksLabelFrame             = tasksLabel.frame;
+  tasksLabelFrame.origin.x    = 16;
+  tasksLabelFrame.origin.y    = (separatorFrame.origin.y + 10);
+  tasksLabelFrame.size.width  = 320;
+  tasksLabelFrame.size.height = 21;
+  tasksLabel.frame            = tasksLabelFrame;
+  
+  [provisioningSRPageScroller addSubview:tasksLabel];
+  
+  //Set frame location - [Add Tasks] button
+  addTasksButtonFrame          = addTasksButton.frame;
+  addTasksButtonFrame.origin.x = 16;
+  addTasksButtonFrame.origin.y = (tasksLabelFrame.origin.y + 40);
+  addTasksButton.frame         = addTasksButtonFrame;
 }
 
 
@@ -1034,27 +1081,41 @@
   UILabel *taskNameLabel        = [[UILabel alloc] init];
   UILabel *taskDescriptionLabel = [[UILabel alloc] init];
   UILabel *personnelLabel       = [[UILabel alloc] init];
+  UILabel *statusLabel          = [[UILabel alloc] init];
   
   //Initialize fields
   UITextField *taskNameField  = [[UITextField alloc] init];
-  UITextField *personnelField = [[UITextField alloc] init];
+  personnelField              = [[UITextField alloc] init];
+  
+  //Set delegate for Personnel field - for the Personel Picker implementation
+  personnelField.delegate = self;
   
   //Initialize text view
   UITextView *taskDescriptionTextArea = [[UITextView alloc] init];
   
+  //Initialize segmented control for Task Status
+  NSArray *statusChoices = [NSArray arrayWithObjects:@"To Do", @"Done", nil];
+  UISegmentedControl *statusSegmentedControl = [[UISegmentedControl alloc] initWithItems:statusChoices];
+  
   //Set label texts
   taskNameLabel.text        = @"Task Name: ";
   taskDescriptionLabel.text = @"Task Description: ";
-  personnelLabel.text       = @"Personnel";
+  personnelLabel.text       = @"Personnel: ";
+  statusLabel.text          = @"Task Status: ";
   
   //Set label style
   taskNameLabel.font        = [UIFont fontWithName:@"Helvetica-Bold" size:17];
   taskDescriptionLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
   personnelLabel.font       = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+  statusLabel.font          = [UIFont fontWithName:@"Helvetica-Bold" size:17];
   
   //Set field style
   taskNameField.borderStyle  = UITextBorderStyleRoundedRect;
   personnelField.borderStyle = UITextBorderStyleRoundedRect;
+  
+  //Set field placeholder texts
+  taskNameField.placeholder  = @"Task - Repair broken wiring";
+  personnelField.placeholder = @"Steve Wozniak";
   
   //Set text view style
   taskDescriptionTextArea.backgroundColor = notesTextArea.backgroundColor;
@@ -1077,42 +1138,303 @@
   personnelLabelSize        = labelSize;
   personnelLabel.frame      = personnelLabelSize;
   
+  CGRect taskStatusLabelSize = statusLabel.frame;
+  taskStatusLabelSize        = labelSize;
+  statusLabel.frame          = taskStatusLabelSize;
+  
   //Set field size dimensions
   CGRect fieldSize;
   fieldSize.size.width  = 287;
   fieldSize.size.height = 30;
   
   CGRect taskNameFieldSize = taskNameField.frame;
-  taskNameFieldSize = fieldSize;
-  taskNameField.frame = taskNameFieldSize;
+  taskNameFieldSize        = fieldSize;
+  taskNameField.frame      = taskNameFieldSize;
   
   CGRect personnelFieldSize = personnelField.frame;
-  personnelFieldSize = fieldSize;
-  personnelField.frame = personnelFieldSize;
+  personnelFieldSize        = fieldSize;
+  personnelField.frame      = personnelFieldSize;
   
   //Set text view dimensions
-  CGRect taskDescriptionSize = taskDescriptionTextArea.frame;
+  CGRect taskDescriptionSize      = taskDescriptionTextArea.frame;
+  taskDescriptionSize.size.height = 120;
+  taskDescriptionSize.size.width  = 284;
+  taskDescriptionTextArea.frame   = taskDescriptionSize;
   
+  CGRect startingCoordinates;
   
-  
-  /*
-   //Set field size dimensions
-   CGRect fieldSize;
-   fieldSize.size.width  = 141;
-   fieldSize.size.height = 30;
-   
-   CGRect statusFieldSize      = statusField.frame;
-   statusFieldSize.size.width  = 287;
-   statusFieldSize.size.height = 30;
-   statusField.frame           = statusFieldSize;
-   */
+  if([taskNameArray count] == 0)
+  {
+    startingCoordinates.origin.y = (tasksLabelFrame.origin.y);
+    
+    //Set frame location - Task Name label
+    taskNameLabelFrame          = taskNameLabel.frame;
+    taskNameLabelFrame.origin.x = 16;
+    taskNameLabelFrame.origin.y = (startingCoordinates.origin.y + 40);
+    taskNameLabel.frame         = taskNameLabelFrame;
+  }
+  else
+  {
+    startingCoordinates.origin.y = (taskSeparatorFrame.origin.y);
+    
+    //Set frame location - Task Name label
+    taskNameLabelFrame          = taskNameLabel.frame;
+    taskNameLabelFrame.origin.x = 16;
+    taskNameLabelFrame.origin.y = (startingCoordinates.origin.y + 30);
+    taskNameLabel.frame         = taskNameLabelFrame;
+  }
 
+  //Set frame location - Task name field
+  taskNameFieldFrame          = taskNameField.frame;
+  taskNameFieldFrame.origin.x = 16;
+  taskNameFieldFrame.origin.y = (taskNameLabelFrame.origin.y + 30);
+  taskNameField.frame         = taskNameFieldFrame;
+  
+  //Set frame location - Description label
+  taskDescriptionLabelFrame          = taskDescriptionLabel.frame;
+  taskDescriptionLabelFrame.origin.x = 16;
+  taskDescriptionLabelFrame.origin.y = (taskNameFieldFrame.origin.y + 40);
+  taskDescriptionLabel.frame         = taskDescriptionLabelFrame;
+  
+  //Set frame location - Description text view
+  taskDescriptionAreaFrame          = taskDescriptionTextArea.frame;
+  taskDescriptionAreaFrame.origin.x = 16;
+  taskDescriptionAreaFrame.origin.y = (taskDescriptionLabelFrame.origin.y + 30);
+  taskDescriptionTextArea.frame     = taskDescriptionAreaFrame;
+  
+  //Set frame location - Personnel label
+  personnelLabelFrame          = personnelLabel.frame;
+  personnelLabelFrame.origin.x = 16;
+  personnelLabelFrame.origin.y = (taskDescriptionAreaFrame.origin.y + 130);
+  personnelLabel.frame         = personnelLabelFrame;
+  
+  //Set frame location - Personnel field
+  personnelFieldFrame          = personnelField.frame;
+  personnelFieldFrame.origin.x = 16;
+  personnelFieldFrame.origin.y = (personnelLabelFrame.origin.y + 30);
+  personnelField.frame         = personnelFieldFrame;
+  
+  //Set frame location - Status label
+  taskStatusLabelFrame = statusLabel.frame;
+  taskStatusLabelFrame.origin.x = 16;
+  taskStatusLabelFrame.origin.y = (personnelFieldFrame.origin.y + 50);
+  statusLabel.frame = taskStatusLabelFrame;
+  
+  //Set frame location - Status segmented control
+  CGRect statusSegmentedControlFrame      = statusSegmentedControl.frame;
+  statusSegmentedControlFrame.size.width  = 175;
+  statusSegmentedControlFrame.size.height = 40;
+  statusSegmentedControlFrame.origin.x    = 130;
+  statusSegmentedControlFrame.origin.y    = (personnelFieldFrame.origin.y + 50);
+  statusSegmentedControl.frame            = statusSegmentedControlFrame;
+  
+  //Initialize functionalities for segmented control
+  statusSegmentedControl.selectedSegmentIndex = 0; //default selected is 'To Do'
+  [statusSegmentedControl addTarget:self
+                             action:nil //@selector()
+                   forControlEvents:UIControlEventValueChanged];
+  
+  //Add separator line at end
+  //Define separator line for the Tasks entries
+  UIView *taskSeparator          = [[UIView alloc] init];
+  taskSeparator.backgroundColor  = [UIColor colorWithWhite:0.7 alpha:1];
+  taskSeparatorFrame             = taskSeparator.frame;
+  taskSeparatorFrame.origin.x    = 0;
+  taskSeparatorFrame.origin.y    = (taskStatusLabelFrame.origin.y + 60);
+  taskSeparatorFrame.size.height = 1;
+  taskSeparatorFrame.size.width  = 320;
+  taskSeparator.frame            = taskSeparatorFrame;
+  
+  //Set frame location - [Add Tasks] button
+  addTasksButtonFrame          = addTasksButton.frame;
+  addTasksButtonFrame.origin.x = 16;
+  addTasksButtonFrame.origin.y = (taskSeparatorFrame.origin.y + 30);
+  addTasksButton.frame         = addTasksButtonFrame;
+  
+  //Add views in scroller
+  [provisioningSRPageScroller addSubview:taskNameLabel];
+  [provisioningSRPageScroller addSubview:taskNameField];
+  
+  [provisioningSRPageScroller addSubview:taskDescriptionLabel];
+  [provisioningSRPageScroller addSubview:taskDescriptionTextArea];
+  
+  [provisioningSRPageScroller addSubview:personnelLabel];
+  [provisioningSRPageScroller addSubview:personnelField];
+  
+  [provisioningSRPageScroller addSubview:statusLabel];
+  [provisioningSRPageScroller addSubview:statusSegmentedControl];
+  
+  [provisioningSRPageScroller addSubview:taskSeparator];
+  
+  //Store fields in arrays
+  [taskNameArray addObject:taskNameField];
+  [taskDescriptionArray addObject:taskDescriptionTextArea];
+  [personnelArray addObject:personnelField];
+  [taskStatusArray addObject:statusSegmentedControl];
   
   
-  
-  
+  //Adjust scroller height
+  [self setScrollerSize];
 }
 
+
+#pragma mark - Get Personnel endpoint connection for Personnel picker
+- (void) getPersonnels
+{
+  //Set URL for retrieving Personnels
+  URL = @"http://192.168.2.113/vertex-api/user/personnel/getPersonnels"; //107
+  
+  NSMutableURLRequest *getRequest = [NSMutableURLRequest
+                                     requestWithURL:[NSURL URLWithString:URL]];
+  
+  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+  [getRequest setHTTPMethod:@"GET"];
+  NSLog(@"%@", getRequest);
+  
+  NSURLConnection *connection = [[NSURLConnection alloc]
+                                 initWithRequest:getRequest
+                                 delegate:self];
+  [connection start];
+  
+  NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+  NSError *error = [[NSError alloc] init];
+  
+  //GET
+  NSData *responseData = [NSURLConnection
+                          sendSynchronousRequest:getRequest
+                          returningResponse:&urlResponse
+                          error:&error];
+  
+  if (responseData == nil)
+  {
+    //Show an alert if connection is not available
+    UIAlertView *connectionAlert = [[UIAlertView alloc]
+                                    initWithTitle:@"Warning"
+                                    message:@"No network connection detected. Displaying data from phone cache."
+                                    delegate:nil
+                                    cancelButtonTitle:@"OK"
+                                    otherButtonTitles:nil];
+    [connectionAlert show];
+    
+    //TODO: Connect to CoreData for local data
+    //!- FOR TESTING ONLY -!
+    personnelNameArray = [[NSMutableArray alloc] initWithObjects:
+                                      @"Demo - Steve Wozniak"
+                                    , @"Demo - Ron Wayne"
+                                    , @"Demo - Daniel Kotke"
+                                    , nil];
+    
+    personnelIdArray = [[NSMutableArray alloc] initWithObjects:
+                                      @"Demo - 0001"
+                                    , @"Demo - 0002"
+                                    , @"Demo - 0003"
+                                    , nil];
+  }
+  else
+  {
+    personnels = [NSJSONSerialization
+                  JSONObjectWithData:responseData
+                             options:kNilOptions
+                               error:&error];
+    
+    NSLog(@"getPersonnels JSON Result: %@", personnels);
+    
+    //Get personnel ids
+    personnelIdArray = [personnels valueForKey:@"id"];
+    NSLog(@"personnelIdArray: %@", personnelIdArray);
+    
+    for(int i = 0; i < personnels.count; i++)
+    {
+      //Get personnel name - concatenate and format
+      NSMutableString *personnelName = [NSMutableString stringWithFormat:@"%@ %@ %@ %@"
+                                        , [[[personnels valueForKey:@"personnelInfo"] valueForKey:@"firstName"] objectAtIndex:i]
+                                        , [[[personnels valueForKey:@"personnelInfo"] valueForKey:@"middleName"] objectAtIndex:i]
+                                        , [[[personnels valueForKey:@"personnelInfo"] valueForKey:@"lastName"] objectAtIndex:i]
+                                        , [[[personnels valueForKey:@"personnelInfo"] valueForKey:@"suffix"] objectAtIndex:i]];
+      
+      [personnelNameArray addObject:personnelName];
+    }
+    
+    NSLog(@"personnelNameArray: %@", personnelNameArray);
+  }
+}
+
+
+#pragma mark - Change assetTypeField to assetTypePicker when clicked
+- (BOOL)textFieldDidBeginEditing:(UITextField *)textField
+{
+  NSLog(@"textFieldDidBeginEditing - function call");
+  if(personnelField.isEditing)
+  {
+    NSLog(@"textFieldDidBeginEditing - personnelField");
+    [textField resignFirstResponder];
+    
+    actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                              delegate:nil
+                                     cancelButtonTitle:nil
+                                destructiveButtonTitle:nil
+                                     otherButtonTitles:nil];
+    
+    [actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+    
+    personnelPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 40, 0, 0)];
+    personnelPicker.showsSelectionIndicator = YES;
+    personnelPicker.dataSource = self;
+    personnelPicker.delegate   = self;
+    
+    [actionSheet addSubview:personnelPicker];
+    
+    UISegmentedControl *doneButton = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObject:@"Done"]];
+    doneButton.momentary = YES;
+    doneButton.frame = CGRectMake(260, 7.0f, 50.0f, 30.0f);
+    doneButton.segmentedControlStyle = UISegmentedControlStyleBar;
+    doneButton.tintColor = [UIColor blackColor];
+    [doneButton addTarget:self action:@selector(getPersonnelIndex) forControlEvents:UIControlEventValueChanged];
+    
+    [actionSheet addSubview:doneButton];
+    [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
+    [actionSheet setBounds:CGRectMake(0, 0, 320, 485)];
+    
+    personnelField.inputView = actionSheet;
+    
+    return YES;
+  }
+  else
+  {
+    return NO;
+  }
+}
+
+
+#pragma mark - Implementing the Picker View
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+  return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+  return [personnelNameArray count];
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+  return [self.personnelNameArray objectAtIndex:row];
+}
+
+
+#pragma mark - Get the selected personnel Id and name in the Personnel Picker
+-(void) getPersonnelIndex
+{
+  [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
+  
+  int personnelIndex  = [personnelPicker selectedRowInComponent:0];
+  selectedPersonnelId = [personnelIdArray objectAtIndex:personnelIndex]; //selectedIndex
+  NSLog(@"selectedPersonnelId: %@", selectedPersonnelId);
+  
+  selectedPersonnelName = [personnelNameArray objectAtIndex:personnelIndex];
+  personnelField.text   = selectedPersonnelName;
+}
 
 
 #pragma mark - [Save] button implementation
@@ -1120,8 +1442,7 @@
 {
   NSLog(@"Save Service Request Provisioning");
   
-  //statusId = @20130101420000005;
-  //[self updateServiceRequestStatus:@"PROPOSAL"];
+  [self saveServiceRequestWithTasks];
 }
 
 
@@ -1142,6 +1463,158 @@
   
   //statusId = @20130101420000005;
   //[self updateServiceRequestStatus:@"PROPOSAL"];
+}
+
+
+#pragma mark - Save the 'Tasks' for this Service Request
+-(void) saveServiceRequestWithTasks
+{
+  NSLog(@"saveServiceRequestWithTasks");
+  
+  /*
+   "{
+      serviceRequest:
+      {
+        id: long
+      },
+      assignedTo:
+      {
+        id: long
+      },
+      name: string,
+      description: string,
+      status: boolean
+   }"
+   */
+  
+  tasksJson = [[NSMutableDictionary alloc] init];
+  
+  //serviceRequest
+  NSMutableDictionary *serviceRequestIdJson = [[NSMutableDictionary alloc] init];
+  [serviceRequestIdJson setObject:[serviceRequestInfo valueForKey:@"id"] forKey:@"id"];
+  [tasksJson setObject:serviceRequestIdJson forKey:@"serviceRequest"];
+  
+  //task array
+  NSMutableArray *tasksArray = [[NSMutableArray alloc] init];
+  for(int i = 0; i < [taskNameArray count]; i++)
+  {
+    NSMutableDictionary *tasksDictionary = [[NSMutableDictionary alloc] init];
+    UITextField *tempField = [[UITextField alloc] init];
+    UITextView *tempView   = [[UITextView alloc] init];
+    UISegmentedControl *tempControl = [[UISegmentedControl alloc] init];
+    NSNumber *status = [[NSNumber alloc] init];
+    
+    /*
+    tempField = [personnelArray objectAtIndex:i];
+    [tasksDictionary setObject:tempField.text forKey:@"ID???"]
+    */
+    
+    //task name
+    tempField = [taskNameArray objectAtIndex:i];
+    [tasksDictionary setObject:tempField.text forKey:@"name"];
+    
+    //task description
+    tempView = [taskDescriptionArray objectAtIndex:i];
+    [tasksDictionary setObject:tempView.text forKey:@"description"];
+    
+    //task status
+    tempControl = [taskStatusArray objectAtIndex:i];
+    if(tempControl.selectedSegmentIndex == 0) //To Do
+    {
+      status = @0;
+    }
+    else if(tempControl.selectedSegmentIndex == 1) //Done
+    {
+      status = @1;
+    }
+    [tasksDictionary setObject:status forKey:@"status"];
+    
+    [tasksArray addObject:tasksDictionary];
+  }
+  
+  [tasksJson setObject:tasksArray forKey:@"tasks"]; //!!! TODO
+  
+  //assignedTo
+  NSMutableDictionary *assignedToJson = [[NSMutableDictionary alloc] init];
+  //[assignedToJson setObject:selectedPersonnelId forKey:@"id"];
+  [assignedToJson setObject:@12345 forKey:@"id"]; //!!! TEST ONLY
+  [tasksJson setObject:assignedToJson forKey:@"assignedTo"];
+  
+  /*
+  //!!! TEST ONLY
+  //name
+  [tasksJson setObject:@"test" forKey:@"name"];
+  
+  //description
+  [tasksJson setObject:@"test" forKey:@"description"];
+  
+  //status
+  [tasksJson setObject:@"test" forKey:@"description"];
+   */
+  
+  //Construct JSON request for Add Tasks
+  NSLog(@"Tasks JSON: %@", tasksJson);
+  NSError *error = [[NSError alloc] init];
+  NSData *jsonData = [NSJSONSerialization
+                      dataWithJSONObject:tasksJson
+                      options:NSJSONWritingPrettyPrinted
+                      error:&error];
+  
+  NSString *jsonString = [[NSString alloc]
+                          initWithData:jsonData
+                          encoding:NSUTF8StringEncoding];
+  
+  NSLog(@"jsonData Request: %@", jsonData);
+  NSLog(@"jsonString Request: %@", jsonString);
+  
+  //Set URL for Update Service Request
+  //http://192.168.2.113/vertex-api/service-request/task/addTask
+  //URL = @"http://192.168.2.113/vertex-api/service-request/task/addTask";
+  URL = @"http://blah"; //TEST ONLY !!!
+  
+  NSMutableURLRequest *postRequest = [NSMutableURLRequest
+                                     requestWithURL:[NSURL URLWithString:URL]];
+  
+  //POST method - Update
+  [postRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+  [postRequest setHTTPMethod:@"POST"];
+  [postRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String] length:[jsonString length]]];
+  NSLog(@"%@", postRequest);
+  
+  NSURLConnection *connection = [[NSURLConnection alloc]
+                                 initWithRequest:postRequest
+                                 delegate:self];
+  
+  [connection start];
+  
+  NSLog(@"addTask - httpResponseCode: %d", httpResponseCode);
+  
+  //Set alert message display depending on what operation is performed (ACCEPTED or PROPOSAL)
+  NSString *updateAlertMessage     = [[NSString alloc] init];
+  NSString *updateFailAlertMessage = [[NSString alloc] init];
+  
+  if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
+  {
+    UIAlertView *addTaskAlert = [[UIAlertView alloc]
+                                  initWithTitle:@"Add Task"
+                                  message:@"Task for service request added."
+                                  delegate:self
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+    [addTaskAlert show];
+  }
+  else //(httpResponseCode >= 400)
+  {
+    UIAlertView *addTaskFailAlert = [[UIAlertView alloc]
+                                      initWithTitle:@"Add Task"
+                                      message:@"Task for service request not added. Please try again later."
+                                      delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+    [addTaskFailAlert show];
+  }
+  
+  [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -1393,33 +1866,6 @@
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
-
-
-/*
- #pragma mark - Validation if there are Schedule Periods entered
- -(BOOL) validateSchedulePeriods: (NSMutableArray *) schedulePeriod
- {
- NSLog(@"validateSchedulePeriods");
- NSLog(@"schedulePeriod count: %d", [schedulePeriod count]);
- //!!! TODO
- if ([schedulePeriod count] == 1) //1 element meaning default 'periods' node but empty of contents
- {
- UIAlertView *emptySchedulePeriodAlert = [[UIAlertView alloc]
- initWithTitle:@"Incomplete Information"
- message:@"No schedule period dates entered."
- delegate:nil
- cancelButtonTitle:@"OK"
- otherButtonTitles:nil];
- [emptySchedulePeriodAlert show];
- 
- return FALSE;
- }
- else
- {
- return TRUE;
- }
- }
- */
 
 
 #pragma mark - Dismiss onscreen keyboard

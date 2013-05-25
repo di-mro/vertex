@@ -35,6 +35,8 @@
 @synthesize URL;
 @synthesize httpResponseCode;
 
+@synthesize cancelUserGroupConfigurationConfirmation;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -52,7 +54,7 @@
   
   //Keyboard dismissal
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                        action:@selector (dismissKeyboard)];
+                                                                        action:@selector(dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //[Cancel] navigation button
@@ -241,13 +243,16 @@
 #pragma mark - [Cancel] button implementation
 -(void) cancelUserGroupConfig
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Cancel User Group Configuration");
   
-  //Go back to Home Page
-  HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+  cancelUserGroupConfigurationConfirmation = [[UIAlertView alloc]
+                                                  initWithTitle:@"Cancel User Group Configuration"
+                                                        message:@"Are you sure you want to cancel configuring this user group?"
+                                                       delegate:self
+                                              cancelButtonTitle:@"Yes"
+                                              otherButtonTitles:@"No", nil];
   
-  [self.navigationController pushViewController:controller animated:YES];
+  [cancelUserGroupConfigurationConfirmation show];
 }
 
 
@@ -344,11 +349,26 @@
 #pragma mark - Transition to Assets Page when OK on Alert Box is clicked
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-  if (buttonIndex == 0)
+  if([alertView isEqual:cancelUserGroupConfigurationConfirmation])
   {
-    UserAccountConfigurationPageViewController *controller = (UserAccountConfigurationPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"UserAccountConfigPage"];
-    
-    [self.navigationController pushViewController:controller animated:YES];
+    NSLog(@"Cancel User Group Configuration Confirmation");
+    if(buttonIndex == 0) //Yes - Cancel
+    {
+      //Go back to User Configuration Page
+      UserAccountConfigurationPageViewController *controller = (UserAccountConfigurationPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"UserAccountConfigPage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
+  }
+  else
+  {
+    if (buttonIndex == 0) //OK
+    {
+      //Go back to Home
+      HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+      
+      [self.navigationController pushViewController:controller animated:YES];
+    }
   }
 }
 

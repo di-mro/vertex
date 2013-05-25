@@ -71,7 +71,7 @@
   //Set URL for Login
   //URL = @"http://192.168.2.113/vertex-api/user/login";
   //URL = @"http://192.168.2.107/vertex-api/user/login";
-  URL = @"http://192.168.2.113/vertex-api/auth/login"; //107
+  URL = @"http://192.168.2.107/vertex-api/auth/login"; //113
   
   if([self validateLoginFields])
   {
@@ -202,6 +202,35 @@
                           sendSynchronousRequest:getRequest
                           returningResponse:&urlResponse
                           error:&error];
+  
+  //~ Write responseDate to file
+  NSLog(@"Login - userInfo Response data: %@", responseData);
+  
+  NSString *loggedUserInfo = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+  NSLog(@"loggedUserInfo: %@", loggedUserInfo);
+  
+  /*
+  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+  NSString *documentsDirectory = [paths objectAtIndex:0];
+  NSString *path = [documentsDirectory stringByAppendingPathComponent:@"/vertex_user_info.txt"];
+  [loggedUserInfo writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:&error];
+   */
+  /*
+  NSFileHandle *userFile;
+  userFile = [NSFileHandle fileHandleForUpdatingAtPath: @"~/vertex_userInfo.txt"];
+  
+  if (userFile == nil)
+  {
+    NSLog(@"Failed to open file");
+  }
+  else
+  {
+    //[userFile writeData: loggedUserInfo];
+    [userFile writeData:responseData];
+    [userFile closeFile];
+  }
+   */
+  //***
   
   if(responseData == nil)
   {

@@ -43,10 +43,21 @@
 @property (strong, nonatomic) IBOutlet UILabel *schedulesLabel;
 
 @property (strong, nonatomic) UILabel *tasksLabel;
+@property (strong, nonatomic) UITextField *personnelField;
+
+@property (strong, nonatomic) UIActionSheet *actionSheet;
+@property (strong, nonatomic) UIPickerView *personnelPicker;
+
+@property (strong, nonatomic) NSMutableDictionary *personnels;
+
+@property (strong, nonatomic) NSMutableArray *personnelNameArray;
+@property (strong, nonatomic) NSMutableArray *personnelIdArray;
+
+@property (strong, nonatomic) NSNumber *selectedPersonnelId;
+@property (strong, nonatomic) NSString *selectedPersonnelName;
 
 @property CGRect addNotesButtonFrame;
 @property CGRect schedulesLabelFrame;
-@property CGRect proposalLabelFrame;
 @property CGRect statusLabelFrame;
 @property CGRect statusFieldFrame;
 @property CGRect authorLabelFrame;
@@ -62,28 +73,22 @@
 @property CGRect toTimeFieldFrame;
 
 @property CGRect separatorFrame;
+@property CGRect taskSeparatorFrame;
 
 @property CGRect tasksLabelFrame;
-@property CGRect taskNameFrame;
+@property CGRect taskNameLabelFrame;
 @property CGRect taskNameFieldFrame;
-@property CGRect taskDescriptionFrame;
+@property CGRect taskDescriptionLabelFrame;
 @property CGRect taskDescriptionAreaFrame;
 @property CGRect personnelLabelFrame;
 @property CGRect personnelFieldFrame;
+@property CGRect taskStatusLabelFrame;
 @property CGRect addTasksButtonFrame;
-
-/*
-@property (strong, nonatomic) NSMutableArray *statusArray;
-@property (strong, nonatomic) NSMutableArray *authorArray;
-@property (strong, nonatomic) NSMutableArray *fromDatesArray;
-@property (strong, nonatomic) NSMutableArray *fromTimesArray;
-@property (strong, nonatomic) NSMutableArray *toDatesArray;
-@property (strong, nonatomic) NSMutableArray *toTimesArray;
-*/
  
 @property (strong, nonatomic) NSMutableArray *taskNameArray;
 @property (strong, nonatomic) NSMutableArray *taskDescriptionArray;
 @property (strong, nonatomic) NSMutableArray *personnelArray;
+@property (strong, nonatomic) NSMutableArray *taskStatusArray;
 
 @property (strong, nonatomic) NSNumber *userId;
 @property (strong, nonatomic) NSNumber *serviceRequestId;
@@ -96,10 +101,8 @@
 @property (strong, nonatomic) NSMutableArray *schedulesStatusArray;
 @property (strong, nonatomic) NSMutableArray *schedulesAuthorArray;
 
-@property (strong, nonatomic) UIActionSheet *actionSheet;
-@property (strong, nonatomic) UIPickerView *personnelPicker;
-
 @property (strong, nonatomic) NSMutableDictionary *serviceRequestJson;
+@property (strong, nonatomic) NSMutableDictionary *tasksJson;
 
 @property (strong, nonatomic) NSString *URL;
 @property int httpResponseCode;

@@ -8,6 +8,8 @@
 
 #import "RemoveEssePageViewController.h"
 #import "HomePageViewController.h"
+#import "EsseInfoConfigurationPageViewController.h"
+
 
 @interface RemoveEssePageViewController ()
 
@@ -24,6 +26,9 @@
 
 @synthesize URL;
 @synthesize httpResponseCode;
+
+@synthesize cancelRemoveEsseConfirmation;
+@synthesize removeEsseConfirmation;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -138,28 +143,31 @@
 
 
 #pragma mark - [Cancel] button implementation
--(void) cancelDeleteLifecycle
+-(void) cancelDeleteEsse
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
-  NSLog(@"Cancel Delete Lifecycle");
+  NSLog(@"Cancel Delete Esse");
+
+  cancelRemoveEsseConfirmation = [[UIAlertView alloc]
+                                      initWithTitle:@"Cancel Remove Esse"
+                                            message:@"Are you sure you want to cancel removing an esse?"
+                                           delegate:self
+                                  cancelButtonTitle:@"Yes"
+                                  otherButtonTitles:@"No", nil];
   
-  //Go back to Home Page
-  HomePageViewController *controller = (HomePageViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
-  
-  [self.navigationController pushViewController:controller animated:YES];
+  [cancelRemoveEsseConfirmation show];
 }
 
 
 #pragma mark - [Delete] button implementation
 -(void) removeEsse
 {
-  UIAlertView *removeEsseConfirmation = [[UIAlertView alloc]
-                                              initWithTitle:@"Remove Esse"
-                                                    message:@"Are you sure you want to delete the selected esse?"
-                                                   delegate:self
-                                          cancelButtonTitle:@"Yes"
-                                          otherButtonTitles:@"No",
-                                          nil];
+  removeEsseConfirmation = [[UIAlertView alloc]
+                            initWithTitle:@"Remove Esse"
+                                      message:@"Are you sure you want to delete the selected esse?"
+                                     delegate:self
+                            cancelButtonTitle:@"Yes"
+                            otherButtonTitles:@"No", nil];
+  
   [removeEsseConfirmation show];
   //clickedButtonAtIndex:
 }
@@ -170,63 +178,77 @@
 {
   HomePageViewController *controller = (HomePageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
   
-  if (buttonIndex == 0)
+  if([alertView isEqual:cancelRemoveEsseConfirmation])
   {
-    //TODO - WS Endpoint for delete / remove Esse
-    URL = @"";
-    
-    //! TEST
-    NSMutableString *urlParams = [NSMutableString
-                                  stringWithFormat:@"%@"
-                                  , selectedEsseId];
-    
-    NSMutableURLRequest *deleteRequest = [NSMutableURLRequest
-                                          requestWithURL:[NSURL URLWithString:urlParams]];
-    
-    [deleteRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [deleteRequest setHTTPMethod:@"DELETE"];
-    NSLog(@"%@", deleteRequest);
-    
-    NSURLConnection *connection = [[NSURLConnection alloc]
-                                   initWithRequest:deleteRequest
-                                          delegate:self];
-    [connection start];
-    
-    NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
-    NSError *error = [[NSError alloc] init];
-    
-    NSData *responseData = [NSURLConnection
-                            sendSynchronousRequest:deleteRequest
-                                 returningResponse:&urlResponse
-                                             error:&error];
-    
-    if (responseData == nil)
+    NSLog(@"Cancel Remove Esse Confirmation");
+    if(buttonIndex == 0) //Yes - Cancel
     {
-      //Show an alert if connection is not available
-      UIAlertView *removeEsseAlert = [[UIAlertView alloc]
-                                          initWithTitle:@"Warning"
-                                                message:@"Esse not removed. Please try again."
-                                               delegate:nil
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles:nil];
-      [removeEsseAlert show];
+      //Go back to Esse Info Config Page
+      EsseInfoConfigurationPageViewController *esseController = (EsseInfoConfigurationPageViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"EsseInfoConfigPage"];
+      
+      [self.navigationController pushViewController:esseController animated:YES];
+    }
+  }
+  else if([alertView isEqual:removeEsseConfirmation])
+  {
+    if (buttonIndex == 0)
+    {
+      //TODO - WS Endpoint for delete / remove Esse
+      URL = @"http://blah/"; //!!! TODO - TEST ONLY
+      
+      //! TEST
+      NSMutableString *urlParams = [NSMutableString
+                                    stringWithFormat:@"http://blah/%@"
+                                    , selectedEsseId];
+      
+      NSMutableURLRequest *deleteRequest = [NSMutableURLRequest
+                                            requestWithURL:[NSURL URLWithString:urlParams]];
+      
+      [deleteRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+      [deleteRequest setHTTPMethod:@"DELETE"];
+      NSLog(@"%@", deleteRequest);
+      
+      NSURLConnection *connection = [[NSURLConnection alloc]
+                                     initWithRequest:deleteRequest
+                                     delegate:self];
+      [connection start];
+      
+      NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+      NSError *error = [[NSError alloc] init];
+      
+      NSData *responseData = [NSURLConnection
+                              sendSynchronousRequest:deleteRequest
+                                   returningResponse:&urlResponse
+                                               error:&error];
+      
+      if (responseData == nil)
+      {
+        //Show an alert if connection is not available
+        UIAlertView *removeEsseAlert = [[UIAlertView alloc]
+                                            initWithTitle:@"Warning"
+                                                  message:@"Esse not removed. Please try again."
+                                                 delegate:nil
+                                        cancelButtonTitle:@"OK"
+                                        otherButtonTitles:nil];
+        [removeEsseAlert show];
+      }
+      else
+      {
+        UIAlertView *removeEsseAlert = [[UIAlertView alloc]
+                                            initWithTitle:@"Remove Esse"
+                                                  message:@"Esse removed"
+                                                 delegate:nil
+                                        cancelButtonTitle:@"OK"
+                                        otherButtonTitles:nil];
+        [removeEsseAlert show];
+      }
+      [self.navigationController pushViewController:controller animated:YES];
     }
     else
     {
-      UIAlertView *removeEsseAlert = [[UIAlertView alloc]
-                                          initWithTitle:@"Remove Esse"
-                                                message:@"Esse removed"
-                                               delegate:nil
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles:nil];
-      [removeEsseAlert show];
+      [self.navigationController pushViewController:controller animated:YES];
+      NSLog(@"Delete Esse Cancel");
     }
-    [self.navigationController pushViewController:controller animated:YES];
-  }
-  else
-  {
-    [self.navigationController pushViewController:controller animated:YES];
-    NSLog(@"Delete Esse Cancel");
   }
 }
 

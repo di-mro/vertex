@@ -35,8 +35,11 @@
 @property (strong, nonatomic) IBOutlet UITextField *addressField;
 
 @property (strong, nonatomic) NSMutableDictionary *addEsseJson;
+
 @property (strong, nonatomic) NSString *URL;
 @property int httpResponseCode;
+
+@property (strong, nonatomic) UIAlertView *cancelAddEsseConfirmation;
 
 
 @end

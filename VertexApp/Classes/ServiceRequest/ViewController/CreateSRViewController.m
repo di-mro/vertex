@@ -94,7 +94,7 @@
   
   //Keyboard dismissal
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                        action:@selector (dismissKeyboard)];
+                                                                        action:@selector(dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   
   //[Cancel] navigation button

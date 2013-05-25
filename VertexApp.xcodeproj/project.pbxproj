@@ -21,6 +21,7 @@
 		ED0A1A6E170D66640093FE4B /* ViewAssetTypePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0A1A6D170D66630093FE4B /* ViewAssetTypePageViewController.m */; };
 		ED0A1A71170D67740093FE4B /* AssetTypeDetailPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0A1A70170D67730093FE4B /* AssetTypeDetailPageViewController.m */; };
 		ED0A1A74170D82F60093FE4B /* DeleteAssetTypePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0A1A73170D82F40093FE4B /* DeleteAssetTypePageViewController.m */; };
+		ED0CA7D517507DB10026CE34 /* vertex_user_info.txt in Resources */ = {isa = PBXBuildFile; fileRef = ED0CA7D417507DB10026CE34 /* vertex_user_info.txt */; };
 		ED2E13F61712793C0012CB99 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E13F51712793C0012CB99 /* Notifications.m */; };
 		ED2E13FC171280020012CB99 /* NoticePriorities.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E13FB171280020012CB99 /* NoticePriorities.m */; };
 		ED2E13FF171283010012CB99 /* Services.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E13FE171283010012CB99 /* Services.m */; };
@@ -295,6 +296,7 @@
 		ED0A1A70170D67730093FE4B /* AssetTypeDetailPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetTypeDetailPageViewController.m; sourceTree = "<group>"; };
 		ED0A1A72170D82F20093FE4B /* DeleteAssetTypePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteAssetTypePageViewController.h; sourceTree = "<group>"; };
 		ED0A1A73170D82F40093FE4B /* DeleteAssetTypePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteAssetTypePageViewController.m; sourceTree = "<group>"; };
+		ED0CA7D417507DB10026CE34 /* vertex_user_info.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vertex_user_info.txt; sourceTree = "<group>"; };
 		ED2E13F41712793C0012CB99 /* Notifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notifications.h; sourceTree = "<group>"; };
 		ED2E13F51712793C0012CB99 /* Notifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notifications.m; sourceTree = "<group>"; };
 		ED2E13FA171280020012CB99 /* NoticePriorities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticePriorities.h; sourceTree = "<group>"; };
@@ -1377,6 +1379,7 @@
 			children = (
 				EDEFE7DA16DF3C63002C35D6 /* Images */,
 				EDEFE7DB16DF3C63002C35D6 /* Sounds */,
+				ED0CA7D417507DB10026CE34 /* vertex_user_info.txt */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1529,6 +1532,7 @@
 				ED634A271737BB23003540A4 /* Default-568h@2x.png in Resources */,
 				ED634A2D1737BCD4003540A4 /* Default@2x.png in Resources */,
 				ED634A371737BD81003540A4 /* Default.png in Resources */,
+				ED0CA7D517507DB10026CE34 /* vertex_user_info.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

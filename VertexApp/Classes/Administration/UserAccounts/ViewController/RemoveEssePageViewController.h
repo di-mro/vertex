@@ -20,5 +20,8 @@
 @property (nonatomic, strong) NSString *URL;
 @property int httpResponseCode;
 
+@property (strong, nonatomic) UIAlertView *cancelRemoveEsseConfirmation;
+@property (strong, nonatomic) UIAlertView *removeEsseConfirmation;
+
 
 @end
