@@ -129,6 +129,7 @@
 		ED59EC6416DCA7C200FCA959 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC6316DCA7C200FCA959 /* QuartzCore.framework */; };
 		ED59EC6616DCA7CD00FCA959 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC6516DCA7CD00FCA959 /* Security.framework */; };
 		ED59EC6816DCA7D600FCA959 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED59EC6716DCA7D600FCA959 /* SystemConfiguration.framework */; };
+		ED5E837B1753113C00D88B12 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED5E837A1753113C00D88B12 /* libsqlite3.0.dylib */; };
 		ED63134B16E5BD2800987E2D /* ReachabilityAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ED63134A16E5BCFD00987E2D /* ReachabilityAppDelegate.m */; };
 		ED63134C16E5BD2F00987E2D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = ED63134516E5BCEB00987E2D /* Reachability.m */; };
 		ED63134F16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ED63134D16E5DEE600987E2D /* VertexCoreDataModel.xcdatamodeld */; };
@@ -501,6 +502,7 @@
 		ED59EC6316DCA7C200FCA959 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		ED59EC6516DCA7CD00FCA959 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		ED59EC6716DCA7D600FCA959 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		ED5E837A1753113C00D88B12 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		ED63134416E5BCEB00987E2D /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		ED63134516E5BCEB00987E2D /* Reachability.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		ED63134916E5BCFD00987E2D /* ReachabilityAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReachabilityAppDelegate.h; sourceTree = "<group>"; };
@@ -681,6 +683,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED5E837B1753113C00D88B12 /* libsqlite3.0.dylib in Frameworks */,
 				ED59EC6816DCA7D600FCA959 /* SystemConfiguration.framework in Frameworks */,
 				ED59EC6616DCA7CD00FCA959 /* Security.framework in Frameworks */,
 				ED59EC6416DCA7C200FCA959 /* QuartzCore.framework in Frameworks */,
@@ -839,6 +842,7 @@
 		EDE0E8A216CB744700B9D0E7 = {
 			isa = PBXGroup;
 			children = (
+				ED5E837A1753113C00D88B12 /* libsqlite3.0.dylib */,
 				ED59EC4916DCA6D600FCA959 /* RestKit.xcodeproj */,
 				EDE0E8B416CB744700B9D0E7 /* VertexApp */,
 				EDE0E8AD16CB744700B9D0E7 /* Frameworks */,
@@ -1250,10 +1254,10 @@
 			children = (
 				EDEFE79A16DF3C51002C35D6 /* HomePageViewController.h */,
 				EDEFE79B16DF3C51002C35D6 /* HomePageViewController.m */,
-				EDEFE79C16DF3C51002C35D6 /* LoginCredentials.h */,
-				EDEFE79D16DF3C51002C35D6 /* LoginCredentials.m */,
 				EDEFE79E16DF3C51002C35D6 /* LoginViewController.h */,
 				EDEFE79F16DF3C51002C35D6 /* LoginViewController.m */,
+				EDEFE79C16DF3C51002C35D6 /* LoginCredentials.h */,
+				EDEFE79D16DF3C51002C35D6 /* LoginCredentials.m */,
 				EDEFE7A016DF3C51002C35D6 /* NavigationController.h */,
 				EDEFE7A116DF3C51002C35D6 /* NavigationController.m */,
 				EDEFE7A216DF3C51002C35D6 /* ViewController.h */,

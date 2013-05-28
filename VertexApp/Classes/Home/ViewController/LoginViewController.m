@@ -11,7 +11,6 @@
 #import "RestKit/RestKit.h"
 #import "HomePageViewController.h"
 
-//#import "UserInfo.h"
 
 @interface LoginViewController ()
 
@@ -22,17 +21,17 @@
 @synthesize usernameField;
 @synthesize passwordField;
 
-@synthesize username;
-@synthesize password;
-
 @synthesize URL;
 @synthesize httpResponseCode;
 
-@synthesize token;
-
 @synthesize userInfo;
 
+@synthesize userId;
+@synthesize username;
+@synthesize password;
 @synthesize userProfileId;
+@synthesize userInfoId;
+@synthesize token;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -71,7 +70,7 @@
   //Set URL for Login
   //URL = @"http://192.168.2.113/vertex-api/user/login";
   //URL = @"http://192.168.2.107/vertex-api/user/login";
-  URL = @"http://192.168.2.107/vertex-api/auth/login"; //113
+  URL = @"http://192.168.2.113/vertex-api/auth/login"; //107
   
   if([self validateLoginFields])
   {
@@ -209,29 +208,6 @@
   NSString *loggedUserInfo = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
   NSLog(@"loggedUserInfo: %@", loggedUserInfo);
   
-  /*
-  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-  NSString *documentsDirectory = [paths objectAtIndex:0];
-  NSString *path = [documentsDirectory stringByAppendingPathComponent:@"/vertex_user_info.txt"];
-  [loggedUserInfo writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:&error];
-   */
-  /*
-  NSFileHandle *userFile;
-  userFile = [NSFileHandle fileHandleForUpdatingAtPath: @"~/vertex_userInfo.txt"];
-  
-  if (userFile == nil)
-  {
-    NSLog(@"Failed to open file");
-  }
-  else
-  {
-    //[userFile writeData: loggedUserInfo];
-    [userFile writeData:responseData];
-    [userFile closeFile];
-  }
-   */
-  //***
-  
   if(responseData == nil)
   {
     UIAlertView *loginAlert = [[UIAlertView alloc]
@@ -251,25 +227,31 @@
     
     NSLog(@"getUserInfo JSON Result: %@", userInfo);
     
-    //Get the userProfileId for the System Function Hierachies
+    //Get info for SQLite storage
+    userId        = [userInfo valueForKey:@"id"];
+    username      = [userInfo valueForKey:@"username"];
+    password      = passwordField.text;
     userProfileId = [[userInfo valueForKey:@"profile"] valueForKey:@"id"];
-    NSLog(@"userProfileId: %@", userProfileId);
+    userInfoId    = [[userInfo valueForKey:@"info"] valueForKey:@"id"];
+    //token - assigned in login()
     
-    //!!! TODO - Store userInfo in singleton object - global variable for access in other modules
+    //Create SQLite db
+    [self openDB];
+    
+    [self createTable:@"user_accounts"
+           withField1:@"userId"
+           withField2:@"username"
+           withField3:@"password"
+           withField4:@"profileId"
+           withField5:@"userInfoId"
+           withField6:@"token"];
+    
+    //Save info in SQLite
+    [self saveUserInfo];
   }
   
   //Segue to Home Page
   [self performSegueWithIdentifier: @"loginToHome" sender: self];
-}
-
-
-#pragma mark - Prepare for segue, passing the userProfileId to Home Page
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-  if ([segue.identifier isEqualToString:@"loginToHome"])
-  {
-    [segue.destinationViewController setUserProfileId:userProfileId];
-  }
 }
 
 
@@ -343,6 +325,113 @@
   }
   
   return YES;
+}
+
+#pragma mark - SQLite Operations
+#pragma mark - Create user_accounts table
+-(void) createTable: (NSString *) tableName //user_accounts
+         withField1: (NSString *) field1 //userId
+         withField2: (NSString *) field2 //username
+         withField3: (NSString *) field3 //password
+         withField4: (NSString *) field4 //profileId
+         withField5: (NSString *) field5 //userInfoId
+         withField6: (NSString *) field6 //token
+{
+  char *err;
+  NSString *sql = [NSString stringWithFormat:
+                   @"CREATE TABLE IF NOT EXISTS '%@' ('%@' " "NUM PRIMARY KEY, '%@' TEXT, '%@' TEXT, '%@' NUM, '%@' NUM, '%@' TEXT);"
+                   , tableName
+                   , field1
+                   , field2
+                   , field3
+                   , field4
+                   , field5
+                   , field6];
+  
+  if(sqlite3_exec(db, [sql UTF8String], NULL, NULL, &err) != SQLITE_OK)
+  {
+    sqlite3_close(db);
+    NSLog(@"Could not create table");
+  }
+  else
+  {
+    NSLog(@"Table Created");
+  }
+}
+
+#pragma mark - Set file path to db
+-(NSString *) getFilePath
+{
+  NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+  return [[paths objectAtIndex:0] stringByAppendingPathComponent:@"di_vertex.sql"];
+}
+
+#pragma mark - Open the db
+-(void) openDB
+{
+  if(sqlite3_open([[self getFilePath] UTF8String], &db) != SQLITE_OK)
+  {
+    sqlite3_close(db);
+    NSLog(@"Database failed to open");
+  }
+  else
+  {
+    NSLog(@"Database opened");
+  }
+}
+
+#pragma mark - Collect User Accounts data from response parameter and save to db
+-(void) saveUserInfo
+{
+  //Truncate user_accounts first to remove unecessary info, only save info for the logged user
+  //[self truncateUserAccounts];
+  
+  NSString *sql = [NSString stringWithFormat:@"INSERT INTO user_accounts ('userId', 'username', 'password', 'profileId', 'userInfoId', 'token') VALUES ('%@', '%@', '%@', '%@', '%@', '%@')"
+                   , userId
+                   , username
+                   , password
+                   , userProfileId
+                   , userInfoId
+                   , token];
+  
+  char *err;
+  if(sqlite3_exec(db, [sql UTF8String], NULL, NULL, &err) != SQLITE_OK)
+  {
+    sqlite3_close(db);
+    NSLog(@"Could not update the table");
+  }
+  else
+  {
+    NSLog(@"Table Updated");
+  }
+}
+
+#pragma mark - Truncate user_accounts table
+-(void) truncateUserAccounts
+{
+  char *err;
+  NSString *sql = [NSString stringWithFormat:@"DELETE FROM user_accounts"];
+  
+  if(sqlite3_exec(db, [sql UTF8String], NULL, NULL, &err) != SQLITE_OK)
+  {
+    sqlite3_close(db);
+    NSLog(@"Could not truncate user_accounts table");
+  }
+  else
+  {
+    NSLog(@"user_accounts table truncated");
+  }
+}
+
+
+
+#pragma mark - Prepare for segue, passing the userProfileId to Home Page
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+  if ([segue.identifier isEqualToString:@"loginToHome"])
+  {
+    [segue.destinationViewController setUserProfileId:userProfileId];
+  }
 }
 
 

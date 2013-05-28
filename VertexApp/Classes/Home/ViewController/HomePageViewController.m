@@ -46,9 +46,15 @@
                                                                           target:self
                                                                           action:@selector(logout)];
   
-  [self displayHomePageEntries];
-  //[self getSystemFunctions];
-  
+  //Get userProfileId from SQLite
+  [self retrieveInfoFromDB];
+
+  //System Function Hierarchies
+  [self getSystemFunctions];
+
+  //Manual setting of System Functions - Backup only
+  //[self displayHomePageEntries];
+
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -126,6 +132,7 @@
     
     //!!! TODO - How to determine if submenu ???
     homePageEntries = [[NSMutableArray alloc] init];
+    
     //!!! TODO - For admin view only
     for (int i = 0; i < 8; i++)
     {
@@ -320,6 +327,9 @@
   
   [self dismissViewControllerAnimated:YES completion:nil];
    */
+  
+  //Truncate SQLite tables
+  [self truncateUserAccounts];
 }
 
 
@@ -337,6 +347,95 @@
   httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
+}
+
+
+#pragma mark - SQLite operations
+#pragma mark - Retrieve logged user account information
+-(void) retrieveInfoFromDB
+{
+  [self openDB];
+  
+  //user_accounts table only stores the information for the current logged user
+  //NSString *sql = [NSString stringWithFormat:@"SELECT * FROM user_accounts WHERE userProfileId=%@", userProfileId];
+  NSString *sql = [NSString stringWithFormat:@"SELECT * FROM user_accounts"];
+  sqlite3_stmt *statement;
+  
+  if(sqlite3_prepare_v2(db, [sql UTF8String], -1, &statement, nil) == SQLITE_OK)
+  {
+    //NSLog(@"statement: %@", statement);
+    while(sqlite3_step(statement) == SQLITE_ROW)
+    {
+      //userId
+      char *field1 = (char *) sqlite3_column_text(statement, 0);
+      NSString *userId = [[NSString alloc] initWithUTF8String:field1];
+      NSLog(@"userId: %@", userId);
+      
+      //username
+      char *field2 = (char *) sqlite3_column_text(statement, 1);
+      NSString *username = [[NSString alloc] initWithUTF8String:field2];
+      NSLog(@"username: %@", username);
+      
+      //password
+      char *field3 = (char *) sqlite3_column_text(statement, 2);
+      NSString *password = [[NSString alloc] initWithUTF8String:field3];
+      NSLog(@"password: %@", password);
+      
+      //profileId
+      char *field4 = (char *) sqlite3_column_text(statement, 3);
+      NSString *profileIdString = [[NSString alloc] initWithUTF8String:field4];
+      userProfileId = profileIdString;
+      NSLog(@"userProfileId: %@", userProfileId);
+      
+      //userInfoId
+      char *field5 = (char *) sqlite3_column_text(statement, 4);
+      NSString *userInfoId = [[NSString alloc] initWithUTF8String:field5];
+      NSLog(@"userInfoId: %@", userInfoId);
+      
+      //token
+      char *field6 = (char *) sqlite3_column_text(statement, 5);
+      NSString *token = [[NSString alloc] initWithUTF8String:field6];
+      NSLog(@"token: %@", token);
+    }
+  }
+}
+
+#pragma mark - Truncate user_accounts table upon logout
+-(void) truncateUserAccounts
+{
+  char *err;
+  NSString *sql = [NSString stringWithFormat:@"DELETE FROM user_accounts"];
+  
+  if(sqlite3_exec(db, [sql UTF8String], NULL, NULL, &err) != SQLITE_OK)
+  {
+    sqlite3_close(db);
+    NSLog(@"user_accounts table failed to truncate");
+  }
+  else
+  {
+    NSLog(@"user_accounts table truncated");
+  }
+}
+
+#pragma mark - Get file path to db
+-(NSString *) getFilePath
+{
+  NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+  return [[paths objectAtIndex:0] stringByAppendingPathComponent:@"di_vertex.sql"];
+}
+
+#pragma mark - Open the db
+-(void) openDB
+{
+  if(sqlite3_open([[self getFilePath] UTF8String], &db) != SQLITE_OK)
+  {
+    sqlite3_close(db);
+    NSLog(@"Database failed to open");
+  }
+  else
+  {
+    NSLog(@"Database opened");
+  }
 }
 
 

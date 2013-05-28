@@ -7,8 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "sqlite3.h"
 
 @interface HomePageViewController : UIViewController
+{
+  sqlite3 *db;
+}
+
 
 - (void)displayHomePageEntries;
 
@@ -22,8 +27,16 @@
 @property (strong, nonatomic) NSString *URL;
 @property int httpResponseCode;
 
-
 -(void) logout;
+
+
+//SQLite
+-(NSString *) getFilePath;
+
+-(void) openDB;
+
+-(void) retrieveInfoFromDB;
+
 
 
 @end
