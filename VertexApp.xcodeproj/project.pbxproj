@@ -22,6 +22,8 @@
 		ED0A1A71170D67740093FE4B /* AssetTypeDetailPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0A1A70170D67730093FE4B /* AssetTypeDetailPageViewController.m */; };
 		ED0A1A74170D82F60093FE4B /* DeleteAssetTypePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0A1A73170D82F40093FE4B /* DeleteAssetTypePageViewController.m */; };
 		ED0CA7D517507DB10026CE34 /* vertex_user_info.txt in Resources */ = {isa = PBXBuildFile; fileRef = ED0CA7D417507DB10026CE34 /* vertex_user_info.txt */; };
+		ED1C91781754A6A6009F22C9 /* UserAccountInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1C91761754A6A6009F22C9 /* UserAccountInfoManager.m */; };
+		ED1C917C1754A711009F22C9 /* SQLiteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1C917B1754A711009F22C9 /* SQLiteManager.m */; };
 		ED2E13F61712793C0012CB99 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E13F51712793C0012CB99 /* Notifications.m */; };
 		ED2E13FC171280020012CB99 /* NoticePriorities.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E13FB171280020012CB99 /* NoticePriorities.m */; };
 		ED2E13FF171283010012CB99 /* Services.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2E13FE171283010012CB99 /* Services.m */; };
@@ -298,6 +300,10 @@
 		ED0A1A72170D82F20093FE4B /* DeleteAssetTypePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteAssetTypePageViewController.h; sourceTree = "<group>"; };
 		ED0A1A73170D82F40093FE4B /* DeleteAssetTypePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteAssetTypePageViewController.m; sourceTree = "<group>"; };
 		ED0CA7D417507DB10026CE34 /* vertex_user_info.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vertex_user_info.txt; sourceTree = "<group>"; };
+		ED1C91751754A6A6009F22C9 /* UserAccountInfoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAccountInfoManager.h; sourceTree = "<group>"; };
+		ED1C91761754A6A6009F22C9 /* UserAccountInfoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAccountInfoManager.m; sourceTree = "<group>"; };
+		ED1C917A1754A711009F22C9 /* SQLiteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQLiteManager.h; sourceTree = "<group>"; };
+		ED1C917B1754A711009F22C9 /* SQLiteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQLiteManager.m; sourceTree = "<group>"; };
 		ED2E13F41712793C0012CB99 /* Notifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notifications.h; sourceTree = "<group>"; };
 		ED2E13F51712793C0012CB99 /* Notifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notifications.m; sourceTree = "<group>"; };
 		ED2E13FA171280020012CB99 /* NoticePriorities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticePriorities.h; sourceTree = "<group>"; };
@@ -701,6 +707,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ED1C91701754A6A5009F22C9 /* SQLite */ = {
+			isa = PBXGroup;
+			children = (
+				ED1C91791754A711009F22C9 /* DBLocation */,
+				ED1C91741754A6A6009F22C9 /* UserAccountInformation */,
+			);
+			path = SQLite;
+			sourceTree = "<group>";
+		};
+		ED1C91741754A6A6009F22C9 /* UserAccountInformation */ = {
+			isa = PBXGroup;
+			children = (
+				ED1C91751754A6A6009F22C9 /* UserAccountInfoManager.h */,
+				ED1C91761754A6A6009F22C9 /* UserAccountInfoManager.m */,
+			);
+			path = UserAccountInformation;
+			sourceTree = "<group>";
+		};
+		ED1C91791754A711009F22C9 /* DBLocation */ = {
+			isa = PBXGroup;
+			children = (
+				ED1C917A1754A711009F22C9 /* SQLiteManager.h */,
+				ED1C917B1754A711009F22C9 /* SQLiteManager.m */,
+			);
+			path = DBLocation;
+			sourceTree = "<group>";
+		};
 		ED2E13F0171278960012CB99 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
@@ -842,7 +875,6 @@
 		EDE0E8A216CB744700B9D0E7 = {
 			isa = PBXGroup;
 			children = (
-				ED5E837A1753113C00D88B12 /* libsqlite3.0.dylib */,
 				ED59EC4916DCA6D600FCA959 /* RestKit.xcodeproj */,
 				EDE0E8B416CB744700B9D0E7 /* VertexApp */,
 				EDE0E8AD16CB744700B9D0E7 /* Frameworks */,
@@ -865,6 +897,7 @@
 				ED59EC5D16DCA79800FCA959 /* CoreData.framework */,
 				EDE0E8B216CB744700B9D0E7 /* CoreGraphics.framework */,
 				EDE0E8B016CB744700B9D0E7 /* Foundation.framework */,
+				ED5E837A1753113C00D88B12 /* libsqlite3.0.dylib */,
 				ED59EC5F16DCA7A700FCA959 /* libxml2.2.dylib */,
 				ED59EC6116DCA7B500FCA959 /* MobileCoreServices.framework */,
 				ED59EC6316DCA7C200FCA959 /* QuartzCore.framework */,
@@ -911,6 +944,7 @@
 				ED3D573416EB115600497F80 /* Schedule */,
 				EDEFE7A816DF3C51002C35D6 /* ServiceRequest */,
 				EDEFE7B216DF3C51002C35D6 /* Settings */,
+				ED1C91701754A6A5009F22C9 /* SQLite */,
 				EDEFE7B616DF3C51002C35D6 /* Statistics&Reports */,
 				EDEFE7B816DF3C51002C35D6 /* Storyboard */,
 			);
@@ -1730,6 +1764,8 @@
 				ED925DFE1749E6FA00E2CF03 /* ApprovalSRPageViewController.m in Sources */,
 				ED062766174C8A3F00B90EDC /* ProvisioningSRListViewController.m in Sources */,
 				ED06276C174C8ACF00B90EDC /* ProvisioningSRPageViewController.m in Sources */,
+				ED1C91781754A6A6009F22C9 /* UserAccountInfoManager.m in Sources */,
+				ED1C917C1754A711009F22C9 /* SQLiteManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

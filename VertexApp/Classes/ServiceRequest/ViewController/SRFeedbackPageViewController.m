@@ -25,9 +25,17 @@
 @synthesize URL;
 @synthesize httpResponseCode;
 
+@synthesize serviceRequestId;
+
 @synthesize topicId;
 @synthesize srFeedbackInfo;
+
 @synthesize srFeedbackQuestions;
+@synthesize srFeedbackQuestionId;
+
+@synthesize addFeebackJson;
+
+@synthesize srFeedbackRatingsArray;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -65,6 +73,9 @@
   //Set topicId to Service Request topic Id
   topicId = @20130101530000001;
   
+  //srFeedbackRatings init
+  srFeedbackRatingsArray = [[NSMutableArray alloc] init];
+  
   //srRatings init
   srRatings = 0.0;
   
@@ -79,6 +90,14 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - Set Service Request ID to the selected serviceRequestId from previous page
+- (void) setServiceRequestId:(NSNumber *) srIdFromPrev
+{
+  serviceRequestId = srIdFromPrev;
+  NSLog(@"SRFeedbackPage - serviceRequestId: %@", serviceRequestId);
 }
 
 
@@ -136,11 +155,17 @@
     NSLog(@"getTopicQuestions JSON Result: %@", srFeedbackInfo);
     
     srFeedbackQuestions = [[NSMutableArray alloc] init];
+    srFeedbackQuestionId = [[NSMutableArray alloc] init];
     for(int i = 0; i < [[[srFeedbackInfo valueForKey:@"questions"] valueForKey:@"question"] count]; i++)
     {
+      //Store question
       [srFeedbackQuestions addObject:[[[srFeedbackInfo valueForKey:@"questions"] valueForKey:@"question"] objectAtIndex:i]];
+      //Store question id
+      [srFeedbackQuestionId addObject:[[[srFeedbackInfo valueForKey:@"questions"] valueForKey:@"id"] objectAtIndex:i]];
     }
+
     NSLog(@"srFeedbackQuestions: %@", srFeedbackQuestions);
+    NSLog(@"srFeedbackQuestionId: %@", srFeedbackQuestionId);
   }
 }
 
@@ -200,7 +225,7 @@
   segmentedControlFrame.size.height = 40;
   segmentedControl.frame            = segmentedControlFrame;
   
-  segmentedControl.selectedSegmentIndex = 0; //set 'Yes' as default selected button
+  //segmentedControl.selectedSegmentIndex = 0; //set 'Yes' as default selected button
   [segmentedControl addTarget:self
 	                     action:@selector(rate:)
 	           forControlEvents:UIControlEventValueChanged];
@@ -222,13 +247,20 @@
 {
   UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
   
-  if ([[segmentedControl titleForSegmentAtIndex:segmentedControl.selectedSegmentIndex] isEqual: @"Yes"])
+  //if ([[segmentedControl titleForSegmentAtIndex:segmentedControl.selectedSegmentIndex] isEqual: @"Yes"])
+  if(segmentedControl.selectedSegmentIndex == 0) //YES
   {
     srRatings += 25.0;
+    [srFeedbackRatingsArray addObject:@10];
+  }
+  else if(segmentedControl.selectedSegmentIndex == 1) //NO
+  {
+    srRatings += 0.0;
+    [srFeedbackRatingsArray addObject:@0];
   }
   else
   {
-    srRatings += 0.0;
+    [srFeedbackRatingsArray addObject:@10];
   }
 }
 
@@ -280,40 +312,88 @@
 -(void) submitSRFeedback
 {
   NSLog(@"Submit Service Request Feedback");
-  
-  int finalRating  = 0.0;
-  NSString *comments = [[NSString alloc] init];
-  
-  //Compute value for rating
-  finalRating = (srRatings / 100) * 10;
-  NSLog(@"finalRating: %d", finalRating);
-  NSLog(@"srRatings: %d", srRatings);
-  
-  comments = srCommentsTextArea.text;
-  NSLog(@"Comments: %@", comments);
-  
-  //? key-value pair - for passing feedbacks
-  //Feedback form content
-  //each question has a rating
-  
   /*
-  NSError *error = [[NSError alloc] init];
+   "{
+      responder:
+      {
+        id: long
+      },
+      submittedDate: string,
+      results:
+      [
+        {
+          question:
+          {
+            id: long
+          },
+          rating: int
+        }
+        , ...
+      ],
+      comment: string
+   }"
+   */
+  
+  addFeebackJson = [[NSMutableDictionary alloc] init];
+  
+  //responder
+  NSMutableDictionary *responderJson = [[NSMutableDictionary alloc] init];
+  [responderJson setObject:@20130101500000001 forKey:@"id"]; //!!! - TODO - Replace with userId of logged user
+  [addFeebackJson setObject:responderJson forKey:@"responder"];
+  
+  //submittedDate
+  NSDate *date = [[NSDate alloc] init];
+  NSString *submittedDate = [[NSString alloc] init];
+  NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+  [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+  submittedDate = [dateFormatter stringFromDate:date];
+  
+  [addFeebackJson setObject:submittedDate forKey:@"submittedDate"];
+  
+  //comment
+  [addFeebackJson setObject:srCommentsTextArea.text forKey:@"comment"];
+  
+  //results
+  NSMutableArray *resultsArray = [[NSMutableArray alloc] init];
+  NSMutableDictionary *resultsDictionary;
+  NSMutableDictionary *questionJson;
+  
+  for(int i = 0; i < srFeedbackQuestionId.count; i++)
+  {
+    resultsDictionary = [[NSMutableDictionary alloc] init];
+    questionJson = [[NSMutableDictionary alloc] init];
+    
+    //question
+    [questionJson setObject:[srFeedbackQuestionId objectAtIndex:i] forKey:@"id"];
+    [resultsDictionary setObject:questionJson forKey:@"question"];
+    
+    //rating
+    [resultsDictionary setObject:[srFeedbackRatingsArray objectAtIndex:i] forKey:@"rating"];
+    
+    //save question-rating node in an array
+    [resultsArray insertObject:resultsDictionary atIndex:i];
+  }
+  
+  //save results array in whole JSON request for addFeedback
+  [addFeebackJson setObject:resultsArray forKey:@"results"];
+  NSLog(@"addFeedback JSON: %@", addFeebackJson);
+
+  NSError *error   = [[NSError alloc] init];
   NSData *jsonData = [NSJSONSerialization
-                      dataWithJSONObject:serviceRequestJson
+                      dataWithJSONObject:addFeebackJson
                       options:NSJSONWritingPrettyPrinted
                       error:&error];
+  
   NSString *jsonString = [[NSString alloc]
                           initWithData:jsonData
                           encoding:NSUTF8StringEncoding];
-  
-  NSLog(@"jsonData Request: %@", jsonData);
-  NSLog(@"jsonString Request: %@", jsonString);
-  
-  //Set URL for Add Service Request
-  URL = @"";
+    
+  //Set URL for Add Feedback
+  //URL = @"http://192.168.2.113/vertex-api/feedback/feedback-form/addFeedback/{serviceRequestId}";
+  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.113/vertex-api/feedback/feedback-form/addFeedback/%@", serviceRequestId];
   
   NSMutableURLRequest *postRequest = [NSMutableURLRequest
-                                      requestWithURL:[NSURL URLWithString:URL]];
+                                      requestWithURL:[NSURL URLWithString:urlParams]];
   
   //POST method - Create
   [postRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
@@ -323,18 +403,17 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:postRequest
-                                 delegate:self];
+                                        delegate:self];
   
   [connection start];
   
-  NSLog(@"addServiceRequest - httpResponseCode: %d", httpResponseCode);
+  NSLog(@"addFeedback - httpResponseCode: %d", httpResponseCode);
   if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
   {
-   //Inform user Service Request is saved
-   UIAlertView *srFeedbackAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Service Request Feedback"
-                                    message:@"Feedback submitted."
-                                    delegate:self
+    UIAlertView *srFeedbackAlert = [[UIAlertView alloc]
+                                        initWithTitle:@"Service Request Feedback"
+                                              message:@"Feedback submitted."
+                                             delegate:self
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
    [srFeedbackAlert show];
@@ -342,16 +421,15 @@
   else //(httpResponseCode >= 400)
   {
     UIAlertView *srFeedbackFailAlert = [[UIAlertView alloc]
-                                      initWithTitle:@"Service Request Feedback Failed"
-                                      message:@"Feedback not submitted. Please try again later"
-                                      delegate:self
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles:nil];
+                                            initWithTitle:@"Service Request Feedback Failed"
+                                                  message:@"Feedback not submitted. Please try again later"
+                                                 delegate:self
+                                        cancelButtonTitle:@"OK"
+                                        otherButtonTitles:nil];
     [srFeedbackFailAlert show];
   }
   
   [self dismissViewControllerAnimated:YES completion:nil];
-  */
 }
 
 

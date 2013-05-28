@@ -11,6 +11,8 @@
 #import "RestKit/RestKit.h"
 #import "HomePageViewController.h"
 
+#import "UserAccountInfoManager.h"
+
 
 @interface LoginViewController ()
 
@@ -201,12 +203,8 @@
                           sendSynchronousRequest:getRequest
                           returningResponse:&urlResponse
                           error:&error];
-  
-  //~ Write responseDate to file
-  NSLog(@"Login - userInfo Response data: %@", responseData);
-  
+    
   NSString *loggedUserInfo = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-  NSLog(@"loggedUserInfo: %@", loggedUserInfo);
   
   if(responseData == nil)
   {
@@ -248,6 +246,26 @@
     
     //Save info in SQLite
     [self saveUserInfo];
+    
+  /*
+  //UserAccountInfoManager *userAccountInfoSQLManager = [UserAccountInfoManager alloc];
+  [userAccountInfoSQLManager openDB];
+
+  [userAccountInfoSQLManager createTable:@"user_accounts"
+                 withField1:@"userId"
+                 withField2:@"username"
+                 withField3:@"password"
+                 withField4:@"profileId"
+                 withField5:@"userInfoId"
+                 withField6:@"token"];
+
+  [userAccountInfoSQLManager saveUserInfo:userId
+                              :username
+                              :password
+                              :userProfileId
+                              :userInfoId
+                              :token];
+   */
   }
   
   //Segue to Home Page
@@ -327,6 +345,7 @@
   return YES;
 }
 
+
 #pragma mark - SQLite Operations
 #pragma mark - Create user_accounts table
 -(void) createTable: (NSString *) tableName //user_accounts
@@ -363,6 +382,7 @@
 -(NSString *) getFilePath
 {
   NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+  NSLog(@"paths: %@", paths);
   return [[paths objectAtIndex:0] stringByAppendingPathComponent:@"di_vertex.sql"];
 }
 
@@ -384,7 +404,7 @@
 -(void) saveUserInfo
 {
   //Truncate user_accounts first to remove unecessary info, only save info for the logged user
-  //[self truncateUserAccounts];
+  [self truncateUserAccounts];
   
   NSString *sql = [NSString stringWithFormat:@"INSERT INTO user_accounts ('userId', 'username', 'password', 'profileId', 'userInfoId', 'token') VALUES ('%@', '%@', '%@', '%@', '%@', '%@')"
                    , userId

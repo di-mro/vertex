@@ -21,6 +21,17 @@
 @property (strong, nonatomic) IBOutlet UILabel *lifecyclePreviousLabel;
 @property (strong, nonatomic) IBOutlet UITextField *lifecyclePreviousField;
 
+@property (strong, nonatomic) UIActionSheet *actionSheet;
+@property (strong, nonatomic) UIPickerView *lifecyclePreviousPicker;
+
+@property (strong, nonatomic) NSMutableArray *lifecyclePreviousPickerArray;
+@property (strong, nonatomic) NSMutableArray *lifecyclePreviousIdArray;
+
+@property (strong, nonatomic) NSMutableDictionary *lifecycles;
+
+@property (strong, nonatomic) NSNumber *selectedLifecycleId;
+@property (strong, nonatomic) NSMutableDictionary *addLifecycleJson;
+
 @property (strong, nonatomic) NSString *URL;
 @property int httpResponseCode;
 

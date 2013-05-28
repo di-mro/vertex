@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UserAccountInfoManager.h"
 #import "sqlite3.h"
 
 @interface HomePageViewController : UIViewController
 {
   sqlite3 *db;
+  //UserAccountInfoManager *userAccountInfoSQLManager;
 }
 
 

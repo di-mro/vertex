@@ -7,6 +7,8 @@
 //
 
 #import "SRFeedbackListViewController.h"
+#import "SRFeedbackPageViewController.h"
+
 
 @interface SRFeedbackListViewController ()
 
@@ -200,7 +202,7 @@
   [self performSegueWithIdentifier:@"srFeedbackListToQuestionsPage" sender:self];
 }
 
-/*
+
 #pragma mark - prepare for segue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -209,7 +211,7 @@
     [segue.destinationViewController setServiceRequestId:selectedSRId];
   }
 }
-*/
+
 
 
 @end

@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UserAccountInfoManager.h"
 #import "sqlite3.h"
 
 
 @interface LoginViewController : UIViewController
 {
   sqlite3 *db;
+  //UserAccountInfoManager *userAccountInfoSQLManager;
 }
 
 
@@ -51,5 +53,6 @@
          withField6: (NSString *) field6;
 
 -(void) saveUserInfo;
+
 
 @end

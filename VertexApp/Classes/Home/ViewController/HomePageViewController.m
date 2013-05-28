@@ -9,6 +9,9 @@
 #import "HomePageViewController.h"
 #import "LoginViewController.h"
 
+#import "UserAccountInfoManager.h"
+
+
 @interface HomePageViewController ()
 
 @end
@@ -48,7 +51,7 @@
   
   //Get userProfileId from SQLite
   [self retrieveInfoFromDB];
-
+  
   //System Function Hierarchies
   [self getSystemFunctions];
 
@@ -131,27 +134,51 @@
     NSLog(@"systemFunctionsInfo JSON Result: %@", systemFunctionsInfo);
     
     //!!! TODO - How to determine if submenu ???
+    //!!! TODO - Can this implementation be more flexible ???
     homePageEntries = [[NSMutableArray alloc] init];
     
-    //!!! TODO - For admin view only
-    for (int i = 0; i < 8; i++)
+    //Setting the menu entries and icons depending on userProfile of logged user
+    //Admin
+    if([userProfileId isEqual:@"20130101800000001"])
     {
-      [homePageEntries addObject:[[systemFunctionsInfo valueForKey:@"name"] objectAtIndex:i]];
+      //For admin view only - 8 menu entries
+      for (int i = 0; i < 8; i++)
+      {
+        [homePageEntries addObject:[[systemFunctionsInfo valueForKey:@"name"] objectAtIndex:i]];
+      }
+      
+      homePageIcons = [[NSMutableArray alloc] initWithObjects:
+                         @"notification_icon.png"
+                       , @"service_request_icon.png"
+                       , @"asset_icon.png"
+                       , @"billing_icon.png"
+                       , @"reports_icon.png"
+                       , @"administration_icon.png"
+                       , @"schedule_icon.png"
+                       , @"settings_icon.png"
+                       , nil];
+    }
+    //Dweller
+    else if([userProfileId isEqual:@"20130101800000002"])
+    {
+      //For dweller view only - 6 menu entries
+      for (int i = 0; i < 6; i++)
+      {
+        [homePageEntries addObject:[[systemFunctionsInfo valueForKey:@"name"] objectAtIndex:i]];
+      }
+      
+      homePageIcons = [[NSMutableArray alloc] initWithObjects:
+                         @"notification_icon.png"
+                       , @"service_request_icon.png"
+                       , @"asset_icon.png"
+                       , @"billing_icon.png"
+                       , @"reports_icon.png"
+                       , @"settings_icon.png"
+                       , nil];
     }
   }
   
   NSLog(@"homePageEntries: %@", homePageEntries);
-  
-  homePageIcons = [[NSMutableArray alloc] initWithObjects: @"notification_icon.png"
-                   , @"service_request_icon.png"
-                   , @"asset_icon.png"
-                   , @"billing_icon.png"
-                   , @"reports_icon.png"
-                   , @"administration_icon.png"
-                   , @"schedule_icon.png"
-                   , @"settings_icon.png"
-                   , nil];
-  
 }
 
 
@@ -234,33 +261,64 @@
 #pragma mark - Segue
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  switch (indexPath.row)
+  //Setting the segues for Admin and Dweller view
+  //Admin
+  if([userProfileId isEqual:@"20130101800000001"])
   {
-    //Notifications
-    case 0: [self performSegueWithIdentifier:@"homeToNotices" sender:self];
-      break;
-    //Service Request
-    case 1: [self performSegueWithIdentifier:@"homeToServiceRequest" sender:self];
-      break;
-    //Asset
-    case 2: [self performSegueWithIdentifier:@"homeToAssets" sender:self];
-      break;
-    //Billing
-    case 3: [self performSegueWithIdentifier:@"homeToBilling" sender:self];
-      break;
-    //Reports
-    case 4: [self performSegueWithIdentifier:@"homeToReports" sender:self];
-      break;
-    //Administration
-    case 5: [self performSegueWithIdentifier:@"homeToAdmin" sender:self];
-      break;
-    //Schedule
-    case 6: [self performSegueWithIdentifier:@"homeToSchedule" sender:self];
-      break;
-    //Settings
-    case 7: [self performSegueWithIdentifier:@"homeToSettings" sender:self];
-      break;
-    default: break;
+    switch (indexPath.row)
+    {
+      //Notifications
+      case 0: [self performSegueWithIdentifier:@"homeToNotices" sender:self];
+        break;
+      //Service Request
+      case 1: [self performSegueWithIdentifier:@"homeToServiceRequest" sender:self];
+        break;
+      //Asset
+      case 2: [self performSegueWithIdentifier:@"homeToAssets" sender:self];
+        break;
+      //Billing
+      case 3: [self performSegueWithIdentifier:@"homeToBilling" sender:self];
+        break;
+      //Reports
+      case 4: [self performSegueWithIdentifier:@"homeToReports" sender:self];
+        break;
+      //Administration
+      case 5: [self performSegueWithIdentifier:@"homeToAdmin" sender:self];
+        break;
+      //Schedule
+      case 6: [self performSegueWithIdentifier:@"homeToSchedule" sender:self];
+        break;
+      //Settings
+      case 7: [self performSegueWithIdentifier:@"homeToSettings" sender:self];
+        break;
+      default: break;
+    }
+  }
+  //Dweller
+  else if([userProfileId isEqual:@"20130101800000002"])
+  {
+    switch (indexPath.row)
+    {
+      //Notifications
+      case 0: [self performSegueWithIdentifier:@"homeToNotices" sender:self];
+        break;
+      //Service Request
+      case 1: [self performSegueWithIdentifier:@"homeToServiceRequest" sender:self];
+        break;
+      //Asset
+      case 2: [self performSegueWithIdentifier:@"homeToAssets" sender:self];
+        break;
+      //Billing
+      case 3: [self performSegueWithIdentifier:@"homeToBilling" sender:self];
+        break;
+      //Reports
+      case 4: [self performSegueWithIdentifier:@"homeToReports" sender:self];
+        break;
+      //Settings
+      case 5: [self performSegueWithIdentifier:@"homeToSettings" sender:self];
+        break;
+      default: break;
+    }
   }
 }
 
@@ -327,9 +385,11 @@
   
   [self dismissViewControllerAnimated:YES completion:nil];
    */
-  
+
   //Truncate SQLite tables
   [self truncateUserAccounts];
+  //[userAccountInfoSQLManager truncateUserAccounts];
+  
 }
 
 
@@ -355,6 +415,7 @@
 -(void) retrieveInfoFromDB
 {
   [self openDB];
+  //sqlite3 *db = [userAccountInfoSQLManager openAndReturnDB];
   
   //user_accounts table only stores the information for the current logged user
   //NSString *sql = [NSString stringWithFormat:@"SELECT * FROM user_accounts WHERE userProfileId=%@", userProfileId];
@@ -400,6 +461,8 @@
   }
 }
 
+
+
 #pragma mark - Truncate user_accounts table upon logout
 -(void) truncateUserAccounts
 {
@@ -421,6 +484,7 @@
 -(NSString *) getFilePath
 {
   NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+  NSLog(@"paths: %@", paths);
   return [[paths objectAtIndex:0] stringByAppendingPathComponent:@"di_vertex.sql"];
 }
 
