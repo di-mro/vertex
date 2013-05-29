@@ -9,16 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "sqlite3.h"
 
+
 @interface UserAccountInfoManager : NSObject
 {
   sqlite3 *db;
 }
 
--(NSString *) getFilePath;
+//-(NSString *) getFilePath;
 
 -(void) openDB;
-
--(sqlite3 *) openAndReturnDB;
 
 -(void) createTable: (NSString *) tableName
          withField1: (NSNumber *) field1
@@ -35,7 +34,9 @@
                     : (NSNumber *) userInfoId
                     : (NSString *) token;
 
--(void) retrieveInfoFromDB;
+-(NSNumber *) retrieveInfoFromDB;
+
+-(NSString *) retrieveToken;
 
 -(void) truncateUserAccounts;
 

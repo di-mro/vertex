@@ -14,6 +14,7 @@
 
 #pragma mark - SQLite Operations
 
+/*
 #pragma mark - Set file path to db
 -(NSString *) getFilePath
 {
@@ -21,24 +22,16 @@
   NSLog(@"paths: %@", paths);
   return [[paths objectAtIndex:0] stringByAppendingPathComponent:@"di_vertex.sql"];
 }
+*/
+
 
 #pragma mark - Open the db
 -(void) openDB
 {
-  if(sqlite3_open([[self getFilePath] UTF8String], &db) != SQLITE_OK)
-  {
-    sqlite3_close(db);
-    NSLog(@"Database failed to open");
-  }
-  else
-  {
-    NSLog(@"Database opened");
-  }
-}
+  NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+  NSLog(@"paths: %@", paths);
 
--(sqlite3 *) openAndReturnDB
-{
-  if(sqlite3_open([[self getFilePath] UTF8String], &db) != SQLITE_OK)
+  if(sqlite3_open([[[paths objectAtIndex:0] stringByAppendingPathComponent:@"di_vertex.sql"] UTF8String], &db) != SQLITE_OK)
   {
     sqlite3_close(db);
     NSLog(@"Database failed to open");
@@ -47,7 +40,6 @@
   {
     NSLog(@"Database opened");
   }
-  return db;
 }
 
 
@@ -116,13 +108,15 @@
 
 
 #pragma mark - Retrieve logged user account information
--(void) retrieveInfoFromDB
+-(NSNumber *) retrieveInfoFromDB
 {
   [self openDB];
   
   //user_accounts table only stores the information for the current logged user
   NSString *sql = [NSString stringWithFormat:@"SELECT * FROM user_accounts"];
   sqlite3_stmt *statement;
+  
+  NSNumber *userProfileId = [[NSNumber alloc] init];
   
   if(sqlite3_prepare_v2(db, [sql UTF8String], -1, &statement, nil) == SQLITE_OK)
   {
@@ -147,7 +141,7 @@
       //profileId
       char *field4 = (char *) sqlite3_column_text(statement, 3);
       NSString *profileIdString = [[NSString alloc] initWithUTF8String:field4];
-      //userProfileId = profileIdString;
+      userProfileId = profileIdString;
       NSLog(@"userProfileId: %@", profileIdString);
       
       //userInfoId
@@ -160,7 +154,33 @@
       NSString *token = [[NSString alloc] initWithUTF8String:field6];
       NSLog(@"token: %@", token);
     }
-  }  
+  }
+  return userProfileId;
+}
+
+
+#pragma mark - Retrieve token from user_accounts
+-(NSString *) retrieveToken
+{
+  [self openDB];
+  
+  //user_accounts table only stores the information for the current logged user - one entry
+  NSString *sql = [NSString stringWithFormat:@"SELECT token FROM user_accounts"];
+  sqlite3_stmt *statement;
+  
+  NSString *token = [[NSString alloc] init];
+  
+  if(sqlite3_prepare_v2(db, [sql UTF8String], -1, &statement, nil) == SQLITE_OK)
+  {
+    while(sqlite3_step(statement) == SQLITE_ROW)
+    {
+      //token
+      char *field1 = (char *) sqlite3_column_text(statement, 0);
+      token = [[NSString alloc] initWithUTF8String:field1];
+      NSLog(@"token: %@", token);
+    }
+  }
+  return token;
 }
 
 
@@ -180,6 +200,7 @@
     NSLog(@"user_accounts table truncated");
   }
 }
+
 
 
 @end

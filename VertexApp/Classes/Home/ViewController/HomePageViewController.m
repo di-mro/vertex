@@ -22,6 +22,7 @@
 @synthesize homePageIcons;
 
 @synthesize userProfileId;
+@synthesize token;
 
 @synthesize systemFunctionsInfo;
 
@@ -49,8 +50,16 @@
                                                                           target:self
                                                                           action:@selector(logout)];
   
-  //Get userProfileId from SQLite
-  [self retrieveInfoFromDB];
+  
+  userAccountInfoSQLManager = [UserAccountInfoManager alloc];
+  
+  //Get userProfileId store in SQLite
+  //[self retrieveInfoFromDB];
+  userProfileId = [userAccountInfoSQLManager retrieveInfoFromDB];
+  
+  //Get token store in SQLite
+  token = [userAccountInfoSQLManager retrieveToken];
+  NSLog(@"retrievedToken: %@", token);
   
   //System Function Hierarchies
   [self getSystemFunctions];
@@ -328,24 +337,13 @@
 {
   NSLog(@"Logout");
   
-  //Go back to Login Page
-  LoginViewController* controller = (LoginViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"LoginPage"];
-   
-  controller.navigationItem.hidesBackButton = YES;
-  [self.navigationController pushViewController:controller animated:YES];
-   
-  /* !- TODO -!
-   Clear user tokens/objects when [Logout] is pressed
-   */
-  
-  /*
   URL = @"http://192.168.2.113/vertex-api/auth/logout";
   
   NSMutableURLRequest *postRequest = [NSMutableURLRequest
                                       requestWithURL:[NSURL URLWithString:URL]];
   
   //POST method
-  //!!! TODO - Pass tokens
+  [postRequest setValue:token forHTTPHeaderField:@"token"];
   [postRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
   [postRequest setHTTPMethod:@"POST"];
   NSLog(@"%@", postRequest);
@@ -384,11 +382,10 @@
   }
   
   [self dismissViewControllerAnimated:YES completion:nil];
-   */
 
   //Truncate SQLite tables
-  [self truncateUserAccounts];
-  //[userAccountInfoSQLManager truncateUserAccounts];
+  //[self truncateUserAccounts];
+  [userAccountInfoSQLManager truncateUserAccounts];
   
 }
 
@@ -409,13 +406,12 @@
   NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
 
-
+/*
 #pragma mark - SQLite operations
 #pragma mark - Retrieve logged user account information
 -(void) retrieveInfoFromDB
 {
   [self openDB];
-  //sqlite3 *db = [userAccountInfoSQLManager openAndReturnDB];
   
   //user_accounts table only stores the information for the current logged user
   //NSString *sql = [NSString stringWithFormat:@"SELECT * FROM user_accounts WHERE userProfileId=%@", userProfileId];
@@ -460,9 +456,9 @@
     }
   }
 }
+*/
 
-
-
+/*
 #pragma mark - Truncate user_accounts table upon logout
 -(void) truncateUserAccounts
 {
@@ -501,7 +497,7 @@
     NSLog(@"Database opened");
   }
 }
-
+*/
 
 
 @end

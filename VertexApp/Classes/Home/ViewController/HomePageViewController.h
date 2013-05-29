@@ -12,8 +12,8 @@
 
 @interface HomePageViewController : UIViewController
 {
-  sqlite3 *db;
-  //UserAccountInfoManager *userAccountInfoSQLManager;
+  //sqlite3 *db;
+  UserAccountInfoManager *userAccountInfoSQLManager;
 }
 
 
@@ -23,6 +23,7 @@
 @property (strong, nonatomic) NSMutableArray *homePageIcons;
 
 @property (strong, nonatomic) NSNumber *userProfileId;
+@property (strong, nonatomic) NSString *token;
 
 @property (strong, nonatomic) NSMutableDictionary *systemFunctionsInfo;
 
@@ -31,14 +32,13 @@
 
 -(void) logout;
 
-
+/*
 //SQLite
 -(NSString *) getFilePath;
 
 -(void) openDB;
 
 -(void) retrieveInfoFromDB;
-
-
+*/
 
 @end

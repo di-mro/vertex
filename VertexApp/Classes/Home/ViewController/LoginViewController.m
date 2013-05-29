@@ -48,6 +48,8 @@
 
 - (void)viewDidLoad
 {
+  userAccountInfoSQLManager = [UserAccountInfoManager alloc];
+  
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -233,6 +235,7 @@
     userInfoId    = [[userInfo valueForKey:@"info"] valueForKey:@"id"];
     //token - assigned in login()
     
+    /*
     //Create SQLite db
     [self openDB];
     
@@ -246,26 +249,25 @@
     
     //Save info in SQLite
     [self saveUserInfo];
+    */
     
-  /*
-  //UserAccountInfoManager *userAccountInfoSQLManager = [UserAccountInfoManager alloc];
+  //SQLite operations - save user account information of logged user
   [userAccountInfoSQLManager openDB];
 
   [userAccountInfoSQLManager createTable:@"user_accounts"
-                 withField1:@"userId"
-                 withField2:@"username"
-                 withField3:@"password"
-                 withField4:@"profileId"
-                 withField5:@"userInfoId"
-                 withField6:@"token"];
+                              withField1:@"userId"
+                              withField2:@"username"
+                              withField3:@"password"
+                              withField4:@"profileId"
+                              withField5:@"userInfoId"
+                              withField6:@"token"];
 
   [userAccountInfoSQLManager saveUserInfo:userId
-                              :username
-                              :password
-                              :userProfileId
-                              :userInfoId
-                              :token];
-   */
+                                         :username
+                                         :password
+                                         :userProfileId
+                                         :userInfoId
+                                         :token];
   }
   
   //Segue to Home Page
@@ -345,7 +347,7 @@
   return YES;
 }
 
-
+/*
 #pragma mark - SQLite Operations
 #pragma mark - Create user_accounts table
 -(void) createTable: (NSString *) tableName //user_accounts
@@ -442,7 +444,7 @@
     NSLog(@"user_accounts table truncated");
   }
 }
-
+*/
 
 
 #pragma mark - Prepare for segue, passing the userProfileId to Home Page
@@ -450,7 +452,7 @@
 {
   if ([segue.identifier isEqualToString:@"loginToHome"])
   {
-    [segue.destinationViewController setUserProfileId:userProfileId];
+    //[segue.destinationViewController setUserProfileId:userProfileId];
   }
 }
 

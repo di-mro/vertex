@@ -13,8 +13,8 @@
 
 @interface LoginViewController : UIViewController
 {
-  sqlite3 *db;
-  //UserAccountInfoManager *userAccountInfoSQLManager;
+  //sqlite3 *db;
+  UserAccountInfoManager *userAccountInfoSQLManager;
 }
 
 
@@ -38,7 +38,7 @@
 
 - (IBAction)login:(id)sender;
 
-
+/*
 //SQLite
 -(NSString *) getFilePath;
 
@@ -53,6 +53,6 @@
          withField6: (NSString *) field6;
 
 -(void) saveUserInfo;
-
+*/
 
 @end
