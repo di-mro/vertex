@@ -7,8 +7,17 @@
 //
 
 #import "ViewController.h"
+#import <UIKit/UIKit.h>
+#import "UserAccountInfoManager.h"
+#import "UserAccountsObject.h"
+
 
 @interface CreateSRViewController : ViewController
+{
+  UserAccountInfoManager *userAccountInfoSQLManager;
+  UserAccountsObject *userAccountsObject;
+}
+
 
 @property (strong, nonatomic) IBOutlet UIScrollView *createSRScroller;
 @property (strong, nonatomic) UIPickerView *srGenericPicker;

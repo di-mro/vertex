@@ -144,9 +144,23 @@
   [priorityField setDelegate:self];
   
   //Set Date Requested field date
-  dateRequested              = [[NSDate alloc] init];
+  dateRequested                  = [[NSDate alloc] init];
+  NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+  NSString *dateRequestedString  = [[NSString alloc] init];
+  [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+  dateRequestedString        = [dateFormatter stringFromDate:dateRequested];
   dateRequestedField.enabled = NO;
-  dateRequestedField.text    = dateRequested.description;
+  dateRequestedField.text    = dateRequestedString;
+
+  
+  //Get logged user userAccountInformation
+  userAccountInfoSQLManager = [UserAccountInfoManager alloc];
+  userAccountsObject = [UserAccountsObject alloc];
+  userAccountsObject = [userAccountInfoSQLManager getUserAccountInfo];
+  
+  //Get logged user userId for CreateSR operations
+  userId = userAccountsObject.userId;
+  NSLog(@"Create SR - userId: %@", userId);
   
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -162,7 +176,6 @@
 #pragma mark - Get user owned assets
 -(void) getAssetOwnership
 {
-  userId = @20130101500000001;
   NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.107/vertex-api/asset/getOwnership/%@", userId];
   
   NSMutableURLRequest *getRequest = [NSMutableURLRequest
@@ -324,9 +337,6 @@
 -(void) getLifecycles
 {
   //endpoint for getLifecycles
-  //URL = @"http://192.168.2.113/vertex-api/lifecycle/getLifecycles";
-  //URL = @"http://192.168.2.107/vertex-api/lifecycle/getLifecycles";
-  
   NSLog(@"getLifecycles - selectedAssetTypeId: %@", selectedAssetTypeId);
   NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.107/vertex-api/lifecycle/getAssetTypeLifecycles/%@", selectedAssetTypeId];
   
@@ -398,14 +408,12 @@
 {
   //endpoint for getServices
   //URL = @"http://192.168.2.113/vertex-api/service/getServices/{assetTypeId}/{lifecycleId}";
-  //URL = @"http://192.168.2.113/vertex-api/service/getServices";
   //URL = @"http://192.168.2.107/vertex-api/service/getServices/{assetTypeId}/{lifecycleId}";
-  //URL = @"http://192.168.2.107/vertex-api/service/getServices";
   
   NSLog(@"selectedAssetTypeId: %@", selectedAssetTypeId);
   NSLog(@"selectedLifecycleId: %@", selectedLifecycleId);
   
-  //TODO - get selected assetTypeId & lifecycleId, construct URL
+  //Get selected assetTypeId & lifecycleId then construct URL
   NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.107/vertex-api/service/getServices/%@/%@"
                                 , selectedAssetTypeId
                                 , selectedLifecycleId];
@@ -542,29 +550,6 @@
     priorityIdArray     = [priorities valueForKey:@"id"];
     NSLog(@"priorityPickerArray: %@", priorityPickerArray);
   }
-}
-
-
-#pragma mark - Check for network availability
--(BOOL)reachable
-{
-  Reachability *r = [Reachability  reachabilityWithHostName:URL];
-  NetworkStatus internetStatus = [r currentReachabilityStatus];
-  
-  if(internetStatus == NotReachable)
-  {
-    return NO;
-    
-    UIAlertView *reachableAlert = [[UIAlertView alloc]
-                                      initWithTitle:@"Warning"
-                                            message:@"No network connection detected. Displaying data from phone cache."
-                                           delegate:nil
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-    [reachableAlert show];
-  }
-  
-  return YES;
 }
 
 
@@ -915,19 +900,20 @@
     
     //requestor
     NSMutableDictionary *requestorJson = [[NSMutableDictionary alloc] init];
-    [requestorJson setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY!!!
+    [requestorJson setObject:userId forKey:@"id"];
     [serviceRequestJson setObject:requestorJson forKey:@"requestor"];
     
     //admin
     NSMutableDictionary *adminJson = [[NSMutableDictionary alloc] init];
-    [adminJson setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY !!!
+    [adminJson setObject:@20130101500000001 forKey:@"id"]; //TODO - TEST ONLY !!!
     [serviceRequestJson setObject:adminJson forKey:@"admin"];
     
     //cost
     [serviceRequestJson setObject:serviceCost forKey:@"cost"];
     
-    //TODO - schedules !!!
+    //schedules - No schedules yet for Creation status, can be null
     NSMutableDictionary *scheduleDictionary = [[NSMutableDictionary alloc] init];
+    /*
     //schedule - status
     NSMutableDictionary *scheduleStatusDictionary = [[NSMutableDictionary alloc] init];
     [scheduleStatusDictionary setObject:@20130101420000001 forKey:@"id"]; //Service Request Creation Status Id - 20130101420000001
@@ -935,7 +921,7 @@
     
     //schedule - author
     NSMutableDictionary *scheduleAuthor = [[NSMutableDictionary alloc] init];
-    [scheduleAuthor setObject:@20130101500000001 forKey:@"id"]; //!!! TODO - TEST ONLY !!!
+    [scheduleAuthor setObject:userId forKey:@"id"]; //!!! TODO - TEST ONLY !!!
     [scheduleDictionary setObject:scheduleAuthor forKey:@"author"];
     
     //schedule - periods
@@ -955,16 +941,17 @@
     
     NSNumber *boolActive = [[NSNumber alloc] initWithBool:YES];
     [scheduleDictionary setObject:boolActive forKey:@"active"]; //active:boolean
+    //*/
     
     NSMutableArray *scheduleArray = [[NSMutableArray alloc] init];
     [scheduleArray addObject:scheduleDictionary];
     [serviceRequestJson setObject:scheduleArray forKey:@"schedules"];
     
-    //TODO - notes !!!
+    //notes
     NSMutableDictionary *notesDictionary = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *notesSenderJson = [[NSMutableDictionary alloc] init];
     
-    [notesSenderJson setObject:@20130101500000001 forKey:@"id"];
+    [notesSenderJson setObject:userId forKey:@"id"];
     [notesDictionary setObject:notesSenderJson forKey:@"sender"];
     [notesDictionary setObject:notesTextArea.text forKey:@"message"];
     
@@ -973,7 +960,7 @@
     [serviceRequestJson setObject:notesArray forKey:@"notes"];
     
     NSLog(@"Create Service Request JSON: %@", serviceRequestJson);
-    NSError *error = [[NSError alloc] init];
+    NSError *error   = [[NSError alloc] init];
     NSData *jsonData = [NSJSONSerialization
                         dataWithJSONObject:serviceRequestJson
                                    options:NSJSONWritingPrettyPrinted
@@ -983,12 +970,13 @@
                             initWithData:jsonData
                                 encoding:NSUTF8StringEncoding];
     
-    NSLog(@"jsonData Request: %@", jsonData);
-    NSLog(@"jsonString Request: %@", jsonString);
+    //NSLog(@"jsonData Request: %@", jsonData);
+    //NSLog(@"jsonString Request: %@", jsonString);
     
     //Set URL for Add Service Request
     //URL = @"http://192.168.2.113/vertex-api/service-request/addServiceRequest";
     URL = @"http://192.168.2.107/vertex-api/service-request/addServiceRequest";
+    //URL = @"http://blah"; //TEST ONLY
     
     NSMutableURLRequest *postRequest = [NSMutableURLRequest
                                         requestWithURL:[NSURL URLWithString:URL]];
@@ -1123,6 +1111,30 @@
   [priorityField resignFirstResponder];
   [notesTextArea resignFirstResponder];
 }
+
+
+#pragma mark - Check for network availability
+-(BOOL)reachable
+{
+  Reachability *r = [Reachability  reachabilityWithHostName:URL];
+  NetworkStatus internetStatus = [r currentReachabilityStatus];
+  
+  if(internetStatus == NotReachable)
+  {
+    return NO;
+    
+    UIAlertView *reachableAlert = [[UIAlertView alloc]
+                                   initWithTitle:@"Warning"
+                                   message:@"No network connection detected. Displaying data from phone cache."
+                                   delegate:nil
+                                   cancelButtonTitle:@"OK"
+                                   otherButtonTitles:nil];
+    [reachableAlert show];
+  }
+  
+  return YES;
+}
+
 
 
 @end

@@ -8,12 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "UserAccountInfoManager.h"
-#import "sqlite3.h"
 
 
 @interface LoginViewController : UIViewController
 {
-  //sqlite3 *db;
   UserAccountInfoManager *userAccountInfoSQLManager;
 }
 
@@ -38,21 +36,5 @@
 
 - (IBAction)login:(id)sender;
 
-/*
-//SQLite
--(NSString *) getFilePath;
-
--(void) openDB;
-
--(void) createTable: (NSString *) tableName
-         withField1: (NSNumber *) field1
-         withField2: (NSString *) field2
-         withField3: (NSString *) field3
-         withField4: (NSNumber *) field4
-         withField5: (NSNumber *) field5
-         withField6: (NSString *) field6;
-
--(void) saveUserInfo;
-*/
 
 @end

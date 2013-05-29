@@ -10,11 +10,14 @@
 
 @implementation UserAccountsObject
 
+@synthesize userId;
+@synthesize username;
+@synthesize password;
+@synthesize userProfileId;
+@synthesize userInfoId;
+@synthesize token;
+
 @synthesize active;
 @synthesize credentialId;
-@synthesize profileId;
-@synthesize userId;
-@synthesize userInfoId;
-@synthesize userName;
 
 @end

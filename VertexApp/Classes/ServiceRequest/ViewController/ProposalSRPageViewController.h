@@ -7,8 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UserAccountInfoManager.h"
+#import "UserAccountsObject.h"
+
 
 @interface ProposalSRPageViewController : UIViewController
+{
+  UserAccountInfoManager *userAccountInfoSQLManager;
+  UserAccountsObject *userAccountsObject;
+}
+
 
 @property (strong, nonatomic) IBOutlet UIScrollView *proposalSRPageScroller;
 @property CGFloat scrollViewHeight;
@@ -69,19 +77,11 @@
 @property (strong, nonatomic) NSMutableArray *toDatesArray;
 @property (strong, nonatomic) NSMutableArray *toTimesArray;
 
-/*
-@property (strong, nonatomic) NSMutableArray *statusLabelArray;
-@property (strong, nonatomic) NSMutableArray *authorLabelArray;
-@property (strong, nonatomic) NSMutableArray *fromDatesLabelArray;
-@property (strong, nonatomic) NSMutableArray *fromTimesLabelArray;
-@property (strong, nonatomic) NSMutableArray *toDatesLabelArray;
-@property (strong, nonatomic) NSMutableArray *toTimesLabelArray;
-*/
-
 @property (strong, nonatomic) NSMutableDictionary *scheduleFromDateDictionary;
 @property (strong, nonatomic) NSMutableDictionary *scheduleToDateDictionary;
 
 @property (strong, nonatomic) NSNumber *userId;
+
 @property (strong, nonatomic) NSNumber *serviceRequestId;
 @property (strong, nonatomic) NSMutableDictionary *serviceRequestInfo;
 

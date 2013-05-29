@@ -7,8 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UserAccountInfoManager.h"
+#import "UserAccountsObject.h"
+
 
 @interface ApprovalSRPageViewController : UIViewController
+{
+  UserAccountInfoManager *userAccountInfoSQLManager;
+  UserAccountsObject *userAccountsObject;
+}
+
 
 @property (strong, nonatomic) IBOutlet UIScrollView *approvalSRPageScroller;
 @property CGFloat scrollViewHeight;
@@ -44,7 +52,6 @@
 
 @property CGRect addNotesButtonFrame;
 @property CGRect schedulesLabelFrame;
-//@property CGRect proposalLabelFrame;
 @property CGRect statusLabelFrame;
 @property CGRect statusFieldFrame;
 @property CGRect authorLabelFrame;
@@ -73,6 +80,7 @@
 @property (strong, nonatomic) NSMutableDictionary *scheduleToDateDictionary;
 
 @property (strong, nonatomic) NSNumber *userId;
+
 @property (strong, nonatomic) NSNumber *serviceRequestId;
 @property (strong, nonatomic) NSMutableDictionary *serviceRequestInfo;
 
@@ -81,9 +89,6 @@
 @property (strong, nonatomic) NSMutableArray *approvalNotesArray;
 @property (strong, nonatomic) NSMutableArray *schedulesStatusArray;
 @property (strong, nonatomic) NSMutableArray *schedulesAuthorArray;
-
-//@property (strong, nonatomic) UIActionSheet *actionSheet;
-//@property (strong, nonatomic) UIDatePicker *datePicker;
 
 @property (strong, nonatomic) NSString *fromDate;
 @property (strong, nonatomic) NSString *fromTime;

@@ -125,6 +125,14 @@
   //Populate fields based on previously selected Service Request for Acknowledgement
   [self getServiceRequest];
   
+  //Get logged user userAccountInformation
+  userAccountInfoSQLManager = [UserAccountInfoManager alloc];
+  userAccountsObject = [UserAccountsObject alloc];
+  userAccountsObject = [userAccountInfoSQLManager getUserAccountInfo];
+  
+  userId = userAccountsObject.userId;
+  NSLog(@"Acknowledge SR - userId: %@", userId);
+  
   //Add Notes utilities - Store the first note and its coordinates so that when we add notes it will align properly
   notesTextAreaArray = [[NSMutableArray alloc] init];
   [notesTextAreaArray addObject:notesTextArea];
@@ -444,13 +452,13 @@
   
   
   //schedules
-  //TODO - schedules !!!
   NSMutableDictionary *scheduleDictionary = [[NSMutableDictionary alloc] init];
   //schedule - status
   NSMutableDictionary *scheduleStatusDictionary = [[NSMutableDictionary alloc] init];
   NSMutableArray *scheduleArray = [[NSMutableArray alloc] init];
   
   //Check if schedules node is null before updating
+  //TODO - schedules validation
   if([[serviceRequestInfo objectForKey:@"schedules"] count] == 0)
   {
     NSLog(@"No record for Service Request Schedules");
@@ -463,7 +471,7 @@
     
     //schedule - author
     NSMutableDictionary *scheduleAuthor = [[NSMutableDictionary alloc] init];
-    [scheduleAuthor setObject:@20130101500000001 forKey:@"id"]; //!!! TODO - TEST ONLY !!! - Update
+    [scheduleAuthor setObject:userId forKey:@"id"];
     [scheduleDictionary setObject:scheduleAuthor forKey:@"author"];
     
     //schedule - periods
@@ -487,6 +495,7 @@
   NSMutableArray *notesArray = [[NSMutableArray alloc] init];
 
   //Check if notes node is null before updating
+  //TODO - Notes validation
   if ([[serviceRequestInfo objectForKey:@"notes"] count] == 0)
   {
     NSLog(@"No record for Service Request Notes");
@@ -496,7 +505,7 @@
     for(int i = 1; i < notesTextAreaArray.count; i++) //begin at the second text area
     {
       //sender
-      [notesSenderJson setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY - Remove hardcoded value
+      [notesSenderJson setObject:userId forKey:@"id"];
       [notesDictionary setObject:notesSenderJson forKey:@"sender"];
       
       //message
@@ -504,7 +513,7 @@
       tempTextView = [notesTextAreaArray objectAtIndex:i]; //Begin at second element
       [notesDictionary setObject:tempTextView.text forKey:@"message"];
       
-      //save the sender-message node in an array
+      //save the sender-message node in an array, (i-1) because we begin at the second notes area
       [notesArray insertObject:notesDictionary atIndex:(i-1)];
     }
   }
@@ -530,6 +539,7 @@
   //Set URL for Update Service Request
   //URL = @"http://192.168.2.113/vertex-api/service-request/updateServiceRequest";
   URL = @"http://192.168.2.107/vertex-api/service-request/updateServiceRequest";
+  //URL = @"http://blah";
   
   NSMutableURLRequest *putRequest = [NSMutableURLRequest
                                       requestWithURL:[NSURL URLWithString:URL]];

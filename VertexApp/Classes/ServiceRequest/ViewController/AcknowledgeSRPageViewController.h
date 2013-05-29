@@ -7,8 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UserAccountInfoManager.h"
+#import "UserAccountsObject.h"
+
 
 @interface AcknowledgeSRPageViewController : UIViewController
+{
+  UserAccountInfoManager *userAccountInfoSQLManager;
+  UserAccountsObject *userAccountsObject;
+}
+
 
 @property (strong, nonatomic) IBOutlet UIScrollView *acknowledgeSRScroller;
 
@@ -37,6 +45,7 @@
 @property (strong, nonatomic) IBOutlet UITextView *notesTextArea;
 
 @property (strong, nonatomic) NSNumber *userId;
+
 @property (strong, nonatomic) NSNumber *serviceRequestId;
 @property (strong, nonatomic) NSMutableDictionary *serviceRequestInfo;
 

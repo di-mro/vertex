@@ -177,9 +177,9 @@
   if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
   {
     UIAlertView *addAssetTypeAlert = [[UIAlertView alloc]
-                                      initWithTitle:@"Add Asset Type"
-                                      message:@"Asset Type Added."
-                                      delegate:self
+                                          initWithTitle:@"Add Asset Type"
+                                                message:@"Asset Type Added."
+                                               delegate:self
                                       cancelButtonTitle:@"OK"
                                       otherButtonTitles:nil];
     [addAssetTypeAlert show];
@@ -187,9 +187,9 @@
   else //(httpResponseCode >= 400)
   {
     UIAlertView *addAssetTypeFailAlert = [[UIAlertView alloc]
-                                          initWithTitle:@"Add Asset Type Failed"
-                                          message:@"Asset Type not added. Please try again later"
-                                          delegate:self
+                                              initWithTitle:@"Add Asset Type Failed"
+                                                    message:@"Asset Type not added. Please try again later"
+                                                   delegate:self
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
     [addAssetTypeFailAlert show];
@@ -216,9 +216,9 @@
 -(BOOL) validateAddAssetTypeFields
 {
   UIAlertView *addAssetTypeValidateAlert = [[UIAlertView alloc]
-                                           initWithTitle:@"Incomplete Information"
-                                           message:@"Please fill out the necessary fields."
-                                           delegate:nil
+                                               initWithTitle:@"Incomplete Information"
+                                                     message:@"Please fill out the necessary fields."
+                                                    delegate:nil
                                            cancelButtonTitle:@"OK"
                                            otherButtonTitles:nil];
   

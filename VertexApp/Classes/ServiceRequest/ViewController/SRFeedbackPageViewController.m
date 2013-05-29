@@ -25,6 +25,8 @@
 @synthesize URL;
 @synthesize httpResponseCode;
 
+@synthesize userId;
+
 @synthesize serviceRequestId;
 
 @synthesize topicId;
@@ -81,6 +83,14 @@
   
   //Retrieve feedback questions from endpoint URL
   [self getFeedbackQuestions];
+  
+  //Get logged user userAccountInformation
+  userAccountInfoSQLManager = [UserAccountInfoManager alloc];
+  userAccountsObject = [UserAccountsObject alloc];
+  userAccountsObject = [userAccountInfoSQLManager getUserAccountInfo];
+  
+  userId = userAccountsObject.userId;
+  NSLog(@"Feedback SR userId: %@", userId);
   
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -247,7 +257,6 @@
 {
   UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
   
-  //if ([[segmentedControl titleForSegmentAtIndex:segmentedControl.selectedSegmentIndex] isEqual: @"Yes"])
   if(segmentedControl.selectedSegmentIndex == 0) //YES
   {
     srRatings += 25.0;
@@ -338,7 +347,7 @@
   
   //responder
   NSMutableDictionary *responderJson = [[NSMutableDictionary alloc] init];
-  [responderJson setObject:@20130101500000001 forKey:@"id"]; //!!! - TODO - Replace with userId of logged user
+  [responderJson setObject:userId forKey:@"id"];
   [addFeebackJson setObject:responderJson forKey:@"responder"];
   
   //submittedDate

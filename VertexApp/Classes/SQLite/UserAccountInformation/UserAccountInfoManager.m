@@ -13,18 +13,6 @@
 
 
 #pragma mark - SQLite Operations
-
-/*
-#pragma mark - Set file path to db
--(NSString *) getFilePath
-{
-  NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
-  NSLog(@"paths: %@", paths);
-  return [[paths objectAtIndex:0] stringByAppendingPathComponent:@"di_vertex.sql"];
-}
-*/
-
-
 #pragma mark - Open the db
 -(void) openDB
 {
@@ -52,6 +40,8 @@
          withField5: (NSString *) field5 //userInfoId
          withField6: (NSString *) field6 //token
 {
+  [self openDB];
+  
   char *err;
   NSString *sql = [NSString stringWithFormat:
                    @"CREATE TABLE IF NOT EXISTS '%@' ('%@' " "NUM PRIMARY KEY, '%@' TEXT, '%@' TEXT, '%@' NUM, '%@' NUM, '%@' TEXT);"
@@ -83,6 +73,8 @@
                     : (NSNumber *) userInfoId
                     : (NSString *) token
 {
+  [self openDB];
+  
   //Truncate user_accounts first to remove unecessary info, only save info for the logged user
   [self truncateUserAccounts];
   
@@ -107,16 +99,15 @@
 }
 
 
-#pragma mark - Retrieve logged user account information
--(NSNumber *) retrieveInfoFromDB
+#pragma mark - Get User Account information and store in UserAccountsObject
+-(UserAccountsObject *) getUserAccountInfo
 {
   [self openDB];
   
   //user_accounts table only stores the information for the current logged user
   NSString *sql = [NSString stringWithFormat:@"SELECT * FROM user_accounts"];
   sqlite3_stmt *statement;
-  
-  NSNumber *userProfileId = [[NSNumber alloc] init];
+  UserAccountsObject *userAccountsObject = [UserAccountsObject alloc];
   
   if(sqlite3_prepare_v2(db, [sql UTF8String], -1, &statement, nil) == SQLITE_OK)
   {
@@ -140,9 +131,8 @@
       
       //profileId
       char *field4 = (char *) sqlite3_column_text(statement, 3);
-      NSString *profileIdString = [[NSString alloc] initWithUTF8String:field4];
-      userProfileId = profileIdString;
-      NSLog(@"userProfileId: %@", profileIdString);
+      NSString *userProfileId = [[NSString alloc] initWithUTF8String:field4];
+      NSLog(@"userProfileId: %@", userProfileId);
       
       //userInfoId
       char *field5 = (char *) sqlite3_column_text(statement, 4);
@@ -153,40 +143,25 @@
       char *field6 = (char *) sqlite3_column_text(statement, 5);
       NSString *token = [[NSString alloc] initWithUTF8String:field6];
       NSLog(@"token: %@", token);
+      
+      //Assign values in userAccountsObject
+      userAccountsObject.userId        = userId;
+      userAccountsObject.username      = username;
+      userAccountsObject.password      = password;
+      userAccountsObject.userProfileId = userProfileId;
+      userAccountsObject.userInfoId    = userInfoId;
+      userAccountsObject.token         = token;
     }
   }
-  return userProfileId;
-}
-
-
-#pragma mark - Retrieve token from user_accounts
--(NSString *) retrieveToken
-{
-  [self openDB];
-  
-  //user_accounts table only stores the information for the current logged user - one entry
-  NSString *sql = [NSString stringWithFormat:@"SELECT token FROM user_accounts"];
-  sqlite3_stmt *statement;
-  
-  NSString *token = [[NSString alloc] init];
-  
-  if(sqlite3_prepare_v2(db, [sql UTF8String], -1, &statement, nil) == SQLITE_OK)
-  {
-    while(sqlite3_step(statement) == SQLITE_ROW)
-    {
-      //token
-      char *field1 = (char *) sqlite3_column_text(statement, 0);
-      token = [[NSString alloc] initWithUTF8String:field1];
-      NSLog(@"token: %@", token);
-    }
-  }
-  return token;
+  return userAccountsObject;
 }
 
 
 #pragma mark - Truncate user_accounts table
 -(void) truncateUserAccounts
 {
+  [self openDB];
+  
   char *err;
   NSString *sql = [NSString stringWithFormat:@"DELETE FROM user_accounts"];
   

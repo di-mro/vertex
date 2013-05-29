@@ -10,11 +10,16 @@
 
 @interface UserAccountsObject : NSObject
 
+
+@property (nonatomic, retain) NSNumber *userId;
+@property (nonatomic, retain) NSString *username;
+@property (nonatomic, retain) NSString *password; //added field
+@property (nonatomic, retain) NSNumber *userProfileId;
+@property (nonatomic, retain) NSNumber *userInfoId;
+@property (nonatomic, retain) NSString *token; //added field
+
+//fields from data model
 @property (nonatomic, retain) NSNumber * active;
 @property (nonatomic, retain) NSNumber * credentialId;
-@property (nonatomic, retain) NSNumber * profileId;
-@property (nonatomic, retain) NSNumber * userId;
-@property (nonatomic, retain) NSNumber * userInfoId;
-@property (nonatomic, retain) NSString * userName;
 
 @end

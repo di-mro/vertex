@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "sqlite3.h"
+#import "UserAccountsObject.h"
 
 
 @interface UserAccountInfoManager : NSObject
@@ -15,7 +16,6 @@
   sqlite3 *db;
 }
 
-//-(NSString *) getFilePath;
 
 -(void) openDB;
 
@@ -34,9 +34,7 @@
                     : (NSNumber *) userInfoId
                     : (NSString *) token;
 
--(NSNumber *) retrieveInfoFromDB;
-
--(NSString *) retrieveToken;
+-(UserAccountsObject *) getUserAccountInfo;
 
 -(void) truncateUserAccounts;
 

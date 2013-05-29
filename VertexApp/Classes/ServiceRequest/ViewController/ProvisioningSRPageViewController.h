@@ -7,8 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UserAccountInfoManager.h"
+#import "UserAccountsObject.h"
+
 
 @interface ProvisioningSRPageViewController : UIViewController
+{
+  UserAccountInfoManager *userAccountInfoSQLManager;
+  UserAccountsObject *userAccountsObject;
+}
+
 
 @property (strong, nonatomic) IBOutlet UIScrollView *provisioningSRPageScroller;
 @property CGFloat scrollViewHeight;
@@ -91,6 +99,7 @@
 @property (strong, nonatomic) NSMutableArray *taskStatusArray;
 
 @property (strong, nonatomic) NSNumber *userId;
+
 @property (strong, nonatomic) NSNumber *serviceRequestId;
 @property (strong, nonatomic) NSMutableDictionary *serviceRequestInfo;
 

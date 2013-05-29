@@ -53,6 +53,8 @@
 @synthesize assetTypeAttributes;
 @synthesize selectedAssetTypeId;
 
+@synthesize userId;
+
 @synthesize URL;
 @synthesize httpResponseCode;
 
@@ -106,6 +108,14 @@
   
   //assetTypePicker in assetTypeField
   [assetTypeField setDelegate:self];
+  
+  //Get logged user userAccountInformation
+  userAccountInfoSQLManager = [UserAccountInfoManager alloc];
+  userAccountsObject = [UserAccountsObject alloc];
+  userAccountsObject = [userAccountInfoSQLManager getUserAccountInfo];
+  
+  userId = userAccountsObject.userId;
+  NSLog(@"Add Asset - userId: %@", userId);
   
   //CoreData
   AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
@@ -508,7 +518,7 @@
     
     //POST method - Create
     [postRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [postRequest setValue:@"20130101500000001" forHTTPHeaderField:@"userId"]; //make userID dynamic
+    [postRequest setValue:userId.stringValue forHTTPHeaderField:@"userId"];
     [postRequest setHTTPMethod:@"POST"];
     [postRequest setHTTPBody:[NSData dataWithBytes:[jsonString UTF8String] length:[jsonString length]]]; //pass JSON as string
     NSLog(@"%@", postRequest);

@@ -13,8 +13,16 @@
 #import <CoreData/CoreData.h>
 #import "AppDelegate.h"
 
+#import "UserAccountInfoManager.h"
+#import "UserAccountsObject.h"
+
 
 @interface AddAssetPageViewController : ViewController <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate>
+{
+  UserAccountInfoManager *userAccountInfoSQLManager;
+  UserAccountsObject *userAccountsObject;
+}
+
 
 @property (strong, nonatomic) IBOutlet UIView *addAssetView;
 
@@ -45,6 +53,8 @@
 @property (nonatomic, strong) NSMutableDictionary *attribUnits;
 @property (strong, nonatomic) UIPickerView *attributesPicker;
 @property (strong, nonatomic) NSMutableArray *selectedUnitIds;
+
+@property (strong, nonatomic) NSNumber *userId;
 
 @property (strong, nonatomic) NSString *URL;
 @property int httpResponseCode;

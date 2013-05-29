@@ -102,7 +102,6 @@
 {
   //Return the number of rows in the section
   return [assetConfigPageEntries count];
-  NSLog(@"%d", [assetConfigPageEntries count]);
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

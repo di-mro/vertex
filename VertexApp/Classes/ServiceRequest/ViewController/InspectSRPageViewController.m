@@ -81,6 +81,7 @@
 @synthesize scheduleToDateDictionary;
 
 @synthesize userId;
+
 @synthesize serviceRequestId;
 @synthesize serviceRequestInfo;
 
@@ -159,6 +160,14 @@
   
   //Populate fields based on previously selected Service Request for Inspection
   [self getServiceRequest];
+  
+  //Get logged user userAccountInformation
+  userAccountInfoSQLManager = [UserAccountInfoManager alloc];
+  userAccountsObject = [UserAccountsObject alloc];
+  userAccountsObject = [userAccountInfoSQLManager getUserAccountInfo];
+  
+  userId = userAccountsObject.userId;
+  NSLog(@"Inspect SR - userId: %@", userId);
   
   //Initialize array for inspection notes
   inspectionNotesArray = [[NSMutableArray alloc] init];
@@ -363,10 +372,58 @@
     }
     
     //For Inspection Schedules
-    //!!! TODO - Remove hardcoded data for author field
     statusField.text = @"For Inspection"; //For Inspection statusId = 20130101420000004
-    authorField.text = @"Tim Cook"; //logged userId
+    authorField.text = [self getUserById];
   }
+}
+
+
+#pragma mark - Endpoint connection /getUserById
+-(NSString *) getUserById
+{
+  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.113/vertex-api/user/getUserById/%@", userId];
+  
+  NSMutableURLRequest *getRequest = [NSMutableURLRequest
+                                     requestWithURL:[NSURL URLWithString:urlParams]];
+  
+  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+  [getRequest setHTTPMethod:@"GET"];
+  
+  NSURLConnection *connection = [[NSURLConnection alloc]
+                                 initWithRequest:getRequest
+                                        delegate:self];
+  [connection start];
+  
+  NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+  NSError *error = [[NSError alloc] init];
+  
+  NSData *responseData = [NSURLConnection
+                          sendSynchronousRequest:getRequest
+                               returningResponse:&urlResponse
+                                           error:&error];
+  
+  NSString *authorName;
+  if(responseData == nil)
+  {
+    authorName = @"Tim Cook";
+  }
+  else
+  {
+    NSMutableDictionary *authorInfo = [[NSMutableDictionary alloc] init];
+    authorInfo = [NSJSONSerialization
+                  JSONObjectWithData:responseData
+                             options:kNilOptions
+                               error:&error];
+    
+    authorName = [NSString stringWithFormat:@"%@ %@ %@ %@"
+                  , [[authorInfo valueForKey:@"info"] valueForKey:@"firstName"]
+                  , [[authorInfo valueForKey:@"info"] valueForKey:@"middleName"]
+                  , [[authorInfo valueForKey:@"info"] valueForKey:@"lastName"]
+                  , [[authorInfo valueForKey:@"info"] valueForKey:@"suffix"]];
+    
+  }
+  
+  return authorName;
 }
 
 
@@ -924,7 +981,7 @@
   
   //admin
   NSMutableDictionary *adminJson = [[NSMutableDictionary alloc] init];
-  [adminJson setObject:@20130101500000001 forKey:@"id"]; //!!! TODO - TEST ONLY !!!
+  [adminJson setObject:userId forKey:@"id"]; //!!! TODO - only admin can inspect service requests
   [serviceRequestJson setObject:adminJson forKey:@"admin"];
   NSLog(@"adminJson: %@", adminJson);
   
@@ -940,7 +997,7 @@
   for(int i = 0; i < inspectionNotesArray.count; i++)
   {
     //sender
-    [notesSenderJson setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY - Remove hardcoded value
+    [notesSenderJson setObject:userId forKey:@"id"];
     [notesDictionary setObject:notesSenderJson forKey:@"sender"];
     
     //message
@@ -967,7 +1024,7 @@
   
   //schedule - author
   NSMutableDictionary *scheduleAuthor = [[NSMutableDictionary alloc] init];
-  [scheduleAuthor setObject:@20130101500000001 forKey:@"id"]; //!!! TODO - TEST ONLY !!! - Update
+  [scheduleAuthor setObject:userId forKey:@"id"]; //!!! TODO - TEST ONLY !!! - Update
   [scheduleDictionary setObject:scheduleAuthor forKey:@"author"];
   
   //schedule - periods
@@ -1009,7 +1066,7 @@
   
   //Construct JSON request for Inspection update
   NSLog(@"For Inspection Service Request JSON: %@", serviceRequestJson);
-  NSError *error = [[NSError alloc] init];
+  NSError *error   = [[NSError alloc] init];
   NSData *jsonData = [NSJSONSerialization
                       dataWithJSONObject:serviceRequestJson
                                  options:NSJSONWritingPrettyPrinted
@@ -1019,8 +1076,8 @@
                           initWithData:jsonData
                               encoding:NSUTF8StringEncoding];
   
-  NSLog(@"jsonData Request: %@", jsonData);
-  NSLog(@"jsonString Request: %@", jsonString);
+  //NSLog(@"jsonData Request: %@", jsonData);
+  //NSLog(@"jsonString Request: %@", jsonString);
   
   //Set URL for Update Service Request
   //URL = @"http://192.168.2.113/vertex-api/service-request/updateServiceRequest";

@@ -9,8 +9,6 @@
 #import "HomePageViewController.h"
 #import "LoginViewController.h"
 
-#import "UserAccountInfoManager.h"
-
 
 @interface HomePageViewController ()
 
@@ -50,16 +48,13 @@
                                                                           target:self
                                                                           action:@selector(logout)];
   
-  
+  //Get logged user userAccountInformation
   userAccountInfoSQLManager = [UserAccountInfoManager alloc];
+  userAccountsObject = [UserAccountsObject alloc];
+  userAccountsObject = [userAccountInfoSQLManager getUserAccountInfo];
   
-  //Get userProfileId store in SQLite
-  //[self retrieveInfoFromDB];
-  userProfileId = [userAccountInfoSQLManager retrieveInfoFromDB];
-  
-  //Get token store in SQLite
-  token = [userAccountInfoSQLManager retrieveToken];
-  NSLog(@"retrievedToken: %@", token);
+  userProfileId = userAccountsObject.userProfileId;
+  token = userAccountsObject.token;
   
   //System Function Hierarchies
   [self getSystemFunctions];
@@ -78,21 +73,6 @@
 }
 
 
-#pragma mark - Set Profile ID to the logged userProfileId
-- (void) setUserProfileId:(NSNumber *) idFromLogin
-{
-  if (idFromLogin == NULL)
-  {
-    [self displayHomePageEntries];
-  }
-  else
-  {
-    userProfileId = idFromLogin;
-    NSLog(@"HomePage - userProfileId: %@", userProfileId);
-  }
-}
-
-
 #pragma mark - System Function Hierarchies
 - (void) getSystemFunctions
 {
@@ -108,7 +88,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   //start the connection
   [connection start];
   
@@ -118,17 +98,17 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if(responseData == nil)
   {
     UIAlertView *systemFunctionAlert = [[UIAlertView alloc]
-                               initWithTitle:@"No Connection Detected"
-                               message:@"Displaying data from phone cache"
-                               delegate:nil
-                               cancelButtonTitle:@"OK"
-                               otherButtonTitles:nil];
+                                            initWithTitle:@"No Connection Detected"
+                                                  message:@"Displaying data from phone cache"
+                                                 delegate:nil
+                                        cancelButtonTitle:@"OK"
+                                        otherButtonTitles:nil];
     [systemFunctionAlert show];
     
     [self performSegueWithIdentifier: @"loginToHome" sender: self];
@@ -137,10 +117,10 @@
   {
     systemFunctionsInfo = [NSJSONSerialization
                            JSONObjectWithData:responseData
-                           options:kNilOptions
-                           error:&error];
+                                      options:kNilOptions
+                                        error:&error];
     
-    NSLog(@"systemFunctionsInfo JSON Result: %@", systemFunctionsInfo);
+    //NSLog(@"systemFunctionsInfo JSON Result: %@", systemFunctionsInfo);
     
     //!!! TODO - How to determine if submenu ???
     //!!! TODO - Can this implementation be more flexible ???
@@ -350,7 +330,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:postRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -358,8 +338,9 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:postRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
+  NSLog(@"responseDate: %@", responseData);
   
   NSLog(@"logout - httpResponseCode: %d", httpResponseCode);
   if((httpResponseCode == 201) || (httpResponseCode == 200)) //Logout successful
@@ -373,20 +354,18 @@
   else //(httpResponseCode >= 400)
   {
     UIAlertView *logoutAlert = [[UIAlertView alloc]
-                                         initWithTitle:@"Logout Unsuccessful"
-                                         message:@"Could not logout user. Please try again later."
+                                    initWithTitle:@"Logout Unsuccessful"
+                                          message:@"Could not logout user. Please try again later."
                                          delegate:self
-                                         cancelButtonTitle:@"OK"
-                                         otherButtonTitles:nil];
+                                cancelButtonTitle:@"OK"
+                                otherButtonTitles:nil];
     [logoutAlert show];
   }
   
   [self dismissViewControllerAnimated:YES completion:nil];
 
-  //Truncate SQLite tables
-  //[self truncateUserAccounts];
+  //Truncate SQLite user_accounts table
   [userAccountInfoSQLManager truncateUserAccounts];
-  
 }
 
 
@@ -405,99 +384,6 @@
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"httpResponse status code: %d", httpResponseCode);
 }
-
-/*
-#pragma mark - SQLite operations
-#pragma mark - Retrieve logged user account information
--(void) retrieveInfoFromDB
-{
-  [self openDB];
-  
-  //user_accounts table only stores the information for the current logged user
-  //NSString *sql = [NSString stringWithFormat:@"SELECT * FROM user_accounts WHERE userProfileId=%@", userProfileId];
-  NSString *sql = [NSString stringWithFormat:@"SELECT * FROM user_accounts"];
-  sqlite3_stmt *statement;
-  
-  if(sqlite3_prepare_v2(db, [sql UTF8String], -1, &statement, nil) == SQLITE_OK)
-  {
-    //NSLog(@"statement: %@", statement);
-    while(sqlite3_step(statement) == SQLITE_ROW)
-    {
-      //userId
-      char *field1 = (char *) sqlite3_column_text(statement, 0);
-      NSString *userId = [[NSString alloc] initWithUTF8String:field1];
-      NSLog(@"userId: %@", userId);
-      
-      //username
-      char *field2 = (char *) sqlite3_column_text(statement, 1);
-      NSString *username = [[NSString alloc] initWithUTF8String:field2];
-      NSLog(@"username: %@", username);
-      
-      //password
-      char *field3 = (char *) sqlite3_column_text(statement, 2);
-      NSString *password = [[NSString alloc] initWithUTF8String:field3];
-      NSLog(@"password: %@", password);
-      
-      //profileId
-      char *field4 = (char *) sqlite3_column_text(statement, 3);
-      NSString *profileIdString = [[NSString alloc] initWithUTF8String:field4];
-      userProfileId = profileIdString;
-      NSLog(@"userProfileId: %@", userProfileId);
-      
-      //userInfoId
-      char *field5 = (char *) sqlite3_column_text(statement, 4);
-      NSString *userInfoId = [[NSString alloc] initWithUTF8String:field5];
-      NSLog(@"userInfoId: %@", userInfoId);
-      
-      //token
-      char *field6 = (char *) sqlite3_column_text(statement, 5);
-      NSString *token = [[NSString alloc] initWithUTF8String:field6];
-      NSLog(@"token: %@", token);
-    }
-  }
-}
-*/
-
-/*
-#pragma mark - Truncate user_accounts table upon logout
--(void) truncateUserAccounts
-{
-  char *err;
-  NSString *sql = [NSString stringWithFormat:@"DELETE FROM user_accounts"];
-  
-  if(sqlite3_exec(db, [sql UTF8String], NULL, NULL, &err) != SQLITE_OK)
-  {
-    sqlite3_close(db);
-    NSLog(@"user_accounts table failed to truncate");
-  }
-  else
-  {
-    NSLog(@"user_accounts table truncated");
-  }
-}
-
-#pragma mark - Get file path to db
--(NSString *) getFilePath
-{
-  NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
-  NSLog(@"paths: %@", paths);
-  return [[paths objectAtIndex:0] stringByAppendingPathComponent:@"di_vertex.sql"];
-}
-
-#pragma mark - Open the db
--(void) openDB
-{
-  if(sqlite3_open([[self getFilePath] UTF8String], &db) != SQLITE_OK)
-  {
-    sqlite3_close(db);
-    NSLog(@"Database failed to open");
-  }
-  else
-  {
-    NSLog(@"Database opened");
-  }
-}
-*/
 
 
 @end

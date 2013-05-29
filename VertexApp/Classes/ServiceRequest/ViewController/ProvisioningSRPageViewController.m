@@ -98,6 +98,7 @@
 @synthesize taskStatusArray;
 
 @synthesize userId;
+
 @synthesize serviceRequestId;
 @synthesize serviceRequestInfo;
 
@@ -183,8 +184,7 @@
   closeButton.enabled    = NO;
   
   //Scroller size
-  provisioningSRPageScroller.contentSize = CGSizeMake(320.0, 5000);
-  scrollViewHeight = 0.0f;
+  //provisioningSRPageScroller.contentSize = CGSizeMake(320.0, 5000);
   [self setScrollerSize];
   
   //Disable fields - for viewing only
@@ -199,6 +199,14 @@
   
   //Populate fields based on previously selected Service Request for Provisioning Stage
   [self getServiceRequest];
+  
+  //Get logged user userAccountInformation
+  userAccountInfoSQLManager = [UserAccountInfoManager alloc];
+  userAccountsObject = [UserAccountsObject alloc];
+  userAccountsObject = [userAccountInfoSQLManager getUserAccountInfo];
+  
+  userId = userAccountsObject.userId;
+  NSLog(@"Provisioning SR - userId: %@", userId);
   
   //Initialize array for provisioning notes
   provisioningNotesArray = [[NSMutableArray alloc] init];
@@ -231,7 +239,7 @@
 #pragma mark - Adjust page scroller height depending on number of elements in view
 -(void) setScrollerSize
 {
-  //scrollViewHeight = 0.0;
+  scrollViewHeight = 0.0;
   for (UIView *view in provisioningSRPageScroller.subviews)
   {
     scrollViewHeight += view.frame.size.height;
@@ -457,6 +465,55 @@
 }
 
 
+#pragma mark - Endpoint connection /getUserById
+-(NSString *) getUserById
+{
+  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.113/vertex-api/user/getUserById/%@", userId];
+  
+  NSMutableURLRequest *getRequest = [NSMutableURLRequest
+                                     requestWithURL:[NSURL URLWithString:urlParams]];
+  
+  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+  [getRequest setHTTPMethod:@"GET"];
+  
+  NSURLConnection *connection = [[NSURLConnection alloc]
+                                 initWithRequest:getRequest
+                                        delegate:self];
+  [connection start];
+  
+  NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+  NSError *error = [[NSError alloc] init];
+  
+  NSData *responseData = [NSURLConnection
+                          sendSynchronousRequest:getRequest
+                               returningResponse:&urlResponse
+                                           error:&error];
+  
+  NSString *authorName;
+  if(responseData == nil)
+  {
+    authorName = @"Tim Cook";
+  }
+  else
+  {
+    NSMutableDictionary *authorInfo = [[NSMutableDictionary alloc] init];
+    authorInfo = [NSJSONSerialization
+                  JSONObjectWithData:responseData
+                             options:kNilOptions
+                               error:&error];
+    
+    authorName = [NSString stringWithFormat:@"%@ %@ %@ %@"
+                  , [[authorInfo valueForKey:@"info"] valueForKey:@"firstName"]
+                  , [[authorInfo valueForKey:@"info"] valueForKey:@"middleName"]
+                  , [[authorInfo valueForKey:@"info"] valueForKey:@"lastName"]
+                  , [[authorInfo valueForKey:@"info"] valueForKey:@"suffix"]];
+    
+  }
+  
+  return authorName;
+}
+
+
 #pragma mark - Display multiple 'Notes' entries from response JSON
 - (void) displayNotesEntries: (NSString *) noteText
 {
@@ -565,7 +622,7 @@
       int y = 1; //Multiplier to move the y coordinates
       CGRect labelFrame;
       CGRect fieldFrame;
-      CGRect viewFrame;
+      //CGRect viewFrame;
       
       for(int j = i++; j < [provisioningSRPageScroller.subviews count]; j++) //Begin at element after schedulesLabel
       {
@@ -643,7 +700,7 @@
    */
   /*
    //Then redraw the fields
-   //***
+   ////***
    //!!! TODO - Retrieve values for Schedules
    NSMutableArray *retrievedSchedulesArray = [[NSMutableArray alloc] init];
    retrievedSchedulesArray = [serviceRequestInfo valueForKey:@"schedules"];
@@ -1114,7 +1171,7 @@
   personnelField.borderStyle = UITextBorderStyleRoundedRect;
   
   //Set field placeholder texts
-  taskNameField.placeholder  = @"Task - Repair broken wiring";
+  taskNameField.placeholder  = @"Repair broken wiring";
   personnelField.placeholder = @"Steve Wozniak";
   
   //Set text view style
@@ -1293,7 +1350,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -1302,16 +1359,16 @@
   //GET
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if (responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:nil
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:nil
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
@@ -1554,18 +1611,18 @@
   
   //Construct JSON request for Add Tasks
   NSLog(@"Tasks JSON: %@", tasksJson);
-  NSError *error = [[NSError alloc] init];
+  NSError *error   = [[NSError alloc] init];
   NSData *jsonData = [NSJSONSerialization
                       dataWithJSONObject:tasksJson
-                      options:NSJSONWritingPrettyPrinted
-                      error:&error];
+                                 options:NSJSONWritingPrettyPrinted
+                                   error:&error];
   
   NSString *jsonString = [[NSString alloc]
                           initWithData:jsonData
-                          encoding:NSUTF8StringEncoding];
+                              encoding:NSUTF8StringEncoding];
   
-  NSLog(@"jsonData Request: %@", jsonData);
-  NSLog(@"jsonString Request: %@", jsonString);
+  //NSLog(@"jsonData Request: %@", jsonData);
+  //NSLog(@"jsonString Request: %@", jsonString);
   
   //Set URL for Update Service Request
   //http://192.168.2.113/vertex-api/service-request/task/addTask
@@ -1583,22 +1640,22 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:postRequest
-                                 delegate:self];
+                                        delegate:self];
   
   [connection start];
   
   NSLog(@"addTask - httpResponseCode: %d", httpResponseCode);
   
   //Set alert message display depending on what operation is performed (ACCEPTED or PROPOSAL)
-  NSString *updateAlertMessage     = [[NSString alloc] init];
-  NSString *updateFailAlertMessage = [[NSString alloc] init];
+  //NSString *updateAlertMessage     = [[NSString alloc] init];
+  //NSString *updateFailAlertMessage = [[NSString alloc] init];
   
   if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
   {
     UIAlertView *addTaskAlert = [[UIAlertView alloc]
-                                  initWithTitle:@"Add Task"
-                                  message:@"Task for service request added."
-                                  delegate:self
+                                      initWithTitle:@"Add Task"
+                                            message:@"Task for service request added."
+                                           delegate:self
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
     [addTaskAlert show];
@@ -1606,9 +1663,9 @@
   else //(httpResponseCode >= 400)
   {
     UIAlertView *addTaskFailAlert = [[UIAlertView alloc]
-                                      initWithTitle:@"Add Task"
-                                      message:@"Task for service request not added. Please try again later."
-                                      delegate:self
+                                          initWithTitle:@"Add Task"
+                                                message:@"Task for service request not added. Please try again later."
+                                               delegate:self
                                       cancelButtonTitle:@"OK"
                                       otherButtonTitles:nil];
     [addTaskFailAlert show];
@@ -1687,7 +1744,7 @@
   
   //admin
   NSMutableDictionary *adminJson = [[NSMutableDictionary alloc] init];
-  [adminJson setObject:@20130101500000001 forKey:@"id"]; //TEST ONLY !!!
+  [adminJson setObject:userId forKey:@"id"];
   [serviceRequestJson setObject:adminJson forKey:@"admin"];
   NSLog(@"adminJson: %@", adminJson);
   
@@ -1697,12 +1754,12 @@
   //notes
   NSMutableDictionary *notesDictionary = [[NSMutableDictionary alloc] init];
   NSMutableDictionary *notesSenderJson = [[NSMutableDictionary alloc] init];
-  NSMutableArray *notesArray = [[NSMutableArray alloc] init];
+  NSMutableArray *notesArray           = [[NSMutableArray alloc] init];
   
   for(int i = 0; i < provisioningNotesArray.count; i++)
   {
     //sender
-    [notesSenderJson setObject:@20130101500000001 forKey:@"id"]; //!!! TODO - TEST ONLY - Remove hardcoded value
+    [notesSenderJson setObject:userId forKey:@"id"];
     [notesDictionary setObject:notesSenderJson forKey:@"sender"];
     
     //message
@@ -1730,7 +1787,7 @@
   
   //schedule - author
   NSMutableDictionary *scheduleAuthor = [[NSMutableDictionary alloc] init];
-  [scheduleAuthor setObject:@20130101500000001 forKey:@"id"]; //!!! TODO - TEST ONLY !!! - Update
+  [scheduleAuthor setObject:userId forKey:@"id"];
   [scheduleDictionary setObject:scheduleAuthor forKey:@"author"];
   
   //schedule - periods
@@ -1774,18 +1831,18 @@
   
   //Construct JSON request for Proposal update
   NSLog(@"For Proposal Service Request JSON: %@", serviceRequestJson);
-  NSError *error = [[NSError alloc] init];
+  NSError *error   = [[NSError alloc] init];
   NSData *jsonData = [NSJSONSerialization
                       dataWithJSONObject:serviceRequestJson
-                      options:NSJSONWritingPrettyPrinted
-                      error:&error];
+                                 options:NSJSONWritingPrettyPrinted
+                                   error:&error];
   
   NSString *jsonString = [[NSString alloc]
                           initWithData:jsonData
-                          encoding:NSUTF8StringEncoding];
+                              encoding:NSUTF8StringEncoding];
   
-  NSLog(@"jsonData Request: %@", jsonData);
-  NSLog(@"jsonString Request: %@", jsonString);
+  //NSLog(@"jsonData Request: %@", jsonData);
+  //NSLog(@"jsonString Request: %@", jsonString);
   
   //Set URL for Update Service Request
   //URL = @"http://192.168.2.113/vertex-api/service-request/updateServiceRequest";
@@ -1802,7 +1859,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:putRequest
-                                 delegate:self];
+                                        delegate:self];
   
   [connection start];
   
@@ -1828,9 +1885,9 @@
   if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
   {
     UIAlertView *updateSRAlert = [[UIAlertView alloc]
-                                  initWithTitle:@"Service Request"
-                                  message:updateAlertMessage
-                                  delegate:self
+                                      initWithTitle:@"Service Request"
+                                            message:updateAlertMessage
+                                           delegate:self
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
     [updateSRAlert show];
@@ -1838,9 +1895,9 @@
   else //(httpResponseCode >= 400)
   {
     UIAlertView *updateSRFailAlert = [[UIAlertView alloc]
-                                      initWithTitle:@"Service Request Failed"
-                                      message:updateFailAlertMessage
-                                      delegate:self
+                                          initWithTitle:@"Service Request Failed"
+                                                message:updateFailAlertMessage
+                                               delegate:self
                                       cancelButtonTitle:@"OK"
                                       otherButtonTitles:nil];
     [updateSRFailAlert show];

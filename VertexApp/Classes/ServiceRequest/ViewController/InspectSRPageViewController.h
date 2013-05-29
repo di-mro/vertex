@@ -7,8 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UserAccountInfoManager.h"
+#import "UserAccountsObject.h"
+
 
 @interface InspectSRPageViewController : UIViewController
+{
+  UserAccountInfoManager *userAccountInfoSQLManager;
+  UserAccountsObject *userAccountsObject;
+}
 
 
 @property (strong, nonatomic) IBOutlet UIScrollView *inspectSRScroller;
@@ -73,6 +80,7 @@
 @property (strong, nonatomic) NSMutableDictionary *scheduleToDateDictionary;
 
 @property (strong, nonatomic) NSNumber *userId;
+
 @property (strong, nonatomic) NSNumber *serviceRequestId;
 @property (strong, nonatomic) NSMutableDictionary *serviceRequestInfo;
 
@@ -102,5 +110,6 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *addSchedulesButton;
 - (IBAction)addInspectionScheduleFields:(id)sender;
+
 
 @end

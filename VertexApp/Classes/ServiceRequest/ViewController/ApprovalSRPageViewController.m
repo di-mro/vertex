@@ -51,9 +51,6 @@
 
 @synthesize schedulesLabel;
 
-//@synthesize actionSheet;
-//@synthesize datePicker;
-
 @synthesize fromDate;
 @synthesize fromTime;
 @synthesize toDate;
@@ -61,7 +58,6 @@
 
 @synthesize addNotesButtonFrame;
 @synthesize schedulesLabelFrame;
-//@synthesize proposalLabelFrame;
 @synthesize statusLabelFrame;
 @synthesize statusFieldFrame;
 @synthesize authorLabelFrame;
@@ -90,6 +86,7 @@
 @synthesize scheduleToDateDictionary;
 
 @synthesize userId;
+
 @synthesize serviceRequestId;
 @synthesize serviceRequestInfo;
 
@@ -174,6 +171,14 @@
   
   //Populate fields based on previously selected Service Request for Approval Stage
   [self getServiceRequest];
+  
+  //Get logged user userAccountInformation
+  userAccountInfoSQLManager = [UserAccountInfoManager alloc];
+  userAccountsObject = [UserAccountsObject alloc];
+  userAccountsObject = [userAccountInfoSQLManager getUserAccountInfo];
+  
+  userId = userAccountsObject.userId;
+  NSLog(@"Approval SR - userId: %@", userId);
   
   //Initialize array for approval notes
   approvalNotesArray = [[NSMutableArray alloc] init];
@@ -427,6 +432,55 @@
 }
 
 
+#pragma mark - Endpoint connection /getUserById
+-(NSString *) getUserById
+{
+  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.113/vertex-api/user/getUserById/%@", userId];
+  
+  NSMutableURLRequest *getRequest = [NSMutableURLRequest
+                                     requestWithURL:[NSURL URLWithString:urlParams]];
+  
+  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+  [getRequest setHTTPMethod:@"GET"];
+  
+  NSURLConnection *connection = [[NSURLConnection alloc]
+                                 initWithRequest:getRequest
+                                 delegate:self];
+  [connection start];
+  
+  NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+  NSError *error = [[NSError alloc] init];
+  
+  NSData *responseData = [NSURLConnection
+                          sendSynchronousRequest:getRequest
+                          returningResponse:&urlResponse
+                          error:&error];
+  
+  NSString *authorName;
+  if(responseData == nil)
+  {
+    authorName = @"Tim Cook";
+  }
+  else
+  {
+    NSMutableDictionary *authorInfo = [[NSMutableDictionary alloc] init];
+    authorInfo = [NSJSONSerialization
+                  JSONObjectWithData:responseData
+                  options:kNilOptions
+                  error:&error];
+    
+    authorName = [NSString stringWithFormat:@"%@ %@ %@ %@"
+                  , [[authorInfo valueForKey:@"info"] valueForKey:@"firstName"]
+                  , [[authorInfo valueForKey:@"info"] valueForKey:@"middleName"]
+                  , [[authorInfo valueForKey:@"info"] valueForKey:@"lastName"]
+                  , [[authorInfo valueForKey:@"info"] valueForKey:@"suffix"]];
+    
+  }
+  
+  return authorName;
+}
+
+
 #pragma mark - Display multiple 'Notes' entries from response JSON
 - (void) displayNotesEntries: (NSString *) noteText
 {
@@ -535,7 +589,7 @@
       int y = 1; //Multiplier to move the y coordinates
       CGRect labelFrame;
       CGRect fieldFrame;
-      CGRect viewFrame;
+      //CGRect viewFrame;
       
       for(int j = i++; j < [approvalSRPageScroller.subviews count]; j++) //Begin at element after schedulesLabel
       {
@@ -665,12 +719,12 @@
   toTimeField.enabled   = NO;
   
   //Put tags to identify fields
-  statusField.tag = 0;
-  authorField.tag = 1;
+  statusField.tag   = 0;
+  authorField.tag   = 1;
   fromDateField.tag = 2;
   fromTimeField.tag = 3;
-  toDateField.tag = 4;
-  toTimeField.tag = 5;
+  toDateField.tag   = 4;
+  toTimeField.tag   = 5;
   
   //Set label size dimensions
   CGRect labelSize;
@@ -868,53 +922,53 @@
   NSLog(@"updateServiceRequestStatus");
   /*
    "{
-   "id" : long,
-   "status" :
-   {
-   "id" : long
-   },
-   "admin" :
-   {
-   "id" : long
-   },
-   "cost" : double,
-   "schedules": # schedules can be null
-   [
-   {
-   "status":
-   {
-   "id": long
-   },
-   "author":
-   {
-   "id": long
-   },
-   "periods":
-   [
-   {
-   "fromDate": string,
-   "fromTime": string,
-   "fromTimezone": string,
-   "toDate": string,
-   "toTime": string,
-   "toTimezone": string
-   }
-   , ...
-   ],
-   "active": boolean
-   }
-   ],
-   "notes": # notes can be null
-   [
-   {
-   "sender":
-   {
-   "id": long
-   },
-   "message": string
-   }
-   , ...
-   ]
+      "id" : long,
+      "status" :
+      {
+        "id" : long
+      },
+      "admin" :
+      {
+        "id" : long
+      },
+      "cost" : double,
+      "schedules": # schedules can be null
+      [
+        {
+          "status":
+          {
+            "id": long
+          },
+          "author":
+          {
+            "id": long
+          },
+          "periods":
+          [
+            {
+              "fromDate": string,
+              "fromTime": string,
+              "fromTimezone": string,
+              "toDate": string,
+              "toTime": string,
+              "toTimezone": string
+            }
+            , ...
+          ],
+          "active": boolean
+        }
+      ],
+      "notes": # notes can be null
+      [
+        {
+          "sender":
+          {
+            "id": long
+          },
+          "message": string
+        }
+        , ...
+      ]
    }"
    */
   
@@ -931,7 +985,7 @@
   
   //admin
   NSMutableDictionary *adminJson = [[NSMutableDictionary alloc] init];
-  [adminJson setObject:@20130101500000001 forKey:@"id"]; //!!! TODO - TEST ONLY !!!
+  [adminJson setObject:userId forKey:@"id"]; //!!! TODO - TEST ONLY !!! - only admin can approve ??
   [serviceRequestJson setObject:adminJson forKey:@"admin"];
   NSLog(@"adminJson: %@", adminJson);
   
@@ -941,12 +995,12 @@
   //notes
   NSMutableDictionary *notesDictionary = [[NSMutableDictionary alloc] init];
   NSMutableDictionary *notesSenderJson = [[NSMutableDictionary alloc] init];
-  NSMutableArray *notesArray = [[NSMutableArray alloc] init];
+  NSMutableArray *notesArray           = [[NSMutableArray alloc] init];
   
   for(int i = 0; i < approvalNotesArray.count; i++)
   {
     //sender
-    [notesSenderJson setObject:@20130101500000001 forKey:@"id"]; //!!! TODO - TEST ONLY - Remove hardcoded value
+    [notesSenderJson setObject:userId forKey:@"id"];
     [notesDictionary setObject:notesSenderJson forKey:@"sender"];
     
     //message
@@ -974,7 +1028,7 @@
   
   //schedule - author
   NSMutableDictionary *scheduleAuthor = [[NSMutableDictionary alloc] init];
-  [scheduleAuthor setObject:@20130101500000001 forKey:@"id"]; //!!! TODO - TEST ONLY !!! - Update
+  [scheduleAuthor setObject:userId forKey:@"id"];
   [scheduleDictionary setObject:scheduleAuthor forKey:@"author"];
   
   //schedule - periods
@@ -1018,18 +1072,18 @@
   
   //Construct JSON request for Approval update
   NSLog(@"For Approval Service Request JSON: %@", serviceRequestJson);
-  NSError *error = [[NSError alloc] init];
+  NSError *error   = [[NSError alloc] init];
   NSData *jsonData = [NSJSONSerialization
                       dataWithJSONObject:serviceRequestJson
-                      options:NSJSONWritingPrettyPrinted
-                      error:&error];
+                                 options:NSJSONWritingPrettyPrinted
+                                   error:&error];
   
   NSString *jsonString = [[NSString alloc]
                           initWithData:jsonData
-                          encoding:NSUTF8StringEncoding];
+                              encoding:NSUTF8StringEncoding];
   
-  NSLog(@"jsonData Request: %@", jsonData);
-  NSLog(@"jsonString Request: %@", jsonString);
+  //NSLog(@"jsonData Request: %@", jsonData);
+  //NSLog(@"jsonString Request: %@", jsonString);
   
   //Set URL for Update Service Request
   //URL = @"http://192.168.2.113/vertex-api/service-request/updateServiceRequest";
@@ -1047,7 +1101,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:putRequest
-                                 delegate:self];
+                                        delegate:self];
   
   [connection start];
   
@@ -1072,9 +1126,9 @@
   if((httpResponseCode == 201) || (httpResponseCode == 200)) //add
   {
     UIAlertView *updateSRAlert = [[UIAlertView alloc]
-                                  initWithTitle:@"Service Request"
-                                  message:updateAlertMessage
-                                  delegate:self
+                                      initWithTitle:@"Service Request"
+                                            message:updateAlertMessage
+                                           delegate:self
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
     [updateSRAlert show];
@@ -1082,9 +1136,9 @@
   else //(httpResponseCode >= 400)
   {
     UIAlertView *updateSRFailAlert = [[UIAlertView alloc]
-                                      initWithTitle:@"Service Request Failed"
-                                      message:updateFailAlertMessage
-                                      delegate:self
+                                          initWithTitle:@"Service Request Failed"
+                                                message:updateFailAlertMessage
+                                               delegate:self
                                       cancelButtonTitle:@"OK"
                                       otherButtonTitles:nil];
     [updateSRFailAlert show];
@@ -1120,7 +1174,6 @@
     [[[approvalSRPageScroller subviews] objectAtIndex:i] resignFirstResponder];
   }
 }
-
 
 
 

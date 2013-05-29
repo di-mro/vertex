@@ -7,11 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UserAccountInfoManager.h"
+#import "UserAccountsObject.h"
 
 @interface SRFeedbackPageViewController : UIViewController
+{
+  UserAccountInfoManager *userAccountInfoSQLManager;
+  UserAccountsObject *userAccountsObject;
+}
 
-//- (void) displaySRFeedbackPageQuestions;
-//@property (nonatomic, retain) NSMutableArray *displaySRFeedbackQuestions;
 
 @property (strong, nonatomic) IBOutlet UITextView *srCommentsTextArea;
 @property (strong, nonatomic) IBOutlet UIScrollView *srFeedbackScroller;
@@ -24,6 +28,8 @@
 @property (strong, nonatomic) NSString *URL;
 @property int httpResponseCode;
 
+@property (strong, nonatomic) NSNumber *userId;
+
 @property (strong, nonatomic) NSNumber *serviceRequestId;
 
 @property (strong, nonatomic) NSNumber *topicId;
@@ -33,5 +39,6 @@
 @property (strong, nonatomic) NSMutableArray *srFeedbackQuestionId;
 
 @property (strong, nonatomic) NSMutableDictionary *addFeebackJson;
+
 
 @end

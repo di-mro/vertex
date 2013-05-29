@@ -85,7 +85,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   [connection start];
   
   NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
@@ -93,16 +93,16 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
+                              returningResponse:&urlResponse
+                                          error:&error];
   
   if (responseData == nil)
   {
     //Show an alert if connection is not available
     UIAlertView *connectionAlert = [[UIAlertView alloc]
-                                    initWithTitle:@"Warning"
-                                    message:@"No network connection detected. Displaying data from phone cache."
-                                    delegate:nil
+                                        initWithTitle:@"Warning"
+                                              message:@"No network connection detected. Displaying data from phone cache."
+                                             delegate:nil
                                     cancelButtonTitle:@"OK"
                                     otherButtonTitles:nil];
     [connectionAlert show];
@@ -124,18 +124,18 @@
   {
     //JSON
     assetsDict = [NSJSONSerialization
-                      JSONObjectWithData:responseData
-                      options:kNilOptions
-                      error:&error];
+                  JSONObjectWithData:responseData
+                             options:kNilOptions
+                               error:&error];
     NSLog(@"assets JSON: %@", assetsDict);
     
     deleteAssetPageEntries = [assetsDict valueForKey:@"name"];
     
     assetNameArray = [[NSMutableArray alloc] init];
-    assetIdArray = [[NSMutableArray alloc] init];
+    assetIdArray   = [[NSMutableArray alloc] init];
     
     assetNameArray = [assetsDict valueForKey:@"name"];
-    assetIdArray = [assetsDict valueForKey:@"id"];
+    assetIdArray   = [assetsDict valueForKey:@"id"];
   }
 }
 

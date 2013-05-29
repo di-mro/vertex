@@ -10,7 +10,6 @@
 #import "Reachability.h"
 #import "RestKit/RestKit.h"
 #import "HomePageViewController.h"
-
 #import "UserAccountInfoManager.h"
 
 
@@ -48,6 +47,7 @@
 
 - (void)viewDidLoad
 {
+  //Initialize userAccountInfoSQLManager
   userAccountInfoSQLManager = [UserAccountInfoManager alloc];
   
   [super viewDidLoad];
@@ -72,8 +72,6 @@
 - (IBAction)login:(id)sender
 {
   //Set URL for Login
-  //URL = @"http://192.168.2.113/vertex-api/user/login";
-  //URL = @"http://192.168.2.107/vertex-api/user/login";
   URL = @"http://192.168.2.113/vertex-api/auth/login"; //107
   
   if([self validateLoginFields])
@@ -147,32 +145,8 @@
     NSLog(@"Unable to login");
   }
   
-  //Get User Profile Id and other details
+  //Connect to endpoint /getUserByName and get logged user's account info
   [self getUserInfo];
-
-  /*
-   //RestKit
-   NSString *username = userNameField.text;
-   NSString *password = passwordField.text;
-   
-   RKObjectMapping* loginMapping = [RKObjectMapping requestMapping ];
-   // Shortcut for [RKObjectMapping mappingForClass:[NSMutableDictionary class] ]
-   [loginMapping addAttributeMappingsFromArray:@[@"username", @"password"]];
-   NSLog(@"loginMapping: %@", loginMapping);
-   
-   // Now configure the request descriptor
-   RKRequestDescriptor *requestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:loginMapping
-   objectClass:[LoginCredentials class]
-   rootKeyPath:@"user"];
-   NSLog(@"requestDescriptor: %@", requestDescriptor);
-   
-   // Create a new LoginCredential object and POST it to the server
-   LoginCredentials *loginCredentials = [[LoginCredentials alloc] init];
-   loginCredentials.username = username;
-   loginCredentials.password = password;
-   NSLog(@"loginCredentials: %@", loginCredentials);
-   [[RKObjectManager sharedManager] postObject:loginCredentials path:@"http://192.168.2.103:8080/vertex/ws/user/login" parameters:nil success:nil failure:nil];
-   */
 }
 
 
@@ -193,7 +167,7 @@
   
   NSURLConnection *connection = [[NSURLConnection alloc]
                                  initWithRequest:getRequest
-                                 delegate:self];
+                                        delegate:self];
   //start the connection
   [connection start];
   
@@ -203,17 +177,15 @@
   
   NSData *responseData = [NSURLConnection
                           sendSynchronousRequest:getRequest
-                          returningResponse:&urlResponse
-                          error:&error];
-    
-  NSString *loggedUserInfo = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+                               returningResponse:&urlResponse
+                                           error:&error];
   
   if(responseData == nil)
   {
     UIAlertView *loginAlert = [[UIAlertView alloc]
-                               initWithTitle:@"No Connection Detected"
-                               message:@"Displaying data from phone cache"
-                               delegate:nil
+                                   initWithTitle:@"No Connection Detected"
+                                         message:@"Displaying data from phone cache"
+                                        delegate:nil
                                cancelButtonTitle:@"OK"
                                otherButtonTitles:nil];
     [loginAlert show];
@@ -227,7 +199,7 @@
     
     NSLog(@"getUserInfo JSON Result: %@", userInfo);
     
-    //Get info for SQLite storage
+    //Get userInfo to be stored in SQLite table
     userId        = [userInfo valueForKey:@"id"];
     username      = [userInfo valueForKey:@"username"];
     password      = passwordField.text;
@@ -235,39 +207,21 @@
     userInfoId    = [[userInfo valueForKey:@"info"] valueForKey:@"id"];
     //token - assigned in login()
     
-    /*
-    //Create SQLite db
-    [self openDB];
-    
-    [self createTable:@"user_accounts"
-           withField1:@"userId"
-           withField2:@"username"
-           withField3:@"password"
-           withField4:@"profileId"
-           withField5:@"userInfoId"
-           withField6:@"token"];
-    
-    //Save info in SQLite
-    [self saveUserInfo];
-    */
-    
-  //SQLite operations - save user account information of logged user
-  [userAccountInfoSQLManager openDB];
+    //SQLite operations - save user account information of logged user
+    [userAccountInfoSQLManager createTable:@"user_accounts"
+                               withField1:@"userId"
+                               withField2:@"username"
+                               withField3:@"password"
+                               withField4:@"profileId"
+                               withField5:@"userInfoId"
+                               withField6:@"token"];
 
-  [userAccountInfoSQLManager createTable:@"user_accounts"
-                              withField1:@"userId"
-                              withField2:@"username"
-                              withField3:@"password"
-                              withField4:@"profileId"
-                              withField5:@"userInfoId"
-                              withField6:@"token"];
-
-  [userAccountInfoSQLManager saveUserInfo:userId
-                                         :username
-                                         :password
-                                         :userProfileId
-                                         :userInfoId
-                                         :token];
+    [userAccountInfoSQLManager saveUserInfo:userId
+                                          :username
+                                          :password
+                                          :userProfileId
+                                          :userInfoId
+                                          :token];
   }
   
   //Segue to Home Page
@@ -288,24 +242,6 @@
   httpResponse     = (NSHTTPURLResponse *)response;
   httpResponseCode = [httpResponse statusCode];
   NSLog(@"connection-httpResponse status code: %d", httpResponseCode);
-  
-  /*
-  //POST
-  if(httpResponseCode == 200) //ok
-  {
-    [self performSegueWithIdentifier: @"loginToHome" sender: self];
-  }
-  else //(httpResponseCode >= 400)
-  {
-    UIAlertView *loginAlert = [[UIAlertView alloc]
-                                   initWithTitle:@"Invalid User"
-                                         message:@"Username and password is incorrect."
-                                        delegate:nil
-                               cancelButtonTitle:@"OK"
-                               otherButtonTitles:nil];
-    [loginAlert show];
-  }
-   */
 }
 
 
@@ -345,115 +281,6 @@
   }
   
   return YES;
-}
-
-/*
-#pragma mark - SQLite Operations
-#pragma mark - Create user_accounts table
--(void) createTable: (NSString *) tableName //user_accounts
-         withField1: (NSString *) field1 //userId
-         withField2: (NSString *) field2 //username
-         withField3: (NSString *) field3 //password
-         withField4: (NSString *) field4 //profileId
-         withField5: (NSString *) field5 //userInfoId
-         withField6: (NSString *) field6 //token
-{
-  char *err;
-  NSString *sql = [NSString stringWithFormat:
-                   @"CREATE TABLE IF NOT EXISTS '%@' ('%@' " "NUM PRIMARY KEY, '%@' TEXT, '%@' TEXT, '%@' NUM, '%@' NUM, '%@' TEXT);"
-                   , tableName
-                   , field1
-                   , field2
-                   , field3
-                   , field4
-                   , field5
-                   , field6];
-  
-  if(sqlite3_exec(db, [sql UTF8String], NULL, NULL, &err) != SQLITE_OK)
-  {
-    sqlite3_close(db);
-    NSLog(@"Could not create table");
-  }
-  else
-  {
-    NSLog(@"Table Created");
-  }
-}
-
-#pragma mark - Set file path to db
--(NSString *) getFilePath
-{
-  NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
-  NSLog(@"paths: %@", paths);
-  return [[paths objectAtIndex:0] stringByAppendingPathComponent:@"di_vertex.sql"];
-}
-
-#pragma mark - Open the db
--(void) openDB
-{
-  if(sqlite3_open([[self getFilePath] UTF8String], &db) != SQLITE_OK)
-  {
-    sqlite3_close(db);
-    NSLog(@"Database failed to open");
-  }
-  else
-  {
-    NSLog(@"Database opened");
-  }
-}
-
-#pragma mark - Collect User Accounts data from response parameter and save to db
--(void) saveUserInfo
-{
-  //Truncate user_accounts first to remove unecessary info, only save info for the logged user
-  [self truncateUserAccounts];
-  
-  NSString *sql = [NSString stringWithFormat:@"INSERT INTO user_accounts ('userId', 'username', 'password', 'profileId', 'userInfoId', 'token') VALUES ('%@', '%@', '%@', '%@', '%@', '%@')"
-                   , userId
-                   , username
-                   , password
-                   , userProfileId
-                   , userInfoId
-                   , token];
-  
-  char *err;
-  if(sqlite3_exec(db, [sql UTF8String], NULL, NULL, &err) != SQLITE_OK)
-  {
-    sqlite3_close(db);
-    NSLog(@"Could not update the table");
-  }
-  else
-  {
-    NSLog(@"Table Updated");
-  }
-}
-
-#pragma mark - Truncate user_accounts table
--(void) truncateUserAccounts
-{
-  char *err;
-  NSString *sql = [NSString stringWithFormat:@"DELETE FROM user_accounts"];
-  
-  if(sqlite3_exec(db, [sql UTF8String], NULL, NULL, &err) != SQLITE_OK)
-  {
-    sqlite3_close(db);
-    NSLog(@"Could not truncate user_accounts table");
-  }
-  else
-  {
-    NSLog(@"user_accounts table truncated");
-  }
-}
-*/
-
-
-#pragma mark - Prepare for segue, passing the userProfileId to Home Page
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-  if ([segue.identifier isEqualToString:@"loginToHome"])
-  {
-    //[segue.destinationViewController setUserProfileId:userProfileId];
-  }
 }
 
 

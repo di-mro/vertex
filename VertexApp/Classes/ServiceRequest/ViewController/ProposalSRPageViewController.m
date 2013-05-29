@@ -166,8 +166,7 @@
                                              , nil];
   
   //Scroller size
-  //.proposalSRPageScroller.contentSize = CGSizeMake(320.0, 5000);
-  scrollViewHeight = 0.0f;
+  //proposalSRPageScroller.contentSize = CGSizeMake(320.0, 5000);
   [self setScrollerSize];
   
   //Disable fields - for viewing only
@@ -186,6 +185,14 @@
   //Populate fields based on previously selected Service Request for Proposal Stage
   [self getServiceRequest];
   
+  //Get logged user userAccountInformation
+  userAccountInfoSQLManager = [UserAccountInfoManager alloc];
+  userAccountsObject = [UserAccountsObject alloc];
+  userAccountsObject = [userAccountInfoSQLManager getUserAccountInfo];
+  
+  userId = userAccountsObject.userId;
+  NSLog(@"Proposal SR - userId: %@", userId);
+  
   //Initialize array for proposal notes
   proposalNotesArray = [[NSMutableArray alloc] init];
   
@@ -196,15 +203,6 @@
   fromTimesArray = [[NSMutableArray alloc] init];
   toDatesArray   = [[NSMutableArray alloc] init];
   toTimesArray   = [[NSMutableArray alloc] init];
-  
-  /*
-  statusLabelArray    = [[NSMutableArray alloc] init];
-  authorLabelArray    = [[NSMutableArray alloc] init];
-  fromDatesLabelArray = [[NSMutableArray alloc] init];
-  fromTimesLabelArray = [[NSMutableArray alloc] init];
-  toDatesLabelArray   = [[NSMutableArray alloc] init];
-  toTimesLabelArray   = [[NSMutableArray alloc] init];
-  */
   
   //Initialize dictionaries for proposal schedules
   scheduleFromDateDictionary = [[NSMutableDictionary alloc] init];
@@ -224,6 +222,7 @@
 #pragma mark - Adjust proposalSRPageScroller height depending on number of elements in view
 -(void) setScrollerSize
 {
+  scrollViewHeight = 0.0f;
   for (UIView *view in proposalSRPageScroller.subviews)
   {
     scrollViewHeight += view.frame.size.height;
@@ -403,7 +402,7 @@
       }
     }
     
-    //!!! TODO - Retrieve values for Schedules
+    //Retrieve values for Schedules
     NSMutableArray *retrievedSchedulesArray = [[NSMutableArray alloc] init];
     retrievedSchedulesArray = [serviceRequestInfo valueForKey:@"schedules"];
     
@@ -443,6 +442,55 @@
                                   :startingCoordinates];
     }
   }
+}
+
+
+#pragma mark - Endpoint connection /getUserById
+-(NSString *) getUserById
+{
+  NSMutableString *urlParams = [NSMutableString stringWithFormat:@"http://192.168.2.113/vertex-api/user/getUserById/%@", userId];
+  
+  NSMutableURLRequest *getRequest = [NSMutableURLRequest
+                                     requestWithURL:[NSURL URLWithString:urlParams]];
+  
+  [getRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+  [getRequest setHTTPMethod:@"GET"];
+  
+  NSURLConnection *connection = [[NSURLConnection alloc]
+                                 initWithRequest:getRequest
+                                 delegate:self];
+  [connection start];
+  
+  NSHTTPURLResponse *urlResponse = [[NSHTTPURLResponse alloc] init];
+  NSError *error = [[NSError alloc] init];
+  
+  NSData *responseData = [NSURLConnection
+                          sendSynchronousRequest:getRequest
+                          returningResponse:&urlResponse
+                          error:&error];
+  
+  NSString *authorName;
+  if(responseData == nil)
+  {
+    authorName = @"Tim Cook";
+  }
+  else
+  {
+    NSMutableDictionary *authorInfo = [[NSMutableDictionary alloc] init];
+    authorInfo = [NSJSONSerialization
+                  JSONObjectWithData:responseData
+                  options:kNilOptions
+                  error:&error];
+    
+    authorName = [NSString stringWithFormat:@"%@ %@ %@ %@"
+                  , [[authorInfo valueForKey:@"info"] valueForKey:@"firstName"]
+                  , [[authorInfo valueForKey:@"info"] valueForKey:@"middleName"]
+                  , [[authorInfo valueForKey:@"info"] valueForKey:@"lastName"]
+                  , [[authorInfo valueForKey:@"info"] valueForKey:@"suffix"]];
+    
+  }
+  
+  return authorName;
 }
 
 
@@ -554,7 +602,7 @@
       int y = 1; //Multiplier to move the y coordinates
       CGRect labelFrame;
       CGRect fieldFrame;
-      CGRect viewFrame;
+      //CGRect viewFrame;
       
       for(int j = i++; j < [proposalSRPageScroller.subviews count]; j++) //Begin at element after schedulesLabel
       {
@@ -632,7 +680,7 @@
    */
   /*
   //Then redraw the fields
-  //***
+  ////***
   //!!! TODO - Retrieve values for Schedules
   NSMutableArray *retrievedSchedulesArray = [[NSMutableArray alloc] init];
   retrievedSchedulesArray = [serviceRequestInfo valueForKey:@"schedules"];
@@ -672,7 +720,7 @@
                                 :[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"periods"]
                                 :startingCoordinates];
   }
-  //***
+  ////***
    */
 
   /*
@@ -1084,12 +1132,12 @@
   toTimeField.borderStyle   = UITextBorderStyleRoundedRect;
   
   //Put tags to identify fields
-  statusField.tag = 0;
-  authorField.tag = 1;
+  statusField.tag   = 0;
+  authorField.tag   = 1;
   fromDateField.tag = 2;
   fromTimeField.tag = 3;
-  toDateField.tag = 4;
-  toTimeField.tag = 5;
+  toDateField.tag   = 4;
+  toTimeField.tag   = 5;
   
   //Disable status and author fields
   statusField.enabled = NO;
@@ -1216,8 +1264,8 @@
   authorFieldFrame.origin.y = (authorLabelFrame.origin.y + 30);
   authorField.frame         = authorFieldFrame;
   
-  //!!! TODO - Set author name to the logged person
-  authorField.text = @"Juan Pedro dela Cruz Sr.";
+  //Set author name to the logged person/admin
+  authorField.text = [self getUserById];
   
   //Set frame locations - From Date Label and Field
   fromDateLabelFrame          = fromDateLabel.frame;
@@ -1266,7 +1314,7 @@
   //Define separator line for the period entries
   UIView *separator          = [[UIView alloc] init];
   separator.backgroundColor  = [UIColor colorWithWhite:0.7 alpha:1];
-  separatorFrame = separator.frame;
+  separatorFrame             = separator.frame;
   separatorFrame.origin.x    = 0;
   separatorFrame.origin.y    = (toTimeField.frame.origin.y + 50);
   separatorFrame.size.height = 1;
@@ -1586,12 +1634,12 @@
   //notes
   NSMutableDictionary *notesDictionary = [[NSMutableDictionary alloc] init];
   NSMutableDictionary *notesSenderJson = [[NSMutableDictionary alloc] init];
-  NSMutableArray *notesArray = [[NSMutableArray alloc] init];
+  NSMutableArray *notesArray           = [[NSMutableArray alloc] init];
   
   for(int i = 0; i < proposalNotesArray.count; i++)
   {
     //sender
-    [notesSenderJson setObject:@20130101500000001 forKey:@"id"]; //!!! TODO - TEST ONLY - Remove hardcoded value
+    [notesSenderJson setObject:userId forKey:@"id"];
     [notesDictionary setObject:notesSenderJson forKey:@"sender"];
     
     //message
@@ -1619,7 +1667,7 @@
   
   //schedule - author
   NSMutableDictionary *scheduleAuthor = [[NSMutableDictionary alloc] init];
-  [scheduleAuthor setObject:@20130101500000001 forKey:@"id"]; //!!! TODO - TEST ONLY !!! - Update
+  [scheduleAuthor setObject:userId forKey:@"id"];
   [scheduleDictionary setObject:scheduleAuthor forKey:@"author"];
   
   //schedule - periods
@@ -1661,7 +1709,7 @@
   
   //Construct JSON request for Proposal update
   NSLog(@"For Proposal Service Request JSON: %@", serviceRequestJson);
-  NSError *error = [[NSError alloc] init];
+  NSError *error   = [[NSError alloc] init];
   NSData *jsonData = [NSJSONSerialization
                       dataWithJSONObject:serviceRequestJson
                                  options:NSJSONWritingPrettyPrinted
@@ -1671,8 +1719,8 @@
                           initWithData:jsonData
                               encoding:NSUTF8StringEncoding];
   
-  NSLog(@"jsonData Request: %@", jsonData);
-  NSLog(@"jsonString Request: %@", jsonString);
+  //NSLog(@"jsonData Request: %@", jsonData);
+  //NSLog(@"jsonString Request: %@", jsonString);
   
   //Set URL for Update Service Request
   //URL = @"http://192.168.2.113/vertex-api/service-request/updateServiceRequest";
@@ -1734,9 +1782,7 @@
   
   [self dismissViewControllerAnimated:YES completion:nil];
   NSLog(@"Service Request Proposal");
-  
 }
-
 
 
 #pragma mark - Connection didFailWithError

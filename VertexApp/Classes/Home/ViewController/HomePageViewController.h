@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UserAccountInfoManager.h"
 #import "sqlite3.h"
+#import "UserAccountInfoManager.h"
+#import "UserAccountsObject.h"
+
 
 @interface HomePageViewController : UIViewController
 {
-  //sqlite3 *db;
   UserAccountInfoManager *userAccountInfoSQLManager;
+  UserAccountsObject *userAccountsObject;
 }
 
 
@@ -32,13 +34,5 @@
 
 -(void) logout;
 
-/*
-//SQLite
--(NSString *) getFilePath;
-
--(void) openDB;
-
--(void) retrieveInfoFromDB;
-*/
 
 @end
