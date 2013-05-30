@@ -697,10 +697,9 @@
    }
    }
    }
-   */
+  // */
   /*
    //Then redraw the fields
-   ////***
    //!!! TODO - Retrieve values for Schedules
    NSMutableArray *retrievedSchedulesArray = [[NSMutableArray alloc] init];
    retrievedSchedulesArray = [serviceRequestInfo valueForKey:@"schedules"];
@@ -740,8 +739,7 @@
    :[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"periods"]
    :startingCoordinates];
    }
-   //***
-   */
+  //*/
   
   /*
    //Move the fields and labels after the 'Schedules' label
@@ -788,14 +786,14 @@
    }
    }
    }
-   */
+   //*/
   
   /*
   //Add Schedules Button
   addScheduleButtonFrame = addSchedulesButton.frame;
   addScheduleButtonFrame.origin.y = (separatorFrame.origin.y + 45);
   addSchedulesButton.frame = addScheduleButtonFrame;
-  */
+  //*/
    
   /*
    //Clear / redraw the fields and labels after the 'Schedules' label
@@ -809,10 +807,9 @@
    }
    }
    }
-   */
+  // */
   
   /*
-   
    //Move the fields and labels after the 'Schedules' label
    for (int i = 0; i < [proposalSRPageScroller.subviews count]; i++)
    {
@@ -851,13 +848,13 @@
    }
    }
    }
-   */
+   //*/
   /*
    //Add Schedules Button
    addScheduleButtonFrame = addSchedulesButton.frame;
    addScheduleButtonFrame.origin.y = (separatorFrame.origin.y + 45);
    addSchedulesButton.frame = addScheduleButtonFrame;
-   */
+   //*/
   
   //Adjust scroller height
   [self setScrollerSize];

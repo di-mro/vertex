@@ -222,13 +222,13 @@
 #pragma mark - Adjust proposalSRPageScroller height depending on number of elements in view
 -(void) setScrollerSize
 {
-  scrollViewHeight = 0.0f;
+  float height = 0.0;
   for (UIView *view in proposalSRPageScroller.subviews)
   {
-    scrollViewHeight += view.frame.size.height;
+    height += view.frame.size.height;
   }
-  NSLog(@"scroller height: %f", scrollViewHeight);
-  [proposalSRPageScroller setContentSize:(CGSizeMake(320, scrollViewHeight))];
+  NSLog(@"scroller height: %f", height);
+  [proposalSRPageScroller setContentSize:(CGSizeMake(320, height))];
 }
 
 
@@ -591,7 +591,7 @@
   //Schedules Label
   schedulesLabelFrame          = schedulesLabel.frame;
   schedulesLabelFrame.origin.x = 16;
-  schedulesLabelFrame.origin.y = (addNotesButtonFrame.origin.y + 70);
+  schedulesLabelFrame.origin.y = (addNotesButtonFrame.origin.y + 40);
   schedulesLabel.frame         = schedulesLabelFrame;
   
   //Move the fields and labels after the 'Schedules' label
@@ -602,65 +602,119 @@
       int y = 1; //Multiplier to move the y coordinates
       CGRect labelFrame;
       CGRect fieldFrame;
-      //CGRect viewFrame;
+      CGRect viewFrame;
+      CGRect prevFrame;
+      
+      UILabel *tempLabel;
+      UITextField *tempField;
+      UIView *tempView;
       
       for(int j = i++; j < [proposalSRPageScroller.subviews count]; j++) //Begin at element after schedulesLabel
       {
+        //* Get frame location of previous element
+        if([[[proposalSRPageScroller subviews] objectAtIndex:j-1] isKindOfClass:[UILabel class]])
+        {
+          tempLabel = [[UILabel alloc] init];
+          tempLabel = [[proposalSRPageScroller subviews] objectAtIndex:j];
+          
+          if([tempLabel isEqual:schedulesLabel])
+          {
+            prevFrame.origin.y = (schedulesLabelFrame.origin.y + 40);
+          }
+          else
+          {
+            prevFrame = tempLabel.frame;
+          }
+        }
+        else if([[[proposalSRPageScroller subviews] objectAtIndex:j-1] isKindOfClass:[UITextField class]])
+        {
+          tempField = [[UITextField alloc] init];
+          tempField = [[proposalSRPageScroller subviews] objectAtIndex:j];
+          prevFrame = tempField.frame;
+        }
+        else if ([[[proposalSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UIView class]])
+        {
+          tempView = [[UIView alloc] init];
+          tempView = [[proposalSRPageScroller subviews] objectAtIndex:j];
+          prevFrame = tempView.frame;
+        }
+        //*/
+        
         if([[[proposalSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UILabel class]])
         {
-          UILabel *tempLabel = [[UILabel alloc] init];
+          tempLabel = [[UILabel alloc] init];
           tempLabel = [[proposalSRPageScroller subviews] objectAtIndex:j];
           NSLog(@"tempLabel: %@", tempLabel);
           
           labelFrame = tempLabel.frame;
-          if ([tempLabel.text isEqual:@"From Time: "]
-              || [tempLabel.text isEqual:@"To Time: "])
+          
+          if ([tempLabel.text isEqual:@"From Time: "])
           {
             labelFrame.origin.x = 166;
+            //labelFrame.origin.y = (schedulesLabelFrame.origin.y + (30 * y + 10));
+            labelFrame.origin.y = (prevFrame.origin.y + 30);
+            tempLabel.frame = labelFrame;
+          }
+          else if ([tempLabel.text isEqual:@"To Time: "])
+          {
+            labelFrame.origin.x = 166;
+            //labelFrame.origin.y = (schedulesLabelFrame.origin.y + (30 * y + 10));
+            labelFrame.origin.y = (prevFrame.origin.y + 30);
+            tempLabel.frame = labelFrame;
           }
           else
           {
             labelFrame.origin.x = 16;
+            //labelFrame.origin.y = (schedulesLabelFrame.origin.y + (30 * y + 10));
+            labelFrame.origin.y = (prevFrame.origin.y + 30);
+            tempLabel.frame = labelFrame;
           }
-          labelFrame.origin.x = 16;
-          labelFrame.origin.y = (schedulesLabelFrame.origin.y + (30 * y));
-          tempLabel.frame = labelFrame;
         }
         else if([[[proposalSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UITextField class]])
         {
-          UITextField *tempField = [[UITextField alloc] init];
+          tempField = [[UITextField alloc] init];
           tempField = [[proposalSRPageScroller subviews] objectAtIndex:j];
           NSLog(@"tempField: %@", tempField);
           
           fieldFrame = tempField.frame;
-          if((tempField.tag == 3) || (tempField.tag == 5)) //Tags for 'From Time' and 'To Time' fields
+          NSLog(@"tempField.tag: %d", tempField.tag);
+
+          if(tempField.tag == 3) //Tag for 'From Time' field
           {
             fieldFrame.origin.x = 166;
-            
+            //fieldFrame.origin.y = (schedulesLabelFrame.origin.y + (30 * y + 10));
+            fieldFrame.origin.y = (prevFrame.origin.y + 30);
+            tempField.frame = fieldFrame;
+          }
+          else if (tempField.tag == 5) //Tag for 'To Time' field
+          {
+            fieldFrame.origin.x = 166;
+            //fieldFrame.origin.y = (schedulesLabelFrame.origin.y + (30 * y + 10));
+            fieldFrame.origin.y = (prevFrame.origin.y + 30);
+            tempField.frame = fieldFrame;
           }
           else
           {
             fieldFrame.origin.x = 16;
+            //fieldFrame.origin.y = (schedulesLabelFrame.origin.y + (30 * y + 10));
+            fieldFrame.origin.y = (prevFrame.origin.y + 30);
+            tempField.frame = fieldFrame;
           }
-
-          fieldFrame.origin.x = 16;
-          fieldFrame.origin.y = (schedulesLabelFrame.origin.y + (30 * y));
-          tempField.frame = fieldFrame;
         }
-
         /*
         else if ([[[proposalSRPageScroller subviews] objectAtIndex:j] isKindOfClass:[UIView class]])
         {
-          UIView *tempView = [[UIView alloc] init]; //for the separator
+          tempView = [[UIView alloc] init]; //for the separator
           tempView = [[proposalSRPageScroller subviews] objectAtIndex:j];
           NSLog(@"tempView/separator: %@", tempView);
           
           viewFrame = tempView.frame;
           viewFrame.origin.x = 0;
-          viewFrame.origin.y = (schedulesLabelFrame.origin.y + (30 * y));
+          //viewFrame.origin.y = (schedulesLabelFrame.origin.y + (30 * y));
+          viewFrame.origin.y = (prevFrame.origin.y + (30 * y + 10));
           tempView.frame = viewFrame;
         }
-         */
+         //*/
         y++;
       }
     }
@@ -677,10 +731,9 @@
       }
     }
   }
-   */
+  //*/
   /*
   //Then redraw the fields
-  ////***
   //!!! TODO - Retrieve values for Schedules
   NSMutableArray *retrievedSchedulesArray = [[NSMutableArray alloc] init];
   retrievedSchedulesArray = [serviceRequestInfo valueForKey:@"schedules"];
@@ -720,8 +773,7 @@
                                 :[[retrievedSchedulesDictionary valueForKey:@"schedules"] valueForKey:@"periods"]
                                 :startingCoordinates];
   }
-  ////***
-   */
+  //*/
 
   /*
   //Move the fields and labels after the 'Schedules' label
@@ -768,7 +820,7 @@
       }
     }
   }
-  */
+  //*/
   
   //Add Schedules Button
   addScheduleButtonFrame = addSchedulesButton.frame;
@@ -787,10 +839,9 @@
       }
     }
   }
-   */
+  //*/
 
   /*
-
   //Move the fields and labels after the 'Schedules' label
   for (int i = 0; i < [proposalSRPageScroller.subviews count]; i++)
   {
@@ -829,13 +880,13 @@
      }
    }
   }
-  */
+  //*/
   /*
    //Add Schedules Button
    addScheduleButtonFrame = addSchedulesButton.frame;
    addScheduleButtonFrame.origin.y = (separatorFrame.origin.y + 45);
    addSchedulesButton.frame = addScheduleButtonFrame;
-   */
+  //*/
   
   //Adjust scroller height
   [self setScrollerSize];
